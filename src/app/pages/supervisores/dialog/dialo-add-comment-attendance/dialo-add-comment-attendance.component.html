@@ -1,0 +1,73 @@
+<ion-app>
+  <ion-header class="ion-no-border ion-padding">
+    <ion-row size="12">
+      <ion-col size="12">
+        <div class="close">
+          <ion-icon
+            (click)="modalController.dismiss()"
+            slot="icon-only"
+            name="close-outline"
+            color="danger"
+          ></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col size="12" class="ion-align-self-center">
+        <div>
+          <h4 class="subtitle-negro">AGREGAR UN COMENTARIO</h4>
+        </div>
+      </ion-col>
+      <ion-col size="12" class="ion-align-self-center">
+        <ion-row size="12">
+          <ion-col size="2">
+            <div>
+              <img src="./assets/avatar.png" alt="" />
+            </div>
+          </ion-col>
+          <ion-col size="10" class="ion-align-self-center">
+            <ion-row size="12">
+              <ion-col size="12">Lucero Vargas</ion-col>
+              <ion-col size="12">Chef</ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row size="12">
+      <ion-col size="1" class="ion-align-self-center">
+        <!-- llego -->
+        <img *ngIf="data.attendence === 1" src="./assets/icon/icon_asisti.png" alt="" />
+        <!-- no llego -->
+        <img *ngIf="data.attendence === 2" src="./assets/icon/icon_falt.png" alt="" />
+        <!-- retardo -->
+        <img *ngIf="data.attendence === 3" src="./assets/icon/icon_lleg_tarde.png" alt="" />
+      </ion-col>
+      <ion-col size="11" class="ion-align-self-center">
+        Llegada {{ data.hora | date: "shortTime" }}</ion-col
+      >
+    </ion-row>
+  </ion-header>
+  <ion-content fullscreen="false" class="ion-padding">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea rows="6" cols="20"></ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row size="12" class="footer">
+        <ion-col size="3" offset="8">
+          <ion-button
+            (click)="save()"
+            shape="round"
+            color="danger"
+            expand="full"
+          >
+            GUARDAR
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+</ion-app>

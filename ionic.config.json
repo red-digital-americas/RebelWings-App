@@ -1,0 +1,7 @@
+{
+  "name": "Rebel Wings App",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

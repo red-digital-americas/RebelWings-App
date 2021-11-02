@@ -1,0 +1,62 @@
+<ion-app>
+  <ion-content fullscreen="false" class="ion-padding">
+    <div class="justify">
+      <ion-grid>
+        <!-- logo -->
+        <ion-row class="ion-align-items-center">
+          <ion-col class="logo">
+            <div>
+              <img
+                class="rebel-img"
+                src="./assets/RW_LogoWEB.png"
+                alt="Rebel wings"
+              />
+            </div>
+          </ion-col>
+        </ion-row>
+        <!-- titulo -->
+        <ion-row>
+          <ion-col class="logo">
+            <h3>CENTRO DE CONTROL</h3>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid>
+        <ion-row class="login">
+          <ion-col size="12">
+            <ion-label floating>Correo electrónico</ion-label>
+            <ion-item class="closed">
+              <ion-input autocomplete="off" type="email" [(ngModel)]="email" placeholder="Ingresa tu usuario"> </ion-input>
+              <ion-icon slot="end" color="danger" name="mail-outline"></ion-icon>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row class="login">
+          <ion-col size="12">
+            <ion-label floating>Contraseña</ion-label>
+            <ion-item class="closed">
+              <ion-input autocomplete="off" [(ngModel)]="password" placeholder="Ingresa tu contraseña" type="password"></ion-input>
+              <ion-icon slot="end" color="danger"  name="key-outline"></ion-icon>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div class="puntero" (click)="forgotPassword()" class="forgot-password">
+              <h4>RECUPERAR CONTRASEÑA</h4>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="login">
+          <ion-col size="12">
+            <div class="logo">
+              <ion-button [disabled]="email === '' || password === ''" (click)="login(email, password)" shape="round" color="danger" expand="full"
+                >INICIAR SESIÓN</ion-button
+              >
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-content>
+</ion-app>

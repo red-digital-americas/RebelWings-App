@@ -1,0 +1,182 @@
+<ion-app>
+  <ion-header class="ion-no-border ion-padding">
+    <ion-grid>
+      <ion-row>
+        <ion-col (click)="return()">
+          <div>
+            <p class="ion-align-items-start return">< REGRESAR</p>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="1">
+          <img
+            src="./assets/icon/ilustracion_stock_de_pollo.png"
+            alt="Validaccion de assistencia"
+          />
+        </ion-col>
+        <ion-col size="11" class="ion-align-self-center">
+          <h3 class="title">STOCK DE POLLO</h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-header>
+  <ion-content fullscreen="false" class="ion-padding">
+    <ion-grid>
+      <!-- titulo de empresa -->
+      <ion-row size="12">
+        <ion-col size="4">
+          <h5 class="subtitle-negro">SUCURSAL MASARIK</h5>
+        </ion-col>
+        <ion-col size="8">
+          <span class="date-grey">
+            {{ today | date: "dd MMM yyy" }}
+          </span>
+        </ion-col>
+        <ion-col size="12">
+          <span class="money"> $ 25,000.00 MXN / 145 Kg de pollo </span>
+        </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="6">
+          <span class="title-progress-bar">Expectativa de Venta</span>
+          &nbsp;
+          <ion-progress-bar color="warning" value=".8"></ion-progress-bar>
+          &nbsp;
+          <div class="margin-completado">
+            <span class="title-progress-bar">% completado</span>
+          </div>
+        </ion-col>
+        <ion-col size="3" offset="3" class="ion-align-items-center">
+          <div class="align-end-text">
+            <ion-button
+              (click)="addPackage(0)"
+              shape="round"
+              color="warning"
+              expand="full"
+            >
+              <span class="color-text-white"> AGREGAR PAQUETE </span>
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-card *ngFor="let item of data">
+        <ion-row size="12">
+          <ion-item-sliding id="item100">
+            <ion-item>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="1" class="ion-align-self-center">
+                    <div>
+                      <img
+                        src="./assets/icon/ilustracion_stock_de_pollo.png"
+                        alt=""
+                      />
+                    </div>
+                  </ion-col>
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div>
+                      <span>Paquete Polllo</span>
+                    </div>
+                  </ion-col>
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div>
+                      <span>{{ item.amount }} Kg</span>
+                    </div>
+                  </ion-col>
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div>
+                      <span>{{ item.code }}</span>
+                    </div>
+                  </ion-col>
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div>
+                      <span>{{ item.created | date: "dd MMM yyy" }}</span>
+                    </div>
+                  </ion-col>
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div>
+                      <span>{{ item.status }}</span>
+                      <!-- <span *ngIf="item.status === 'Tarde'">{{
+                        item.date | date: "shortTime"
+                      }}</span> -->
+                    </div>
+                  </ion-col>
+                  <ion-col size="1" class="ion-align-self-center">
+                    <div>
+                      <img
+                        *ngIf="item.status === '5 Kgs restantes'"
+                        src="./assets/icon/icon_half_2.png"
+                        alt=""
+                      />
+                      <img
+                        *ngIf="item.status === 'Utilizado'"
+                        src="./assets/icon/icon_full_2.png"
+                        alt=""
+                      />
+                      <img *ngIf="item.status === 'En almacen'" src="" alt="" />
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+            <ion-item-options *ngIf="item.status === 'En almacén'" side="end">
+              <ion-item-option color="success">
+                <ion-icon
+                  (click)="addPackage(item.id)"
+                  slot="icon-only"
+                  src="./assets/icon/icon_full.svg"
+                ></ion-icon>
+              </ion-item-option>
+              <ion-item-option color="warning">
+                <ion-icon
+                  (click)="addPackage(item.id)"
+                  slot="icon-only"
+                  src="./assets/icon/icon_half.svg"
+                ></ion-icon>
+              </ion-item-option>
+              <ion-item-option color="danger">
+                <ion-icon
+                  (click)="deletePackage(item.id)"
+                  slot="icon-only"
+                  src="./assets/icon/icon_borrar_2.svg"
+                ></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-row>
+      </ion-card>
+      <!-- footer boton -->
+      <!-- <ion-row size="12" class="footer">
+        <ion-col size="3" offset="8">
+          <ion-button
+            (click)="save()"
+            shape="round"
+            color="danger"
+            expand="full"
+          >
+            GUARDAR
+          </ion-button>
+        </ion-col>
+      </ion-row> -->
+    </ion-grid>
+  </ion-content>
+  <ion-footer no-border>
+    <ion-grid>
+      <!-- footer boton -->
+      <ion-row size="12" class="footer">
+        <ion-col size="3" offset="8">
+          <ion-button
+            [disabled]="disabled === true"
+            (click)="save()"
+            shape="round"
+            color="danger"
+            expand="full"
+          >
+            GUARDAR
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>
+</ion-app>
