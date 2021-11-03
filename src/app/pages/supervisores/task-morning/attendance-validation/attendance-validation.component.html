@@ -117,7 +117,7 @@
             <ion-item-options *ngIf="person.status === 3" side="end">
               <ion-item-option color="warning">
                 <ion-icon
-                  (click)="commentAttendance(person.id)"
+                  (click)="commentAttendance(person.attendanceId, person.clabTrab, person.name, person.jobTitle)"
                   slot="icon-only"
                   name="document-text-outline"
                 ></ion-icon>
@@ -126,19 +126,10 @@
           </ion-item-sliding>
         </ion-row>
       </ion-card>
-      <!-- footer boton -->
-      <!-- <ion-row size="12" class="footer">
-        <ion-col size="3" offset="8">
-          <ion-button (click)="save()" shape="round" color="danger" expand="full">
-            GUARDAR
-          </ion-button>
-        </ion-col>
-      </ion-row> -->
     </ion-grid>
   </ion-content>
-  <ion-footer no-border>
+  <!-- <ion-footer no-border>
     <ion-grid>
-      <!-- footer boton -->
       <ion-row size="12" class="footer">
         <ion-col size="3" offset="8">
           <ion-button
@@ -152,5 +143,5 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-  </ion-footer>
+  </ion-footer> -->
 </ion-app>

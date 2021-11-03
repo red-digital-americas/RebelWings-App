@@ -50,7 +50,7 @@
         <ion-row class="login">
           <ion-col size="12">
             <div class="logo">
-              <ion-button [disabled]="email === '' || password === ''" (click)="login(email, password)" shape="round" color="danger" expand="full"
+              <ion-button [disabled]="email === '' || password === '' || disabled === true" (click)="login(email, password)" shape="round" color="danger" expand="full"
                 >INICIAR SESIÓN</ion-button
               >
             </div>

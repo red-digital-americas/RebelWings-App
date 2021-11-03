@@ -54,7 +54,7 @@
         </ion-row>
         <ion-row size="12">
           <!-- -----------asistencias ---------------->
-          <ion-col size="6">
+          <ion-col *ngIf="data[0]" size="6">
             <ion-card (click)="validacionAsistencia()">
               <ion-card-content>
                 <ion-row size="12">
@@ -87,15 +87,14 @@
                         >
                         &nbsp;
                         <ion-progress-bar
-                          color="danger"
-                          value=".1"
+                          [color]="data[0].color"
+                          [value]="data[0].percentage"
                         ></ion-progress-bar>
                         &nbsp;
                         <div class="margin-completado">
                           <span class="title-progress-bar">
-                            0
+                            {{ data[0].percentage }}% completado
                           </span>
-                          % completado
                         </div>
                       </ion-col>
                     </ion-row>
@@ -105,10 +104,8 @@
             </ion-card>
           </ion-col>
           <!-------------- gas ------------------------>
-          <ion-col size="6">
-            <ion-card
-              (click)="validacionGas(0)"
-            >
+          <ion-col size="6" *ngIf="data[1]">
+            <ion-card (click)="validacionGas(0)">
               <ion-card-content>
                 <ion-row size="12">
                   <ion-col size="3" class="ion-align-self-center">
@@ -135,12 +132,12 @@
                         >
                         &nbsp;
                         <ion-progress-bar
-                          color="danger"
-                          value=".1"
+                          [color]="data[1].color"
+                          [value]="data[1].percentage"
                         ></ion-progress-bar>
                         &nbsp;
                         <div class="margin-completado">
-                          <span class="title-progress-bar">% completado</span>
+                          <span class="title-progress-bar">{{data[1].percentage}}% completado</span>
                         </div>
                       </ion-col>
                     </ion-row>
@@ -150,7 +147,7 @@
             </ion-card>
           </ion-col>
           <!-- ------------salon montado------------ -->
-          <ion-col size="6">
+          <ion-col size="6" *ngIf="data[2]">
             <ion-card (click)="salonMontado(0)">
               <ion-card-content>
                 <ion-row size="12">
@@ -181,12 +178,12 @@
                         >
                         &nbsp;
                         <ion-progress-bar
-                          color="danger"
-                          value=".1"
+                          [color]="data[2].color"
+                          [value]="data[2].percentage"
                         ></ion-progress-bar>
                         &nbsp;
                         <div class="margin-completado">
-                          <span class="title-progress-bar">% completado</span>
+                          <span class="title-progress-bar">{{data[2].percentage}}% completado</span>
                         </div>
                       </ion-col>
                     </ion-row>
@@ -196,7 +193,7 @@
             </ion-card>
           </ion-col>
           <!-- -----------STOCK DE POLLO------------ -->
-          <ion-col size="6">
+          <ion-col size="6" *ngIf="data[4]">
             <!-- aqui se envia el id de sucursal -->
             <ion-card (click)="stockPollo(1)">
               <ion-card-content>
@@ -228,12 +225,12 @@
                         >
                         &nbsp;
                         <ion-progress-bar
-                          color="danger"
-                          value=".1"
+                          [color]="data[4].color"
+                          value=".{{data[4].percentage}}"
                         ></ion-progress-bar>
                         &nbsp;
                         <div class="margin-completado">
-                          <span class="title-progress-bar">% completado</span>
+                          <span class="title-progress-bar">{{data[4].percentage}}% completado</span>
                         </div>
                       </ion-col>
                     </ion-row>
@@ -243,7 +240,7 @@
             </ion-card>
           </ion-col>
           <!-- -----------MESAS EN ESPERA------------ -->
-          <ion-col size="6">
+          <ion-col size="6" *ngIf="data[3]">
             <!-- aqui se envia el id de sucursal -->
             <ion-card (click)="mesas(1)">
               <ion-card-content>
@@ -275,12 +272,12 @@
                         >
                         &nbsp;
                         <ion-progress-bar
-                          color="danger"
-                          value=".1"
+                          [color]="data[3].color"
+                          [value]="data[3].percentage"
                         ></ion-progress-bar>
                         &nbsp;
                         <div class="margin-completado">
-                          <span class="title-progress-bar">% completado</span>
+                          <span class="title-progress-bar">{{data[3].percentage}}% completado</span>
                         </div>
                       </ion-col>
                     </ion-row>

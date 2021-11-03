@@ -15,6 +15,7 @@ import { DialogGeneralMessageComponent } from './pages/dialog-general/dialog-gen
 import { DialogGeneralConfirmationMessageComponent } from './pages/dialog-general/dialog-general-confirmation-message/dialog-general-confirmation-message.component';
 import { LoaderComponent } from './pages/dialog-general/loader/loader.component';
 import { Camera } from '@ionic-native/camera/ngx';
+import { Dialogs } from '@ionic-native/dialogs/ngx';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +36,7 @@ import { Camera } from '@ionic-native/camera/ngx';
     LoaderComponent,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Camera,
+    Dialogs
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

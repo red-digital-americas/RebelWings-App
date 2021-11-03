@@ -14,60 +14,6 @@ export class AttendanceValidationComponent implements OnInit {
   public today = new Date();
   public user;
   public data: any = [];
-  public dataAttendance = {
-    success: true,
-    message: 'string',
-    result: [
-      {
-        id: 1,
-        avatar:
-          './assets/male-avatar-icon-flat-style-male-user-icon-cartoon-man-avatar-hipster-vector-stock-91462914.jpg',
-        name: 'Ignacio Martín Lopez',
-        work: 'Cocinero',
-        turno: 'Matutino',
-        retardos: '1',
-        status: 'llego',
-        hora: 'Fri Oct 22 2021 08:04:13 GMT-0500',
-        icon: './assets/icon/icon_asisti.png',
-      },
-      {
-        id: 2,
-        avatar:
-          './assets/male-avatar-icon-flat-style-male-user-icon-cartoon-man-avatar-hipster-vector-stock-91462914.jpg',
-        name: 'Sergio Rebollo Mendez',
-        work: 'Cocinero',
-        turno: 'Matutino',
-        retardos: '0',
-        status: 'No llegó',
-        hora: 'Fri Oct 22 2021 08:04:13 GMT-0500',
-        icon: './assets/icon/icon_falt.png',
-      },
-      {
-        id: 3,
-        avatar:
-          './assets/male-avatar-icon-flat-style-male-user-icon-cartoon-man-avatar-hipster-vector-stock-91462914.jpg',
-        name: 'Lorena Fernandez Vargas',
-        work: 'Mesero',
-        turno: 'Matutino',
-        retardos: '1',
-        status: 'Tarde',
-        hora: 'Fri Oct 22 2021 08:04:13 GMT-0500',
-        icon: './assets/icon/icon_lleg_tarde.png',
-      },
-      {
-        id: 4,
-        avatar:
-          './assets/male-avatar-icon-flat-style-male-user-icon-cartoon-man-avatar-hipster-vector-stock-91462914.jpg',
-        name: 'Berenice Marin Salinas',
-        work: 'Cocinero',
-        turno: 'Matutino',
-        retardos: '0',
-        status: 'llego',
-        hora: 'Fri Oct 22 2021 08:04:13 GMT-0500',
-        icon: './assets/icon/icon_asisti.png',
-      },
-    ],
-  };
   constructor(
     public router: Router,
     public modalController: ModalController,
@@ -75,7 +21,7 @@ export class AttendanceValidationComponent implements OnInit {
     public load: LoaderComponent
   ) {}
 
-  ngOnInit() {
+  ionViewWillEnter() {
     console.log('hora', this.today);
     this.user = JSON.parse(localStorage.getItem('userData'));
     this.load.presentLoading('Cargando..');
@@ -89,21 +35,25 @@ export class AttendanceValidationComponent implements OnInit {
       });
   }
 
+  ngOnInit() {}
+
   return() {
     // window.history.back();
     this.router.navigateByUrl('horario/control-matutino');
   }
-  async commentAttendance(idPerson: number) {
+  async commentAttendance(idPerson: number, claveTrabajo, nombre, trabajo) {
     const modal = await this.modalController.create({
       component: DialoAddCommentAttendanceComponent,
       cssClass: 'my-custom-class',
       componentProps: {
         id: idPerson,
+        clabTrab: claveTrabajo,
+        name: nombre,
+        jobTitle: trabajo,
       },
     });
     return await modal.present();
   }
-  save() {
-    this.router.navigateByUrl('horario/control-matutino');
-  }
 }
+
+

@@ -18,11 +18,12 @@ export class CentroControlMatutinoComponent implements OnInit {
     public load: LoaderComponent
   ) {}
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log('user', this.user);
     this.getDataControl();
   }
+  ngOnInit() {}
   getDataControl() {
     this.load.presentLoading('Cargando..');
     this.service
@@ -36,8 +37,8 @@ export class CentroControlMatutinoComponent implements OnInit {
   }
   return() {
     console.log('return');
-
-    window.history.back();
+    this.router.navigateByUrl('horario');
+    // window.history.back();
   }
 
   validacionAsistencia() {

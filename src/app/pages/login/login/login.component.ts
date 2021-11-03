@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { LoginService } from './../../../core/services/login/login.service';
 import { DialogGeneralMessageComponent } from '../../dialog-general/dialog-general-message/dialog-general-message.component';
 import { LoaderComponent } from '../../dialog-general/loader/loader.component';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,6 +12,7 @@ import { LoaderComponent } from '../../dialog-general/loader/loader.component';
 })
 export class LoginComponent implements OnInit {
   public showHeader = false;
+  public disabled = false;
   showPassport = false;
   loginForm: any;
   resertForm: any;
@@ -41,23 +43,20 @@ export class LoginComponent implements OnInit {
   async generalMessage(message) {
     const modal = await this.modalController.create({
       component: DialogGeneralMessageComponent,
-      cssClass: 'my-custom-popup',
-      // cssClass: 'my-custom-class',
-      // .setCssClass('profalert');
       componentProps: {
         header: 'Acceso denegado',
         body: message,
-      },
+      }
     });
     return await modal.present();
   }
-  // `email=${correo}&password=${contrasena}`
-  // email: correo, password: contrasena
   login(correo, contrasena) {
+    this.disabled=true;
     const loginObj = `?email=${correo}&password=${contrasena}`;
     this.service.login(loginObj).subscribe(
       (resp) => {
         if (resp.success) {
+          this.disabled=false;
           this.dataProfile = resp.result;
           this.load.presentLoading('Iniciando sesion..');
           console.log('data profile', this.dataProfile);
@@ -67,6 +66,7 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('bienvenido');
         } else {
           this.generalMessage(resp.message);
+          this.disabled = false;
         }
       },
       (error) => {

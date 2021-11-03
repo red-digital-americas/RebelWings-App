@@ -105,7 +105,7 @@
                   <ion-col size="1" class="ion-align-self-center">
                     <div>
                       <img
-                        *ngIf="item.status === '5 Kgs restantes'"
+                        *ngIf="item.status !== 'Utilizado' && item.status !== 'En almacén'"
                         src="./assets/icon/icon_half_2.png"
                         alt=""
                       />
@@ -120,7 +120,7 @@
                 </ion-row>
               </ion-grid>
             </ion-item>
-            <ion-item-options *ngIf="item.status === 'En almacén'" side="end">
+            <ion-item-options *ngIf="item.status === 'En almacén' || item.status === 'Utilizado' " side="end">
               <ion-item-option color="success">
                 <ion-icon
                   (click)="addPackage(item.id)"
