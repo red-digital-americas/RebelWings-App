@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { DialoAddCommentAttendanceComponent } from '../../dialog/dialo-add-comment-attendance/dialo-add-comment-attendance.component';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
@@ -13,16 +13,20 @@ import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.comp
 export class AttendanceValidationComponent implements OnInit {
   public today = new Date();
   public user;
+  public turno;
   public data: any = [];
   constructor(
     public router: Router,
     public modalController: ModalController,
     public service: ServiceGeneralService,
-    public load: LoaderComponent
+    public load: LoaderComponent,
+    public routerActive: ActivatedRoute
   ) {}
 
   ionViewWillEnter() {
     console.log('hora', this.today);
+    console.log(this.routerActive.snapshot.paramMap.get('turno'));
+    this.turno = this.routerActive.snapshot.paramMap.get('turno');
     this.user = JSON.parse(localStorage.getItem('userData'));
     this.load.presentLoading('Cargando..');
     this.service

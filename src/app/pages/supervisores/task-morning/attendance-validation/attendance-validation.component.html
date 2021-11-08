@@ -114,7 +114,7 @@
               </ion-grid>
             </ion-item>
             <!--  -->
-            <ion-item-options *ngIf="person.status === 3" side="end">
+            <ion-item-options *ngIf="person.status === 3 || person.status === 1" side="end">
               <ion-item-option color="warning">
                 <ion-icon
                   (click)="commentAttendance(person.attendanceId, person.clabTrab, person.name, person.jobTitle)"

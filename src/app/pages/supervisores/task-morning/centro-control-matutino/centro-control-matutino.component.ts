@@ -42,9 +42,12 @@ export class CentroControlMatutinoComponent implements OnInit {
   }
 
   validacionAsistencia() {
-    this.router.navigateByUrl('horario/validacion-assistencia');
+    this.router.navigateByUrl('horario/validacion-assistencia/1');
   }
   validacionGas(id: number) {
+    if(id === null){
+      id = 0;
+    }
     this.router.navigateByUrl('horario/validacion-gas/' + id);
   }
   salonMontado(id: number) {

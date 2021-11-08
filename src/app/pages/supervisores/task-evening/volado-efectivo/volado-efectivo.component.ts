@@ -1,64 +1,58 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
+import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import {
   UserPhoto,
   PhotoService,
 } from 'src/app/core/services/services/photo.service';
-import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
-import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-gas-validation',
-  templateUrl: './gas-validation.component.html',
-  styleUrls: ['./gas-validation.component.scss'],
+  selector: 'app-volado-efectivo',
+  templateUrl: './volado-efectivo.component.html',
+  styleUrls: ['./volado-efectivo.component.scss'],
 })
-export class GasValidationComponent implements OnInit {
-  public user: any;
-  public idGas: string;
+export class VoladoEfectivoComponent implements OnInit {
   public today = new Date();
-  public data: GasDataModel = new GasDataModel();
+  public user: any;
+  public idEfectivo: string;
+  public data: EfectivoModel = new EfectivoModel();
   public base64 = 'data:image/jpeg;base64';
   public disabled = false;
+  public fotosEfectivo;
+  public url = 'http://34.237.214.147/back/api_rebel_wings/';
 
-  public fotosGas;
-  public options: CameraOptions = {
-    sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-    quality: 100,
-    destinationType: this.camera.DestinationType.DATA_URL,
-    encodingType: this.camera.EncodingType.JPEG,
-    mediaType: this.camera.MediaType.PICTURE,
-  };
   constructor(
-    public routerActive: ActivatedRoute,
     public router: Router,
-    public actionSheetController: ActionSheetController,
-    public photoService: PhotoService,
+    private camera: Camera,
+    public routerActive: ActivatedRoute,
     public service: ServiceGeneralService,
     public load: LoaderComponent,
-    private camera: Camera
+    public actionSheetController: ActionSheetController,
+    public photoService: PhotoService
   ) {}
+
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
-    console.log(this.user);
     console.log(this.routerActive.snapshot.paramMap.get('id'));
-    this.idGas = this.routerActive.snapshot.paramMap.get('id');
-    if (this.idGas === '0') {
+    this.idEfectivo = this.routerActive.snapshot.paramMap.get('id');
+    if (this.idEfectivo === '0') {
       console.log('Completar la tarea');
     } else {
       console.log('Actualizar la tarea');
       this.getData();
     }
   }
-  async ngOnInit() {}
 
+  ngOnInit() {}
   getData() {
+    this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('ValidationGas/' + this.idGas)
+      .serviceGeneralGet('CashRegisterShortage/' + this.idEfectivo)
       .subscribe((resp) => {
         if (resp.success) {
-          this.load.presentLoading('Cargando..');
           this.data = resp.result;
           console.log('get data', this.data);
         }
@@ -66,15 +60,15 @@ export class GasValidationComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl('horario/control-matutino');
+    this.router.navigateByUrl('horario/control-vespertino');
   }
   async addPhotoToGallery() {
     const name = new Date().toISOString();
     await this.photoService.addNewToGallery();
     await this.photoService.loadSaved();
 
-    this.fotosGas = this.photoService.photos;
-    console.log('fotos gas', this.fotosGas);
+    this.fotosEfectivo = this.photoService.photos;
+    console.log('fotos propina', this.fotosEfectivo);
   }
   public async showActionSheet(photo: UserPhoto, position: number) {
     console.log('photo', photo);
@@ -103,22 +97,21 @@ export class GasValidationComponent implements OnInit {
     });
     await actionSheet.present();
   }
-
   save() {
     this.disabled = true;
-    this.fotosGas = [];
+    this.fotosEfectivo = [];
     // esto se pone aqui por que aun no se estrae la data de un get
-    this.data.branch = this.user.branch;
+    this.data.branchId = this.user.branch;
     this.data.updatedBy = this.user.id;
     this.data.updatedDate = this.today;
-    this.fotosGas = this.photoService.photos;
-    console.log('fotos gas', this.fotosGas);
-    if (this.fotosGas.length !== 0) {
-      this.fotosGas.forEach((foto) => {
-        this.data.photoValidationGas.push({
-          validationGasId: 0,
-          photo: foto.webviewPath,
+    this.fotosEfectivo = this.photoService.photos;
+    console.log('fotos efectivo', this.fotosEfectivo);
+    if (this.fotosEfectivo.length !== 0) {
+      this.fotosEfectivo.forEach((foto) => {
+        this.data.photoCashRegisterShortages.push({
+          cashRegisterShortageId: 0,
           photoPath: 'jpeg',
+          photo: foto.webviewPath,
           createdBy: this.user.id,
           createdDate: this.today,
           updatedBy: this.user.id,
@@ -130,53 +123,63 @@ export class GasValidationComponent implements OnInit {
 
     console.log('Obj To send => ', this.data);
 
-    if (this.idGas === '0') {
-      this.addGas();
+    if (this.idEfectivo === '0') {
+      this.addEfectivo();
     } else {
-      this.updateGas();
+      this.updateEfectivo();
     }
   }
-
-  addGas() {
+  addEfectivo() {
     this.data.createdBy = this.user.id;
     this.data.createdDate = this.today;
     this.service
-      .serviceGeneralPostWithUrl('ValidationGas', this.data)
+      .serviceGeneralPostWithUrl('CashRegisterShortage', this.data)
       .subscribe((data) => {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('horario/control-matutino');
+          this.router.navigateByUrl('horario/control-vespertino');
+          this.disabled = false;
+        } else {
+          this.disabled = false;
         }
       });
   }
-  updateGas() {
+  updateEfectivo() {
+    if (this.data.photoCashRegisterShortages.length !== 0) {
+      this.data.photoCashRegisterShortages.forEach((element) => {
+        element.photoPath = '';
+      });
+    }
     this.service
-      .serviceGeneralPut('ValidationGas', this.data)
+      .serviceGeneralPut('CashRegisterShortage', this.data)
       .subscribe((data) => {
         if (data.success) {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('horario/control-matutino');
+          this.router.navigateByUrl('horario/control-vespertino');
+          this.disabled = false;
+        } else {
+          this.disabled = false;
         }
       });
   }
 }
-
-class GasDataModel {
-  branch: number;
+class EfectivoModel {
+  id: number;
+  branchId: number;
   amount: number;
   comment: string;
   createdBy: number;
   createdDate: Date;
   updatedBy: number;
   updatedDate: Date;
-  photoValidationGas: PhotoGasModel[] = [];
+  photoCashRegisterShortages: PhotoEfectivoModel[] = [];
 }
-class PhotoGasModel {
-  validationGasId: number;
+class PhotoEfectivoModel {
+  cashRegisterShortageId: number;
   photo: string;
   photoPath: string;
   createdBy: number;

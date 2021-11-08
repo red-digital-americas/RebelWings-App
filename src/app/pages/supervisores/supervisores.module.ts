@@ -1,3 +1,6 @@
+import { LimpiezaSalonBanosComponent } from './task-evening/limpieza-salon-banos/limpieza-salon-banos.component';
+import { ResguardoTabletaComponent } from './task-evening/resguardo-tableta/resguardo-tableta.component';
+import { AlarmaComponent } from './task-evening/alarma/alarma.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
@@ -14,6 +17,8 @@ import { DialoAddCommentAttendanceComponent } from './dialog/dialo-add-comment-a
 import { DialogAddPackageComponent } from './dialog/dialog-add-package/dialog-add-package.component';
 import { DialogAddRegisterUsePackageComponent } from './dialog/dialog-add-register-use-package/dialog-add-register-use-package.component';
 import { WaitTablesComponent } from './task-morning/wait-tables/wait-tables.component';
+import { ResguardoPropinaComponent } from './task-evening/resguardo-propina/resguardo-propina.component';
+import { VoladoEfectivoComponent } from './task-evening/volado-efectivo/volado-efectivo.component';
 
 
 @NgModule({
@@ -28,7 +33,12 @@ import { WaitTablesComponent } from './task-morning/wait-tables/wait-tables.comp
     DialoAddCommentAttendanceComponent,
     DialogAddPackageComponent,
     DialogAddRegisterUsePackageComponent,
-    WaitTablesComponent
+    WaitTablesComponent,
+    AlarmaComponent,
+    ResguardoTabletaComponent,
+    ResguardoPropinaComponent,
+    VoladoEfectivoComponent,
+    LimpiezaSalonBanosComponent,
   ],
   imports: [CommonModule, IonicModule, FormsModule, SupervisoresRoutingModule],
 })

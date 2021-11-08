@@ -32,8 +32,7 @@ export class LoungeMountedComponent implements OnInit {
     public actionSheetController: ActionSheetController,
     public photoService: PhotoService
   ) {}
-
-  ngOnInit() {
+  ionViewWillEnter(){
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idLounge = this.routerActive.snapshot.paramMap.get('id');
@@ -42,6 +41,9 @@ export class LoungeMountedComponent implements OnInit {
     } else {
       console.log('Actualizar la tarea');
     }
+  }
+
+  ngOnInit() {
   }
   return() {
     // window.history.back();
@@ -112,7 +114,7 @@ export class LoungeMountedComponent implements OnInit {
     if (this.idLounge === '0') {
       this.addSalon();
     } else {
-      // this.updateGas();
+      this.updateSAlon();
     }
   }
   addSalon() {
