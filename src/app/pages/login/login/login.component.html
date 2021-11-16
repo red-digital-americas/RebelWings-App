@@ -35,8 +35,12 @@
           <ion-col size="12">
             <ion-label floating>Contraseña</ion-label>
             <ion-item class="closed">
-              <ion-input autocomplete="off" [(ngModel)]="password" placeholder="Ingresa tu contraseña" type="password"></ion-input>
-              <ion-icon slot="end" color="danger"  name="key-outline"></ion-icon>
+              <ion-input autocomplete="off" [(ngModel)]="password" placeholder="Ingresa tu contraseña" type="{{typeInput}}"></ion-input>
+              <!-- view pass -->
+              <ion-icon *ngIf="password !== '' && !eyed" (click)="viewPassword(true)" slot="end" color="danger" name="eye-outline" style="cursor: pointer;"></ion-icon>
+              <!-- ocultar pass -->
+              <ion-icon *ngIf="password !== '' && eyed" (click)="viewPassword(false)" slot="end" color="danger" name="eye-off-outline"></ion-icon>
+              <ion-icon *ngIf="password === ''" slot="end" color="danger"  name="key-outline"></ion-icon>
             </ion-item>
           </ion-col>
         </ion-row>

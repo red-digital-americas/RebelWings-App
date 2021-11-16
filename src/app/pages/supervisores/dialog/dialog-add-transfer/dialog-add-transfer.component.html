@@ -1,0 +1,191 @@
+<ion-app>
+  <ion-header class="ion-no-border ion-padding">
+    <ion-row size="12">
+      <ion-col size="12">
+        <div class="close align-text-end">
+          <ion-icon
+            (click)="modalController.dismiss()"
+            slot="icon-only"
+            name="close-outline"
+            color="danger"
+          ></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col size="12" class="ion-align-self-center">
+        <div>
+          <!-- <h4 *ngIf="idPackage === 0" class="subtitle-negro">
+            AGREGAR UN PAQUETE
+          </h4>
+        *ngIf="idPackage !== 0" -->
+          <h4 *ngIf="type === 1" class="subtitle-negro">
+            <b> HACER UNA TRANSFERENCIA </b>
+          </h4>
+          <h4 *ngIf="type === 2" class="subtitle-negro">
+            <b> SOLICITAR UNA TRANSFERENCIA </b>
+          </h4>
+        </div>
+      </ion-col>
+      <ion-col size="1" class="ion-align-self-center">
+        <img src="./assets/icon/ilustracion_transferencias.png" alt="" />
+      </ion-col>
+      <ion-col size="11" class="ion-align-self-center">
+        <div>
+          <h4 class="subtitle-negro">
+            <h5>Rebel Wings Sucursal {{ nameSucursal }}</h5>
+          </h4>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-header>
+  <ion-content fullscreen="false" class="ion-padding">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-list>
+            <ion-label> Estatus </ion-label>
+            <ion-card class="closed">
+              <ion-item>
+                <ion-label>Estatus</ion-label>
+                <ion-select [(ngModel)]="data.status">
+                  <ion-select-option
+                    *ngFor="let item of dataStatus"
+                    [value]="item.id"
+                  >
+                    {{ item.status }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-card>
+          </ion-list>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>Fecha</ion-label>
+          <ion-card class="ion-align-self-center">
+            <ion-datetime
+              [(ngModel)]="data.date"
+              type="date"
+              [value]="today"
+              min="1990-02"
+              [dayShortNames]="customDayShortNames"
+              displayFormat="DD/MMM/YYYY"
+              monthShortNames="ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic"
+            ></ion-datetime>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>Hora</ion-label>
+          <ion-card class="ion-align-self-center">
+            <ion-datetime
+              type="time"
+              [value]="today"
+              [(ngModel)]="data.time"
+              displayFormat="HH:mm"
+            ></ion-datetime>
+          </ion-card>
+        </ion-col>
+        <!-- <ion-col size="12">
+          <ion-label floating>Producto</ion-label>
+          <ion-card class="closed">
+            <ion-item>
+              <ion-label>Producto </ion-label>
+              <ionic-selectable
+                placeholder="Selecciona un producto"
+                (click)="getCatalog($event)"
+                [(ngModel)]="data.productId"
+                [items]="selectCatalogs"
+                itemValueField="codarticulo"
+                itemTextField="descripcion"
+                [canSearch]="true"
+              >
+              </ionic-selectable>
+            </ion-item>
+          </ion-card>
+        </ion-col> -->
+        <!-- search afuera -->
+        <ion-col size="12">
+          <ion-label floating>Producto</ion-label>
+          <ion-card class="closed">
+            <ion-list>
+              <ion-list-header>
+                <ion-searchbar
+                  placeholder="Buscar"
+                  [(ngModel)]="search"
+                ></ion-searchbar>
+              </ion-list-header>
+              <ion-item>
+                <ion-label>Producto </ion-label>
+                <ion-select
+                  placeholder="Selecciona un producto"
+                  (click)="getCatalog(search)"
+                  [(ngModel)]="data.productId"
+                >
+                  <ion-select-option
+                    *ngFor="let data of selectCatalogs"
+                    [value]="data.codarticulo"
+                  >
+                    {{ data.descripcion }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+          </ion-card>
+        </ion-col>
+        <!-- El codigo solo se solicita cuando es un request osea cuando se hace la transferencia -->
+        <ion-col size="12" *ngIf="type !== 2">
+          <ion-label>Codigo</ion-label>
+          <ion-card class="closed">
+            <ion-input
+              [(ngModel)]="data.code"
+              value="-"
+              type="text"
+              placeholder="Codigo"
+            ></ion-input>
+          </ion-card>
+        </ion-col>
+        <ion-col size="12">
+          <ion-label>Cantidad (Kgs)</ion-label>
+          <ion-card class="closed">
+            <ion-input
+              (keyup)="getWordAmount(data.amount)"
+              [(ngModel)]="data.amount"
+              type="text"
+              placeholder="Cantidad"
+            ></ion-input>
+          </ion-card>
+        </ion-col>
+        <ion-col size="12">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea
+              [(ngModel)]="data.comment"
+              rows="6"
+              cols="20"
+            ></ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+  <ion-footer no-border>
+    <ion-grid>
+      <!-- footer boton -->
+      <ion-row size="12" class="footer">
+        <ion-col size="3" offset="8">
+          <!-- [disabled]="
+              data.amount === undefined ||
+              data.amount === '' ||
+              disabled === true
+            " -->
+          <ion-button
+            (click)="save()"
+            shape="round"
+            color="danger"
+            expand="full"
+          >
+            GUARDAR
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>
+</ion-app>

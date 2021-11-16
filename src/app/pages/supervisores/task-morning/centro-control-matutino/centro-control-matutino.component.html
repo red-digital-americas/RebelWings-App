@@ -26,9 +26,9 @@
     <div class="justify">
       <ion-grid>
         <ion-row>
-          <ion-col (click)="return()">
+          <ion-col>
             <div>
-              <p class="ion-align-items-start return">< REGRESAR</p>
+              <p  (click)="return()" class="ion-align-items-start return">< REGRESAR</p>
             </div>
           </ion-col>
         </ion-row>
@@ -76,10 +76,10 @@
                       <ion-col size="12">
                         <div>
                           <span>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Ad debitis ducimus nam maxime voluptas.
+                            Revisa desde aquí la asistencia de todo el equipo.
                           </span>
                         </div>
+                        <br>
                       </ion-col>
                       <ion-col size="12">
                         <span class="title-progress-bar"
@@ -121,8 +121,9 @@
                       <ion-col size="12">
                         <div>
                           <span>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Ad debitis ducimus nam maxime voluptas.
+                            Desde la estación de gas de la sucursal, documenta
+                            la cantidad de gas con la que se cuenta para el día
+                            de hoy.
                           </span>
                         </div>
                       </ion-col>
@@ -137,7 +138,9 @@
                         ></ion-progress-bar>
                         &nbsp;
                         <div class="margin-completado">
-                          <span class="title-progress-bar"> 10{{data[1].percentage}}% completado</span>
+                          <span class="title-progress-bar">
+                            10{{ data[1].percentage }}% completado</span
+                          >
                         </div>
                       </ion-col>
                     </ion-row>
@@ -167,10 +170,11 @@
                       <ion-col size="12">
                         <div>
                           <span>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Ad debitis ducimus nam maxime voluptas.
+                            Revisa que el salón esté en órden. Documéntalo con
+                            una foto y un comentario.
                           </span>
                         </div>
+                        <br>
                       </ion-col>
                       <ion-col size="12">
                         <span class="title-progress-bar"
@@ -183,7 +187,9 @@
                         ></ion-progress-bar>
                         &nbsp;
                         <div class="margin-completado">
-                          <span class="title-progress-bar">10{{data[2].percentage}}% completado</span>
+                          <span class="title-progress-bar"
+                            >10{{ data[2].percentage }}% completado</span
+                          >
                         </div>
                       </ion-col>
                     </ion-row>
@@ -214,8 +220,8 @@
                       <ion-col size="12">
                         <div>
                           <span>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Ad debitis ducimus nam maxime voluptas.
+                            Agrega cada paquete de pollo que llegue a la
+                            sucursal y documenta cuánto se ha usado de cada uno.
                           </span>
                         </div>
                       </ion-col>
@@ -226,11 +232,13 @@
                         &nbsp;
                         <ion-progress-bar
                           [color]="data[4].color"
-                          value=".{{data[4].percentage}}"
+                          value=".{{ data[4].percentage }}"
                         ></ion-progress-bar>
                         &nbsp;
                         <div class="margin-completado">
-                          <span class="title-progress-bar">{{data[4].percentage}}% completado</span>
+                          <span class="title-progress-bar"
+                            >{{ data[4].percentage }}% completado</span
+                          >
                         </div>
                       </ion-col>
                     </ion-row>
@@ -261,8 +269,8 @@
                       <ion-col size="12">
                         <div>
                           <span>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Ad debitis ducimus nam maxime voluptas.
+                            Indica desde aquí cuántas mesas hay en espera y
+                            cuánto tiempo hay entre ellas.
                           </span>
                         </div>
                       </ion-col>
@@ -278,7 +286,9 @@
                         ></ion-progress-bar>
                         &nbsp;
                         <div class="margin-completado">
-                          <span class="title-progress-bar">100% completado</span>
+                          <span class="title-progress-bar"
+                            >100% completado</span
+                          >
                         </div>
                       </ion-col>
                       <ion-col size="12" *ngIf="data[3].isComplete === false">

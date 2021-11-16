@@ -1,3 +1,5 @@
+import { DialogAddTransferComponent } from './dialog/dialog-add-transfer/dialog-add-transfer.component';
+import { TransferenciasComponent } from './task-evening/transferencias/transferencias.component';
 import { LimpiezaSalonBanosComponent } from './task-evening/limpieza-salon-banos/limpieza-salon-banos.component';
 import { ResguardoTabletaComponent } from './task-evening/resguardo-tableta/resguardo-tableta.component';
 import { AlarmaComponent } from './task-evening/alarma/alarma.component';
@@ -19,6 +21,12 @@ import { DialogAddRegisterUsePackageComponent } from './dialog/dialog-add-regist
 import { WaitTablesComponent } from './task-morning/wait-tables/wait-tables.component';
 import { ResguardoPropinaComponent } from './task-evening/resguardo-propina/resguardo-propina.component';
 import { VoladoEfectivoComponent } from './task-evening/volado-efectivo/volado-efectivo.component';
+import { ProductoRiesgoComponent } from './task-evening/producto-riesgo/producto-riesgo.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { DatePicker } from '@ionic-native/date-picker/ngx';
+import { IonicSelectableModule } from 'ionic-selectable';
+
 
 
 @NgModule({
@@ -39,7 +47,19 @@ import { VoladoEfectivoComponent } from './task-evening/volado-efectivo/volado-e
     ResguardoPropinaComponent,
     VoladoEfectivoComponent,
     LimpiezaSalonBanosComponent,
+    ProductoRiesgoComponent,
+    TransferenciasComponent,
+    DialogAddTransferComponent,
   ],
-  imports: [CommonModule, IonicModule, FormsModule, SupervisoresRoutingModule],
+  imports: [
+    CommonModule,
+    IonicModule,
+    FormsModule,
+    SupervisoresRoutingModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    IonicSelectableModule,
+  ],
+  providers: [DatePicker],
 })
 export class SupervisoresModule {}

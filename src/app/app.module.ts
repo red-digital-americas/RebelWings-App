@@ -1,3 +1,4 @@
+import { SidebarComponent } from './pages/sidebar/sidebar.component';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,11 +17,16 @@ import { DialogGeneralConfirmationMessageComponent } from './pages/dialog-genera
 import { LoaderComponent } from './pages/dialog-general/loader/loader.component';
 import { Camera } from '@ionic-native/camera/ngx';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
+import { FilterPipeModule } from 'ngx-filter-pipe';
+import { IonicSelectableModule } from 'ionic-selectable';
+
+
 @NgModule({
   declarations: [
     AppComponent,
     DialogGeneralMessageComponent,
     DialogGeneralConfirmationMessageComponent,
+    SidebarComponent,
   ],
   entryComponents: [],
   imports: [
@@ -31,12 +37,14 @@ import { Dialogs } from '@ionic-native/dialogs/ngx';
     BrowserAnimationsModule,
     CommonModule,
     FormsModule,
+    FilterPipeModule,
+    IonicSelectableModule,
   ],
   providers: [
     LoaderComponent,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Camera,
-    Dialogs
+    Dialogs,
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

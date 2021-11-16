@@ -27,8 +27,8 @@ export class WaitTablesComponent implements OnInit {
     this.idTable = this.routerActive.snapshot.paramMap.get('id');
   }
   return() {
-    // window.history.back();
-    this.router.navigateByUrl('horario/control-matutino');
+    window.history.back();
+    // this.router.navigateByUrl('horario/control-matutino');
   }
   save() {
     console.log('toggle', this.data.waitlistTables);

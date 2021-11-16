@@ -49,7 +49,7 @@ export class ResguardoPropinaComponent implements OnInit {
   getData() {
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('CashRegisterShortage/' + this.idPropina)
+      .serviceGeneralGet('Tip/' + this.idPropina)
       .subscribe((resp) => {
         if (resp.success) {
           this.data = resp.result;
@@ -148,7 +148,7 @@ export class ResguardoPropinaComponent implements OnInit {
          element.photoPath = '';
        });
      }
-    this.service.serviceGeneralPut('Alarm', this.data).subscribe((data) => {
+    this.service.serviceGeneralPut('Tip', this.data).subscribe((data) => {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
         console.log('data', data);

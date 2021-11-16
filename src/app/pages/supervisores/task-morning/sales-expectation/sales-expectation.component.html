@@ -2,9 +2,11 @@
   <ion-header class="ion-no-border ion-padding">
     <ion-grid>
       <ion-row>
-        <ion-col (click)="return()">
+        <ion-col>
           <div>
-            <p class="ion-align-items-start return">< REGRESAR</p>
+            <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR
+            </p>
           </div>
         </ion-col>
       </ion-row>
@@ -79,7 +81,7 @@
                       <span>Paquete Polllo</span>
                     </div>
                   </ion-col>
-                  <ion-col size="2" class="ion-align-self-center">
+                  <ion-col size="1" class="ion-align-self-center">
                     <div>
                       <span>{{ item.amount }} Kg</span>
                     </div>
@@ -105,7 +107,10 @@
                   <ion-col size="1" class="ion-align-self-center">
                     <div>
                       <img
-                        *ngIf="item.status !== 'Utilizado' && item.status !== 'En almacén'"
+                        *ngIf="
+                          item.status !== 'Utilizado' &&
+                          item.status !== 'En almacén'
+                        "
                         src="./assets/icon/icon_half_2.png"
                         alt=""
                       />
@@ -117,10 +122,26 @@
                       <img *ngIf="item.status === 'En almacen'" src="" alt="" />
                     </div>
                   </ion-col>
+                  <ion-col size="1" class="ion-align-self-center">
+                    <div
+                      class="align-end-text"
+                      *ngIf="
+                        item.status === 'En almacén' ||
+                        item.status !== 'Utilizado'
+                      "
+                    >
+                      <ion-icon name="chevron-forward-outline"></ion-icon>
+                    </div>
+                  </ion-col>
                 </ion-row>
               </ion-grid>
             </ion-item>
-            <ion-item-options *ngIf="item.status === 'En almacén' || item.status !== 'Utilizado' " side="end">
+            <ion-item-options
+              *ngIf="
+                item.status === 'En almacén' || item.status !== 'Utilizado'
+              "
+              side="end"
+            >
               <ion-item-option color="success">
                 <ion-icon
                   (click)="addPackage(item.id)"

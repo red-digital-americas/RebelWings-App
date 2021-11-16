@@ -47,68 +47,69 @@ export class CentroControlVespertinoComponent implements OnInit {
     this.router.navigateByUrl('horario');
   }
   remisiones(id) {
-    if(id === null){
-      id= 0;
+    if (id === null) {
+      id = 0;
     }
     this.router.navigateByUrl('horario/remisiones/' + id);
   }
   productoRiesgo(id) {
-    if(id === null){
-      id= 0;
+    console.log('id producto en riesgo', id);
+    if (id === null) {
+      id = 0;
     }
     this.router.navigateByUrl('horario/producto-riesgo/' + id);
   }
   albaranes(id) {
-    if(id === null){
-      id= 0;
+    if (id === null) {
+      id = 0;
     }
     this.router.navigateByUrl('horario/albaranes/' + id);
   }
   transferencias(id) {
-    if(id === null){
-      id= 0;
+    if (id === null) {
+      id = 0;
     }
     this.router.navigateByUrl('horario/transferencias/' + id);
   }
   voladoEfectivo(id) {
-    if(id === null){
-      id= 0;
+    if (id === null) {
+      id = 0;
     }
     this.router.navigateByUrl('horario/volado-efectivo/' + id);
   }
   resguardoPropina(id) {
-    if(id === null){
-      id= 0;
+    if (id === null) {
+      id = 0;
     }
     this.router.navigateByUrl('horario/resguardo-propina/' + id);
   }
   limpiezaSalonBanos(id) {
-    if(id === null){
-      id= 0;
+    if (id === null) {
+      id = 0;
     }
     this.router.navigateByUrl('horario/limpieza-salon-banos/' + id);
   }
   resguardoTableta(id) {
-    if(id === null){
-      id= 0;
+    if (id === null) {
+      id = 0;
     }
     this.router.navigateByUrl('horario/resguardo-tableta/' + id);
   }
   alarma(id) {
-    if(id === null){
-      id= 0;
+    if (id === null) {
+      id = 0;
     }
     this.router.navigateByUrl('horario/alarma/' + id);
   }
   mesas(id: number) {
-    if(id === null){
-      id= 0;
+    if (id === null) {
+      id = 0;
     }
     this.router.navigateByUrl('horario/mesa-espera/' + id);
   }
   stockPollo(id: number) {
-    if(id === null){
-      id= 0;
+    if (id === null) {
+      id = 0;
     }
     this.router.navigateByUrl('horario/expectativa-venta/' + id);
   }

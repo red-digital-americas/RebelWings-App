@@ -2,9 +2,9 @@
   <ion-header class="ion-no-border ion-padding">
     <ion-grid>
       <ion-row>
-        <ion-col (click)="return()">
+        <ion-col>
           <div>
-            <p class="ion-align-items-start return">< REGRESAR</p>
+            <p (click)="return()"class="ion-align-items-start return">< REGRESAR</p>
           </div>
         </ion-col>
       </ion-row>
@@ -59,7 +59,7 @@
       </ion-row>
       <ion-row size="12">
         <ion-col size="6">
-          <ion-row *ngIf="photoService.photos.length === 0">
+          <ion-row *ngIf="photoService.photos.length !== 0">
             <ion-col
               size="3"
               *ngFor="let photo of photoService.photos; index as position"

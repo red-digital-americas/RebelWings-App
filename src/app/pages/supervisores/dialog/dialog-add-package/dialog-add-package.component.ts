@@ -24,7 +24,7 @@ export class DialogAddPackageComponent implements OnInit {
     public load: LoaderComponent
   ) {}
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log('data que recibe', this.navParams.data);
     this.idSucursal = this.navParams.data.idSucursal;
@@ -33,6 +33,7 @@ export class DialogAddPackageComponent implements OnInit {
       this.getPackage();
     }
   }
+  ngOnInit() {}
 
   getPackage() {
     this.service

@@ -23,13 +23,13 @@ export class SalesExpectationComponent implements OnInit {
     public service: ServiceGeneralService,
     public load: LoaderComponent
   ) {}
-
-  ngOnInit() {
+  ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idSucursal = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
   }
+  ngOnInit() {}
 
   getData() {
     this.service
@@ -43,8 +43,8 @@ export class SalesExpectationComponent implements OnInit {
     console.log('sin data');
   }
   return() {
-    // window.history.back();
-    this.router.navigateByUrl('horario/control-matutino');
+    window.history.back();
+    // this.router.navigateByUrl('horario/control-matutino');
   }
 
   async addPackage(idPack: number) {
@@ -60,7 +60,7 @@ export class SalesExpectationComponent implements OnInit {
     });
     modal.onDidDismiss().then((data) => {
       console.log(data);
-      this.ngOnInit();
+      this.ionViewWillEnter();
     });
     this.modalController.dismiss();
     return await modal.present();
@@ -72,7 +72,7 @@ export class SalesExpectationComponent implements OnInit {
         if (resp.success) {
           console.log('delete success', resp);
           this.load.presentLoading('Eliminando paquete..');
-          this.ngOnInit();
+          this.ionViewWillEnter();
         }
       });
   }

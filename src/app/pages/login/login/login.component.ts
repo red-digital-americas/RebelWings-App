@@ -21,6 +21,8 @@ export class LoginComponent implements OnInit {
   public message: any;
   public dataProfile: any;
   public validar = false;
+  eyed = false;
+  public typeInput = 'password';
 
   constructor(
     public platform: Platform,
@@ -46,17 +48,26 @@ export class LoginComponent implements OnInit {
       componentProps: {
         header: 'Acceso denegado',
         body: message,
-      }
+      },
     });
     return await modal.present();
   }
+  public viewPassword(type) {
+    if (type === true) {
+      this.typeInput = 'text';
+      this.eyed = true;
+    } else {
+      this.typeInput = 'password';
+      this.eyed = false;
+    }
+  }
   login(correo, contrasena) {
-    this.disabled=true;
+    this.disabled = true;
     const loginObj = `?email=${correo}&password=${contrasena}`;
     this.service.login(loginObj).subscribe(
       (resp) => {
         if (resp.success) {
-          this.disabled=false;
+          this.disabled = false;
           this.dataProfile = resp.result;
           this.load.presentLoading('Iniciando sesion..');
           console.log('data profile', this.dataProfile);

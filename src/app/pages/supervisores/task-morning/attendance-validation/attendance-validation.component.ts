@@ -42,8 +42,8 @@ export class AttendanceValidationComponent implements OnInit {
   ngOnInit() {}
 
   return() {
-    // window.history.back();
-    this.router.navigateByUrl('horario/control-matutino');
+    window.history.back();
+    // this.router.navigateByUrl('horario/control-matutino');
   }
   async commentAttendance(idPerson: number, claveTrabajo, nombre, trabajo) {
     const modal = await this.modalController.create({

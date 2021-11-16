@@ -26,9 +26,11 @@
     <div class="justify">
       <ion-grid>
         <ion-row>
-          <ion-col (click)="return()">
+          <ion-col>
             <div>
-              <p class="ion-align-items-start return">< REGRESAR</p>
+              <p (click)="return()" class="ion-align-items-start return">
+                < REGRESAR
+              </p>
             </div>
           </ion-col>
         </ion-row>
@@ -77,8 +79,7 @@
                       <ion-col size="12">
                         <div>
                           <span>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Ad debitis ducimus nam maxime voluptas.
+                            Revisa desde aquí la asistencia de todo el equipo.
                           </span>
                         </div>
                       </ion-col>
@@ -129,8 +130,7 @@
                       <ion-col size="12">
                         <div>
                           <span>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Ad debitis ducimus nam maxime voluptas.
+                            Revisa tu semáforo y revisiones pendientes.
                           </span>
                         </div>
                       </ion-col>
@@ -179,8 +179,8 @@
                       <ion-col size="12">
                         <div>
                           <span>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Ad debitis ducimus nam maxime voluptas.
+                            Reporta desde esta sección productos que lleven
+                            mucho sin utilizarse.
                           </span>
                         </div>
                       </ion-col>
@@ -227,8 +227,8 @@
                       <ion-col size="12">
                         <div>
                           <span>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Ad debitis ducimus nam maxime voluptas.
+                            Revisa desde aquí las entregas de hoy. Reporta si
+                            hay algún problema.
                           </span>
                         </div>
                       </ion-col>
@@ -278,10 +278,10 @@
                       <ion-col size="12">
                         <div>
                           <span>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Ad debitis ducimus nam maxime voluptas.
+                            Pide o proporciona producto hacia otras sucursales.
                           </span>
                         </div>
+                        <br>
                       </ion-col>
                       <!-- 100%
                       *ngIf="data[3].isComplete === true"-->
@@ -344,8 +344,8 @@
                       <ion-col size="12">
                         <div>
                           <span>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Ad debitis ducimus nam maxime voluptas.
+                            Reporta con una foto y con el conteo diario, la
+                            cantidad de volado de efectivo.
                           </span>
                         </div>
                       </ion-col>
@@ -411,10 +411,11 @@
                       <ion-col size="12">
                         <div>
                           <span>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Ad debitis ducimus nam maxime voluptas.
+                            Reporta con una foto y con el conteo diario, la
+                            cantidad propinas.
                           </span>
                         </div>
+                        <br>
                       </ion-col>
                       <!-- 100%
                       *ngIf="data[3].isComplete === true"-->
@@ -437,8 +438,16 @@
                         ></ion-progress-bar>
                         &nbsp;
                         <div class="margin-completado">
-                          <span *ngIf="data[3].isComplete === false" class="title-progress-bar">0% completado</span>
-                          <span *ngIf="data[3].isComplete === true" class="title-progress-bar">100% completado</span>
+                          <span
+                            *ngIf="data[3].isComplete === false"
+                            class="title-progress-bar"
+                            >0% completado</span
+                          >
+                          <span
+                            *ngIf="data[3].isComplete === true"
+                            class="title-progress-bar"
+                            >100% completado</span
+                          >
                         </div>
                       </ion-col>
                     </ion-row>
@@ -469,8 +478,8 @@
                       <ion-col size="12">
                         <div>
                           <span>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Ad debitis ducimus nam maxime voluptas.
+                            Revisa que el salón y los baños estén en órden.
+                            Documéntalo con una foto y un comentario.
                           </span>
                         </div>
                       </ion-col>
@@ -534,8 +543,8 @@
                       <ion-col size="12">
                         <div>
                           <span>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Ad debitis ducimus nam maxime voluptas.
+                            Asegúrate que la tableta esté en su lugar.
+                            Documéntalo con una foto y un comentario.
                           </span>
                         </div>
                       </ion-col>
@@ -599,8 +608,8 @@
                       <ion-col size="12">
                         <div>
                           <span>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Ad debitis ducimus nam maxime voluptas.
+                            Asegúrate de que la alarma esté armada. Documéntalo
+                            desde tu celular con una foto y comentario.
                           </span>
                         </div>
                       </ion-col>
@@ -645,9 +654,9 @@
           </ion-col>
           <!-- -----------MESAS EN ESPERA------------ -->
           <!-- *ngIf="data[3]" -->
-          <ion-col size="6">
+          <ion-col size="6" *ngIf="data[2]">
             <!-- aqui se envia el id de sucursal -->
-            <ion-card (click)="mesas(0)">
+            <ion-card (click)="mesas(data[2].id)">
               <ion-card-content>
                 <ion-row size="12">
                   <ion-col size="3" class="ion-align-self-center">
@@ -666,26 +675,38 @@
                       <ion-col size="12">
                         <div>
                           <span>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Ad debitis ducimus nam maxime voluptas.
+                            Indica desde aquí cuántas mesas hay en espera y
+                            cuánto tiempo hay entre ellas.
                           </span>
                         </div>
+                        <br>
                       </ion-col>
-                      <!-- 100%  *ngIf="data[3].isComplete === true"-->
+
                       <ion-col size="12">
                         <span class="title-progress-bar"
                           >Nivel de progreso</span
                         >
                         &nbsp;
-                        <!-- [color]="data[3].color"
-                          [value]="data[3].percentage" -->
                         <ion-progress-bar
-                          color="danger"
-                          value=".1"
+                          *ngIf="data[2].isComplete === false"
+                          color="{{ data[2].color }}"
+                          value="0.1"
+                        ></ion-progress-bar>
+                        <ion-progress-bar
+                          *ngIf="data[2].isComplete === true"
+                          color="{{ data[2].color }}"
+                          value="1"
                         ></ion-progress-bar>
                         &nbsp;
                         <div class="margin-completado">
-                          <span class="title-progress-bar"
+                          <span
+                            *ngIf="data[2].isComplete === false"
+                            class="title-progress-bar"
+                            >0% completado</span
+                          >
+                          <span
+                            *ngIf="data[2].isComplete === true"
+                            class="title-progress-bar"
                             >100% completado</span
                           >
                         </div>
@@ -719,8 +740,8 @@
                       <ion-col size="12">
                         <div>
                           <span>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Ad debitis ducimus nam maxime voluptas.
+                            Agrega cada paquete de pollo que llegue a la
+                            sucursal y documenta cuánto se ha usado de cada uno.
                           </span>
                         </div>
                       </ion-col>
