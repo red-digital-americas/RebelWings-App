@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { ModalController, NavParams, IonSelect } from '@ionic/angular';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 
@@ -13,6 +13,7 @@ export class DialogAddTransferComponent implements OnInit {
   @Input() branchId: number;
   @Input() type: number; // transferencia  1 request 2
   @Input() nameSucursal: string;
+  @ViewChild('mySelect') selectRef: IonSelect;
 
   // public data: TransferModel = new TransferModel();
   public data: any = [];
@@ -22,6 +23,9 @@ export class DialogAddTransferComponent implements OnInit {
   public search = '';
   public dataStatus: any[] = [];
   public selectCatalogs = [];
+  public datetime;
+  public visible = false;
+
   customYearValues = [2020, 2016, 2008, 2004, 2000, 1996];
   customDayShortNames = [
     's\u00f8n',
@@ -34,6 +38,15 @@ export class DialogAddTransferComponent implements OnInit {
   ];
   customPickerOptions: any;
   public paquete = 'Paquete de Pollo';
+  // ******variables de validacion ********
+  public activeStatus = false;
+  public activeDate = false;
+  public activeTime = false;
+  public activeProductId = false;
+  public activeCode = false;
+  public activeAmount = false;
+  public activeComment = false;
+
   constructor(
     public modalController: ModalController,
     public navParams: NavParams,
@@ -82,6 +95,9 @@ export class DialogAddTransferComponent implements OnInit {
         if (resp.success) {
           this.data = resp.result;
           console.log('get transfer', this.data);
+          // document.getElementById('clickSearch').click();
+          // this.selectRef.close();
+          this.getCatalog(this.data.product);
         }
       });
   }
@@ -101,6 +117,7 @@ export class DialogAddTransferComponent implements OnInit {
           if (resp.success) {
             console.log('get productos', resp);
             this.selectCatalogs = resp.result[2];
+            this.visible = true;
           }
         });
     } else {
@@ -156,9 +173,91 @@ export class DialogAddTransferComponent implements OnInit {
       return;
     }
   }
-  getTimeSpan(){
 
+  validateSave() {
+    if (
+      this.data.status === '' ||
+      this.data.status === undefined ||
+      this.data.status === null
+    ) {
+      this.activeStatus = true;
+    } else {
+      this.activeStatus = false;
+    }
+    if (
+      this.data.date === '' ||
+      this.data.date === undefined ||
+      this.data.date === null
+    ) {
+      this.activeDate = true;
+    } else {
+      this.activeDate = false;
+    }
+    if (
+      this.data.time === '' ||
+      this.data.time === undefined ||
+      this.data.time === null
+    ) {
+      this.activeTime = true;
+    } else {
+      this.activeTime = false;
+    }
+    if (
+      this.data.time === '' ||
+      this.data.time === undefined ||
+      this.data.time === null
+    ) {
+      this.activeTime = true;
+    } else {
+      this.activeTime = false;
+    }
+    if (
+      this.data.productId === '' ||
+      this.data.productId === undefined ||
+      this.data.productId === null
+    ) {
+      this.activeProductId = true;
+    } else {
+      this.activeProductId = false;
+    }
+    if (
+      this.data.amount === '' ||
+      this.data.amount === undefined ||
+      this.data.amount === null
+    ) {
+      this.activeAmount = true;
+    } else {
+      this.activeAmount = false;
+    }
+    if (
+      this.data.comment === '' ||
+      this.data.comment === undefined ||
+      this.data.comment === null
+    ) {
+      this.activeComment = true;
+    } else {
+      this.activeComment = false;
+    }
+    if (
+      this.data.status === '' ||
+      this.data.status === undefined ||
+      this.data.date === '' ||
+      this.data.date === undefined ||
+      this.data.time === '' ||
+      this.data.time === undefined ||
+      this.data.productId === '' ||
+      this.data.productId === undefined ||
+      this.data.amount === '' ||
+      this.data.amount === undefined ||
+      this.data.comment === '' ||
+      this.data.comment === undefined
+    ) {
+      return;
+    } else {
+      this.save();
+    }
   }
+
   save() {
     if (this.idRegister === 0) {
       this.addTransference();
@@ -166,9 +265,25 @@ export class DialogAddTransferComponent implements OnInit {
       this.updateTransference();
     }
   }
+  getFormatTimeStamp() {
+    this.data.time = new Date(this.data.time);
+    console.log('time', this.data.time);
+
+    this.datetime =
+      '' +
+      this.data.time.getHours() +
+      ':' +
+      this.data.time.getMinutes() +
+      ':' +
+      this.data.time.getSeconds() +
+      '.' +
+      this.data.time.getMilliseconds();
+    console.log('timestamp', this.datetime);
+  }
   //  HACER UNA TRANSFERENCIA/SOLICITAR UNA TRANSFERENCIA
   addTransference() {
-    if(this.data.code === undefined ){
+    this.getFormatTimeStamp();
+    if (this.data.code === undefined) {
       this.data.code = '';
     }
     this.disabled = true;
@@ -178,7 +293,7 @@ export class DialogAddTransferComponent implements OnInit {
       fromBranchId: this.user.branch,
       toBranchId: this.branchId,
       date: this.data.date,
-      time: null,
+      time: this.datetime,
       productId: this.data.productId,
       code: this.data.code,
       amount: this.data.amount,
@@ -205,14 +320,19 @@ export class DialogAddTransferComponent implements OnInit {
   }
   // solicitar transferencia
   updateTransference() {
+    if (this.data.time.length > 8) {
+      this.getFormatTimeStamp();
+    }
+    this.data.time = this.data.time.Timestamp;
     this.disabled = true;
     const obj = {
+      id: this.data.id,
       type: this.data.type,
       status: this.data.status,
       fromBranchId: this.user.branch,
       toBranchId: this.branchId,
       date: this.data.date,
-      time: null,
+      time: this.datetime,
       productId: this.data.productId,
       code: this.data.code,
       amount: this.data.amount,

@@ -32,6 +32,11 @@ export class LoginComponent implements OnInit {
     public load: LoaderComponent
   ) {}
 
+  ionViewWillEnter(){
+    console.log('pass', this.password);
+
+  }
+
   ngOnInit() {
     if (this.platform.is('android')) {
       this.showHeader = false;

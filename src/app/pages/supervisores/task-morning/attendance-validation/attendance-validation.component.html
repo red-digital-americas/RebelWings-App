@@ -1,10 +1,13 @@
 <ion-app>
-  <ion-header class="ion-no-border ion-padding">
+  <!-- data -->
+  <ion-header *ngIf="data.length !== 0" class="ion-no-border ion-padding">
     <ion-grid>
       <ion-row>
         <ion-col>
           <div>
-            <p  (click)="return()" class="ion-align-items-start return">< REGRESAR</p>
+            <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR
+            </p>
           </div>
         </ion-col>
       </ion-row>
@@ -21,7 +24,7 @@
       </ion-row>
     </ion-grid>
   </ion-header>
-  <ion-content fullscreen="false" class="ion-padding">
+  <ion-content *ngIf="data.length !== 0" fullscreen="false" class="ion-padding">
     <ion-grid>
       <!-- titulo de empresa -->
       <ion-row size="12">
@@ -114,10 +117,20 @@
               </ion-grid>
             </ion-item>
             <!--  -->
-            <ion-item-options *ngIf="person.status === 3 || person.status === 1" side="end">
+            <ion-item-options
+              *ngIf="person.status === 3 || person.status === 1"
+              side="end"
+            >
               <ion-item-option color="warning">
                 <ion-icon
-                  (click)="commentAttendance(person.attendanceId, person.clabTrab, person.name, person.jobTitle)"
+                  (click)="
+                    commentAttendance(
+                      person.attendanceId,
+                      person.clabTrab,
+                      person.name,
+                      person.jobTitle
+                    )
+                  "
                   slot="icon-only"
                   name="document-text-outline"
                 ></ion-icon>
@@ -128,20 +141,105 @@
       </ion-card>
     </ion-grid>
   </ion-content>
-  <!-- <ion-footer no-border>
-    <ion-grid>
-      <ion-row size="12" class="footer">
-        <ion-col size="3" offset="8">
-          <ion-button
-            (click)="save()"
-            shape="round"
-            color="danger"
-            expand="full"
-          >
-            GUARDAR
-          </ion-button>
+  <!-- skeletor -->
+  <ion-header *ngIf="data.length === 0" class="ion-no-border ion-padding">
+    <ion-grid class="animated flash slow">
+      <ion-row size="12">
+        <ion-col size="1">
+          <div>
+            <p class="ion-align-items-start return">
+              <ion-skeleton-text width="10%"></ion-skeleton-text>
+            </p>
+          </div>
+        </ion-col>
+        <ion-col size="11"> </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="1">
+          <ion-skeleton-text width="10%"></ion-skeleton-text>
+        </ion-col>
+        <ion-col size="11" class="ion-align-self-center">
+          <h3 class="title">
+            <ion-skeleton-text width="10%"></ion-skeleton-text>
+          </h3>
         </ion-col>
       </ion-row>
     </ion-grid>
-  </ion-footer> -->
+  </ion-header>
+  <ion-content
+    *ngIf="data.length === 0"
+    fullscreen="false"
+    class="ion-padding animated flash slow"
+  >
+    <ion-grid>
+      <!-- titulo de empresa -->
+      <ion-row size="12">
+        <ion-col size="4">
+          <h5 class="subtitle-negro">
+            <ion-skeleton-text width="40%"></ion-skeleton-text>
+          </h5>
+        </ion-col>
+        <ion-col size="8">
+          <span class="date-grey">
+            <ion-skeleton-text width="60%"></ion-skeleton-text>
+          </span>
+        </ion-col>
+      </ion-row>
+      <ion-card *ngFor="let person of [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]">
+        <ion-row size="12">
+          <ion-item-sliding id="item100">
+            <ion-item>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="1" class="ion-align-self-center">
+                    <div>
+                      <ion-skeleton-text width="10%"></ion-skeleton-text>
+                    </div>
+                  </ion-col>
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div>
+                      <span>
+                        <ion-skeleton-text width="20%"></ion-skeleton-text>
+                      </span>
+                    </div>
+                  </ion-col>
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div>
+                      <span>
+                        <ion-skeleton-text width="20%"></ion-skeleton-text>
+                      </span>
+                    </div>
+                  </ion-col>
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div>
+                      <span>
+                        <ion-skeleton-text width="20%"></ion-skeleton-text>
+                      </span>
+                    </div>
+                  </ion-col>
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div>
+                      <span>
+                        <ion-skeleton-text width="20%"></ion-skeleton-text>
+                      </span>
+                    </div>
+                  </ion-col>
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div>
+                      <ion-skeleton-text width="20%"></ion-skeleton-text>
+                    </div>
+                  </ion-col>
+                  <ion-col size="1" class="ion-align-self-center">
+                    <div>
+                      <ion-skeleton-text width="10%"></ion-skeleton-text>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+          </ion-item-sliding>
+        </ion-row>
+      </ion-card>
+    </ion-grid>
+  </ion-content>
 </ion-app>

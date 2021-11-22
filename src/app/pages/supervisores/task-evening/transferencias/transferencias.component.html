@@ -1,10 +1,13 @@
 <ion-app>
-  <ion-header class="ion-no-border ion-padding">
+  <!-- contenido con informacion -->
+  <ion-header *ngIf="data.length !== 0" class="ion-no-border ion-padding">
     <ion-grid>
       <ion-row>
         <ion-col>
           <div>
-            <p (click)="return()" class="ion-align-items-start return">< REGRESAR</p>
+            <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR
+            </p>
           </div>
         </ion-col>
       </ion-row>
@@ -21,7 +24,7 @@
       </ion-row>
     </ion-grid>
   </ion-header>
-  <ion-content fullscreen="false" class="ion-padding">
+  <ion-content *ngIf="data.length !== 0" fullscreen="false" class="ion-padding">
     <ion-grid>
       <!-- titulo de empresa -->
       <ion-row size="12">
@@ -61,22 +64,38 @@
 
                   <ion-col size="2" class="ion-align-self-center">
                     <div class="align-center-text">
-                      <img
-                        *ngIf="item.tranferId !== null"
-                        src="./assets/icon/icon_recibido.png"
-                        alt=""
-                      />
+                      <img src="./assets/icon/icon_recibido.png" alt="" />
+                      <ion-badge
+                        (click)="
+                          openNotification(
+                            $event,
+                            item.requestId,
+                            2,
+                            item.branchId
+                          )
+                        "
+                        style="color: #d0122d; background: white"
+                        >{{ item.requestId?.length }}</ion-badge
+                      >
                     </div>
                     <div class="align-center-text">Solicitado</div>
                   </ion-col>
                   <!-- transfer -->
                   <ion-col size="2" class="ion-align-self-center">
                     <div class="align-center-text">
-                      <img
-                        *ngIf="item.tranferId !== null"
-                        src="./assets/icon/icon_transferido.png"
-                        alt=""
-                      />
+                      <img src="./assets/icon/icon_transferido.png" alt="" />
+                      <ion-badge
+                        (click)="
+                          openNotification(
+                            $event,
+                            item.tranferId,
+                            1,
+                            item.branchId
+                          )
+                        "
+                        style="color: #d0122d; background: white"
+                        >{{ item.tranferId?.length }}</ion-badge
+                      >
                     </div>
                     <div class="align-center-text">Transferido</div>
                   </ion-col>
@@ -89,6 +108,7 @@
                 </ion-row>
               </ion-grid>
             </ion-item>
+            <!-- **************Opciones de lista*************++ -->
             <ion-item-options side="end">
               <ion-item-option color="warning">
                 <ion-icon
@@ -106,6 +126,94 @@
                 ></ion-icon>
               </ion-item-option>
             </ion-item-options>
+          </ion-item-sliding>
+        </ion-row>
+      </ion-card>
+    </ion-grid>
+  </ion-content>
+  <!-- ion-skeleton-text -->
+  <ion-header *ngIf="data.length === 0" class="ion-no-border ion-padding">
+    <ion-grid>
+      <ion-row size="12">
+        <ion-col size="1">
+          <div>
+            <p class="ion-align-items-start return">
+              <ion-skeleton-text width="30%"></ion-skeleton-text>
+            </p>
+          </div>
+        </ion-col>
+        <ion-col size="11"></ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="1">
+          <ion-skeleton-text width="10%"></ion-skeleton-text>
+        </ion-col>
+        <ion-col size="11" class="ion-align-self-center">
+          <h3 class="title">
+            <ion-skeleton-text width="80%"></ion-skeleton-text>
+          </h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-header>
+  <ion-content *ngIf="data.length === 0" fullscreen="false" class="ion-padding">
+    <ion-grid>
+      <!-- titulo de empresa -->
+      <ion-row size="12">
+        <ion-col size="4">
+          <h5 class="subtitle-negro">
+            <!-- el porcentaje toma el 100% total de la pantalla -->
+            <ion-skeleton-text width="30%"></ion-skeleton-text>
+          </h5>
+        </ion-col>
+        <ion-col size="8">
+          <span class="date-grey">
+            <ion-skeleton-text width="10%"></ion-skeleton-text>
+          </span>
+        </ion-col>
+      </ion-row>
+      <ion-card *ngFor="let item of [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]">
+        <ion-row size="12">
+          <ion-item-sliding id="item100">
+            <ion-item>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="1" class="ion-align-self-center">
+                    <div>
+                      <ion-skeleton-text width="10%"></ion-skeleton-text>
+                    </div>
+                  </ion-col>
+                  <ion-col size="3" class="ion-align-self-center">
+                    <div>
+                      <ion-skeleton-text width="30%"></ion-skeleton-text>
+                    </div>
+                  </ion-col>
+                  <ion-col size="3" class="ion-align-self-center">
+                    <div>
+                      <ion-skeleton-text width="30%"></ion-skeleton-text>
+                    </div>
+                  </ion-col>
+
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div class="align-center-text">
+                      <ion-skeleton-text width="20%"></ion-skeleton-text>
+                    </div>
+                  </ion-col>
+                  <!-- transfer -->
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div class="align-center-text">
+                      <ion-skeleton-text width="10%"></ion-skeleton-text>
+                    </div>
+                  </ion-col>
+
+                  <ion-col size="1" class="ion-align-self-center">
+                    <div class="align-end-text">
+                      <ion-skeleton-text width="10%"></ion-skeleton-text>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
           </ion-item-sliding>
         </ion-row>
       </ion-card>

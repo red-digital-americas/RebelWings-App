@@ -14,7 +14,7 @@ export class AttendanceValidationComponent implements OnInit {
   public today = new Date();
   public user;
   public turno;
-  public data: any = [];
+  public data: any[] = [];
   constructor(
     public router: Router,
     public modalController: ModalController,
@@ -28,7 +28,7 @@ export class AttendanceValidationComponent implements OnInit {
     console.log(this.routerActive.snapshot.paramMap.get('turno'));
     this.turno = this.routerActive.snapshot.paramMap.get('turno');
     this.user = JSON.parse(localStorage.getItem('userData'));
-    this.load.presentLoading('Cargando..');
+    // this.load.presentLoading('Cargando..');
     this.service
       .serviceGeneralGet(`ValidateAttendance/All/${this.user.branch}`)
       .subscribe((resp) => {

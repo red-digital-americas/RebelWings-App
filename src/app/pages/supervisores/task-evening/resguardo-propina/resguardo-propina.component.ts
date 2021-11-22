@@ -23,6 +23,10 @@ export class ResguardoPropinaComponent implements OnInit {
   public disabled = false;
   public fotosPropina;
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
+  public activeData = false;
+  // ******variables de validacion ********
+  public activeAmount = false;
+  public activeComment = false;
 
   constructor(
     public router: Router,
@@ -39,6 +43,7 @@ export class ResguardoPropinaComponent implements OnInit {
     this.idPropina = this.routerActive.snapshot.paramMap.get('id');
     if (this.idPropina === '0') {
       console.log('Completar la tarea');
+      this.activeData = true;
     } else {
       console.log('Actualizar la tarea');
       this.getData();
@@ -47,11 +52,12 @@ export class ResguardoPropinaComponent implements OnInit {
 
   ngOnInit() {}
   getData() {
-    this.load.presentLoading('Cargando..');
+    // this.load.presentLoading('Cargando..');
     this.service
       .serviceGeneralGet('Tip/' + this.idPropina)
       .subscribe((resp) => {
         if (resp.success) {
+          this.activeData = true;
           this.data = resp.result;
           console.log('get data', this.data);
         }
@@ -95,6 +101,37 @@ export class ResguardoPropinaComponent implements OnInit {
       ],
     });
     await actionSheet.present();
+  }
+
+  validateSave() {
+    if (
+      this.data.amount === 0 ||
+      this.data.amount === undefined ||
+      this.data.amount === null
+    ) {
+      this.activeAmount = true;
+    } else {
+      this.activeAmount = false;
+    }
+    if (
+      this.data.comment === '' ||
+      this.data.comment === undefined ||
+      this.data.comment === null
+    ) {
+      this.activeComment = true;
+    } else {
+      this.activeComment = false;
+    }
+    if (
+      this.data.amount === 0 ||
+      this.data.amount === undefined ||
+      this.data.comment === '' ||
+      this.data.comment === undefined
+    ) {
+      return;
+    } else {
+      this.save();
+    }
   }
   save() {
     this.disabled = true;
@@ -143,11 +180,11 @@ export class ResguardoPropinaComponent implements OnInit {
       });
   }
   updatePropina() {
-     if (this.data.photoTips.length !== 0) {
-       this.data.photoTips.forEach((element) => {
-         element.photoPath = '';
-       });
-     }
+    if (this.data.photoTips.length !== 0) {
+      this.data.photoTips.forEach((element) => {
+        element.photoPath = '';
+      });
+    }
     this.service.serviceGeneralPut('Tip', this.data).subscribe((data) => {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
@@ -179,4 +216,3 @@ class PhotoPropinaModel {
   updatedDate: Date;
   filepath: string; //no es parte del modelo solo es para eliminar todas las fotos filesystem
 }
-

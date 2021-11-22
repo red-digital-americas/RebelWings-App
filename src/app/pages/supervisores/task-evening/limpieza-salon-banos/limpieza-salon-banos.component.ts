@@ -23,6 +23,10 @@ export class LimpiezaSalonBanosComponent implements OnInit {
   public disabled = false;
   public fotosLimpieza;
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
+  public activeData = false;
+  // ******variables de validacion ********
+  public activeComment = false;
+
   constructor(
     public router: Router,
     private camera: Camera,
@@ -39,6 +43,7 @@ export class LimpiezaSalonBanosComponent implements OnInit {
     this.idLimpieza = this.routerActive.snapshot.paramMap.get('id');
     if (this.idLimpieza === '0') {
       console.log('Completar la tarea');
+      this.activeData = true;
     } else {
       console.log('Actualizar la tarea');
       this.getData();
@@ -51,6 +56,7 @@ export class LimpiezaSalonBanosComponent implements OnInit {
       .serviceGeneralGet('LivingRoomBathroomCleaning/' + this.idLimpieza)
       .subscribe((resp) => {
         if (resp.success) {
+          this.activeData = true;
           this.data = resp.result;
           console.log('get data', this.data);
         }
@@ -94,6 +100,25 @@ export class LimpiezaSalonBanosComponent implements OnInit {
       ],
     });
     await actionSheet.present();
+  }
+  validateSave() {
+    if (
+      this.data.comment === '' ||
+      this.data.comment === undefined ||
+      this.data.comment === null
+    ) {
+      this.activeComment = true;
+    } else {
+      this.activeComment = false;
+    }
+    if (
+      this.data.comment === '' ||
+      this.data.comment === undefined
+    ) {
+      return;
+    } else {
+      this.save();
+    }
   }
   save() {
     this.disabled = true;

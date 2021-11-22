@@ -19,10 +19,14 @@ export class VoladoEfectivoComponent implements OnInit {
   public user: any;
   public idEfectivo: string;
   public data: EfectivoModel = new EfectivoModel();
+  public activeData = false;
   public base64 = 'data:image/jpeg;base64';
   public disabled = false;
   public fotosEfectivo;
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
+  // ******variables de validacion ********
+  public activeAmount = false;
+  public activeComment = false;
 
   constructor(
     public router: Router,
@@ -35,11 +39,14 @@ export class VoladoEfectivoComponent implements OnInit {
   ) {}
 
   ionViewWillEnter() {
+    console.log('data', this.data);
+
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idEfectivo = this.routerActive.snapshot.paramMap.get('id');
     if (this.idEfectivo === '0') {
       console.log('Completar la tarea');
+      this.activeData = true;
     } else {
       console.log('Actualizar la tarea');
       this.getData();
@@ -48,11 +55,12 @@ export class VoladoEfectivoComponent implements OnInit {
 
   ngOnInit() {}
   getData() {
-    this.load.presentLoading('Cargando..');
+    // this.load.presentLoading('Cargando..');
     this.service
       .serviceGeneralGet('CashRegisterShortage/' + this.idEfectivo)
       .subscribe((resp) => {
         if (resp.success) {
+          this.activeData = true;
           this.data = resp.result;
           console.log('get data', this.data);
         }
@@ -96,6 +104,36 @@ export class VoladoEfectivoComponent implements OnInit {
       ],
     });
     await actionSheet.present();
+  }
+  validateSave() {
+    if (
+      this.data.amount === 0 ||
+      this.data.amount === undefined ||
+      this.data.amount === null
+    ) {
+      this.activeAmount = true;
+    } else {
+      this.activeAmount = false;
+    }
+    if (
+      this.data.comment === '' ||
+      this.data.comment === undefined ||
+      this.data.comment === null
+    ) {
+      this.activeComment = true;
+    } else {
+      this.activeComment = false;
+    }
+    if(
+      this.data.amount === 0 ||
+      this.data.amount === undefined ||
+      this.data.comment === '' ||
+      this.data.comment === undefined
+    ) {
+      return;
+    } else {
+      this.save();
+    }
   }
   save() {
     this.disabled = true;

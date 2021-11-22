@@ -1,10 +1,13 @@
 <ion-app>
+  <!-- **********************data*******************  -->
   <ion-header class="ion-no-border ion-padding">
     <ion-grid>
       <ion-row>
         <ion-col>
           <div>
-            <p  (click)="return()" class="ion-align-items-start return">< REGRESAR</p>
+            <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR
+            </p>
           </div>
         </ion-col>
       </ion-row>
@@ -82,7 +85,8 @@
                     </ion-list-header>
                     <ion-item>
                       <ion-label>Producto </ion-label>
-                      <ion-select placeholder="Selecciona un producto"
+                      <ion-select
+                        placeholder="Selecciona un producto"
                         (click)="getCatalog(item.search)"
                         [(ngModel)]="item.productId"
                       >
@@ -204,6 +208,143 @@
             expand="full"
           >
             GUARDAR
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>
+
+  <!--**************** skeletor ***************-->
+  <!-- no se ocupara aun por que no trae get de data -->
+  <ion-header
+    *ngIf="idProductoRiesgo !== '0'"
+    class="ion-no-border ion-padding"
+  >
+    <ion-grid>
+      <ion-row size="12">
+        <ion-col size="1">
+          <div>
+            <p class="ion-align-items-start return">
+              <ion-skeleton-text width="10%"></ion-skeleton-text>
+            </p>
+          </div>
+        </ion-col>
+        <ion-col size="11"></ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="1">
+          <ion-skeleton-text width="10%"></ion-skeleton-text>
+        </ion-col>
+        <ion-col size="11" class="ion-align-self-center">
+          <h3 class="title">
+            <ion-skeleton-text width="0%"></ion-skeleton-text>
+          </h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-header>
+  <ion-content
+    *ngIf="idProductoRiesgo !== '0'"
+    fullscreen="false"
+    class="ion-padding"
+  >
+    <ion-grid>
+      <!-- titulo de empresa -->
+      <ion-row size="12">
+        <ion-col size="4">
+          <h5 class="subtitle-negro">
+            <ion-skeleton-text width="40%"></ion-skeleton-text>
+          </h5>
+        </ion-col>
+        <ion-col size="8">
+          <span class="date-grey">
+            <ion-skeleton-text width="80%"></ion-skeleton-text>
+          </span>
+        </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="9"></ion-col>
+        <ion-col size="3" class="ion-align-items-end">
+          <div class="align-end-text">
+            <ion-button shape="round" color="warning" expand="full">
+              <ion-skeleton-text width="30%"></ion-skeleton-text>
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+      <br />
+    </ion-grid>
+    <!-- agregar varios registros -->
+    <div>
+      <ion-grid *ngFor="let item of [1, 1]">
+        <ion-row size="12">
+          <ion-col size="9"></ion-col>
+          <ion-col size="3" class="ion-align-items-end">
+            <div class="end">
+              <ion-skeleton-text width="10%"></ion-skeleton-text>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row size="12">
+          <ion-col size="6">
+            <ion-row size="12">
+              <ion-col size="12">
+                <ion-label floating>
+                  <ion-skeleton-text width="10%"></ion-skeleton-text>
+                </ion-label>
+                <ion-card class="closed">
+                  <ion-list>
+                    <br />
+                    <ion-skeleton-text width="10%"></ion-skeleton-text>
+                    <ion-item>
+                      <ion-label>
+                        <ion-skeleton-text width="100%"></ion-skeleton-text>
+                        <ion-skeleton-text width="100%"></ion-skeleton-text>
+                        <ion-skeleton-text width="100%"></ion-skeleton-text>
+                      </ion-label>
+                    </ion-item>
+                  </ion-list>
+                </ion-card>
+              </ion-col>
+              <ion-col size="12">
+                <ion-label floating>
+                  <ion-skeleton-text width="100%"></ion-skeleton-text>
+                </ion-label>
+                <ion-card class="closed">
+                  <br />
+                  <ion-skeleton-text width="100%"></ion-skeleton-text>
+                  <ion-skeleton-text width="100%"></ion-skeleton-text>
+                  <ion-skeleton-text width="100%"></ion-skeleton-text>
+                  <ion-skeleton-text width="100%"></ion-skeleton-text>
+                  <br />
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          <ion-col size="6">
+            <ion-label>
+              <ion-skeleton-text width="10%"></ion-skeleton-text>
+            </ion-label>
+            <ion-card>
+              <br />
+              <ion-skeleton-text width="80%"></ion-skeleton-text>
+              <ion-skeleton-text width="80%"></ion-skeleton-text>
+              <ion-skeleton-text width="80%"></ion-skeleton-text>
+              <br />
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <br /><br />
+      </ion-grid>
+    </div>
+  </ion-content>
+  <ion-footer no-border *ngIf="idProductoRiesgo !== '0'">
+    <ion-grid>
+      <!-- footer boton -->
+      <ion-row size="12" class="footer">
+        <ion-col size="3" offset="8">
+          <ion-button shape="round" color="danger" expand="full">
+            <ion-skeleton-text width="10%"></ion-skeleton-text>
           </ion-button>
         </ion-col>
       </ion-row>
