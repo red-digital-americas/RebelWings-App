@@ -1,3 +1,5 @@
+import { DialogAddAlbaranesComponent } from './dialog/dialog-add-albaranes/dialog-add-albaranes.component';
+import { AlbaranesComponent } from './task-evening/albaranes/albaranes.component';
 import { DialogAddTransferComponent } from './dialog/dialog-add-transfer/dialog-add-transfer.component';
 import { TransferenciasComponent } from './task-evening/transferencias/transferencias.component';
 import { LimpiezaSalonBanosComponent } from './task-evening/limpieza-salon-banos/limpieza-salon-banos.component';
@@ -50,6 +52,8 @@ import { IonicSelectableModule } from 'ionic-selectable';
     ProductoRiesgoComponent,
     TransferenciasComponent,
     DialogAddTransferComponent,
+    AlbaranesComponent,
+    DialogAddAlbaranesComponent
   ],
   imports: [
     CommonModule,
