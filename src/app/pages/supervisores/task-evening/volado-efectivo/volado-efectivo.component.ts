@@ -68,7 +68,7 @@ export class VoladoEfectivoComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl('horario/control-vespertino');
+    this.router.navigateByUrl('supervisor/control-vespertino');
   }
   async addPhotoToGallery() {
     const name = new Date().toISOString();
@@ -177,7 +177,7 @@ export class VoladoEfectivoComponent implements OnInit {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('horario/control-vespertino');
+          this.router.navigateByUrl('supervisor/control-vespertino');
           this.disabled = false;
         } else {
           this.disabled = false;
@@ -197,7 +197,7 @@ export class VoladoEfectivoComponent implements OnInit {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('horario/control-vespertino');
+          this.router.navigateByUrl('supervisor/control-vespertino');
           this.disabled = false;
         } else {
           this.disabled = false;

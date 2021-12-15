@@ -104,7 +104,7 @@
               <ion-item-option color="success">
                 <!-- status 1 = llego -->
                 <ion-icon
-                  (click)="addAlbaran(item.id, 1, item.nombreComercial)"
+                  (click)="addAlbaran(item, 1)"
                   slot="icon-only"
                   src="./assets/icon/icon_done_2.svg"
                 ></ion-icon>
@@ -112,7 +112,7 @@
               <ion-item-option color="warning">
                 <!-- status 2 = llego con problemas -->
                 <ion-icon
-                  (click)="addAlbaran(item.id, 2, item.nombreComercial)"
+                  (click)="addAlbaran(item, 2)"
                   slot="icon-only"
                   src="./assets/icon/icon_alerta.svg"
                 ></ion-icon>
@@ -120,7 +120,7 @@
               <ion-item-option color="danger">
                 <!-- status 3 = no llego -->
                 <ion-icon
-                  (click)="addAlbaran(item.id, 3, item.nombreComercial)"
+                  (click)="addAlbaran(item, 3)"
                   slot="icon-only"
                   src="./assets/icon/icon_close_blanco.svg"
                 ></ion-icon>
@@ -139,7 +139,7 @@
         <ion-col>
           <div>
             <p class="ion-align-items-start return">
-              <ion-skeleton-text width="30%"></ion-skeleton-text>
+              <ion-skeleton-text animated  width="30%"></ion-skeleton-text>
             </p>
           </div>
         </ion-col>
@@ -149,7 +149,7 @@
           <img src="./assets/icon/skeleton-circle.png" alt="" />
         </ion-col>
         <ion-col size="11" class="ion-align-self-center">
-          <ion-skeleton-text width="80%"></ion-skeleton-text>
+          <ion-skeleton-text animated  width="80%"></ion-skeleton-text>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -159,12 +159,12 @@
       <ion-row size="12">
         <ion-col size="4">
           <h5 class="subtitle-negro">
-            <ion-skeleton-text width="30%"></ion-skeleton-text>
+            <ion-skeleton-text animated  width="30%"></ion-skeleton-text>
           </h5>
         </ion-col>
         <ion-col size="8">
           <span class="date-grey">
-            <ion-skeleton-text width="10%"></ion-skeleton-text>
+            <ion-skeleton-text animated  width="10%"></ion-skeleton-text>
           </span>
         </ion-col>
       </ion-row>
@@ -183,21 +183,21 @@
                   <ion-col size="2" class="ion-align-self-center">
                     <div>
                       <span
-                        ><ion-skeleton-text width="30%"></ion-skeleton-text
+                        ><ion-skeleton-text animated  width="30%"></ion-skeleton-text
                       ></span>
                     </div>
                   </ion-col>
                   <ion-col size="3" class="ion-align-self-center">
                     <div>
                       <span
-                        ><ion-skeleton-text width="30%"></ion-skeleton-text
+                        ><ion-skeleton-text animated  width="30%"></ion-skeleton-text
                       ></span>
                     </div>
                   </ion-col>
                   <ion-col size="2" class="ion-align-self-center">
                     <div>
                       <span
-                        ><ion-skeleton-text width="30%"></ion-skeleton-text
+                        ><ion-skeleton-text animated  width="30%"></ion-skeleton-text
                       ></span>
                     </div>
                   </ion-col>
@@ -205,16 +205,16 @@
                   <ion-col size="2" class="ion-align-self-center">
                     <div>
                       <span
-                        ><ion-skeleton-text width="30%"></ion-skeleton-text
+                        ><ion-skeleton-text animated  width="30%"></ion-skeleton-text
                       ></span>
                     </div>
                   </ion-col>
                   <ion-col size="1" class="ion-align-self-center">
-                    <ion-skeleton-text width="30%"></ion-skeleton-text>
+                    <ion-skeleton-text animated  width="30%"></ion-skeleton-text>
                   </ion-col>
                   <ion-col size="1" class="ion-align-self-center">
                     <div class="align-end-text">
-                      <ion-skeleton-text width="30%"></ion-skeleton-text>
+                      <ion-skeleton-text animated  width="30%"></ion-skeleton-text>
                     </div>
                   </ion-col>
                 </ion-row>

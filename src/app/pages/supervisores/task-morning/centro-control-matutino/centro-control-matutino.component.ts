@@ -37,29 +37,29 @@ export class CentroControlMatutinoComponent implements OnInit {
   }
   return() {
     console.log('return');
-    this.router.navigateByUrl('horario');
+    this.router.navigateByUrl('supervisor');
     // window.history.back();
   }
 
   validacionAsistencia() {
-    this.router.navigateByUrl('horario/validacion-assistencia/1');
+    this.router.navigateByUrl('supervisor/validacion-assistencia/1');
   }
   validacionGas(id: number) {
     if(id === null){
       id = 0;
     }
-    this.router.navigateByUrl('horario/validacion-gas/' + id);
+    this.router.navigateByUrl('supervisor/validacion-gas/' + id);
   }
   salonMontado(id: number) {
-    this.router.navigateByUrl('horario/salon-montado/' + id);
+    this.router.navigateByUrl('supervisor/salon-montado/' + id);
   }
   stockPollo(id: number) {
-    this.router.navigateByUrl('horario/expectativa-venta/' + id);
+    this.router.navigateByUrl('supervisor/expectativa-venta/' + id);
   }
   terminarTurno() {
-    this.router.navigateByUrl('horario');
+    this.router.navigateByUrl('supervisor');
   }
   mesas(id: number) {
-    this.router.navigateByUrl('horario/mesa-espera/' + id);
+    this.router.navigateByUrl('supervisor/mesa-espera/' + id);
   }
 }

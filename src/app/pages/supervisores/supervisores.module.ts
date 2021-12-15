@@ -1,3 +1,4 @@
+import { RemisionesComponent } from './task-evening/remisiones/remisiones.component';
 import { DialogAddAlbaranesComponent } from './dialog/dialog-add-albaranes/dialog-add-albaranes.component';
 import { AlbaranesComponent } from './task-evening/albaranes/albaranes.component';
 import { DialogAddTransferComponent } from './dialog/dialog-add-transfer/dialog-add-transfer.component';
@@ -53,7 +54,8 @@ import { IonicSelectableModule } from 'ionic-selectable';
     TransferenciasComponent,
     DialogAddTransferComponent,
     AlbaranesComponent,
-    DialogAddAlbaranesComponent
+    DialogAddAlbaranesComponent,
+    RemisionesComponent
   ],
   imports: [
     CommonModule,

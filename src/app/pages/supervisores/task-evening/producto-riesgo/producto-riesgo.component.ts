@@ -56,7 +56,7 @@ export class ProductoRiesgoComponent implements OnInit {
   ngOnInit() {}
   return() {
     // window.history.back();
-    this.router.navigateByUrl('horario/control-vespertino');
+    this.router.navigateByUrl('supervisor/control-vespertino');
   }
   getCatalog(search) {
     console.log('search', search);
@@ -130,7 +130,7 @@ export class ProductoRiesgoComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading(`Guardando..`);
           console.log('data', data);
-          this.router.navigateByUrl('horario/control-vespertino');
+          this.router.navigateByUrl('supervisor/control-vespertino');
         }
       });
   }
@@ -144,7 +144,7 @@ export class ProductoRiesgoComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
-          this.router.navigateByUrl('horario/control-vespertino');
+          this.router.navigateByUrl('supervisor/control-vespertino');
         }
       });
   }

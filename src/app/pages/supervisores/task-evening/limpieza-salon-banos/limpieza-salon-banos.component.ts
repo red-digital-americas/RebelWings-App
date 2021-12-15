@@ -64,7 +64,7 @@ export class LimpiezaSalonBanosComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl('horario/control-vespertino');
+    this.router.navigateByUrl('supervisor/control-vespertino');
   }
   async addPhotoToGallery() {
     const name = new Date().toISOString();
@@ -162,7 +162,7 @@ export class LimpiezaSalonBanosComponent implements OnInit {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('horario/control-vespertino');
+          this.router.navigateByUrl('supervisor/control-vespertino');
         }
       });
   }
@@ -179,7 +179,7 @@ export class LimpiezaSalonBanosComponent implements OnInit {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('horario/control-vespertino');
+          this.router.navigateByUrl('supervisor/control-vespertino');
         }
       });
   }

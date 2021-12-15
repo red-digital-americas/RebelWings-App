@@ -26,6 +26,14 @@ ion-header {
 .return {
   color: #d0122d;
 }
+// background de opciones
+.background {
+  background-color: #f0f0f0;
+}
+// estilos para el menu
+.btnMenu {
+  margin: 1rem;
+}
 
 // estilos para skeleton text
 .custom-skeleton ion-skeleton-text {
@@ -35,4 +43,3 @@ ion-header {
 .custom-skeleton ion-skeleton-text:last-child {
   margin-bottom: 5px;
 }
-

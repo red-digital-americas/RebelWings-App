@@ -6,15 +6,17 @@ import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.comp
 import { DialogNotificationComponent } from 'src/app/pages/nav/dialog-notification/dialog-notification.component';
 
 @Component({
-  selector: 'app-centro-control-vespertino',
-  templateUrl: './centro-control-vespertino.component.html',
-  styleUrls: ['./centro-control-vespertino.component.scss'],
+  selector: 'app-centro-control',
+  templateUrl: './centro-control.component.html',
+  styleUrls: ['./centro-control.component.scss'],
 })
-export class CentroControlVespertinoComponent implements OnInit {
+export class CentroControlComponent implements OnInit {
   public user: any;
   public vespertino = 2;
   public data: any[] = [];
   public dataNotification: any = [];
+  // variable menu seleccionable
+  public task = 'cocina';
 
   constructor(
     public router: Router,
@@ -22,6 +24,10 @@ export class CentroControlVespertinoComponent implements OnInit {
     public load: LoaderComponent,
     public modalController: ModalController
   ) {}
+  // segment
+  segmentChanged(ev: any) {
+    console.log('Segment changed', ev);
+  }
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log('user', this.user);
@@ -29,6 +35,7 @@ export class CentroControlVespertinoComponent implements OnInit {
     this.getNotification();
   }
   ngOnInit() {}
+  // obtiene el estatus de cada tarea
   getDataControl() {
     // this.load.presentLoading('Cargando..');
     this.service
@@ -42,8 +49,11 @@ export class CentroControlVespertinoComponent implements OnInit {
   }
   return() {
     console.log('return');
-    this.router.navigateByUrl('supervisor');
+    this.router.navigateByUrl('regional');
     // window.history.back();
+  }
+  terminarTurno() {
+    this.router.navigateByUrl('regional');
   }
   //*****************notification*****************************
   async openNotification() {
@@ -63,19 +73,7 @@ export class CentroControlVespertinoComponent implements OnInit {
     this.modalController.dismiss();
     return await modal.present();
   }
-
-  validacionAsistencia() {
-    this.router.navigateByUrl('supervisor/validacion-assistencia/2');
-  }
-  terminarTurno() {
-    this.router.navigateByUrl('supervisor');
-  }
-  remisiones(id) {
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/remisiones/' + id);
-  }
+  // notificaciones de regional
   getNotification() {
     this.service
       .serviceGeneralGet('Transfer/Notifications?id=' + this.user.branch)
@@ -85,66 +83,5 @@ export class CentroControlVespertinoComponent implements OnInit {
           console.log('notificaciones', this.dataNotification);
         }
       });
-  }
-  productoRiesgo(id) {
-    console.log('id producto en riesgo', id);
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/producto-riesgo/' + id);
-  }
-  albaranes(id) {
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/albaranes/' + id);
-  }
-  transferencias(id) {
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/transferencias/' + id);
-  }
-  voladoEfectivo(id) {
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/volado-efectivo/' + id);
-  }
-  resguardoPropina(id) {
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/resguardo-propina/' + id);
-  }
-  limpiezaSalonBanos(id) {
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/limpieza-salon-banos/' + id);
-  }
-  resguardoTableta(id) {
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/resguardo-tableta/' + id);
-  }
-  alarma(id) {
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/alarma/' + id);
-  }
-  mesas(id: number) {
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/mesa-espera/' + id);
-  }
-  stockPollo(id: number) {
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/expectativa-venta/' + id);
   }
 }

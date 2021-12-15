@@ -1,5 +1,8 @@
 <ion-app>
-  <ion-header class="ion-no-border ion-padding">
+  <ion-header
+    *ngIf="dataNotification.length !== 0"
+    class="ion-no-border ion-padding"
+  >
     <ion-row size="12">
       <ion-col size="12">
         <div class="close align-text-end">
@@ -12,7 +15,8 @@
         </div>
       </ion-col>
       <ion-col size="1" class="ion-align-self-center">
-        <ion-icon color="danger" size="large" name="notifications-outline"> </ion-icon>
+        <ion-icon color="danger" size="large" name="notifications-outline">
+        </ion-icon>
       </ion-col>
       <ion-col size="11" class="ion-align-self-center">
         <div>
@@ -23,7 +27,11 @@
       </ion-col>
     </ion-row>
   </ion-header>
-  <ion-content fullscreen="false" class="ion-padding">
+  <ion-content
+    *ngIf="dataNotification.length !== 0"
+    fullscreen="false"
+    class="ion-padding"
+  >
     <ion-grid>
       <ion-row>
         <ion-col size="12">
@@ -43,7 +51,70 @@
                 alt=""
               />
               <span> - {{ item.name }}</span>
-              <span> -  Sucursal {{ item.branch }}</span>
+              <span> - Sucursal {{ item.branch }}</span>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+  <!--------------------------------------------------->
+  <!---------------------skeleton---------------------->
+  <ion-header
+    *ngIf="dataNotification.length === 0"
+    class="ion-no-border ion-padding"
+  >
+    <ion-row size="12">
+      <ion-col size="12">
+        <div class="close align-text-end">
+          <ion-icon
+            (click)="modalController.dismiss()"
+            slot="icon-only"
+            name="close-outline"
+            color="danger"
+          ></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col size="1" class="ion-align-self-center">
+        <img src="./assets/icon/skeleton-circle.png" alt="" />
+      </ion-col>
+      <ion-col size="11" class="ion-align-self-center">
+        <div>
+          <h4 class="subtitle-negro">
+            <ion-skeleton-text animated width="80%"></ion-skeleton-text>
+          </h4>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-header>
+  <ion-content
+    *ngIf="dataNotification.length === 0"
+    fullscreen="false"
+    class="ion-padding"
+  >
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <!-- List of Text Items -->
+          <ion-list *ngFor="let item of [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]">
+            <ion-item>
+              <ion-row>
+                <ion-col size="1" class="ion-align-self-center">
+                  <div>
+                    <img src="./assets/icon/skeleton-circle.png" alt="" />
+                  </div>
+                </ion-col>
+                <ion-col size="2">
+                  <span
+                    ><ion-skeleton-text animated width="30%"></ion-skeleton-text
+                  ></span>
+                </ion-col>
+                <ion-col size="9">
+                  <span>
+                    <ion-skeleton-text animated width="100%"></ion-skeleton-text
+                  ></span>
+                </ion-col>
+              </ion-row>
             </ion-item>
           </ion-list>
         </ion-col>

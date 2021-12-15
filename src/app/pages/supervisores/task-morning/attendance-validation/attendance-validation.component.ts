@@ -43,7 +43,7 @@ export class AttendanceValidationComponent implements OnInit {
 
   return() {
     window.history.back();
-    // this.router.navigateByUrl('horario/control-matutino');
+    // this.router.navigateByUrl('supervisor/control-matutino');
   }
   async commentAttendance(idPerson: number, claveTrabajo, nombre, trabajo) {
     const modal = await this.modalController.create({

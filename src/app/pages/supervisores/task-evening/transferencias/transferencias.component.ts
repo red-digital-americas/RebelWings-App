@@ -45,7 +45,7 @@ export class TransferenciasComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl('horario/control-vespertino');
+    this.router.navigateByUrl('supervisor/control-vespertino');
   }
   async openNotification(ev: any, obj, idType, branch) {
     console.log('data', obj, 'type', idType);

@@ -13,11 +13,21 @@
       </ion-col>
       <ion-col size="12" class="ion-align-self-center">
         <div>
-          <h4 *ngIf="idAlbaran === 0" class="subtitle-negro">
+          <h4 *ngIf="objAlbaran.id === 0" class="subtitle-negro">
             REGISTRAR UN PROBLEMA
           </h4>
-          <h4 *ngIf="idAlbaran !== 0" class="subtitle-negro">
+          <h4 *ngIf="objAlbaran.id !== 0" class="subtitle-negro">
             <b> ACTUALIZAR EL PROBLEMA </b>
+          </h4>
+        </div>
+      </ion-col>
+      <ion-col size="1" class="ion-align-self-center">
+        <img src="./assets/icon/producto.png" alt="" />
+      </ion-col>
+      <ion-col size="11" class="ion-align-self-center">
+        <div>
+          <h4 class="subtitle-negro">
+            <h5>{{ objAlbaran.nombreComercial }}</h5>
           </h4>
         </div>
       </ion-col>
@@ -26,15 +36,16 @@
   <ion-content fullscreen="false" class="ion-padding">
     <ion-grid>
       <ion-row>
-        <ion-col size="6">
-          <ion-label>Hora</ion-label>
+        <ion-col size="6" *ngIf="idStatus !== 3" >
+          <ion-label>Hora a la que llegó</ion-label>
           <ion-card class="ion-align-self-center">
             <ion-datetime
+              [disabled]="data.id !== 0"
               (focus)="activeTime = false"
               required
               type="date"
               [value]="today"
-              [(ngModel)]="data.time"
+              [(ngModel)]="data.timeArrive"
               displayFormat="HH:mm a"
             ></ion-datetime>
           </ion-card>

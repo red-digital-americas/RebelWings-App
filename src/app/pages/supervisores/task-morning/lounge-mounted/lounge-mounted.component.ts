@@ -47,7 +47,7 @@ export class LoungeMountedComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl('horario/control-matutino');
+    this.router.navigateByUrl('supervisor/control-matutino');
   }
   async addPhotoToGallery() {
     const name = new Date().toISOString();
@@ -127,7 +127,7 @@ export class LoungeMountedComponent implements OnInit {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('horario/control-matutino');
+          this.router.navigateByUrl('supervisor/control-matutino');
         }
       });
   }

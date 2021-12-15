@@ -9,8 +9,7 @@ import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.comp
   styleUrls: ['./dialog-add-albaranes.component.scss'],
 })
 export class DialogAddAlbaranesComponent implements OnInit {
-  @Input() nombre: string;
-  @Input() idAlbaran: number;
+  @Input() objAlbaran;
   @Input() idStatus: number;
   public disabled = false;
 
@@ -34,10 +33,9 @@ export class DialogAddAlbaranesComponent implements OnInit {
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log('data que recibe', this.navParams.data);
-    this.idAlbaran = this.navParams.data.idAlbaran;
-    this.idStatus = this.navParams.data.idSucursal;
-    this.nombre = this.navParams.data.nombre;
-    if (this.idAlbaran !== 0) {
+    this.objAlbaran = this.navParams.data.objAlbaran;
+    this.idStatus = this.navParams.data.idStatus;
+    if (this.objAlbaran.id !== 0) {
       this.getAlbaran();
     }
   }
@@ -46,11 +44,11 @@ export class DialogAddAlbaranesComponent implements OnInit {
 
   getAlbaran() {
     this.service
-      .serviceGeneralGet('StockChicken/' + this.idAlbaran)
+      .serviceGeneralGet('Albaran/By-Id/' + this.objAlbaran.id)
       .subscribe((resp) => {
         if (resp.success) {
           this.data = resp.result;
-          console.log('get stock', this.data);
+          console.log('get albaran', this.data);
         }
       });
   }
@@ -60,19 +58,21 @@ export class DialogAddAlbaranesComponent implements OnInit {
     });
   }
   validateSave() {
-    if (
-      this.data.time === '' ||
-      this.data.time === undefined ||
-      this.data.time === null
-    ) {
-      this.activeTime = true;
-    } else {
-      this.activeTime = false;
+    if (this.idStatus !== 3) {
+      if (
+        this.data.albaranTime === '' ||
+        this.data.albaranTime === undefined ||
+        this.data.albaranTime === null
+      ) {
+        this.activeTime = true;
+      } else {
+        this.activeTime = false;
+      }
     }
     if (
-      this.data.time === '' ||
-      this.data.time === undefined ||
-      this.data.time === null
+      this.data.albaranTime === '' ||
+      this.data.albaranTime === undefined ||
+      this.data.albaranTime === null
     ) {
       this.activeTime = true;
     } else {
@@ -87,63 +87,109 @@ export class DialogAddAlbaranesComponent implements OnInit {
     } else {
       this.activeComment = false;
     }
-    if (
-      this.data.time === '' ||
-      this.data.time === undefined ||
-      this.data.comment === '' ||
-      this.data.comment === undefined
-    ) {
-      return;
+    if (this.idStatus !== 3) {
+      if (
+        this.data.albaranTime === '' ||
+        this.data.albaranTime === undefined ||
+        this.data.comment === '' ||
+        this.data.comment === undefined
+      ) {
+        return;
+      } else {
+        this.save();
+      }
     } else {
-      this.save();
+      if (this.data.comment === '' || this.data.comment === undefined) {
+        return;
+      } else {
+        this.save();
+      }
     }
+  }
+  getFormatTimeStamp() {
+    if (this.idStatus === 3) {
+      // si el estatus es no llego se asigna la hora y tiempo actual
+      this.data.timeArrive = this.today;
+    }
+    this.data.timeArrive = new Date(this.data.timeArrive);
+    console.log('time', this.data.timeArrive);
+
+    this.datetime =
+      '' +
+      this.data.timeArrive.getHours() +
+      ':' +
+      this.data.timeArrive.getMinutes() +
+      ':' +
+      this.data.timeArrive.getSeconds() +
+      '.' +
+      this.data.timeArrive.getMilliseconds();
+    console.log('timestamp', this.datetime);
   }
   save() {
-    if (this.idAlbaran === 0) {
-      this.addPackage();
+    if (this.objAlbaran.id === 0) {
+      this.addAlbarares();
     } else {
-      this.updatePackage();
+      this.updateAlbaranes();
     }
   }
-  addPackage() {
+  addAlbarares() {
+    this.getFormatTimeStamp();
     const obj = {
-      branch: this.idStatus,
-      code: this.data.code,
-      amount: this.data.amount,
-      statusId: 1, //aun no esta definido
+      albaranDate: this.objAlbaran.albaranDate,
+      albaranTime: this.objAlbaran.albaranTime,
+      albaranDescription: this.objAlbaran.descripcion,
+      numSerie: this.objAlbaran.numSerie,
+      numAlbaran: this.objAlbaran.numAlbaran,
+      n: this.objAlbaran.n,
+      statusId: this.idStatus,
+      timeArrive: this.datetime,
+      comment: this.data.comment,
       createdBy: this.user.id,
       createdDate: this.today,
       updatedBy: this.user.id,
       updatedDate: this.today,
     };
-    this.service
-      .serviceGeneralPostWithUrl('StockChicken', obj)
-      .subscribe((resp) => {
-        if (resp.success) {
-          this.load.presentLoading('Guardando..');
-          console.log('data', resp);
-          this.modalController.dismiss({
-            dismissed: true,
-          });
-        }
-      });
+    console.log('obj', obj);
+    this.service.serviceGeneralPostWithUrl('Albaran', obj).subscribe((resp) => {
+      if (resp.success) {
+        this.load.presentLoading('Guardando..');
+        console.log('data', resp);
+        this.modalController.dismiss({
+          dismissed: true,
+        });
+      }
+    });
   }
-  updatePackage() {
+  updateAlbaranes() {
+    // if (this.data.timeArrive.length > 8) {
+    //   this.getFormatTimeStamp();
+    // }
     const obj = {
       id: this.data.id,
-      amount: this.data.amount,
-      userId: this.user.id,
+      albaranDate: this.objAlbaran.albaranDate,
+      albaranTime: this.objAlbaran.albaranTime,
+      albaranDescription: this.objAlbaran.descripcion,
+      numSerie: this.objAlbaran.numSerie,
+      numAlbaran: this.objAlbaran.numAlbaran,
+      n: this.objAlbaran.n,
+      statusId: this.idStatus,
+      timeArrive: this.data.timeArrive,
+      comment: this.data.comment,
+      createdBy: this.data.createdBy,
+      createdDate: this.data.createdDate,
+      updatedBy: this.user.id,
+      updatedDate: this.today,
     };
-    this.service
-      .serviceGeneralPut('StockChicken/Package-Used', obj)
-      .subscribe((resp) => {
-        if (resp.success) {
-          this.load.presentLoading('Actualizando stock..');
-          console.log('data', resp);
-          this.modalController.dismiss({
-            dismissed: true,
-          });
-        }
-      });
+    console.log('obj', obj);
+
+    this.service.serviceGeneralPut('Albaran', obj).subscribe((resp) => {
+      if (resp.success) {
+        this.load.presentLoading('Actualizando Albaran..');
+        console.log('data', resp);
+        this.modalController.dismiss({
+          dismissed: true,
+        });
+      }
+    });
   }
 }

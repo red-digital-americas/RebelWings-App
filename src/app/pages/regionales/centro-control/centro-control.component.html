@@ -1,0 +1,867 @@
+<ion-app>
+  <ion-header color="dark" class="ion-border ion-padding">
+    <ion-grid>
+      <ion-row size="12">
+        <ion-col size="2" class="ion-align-items-start">
+          <div>
+            <img style="width: 50%" src="./assets/RW_LogoWEB.png" alt="" />
+          </div>
+        </ion-col>
+        <ion-col size="7" class="ion-align-items-start">
+          <div>
+            <span class="ion-align-items-start color-text-white">CENTRO DE CONTROL</span>
+          </div>
+        </ion-col>
+        <ion-col size="2" class="ion-align-items-end">
+          <div class="align-end-text">
+            <ion-icon size="large" style="color: white" name="notifications-outline">
+            </ion-icon>
+            <ion-badge (click)="openNotification()" *ngIf="dataNotification" style="color: #ffce00">
+              {{ dataNotification.length }}</ion-badge>
+          </div>
+        </ion-col>
+        <ion-col size="1" class="ion-align-items-end">
+          <div class="align-end-text">
+            <ion-icon size="large" style="color: white" name="menu-outline">
+            </ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-header>
+  <!-- contenedor con data -->
+  <ion-content *ngIf="data.length !== 0" fullscreen="false" class="ion-padding">
+    <div class="justify">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div>
+              <p (click)="return()" class="ion-align-items-start return">
+                < REGRESAR </p> </div> </ion-col> </ion-row> <!-- iteracion de data -->
+
+                  <ion-row size="12">
+                    <ion-col size="5" class="ion-align-items-start">
+                      <h2 class="title-red">TAREAS DE SUCURSAL</h2>
+                    </ion-col>
+                    <ion-col size="1"></ion-col>
+                    <ion-col size="3">
+                      <div class="align-end-text">
+                        <ion-button (click)="terminarTurno()" shape="round" color="warning" expand="full">
+                          <span>
+                            LEVANTAR TICKET
+                          </span>
+                        </ion-button>
+                      </div>
+                    </ion-col>
+                    <ion-col size="3" class="ion-align-items-end">
+                      <div class="align-end-text">
+                        <ion-button (click)="terminarTurno()" shape="round" color="danger" expand="full">
+                          <span>
+                            TERMINAR TURNO
+                          </span>
+                        </ion-button>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                  <!-- ----------- M E N U  S E C C I O N A D O-------------->
+                  <ion-row size="12" class="background">
+                    <ion-col size="12">
+                      <ion-segment mode="ios"  scrollable [(ngModel)]="task">
+                        <ion-segment-button value="cocina">
+                          <span class="btnMenu">COCINA</span>
+                        </ion-segment-button>
+                        <ion-segment-button value="salon">
+                          <span class="btnMenu">SALÓN</span>
+                        </ion-segment-button>
+                        <ion-segment-button disabled value="baño">
+                          <span class="btnMenu">BAÑOS</span>
+                        </ion-segment-button>
+                        <ion-segment-button disabled value="sistema">
+                          <span class="btnMenu">SISTEMA Y CAJA</span>
+                        </ion-segment-button>
+                        <ion-segment-button disabled value="mantenimiento">
+                          <span class="btnMenu">MANTENIMIENTO</span>
+                        </ion-segment-button>
+                      </ion-segment>
+                    </ion-col>
+                    <ion-col size="12">
+                      <!-- <ion-row>
+                        <ion-col size="1"></ion-col>
+                        <ion-col size="10"> -->
+                      <span class="title-progress-bar">Nivel de progreso</span>
+                      &nbsp;
+                      <ion-progress-bar mode="ios" color="warning" value=".8"></ion-progress-bar>
+                      &nbsp;
+                      <div class="margin-completado">
+                        <span class="title-progress-bar">% completado</span>
+                      </div>
+                      <!-- </ion-col>
+                        <ion-col size="1"></ion-col>
+                      </ion-row> -->
+                    </ion-col>
+                    <ion-col size="12">
+                      <div [ngSwitch]="task">
+                        <!----------------S E C C I O N  C O C I N A ------------------------>
+                        <ion-row size="12" *ngSwitchCase="'cocina'">
+                          <!-- ------------O R D E N E S------------ -->
+                          <!-- *ngIf="data[2]" -->
+                          <ion-col size="6">
+                            <ion-card>
+                              <ion-card-content>
+                                <ion-row size="12">
+                                  <ion-col size="3" class="ion-align-self-center">
+                                    <img src="./assets/icon/skeleton-circle.png" alt="" />
+                                  </ion-col>
+                                  <ion-col size="9">
+                                    <ion-row size="12">
+                                      <ion-col size="12">
+                                        <div>
+                                          <h3 class="title-tareas">ÓRDENES</h3>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <div>
+                                          <span>
+                                            Reporta desde esta sección productos que lleven
+                                            mucho sin utilizarse.
+                                          </span>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <span class="title-progress-bar">Nivel de progreso</span>
+                                        &nbsp;
+                                        <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                                        &nbsp;
+                                        <div class="margin-completado">
+                                          <!-- {{data[2].percentage}} -->
+                                          <span class="title-progress-bar">0% completado</span>
+                                        </div>
+                                      </ion-col>
+                                    </ion-row>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-card-content>
+                            </ion-card>
+                          </ion-col>
+                          <!-- ------------R E F R I G E R A D O R E S------------ -->
+                          <!-- *ngIf="data[2]" -->
+                          <ion-col size="6">
+                            <ion-card>
+                              <ion-card-content>
+                                <ion-row size="12">
+                                  <ion-col size="3" class="ion-align-self-center">
+                                    <img src="./assets/icon/skeleton-circle.png" alt="" />
+                                  </ion-col>
+                                  <ion-col size="9">
+                                    <ion-row size="12">
+                                      <ion-col size="12">
+                                        <div>
+                                          <h3 class="title-tareas">REFRIGERADORES</h3>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <div>
+                                          <span>
+                                            Reporta desde esta sección productos que lleven
+                                            mucho sin utilizarse.
+                                          </span>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <span class="title-progress-bar">Nivel de progreso</span>
+                                        &nbsp;
+                                        <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                                        &nbsp;
+                                        <div class="margin-completado">
+                                          <!-- {{data[2].percentage}} -->
+                                          <span class="title-progress-bar">0% completado</span>
+                                        </div>
+                                      </ion-col>
+                                    </ion-row>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-card-content>
+                            </ion-card>
+                          </ion-col>
+                          <!-- ------------P O L L O   C O N  P R E C O C C I O N------------ -->
+                          <!-- *ngIf="data[2]" -->
+                          <ion-col size="6">
+                            <ion-card>
+                              <ion-card-content>
+                                <ion-row size="12">
+                                  <ion-col size="3" class="ion-align-self-center">
+                                    <img src="./assets/icon/skeleton-circle.png" alt="" />
+                                  </ion-col>
+                                  <ion-col size="9">
+                                    <ion-row size="12">
+                                      <ion-col size="12">
+                                        <div>
+                                          <h3 class="title-tareas">POLLO CON PRECOCCIÓN</h3>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <div>
+                                          <span>
+                                            Reporta desde esta sección productos que lleven
+                                            mucho sin utilizarse.
+                                          </span>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <span class="title-progress-bar">Nivel de progreso</span>
+                                        &nbsp;
+                                        <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                                        &nbsp;
+                                        <div class="margin-completado">
+                                          <!-- {{data[2].percentage}} -->
+                                          <span class="title-progress-bar">0% completado</span>
+                                        </div>
+                                      </ion-col>
+                                    </ion-row>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-card-content>
+                            </ion-card>
+                          </ion-col>
+                          <!-- ------------P R O D U C T O S  C O M P L E T O S ------------ -->
+                          <!-- *ngIf="data[2]" -->
+                          <ion-col size="6">
+                            <ion-card>
+                              <ion-card-content>
+                                <ion-row size="12">
+                                  <ion-col size="3" class="ion-align-self-center">
+                                    <img src="./assets/icon/skeleton-circle.png" alt="" />
+                                  </ion-col>
+                                  <ion-col size="9">
+                                    <ion-row size="12">
+                                      <ion-col size="12">
+                                        <div>
+                                          <h3 class="title-tareas">PRODUCTOS COMPLETOS Y EN ÓRDEN</h3>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <div>
+                                          <span>
+                                            Reporta desde esta sección productos que lleven
+                                            mucho sin utilizarse.
+                                          </span>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <span class="title-progress-bar">Nivel de progreso</span>
+                                        &nbsp;
+                                        <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                                        &nbsp;
+                                        <div class="margin-completado">
+                                          <!-- {{data[2].percentage}} -->
+                                          <span class="title-progress-bar">0% completado</span>
+                                        </div>
+                                      </ion-col>
+                                    </ion-row>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-card-content>
+                            </ion-card>
+                          </ion-col>
+                          <!-- ------------L I M P I E Z A  D E  F R E I D O R A S------------ -->
+                          <!-- *ngIf="data[2]" -->
+                          <ion-col size="6">
+                            <ion-card>
+                              <ion-card-content>
+                                <ion-row size="12">
+                                  <ion-col size="3" class="ion-align-self-center">
+                                    <img src="./assets/icon/skeleton-circle.png" alt="" />
+                                  </ion-col>
+                                  <ion-col size="9">
+                                    <ion-row size="12">
+                                      <ion-col size="12">
+                                        <div>
+                                          <h3 class="title-tareas">LIMPIEZA DE FREIDORAS</h3>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <div>
+                                          <span>
+                                            Reporta desde esta sección productos que lleven
+                                            mucho sin utilizarse.
+                                          </span>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <span class="title-progress-bar">Nivel de progreso</span>
+                                        &nbsp;
+                                        <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                                        &nbsp;
+                                        <div class="margin-completado">
+                                          <!-- {{data[2].percentage}} -->
+                                          <span class="title-progress-bar">0% completado</span>
+                                        </div>
+                                      </ion-col>
+                                    </ion-row>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-card-content>
+                            </ion-card>
+                          </ion-col>
+                        </ion-row>
+
+
+                        <!----------------S E C C I O N  S A L O N  ------------------------>
+                        <ion-row size="12" *ngSwitchCase="'salon'">
+                          <!-- ----------- C O N T E O  D E  P E R S O N A S------------ -->
+                          <!-- *ngIf="data[2]" -->
+                          <ion-col size="6">
+                            <ion-card>
+                              <ion-card-content>
+                                <ion-row size="12">
+                                  <ion-col size="3" class="ion-align-self-center">
+                                    <img src="./assets/icon/skeleton-circle.png" alt="" />
+                                  </ion-col>
+                                  <ion-col size="9">
+                                    <ion-row size="12">
+                                      <ion-col size="12">
+                                        <div>
+                                          <h3 class="title-tareas">CONTEO DE PERSONAS</h3>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <div>
+                                          <span>
+                                            Reporta desde esta sección productos que lleven
+                                            mucho sin utilizarse.
+                                          </span>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <span class="title-progress-bar">Nivel de progreso</span>
+                                        &nbsp;
+                                        <ion-progress-bar color="success" value="1"></ion-progress-bar>
+                                        &nbsp;
+                                        <div class="margin-completado">
+                                          <!-- {{data[2].percentage}} -->
+                                          <span class="title-progress-bar">0% completado</span>
+                                        </div>
+                                      </ion-col>
+                                    </ion-row>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-card-content>
+                            </ion-card>
+                          </ion-col>
+                          <!-- ------------E N C U E S T A------------ -->
+                          <!-- *ngIf="data[2]" -->
+                          <ion-col size="6">
+                            <ion-card>
+                              <ion-card-content>
+                                <ion-row size="12">
+                                  <ion-col size="3" class="ion-align-self-center">
+                                    <img src="./assets/icon/skeleton-circle.png" alt="" />
+                                  </ion-col>
+                                  <ion-col size="9">
+                                    <ion-row size="12">
+                                      <ion-col size="12">
+                                        <div>
+                                          <h3 class="title-tareas">ENCUESTA</h3>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <div>
+                                          <span>
+                                            Reporta desde esta sección productos que lleven
+                                            mucho sin utilizarse.
+                                          </span>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <span class="title-progress-bar">Nivel de progreso</span>
+                                        &nbsp;
+                                        <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                                        &nbsp;
+                                        <div class="margin-completado">
+                                          <!-- {{data[2].percentage}} -->
+                                          <span class="title-progress-bar">0% completado</span>
+                                        </div>
+                                      </ion-col>
+                                    </ion-row>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-card-content>
+                            </ion-card>
+                          </ion-col>
+                          <!-- ------------L I M P I E Z A  G E N E R A L----------- -->
+                          <!-- *ngIf="data[2]" -->
+                          <ion-col size="6">
+                            <ion-card>
+                              <ion-card-content>
+                                <ion-row size="12">
+                                  <ion-col size="3" class="ion-align-self-center">
+                                    <img src="./assets/icon/skeleton-circle.png" alt="" />
+                                  </ion-col>
+                                  <ion-col size="9">
+                                    <ion-row size="12">
+                                      <ion-col size="12">
+                                        <div>
+                                          <h3 class="title-tareas">LIMPIEZA GENERAL</h3>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <div>
+                                          <span>
+                                            Reporta desde esta sección productos que lleven
+                                            mucho sin utilizarse.
+                                          </span>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <span class="title-progress-bar">Nivel de progreso</span>
+                                        &nbsp;
+                                        <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                                        &nbsp;
+                                        <div class="margin-completado">
+                                          <!-- {{data[2].percentage}} -->
+                                          <span class="title-progress-bar">0% completado</span>
+                                        </div>
+                                      </ion-col>
+                                    </ion-row>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-card-content>
+                            </ion-card>
+                          </ion-col>
+                          <!-- ------------E S T A C I O N ------------ -->
+                          <!-- *ngIf="data[2]" -->
+                          <ion-col size="6">
+                            <ion-card>
+                              <ion-card-content>
+                                <ion-row size="12">
+                                  <ion-col size="3" class="ion-align-self-center">
+                                    <img src="./assets/icon/skeleton-circle.png" alt="" />
+                                  </ion-col>
+                                  <ion-col size="9">
+                                    <ion-row size="12">
+                                      <ion-col size="12">
+                                        <div>
+                                          <h3 class="title-tareas">ESTACIÓN</h3>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <div>
+                                          <span>
+                                            Reporta desde esta sección productos que lleven
+                                            mucho sin utilizarse.
+                                          </span>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <span class="title-progress-bar">Nivel de progreso</span>
+                                        &nbsp;
+                                        <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                                        &nbsp;
+                                        <div class="margin-completado">
+                                          <!-- {{data[2].percentage}} -->
+                                          <span class="title-progress-bar">0% completado</span>
+                                        </div>
+                                      </ion-col>
+                                    </ion-row>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-card-content>
+                            </ion-card>
+                          </ion-col>
+                          <!-- ------------T E M P E R A T U R A  D E  C E R V E Z  A------------ -->
+                          <!-- *ngIf="data[2]" -->
+                          <ion-col size="6">
+                            <ion-card>
+                              <ion-card-content>
+                                <ion-row size="12">
+                                  <ion-col size="3" class="ion-align-self-center">
+                                    <img src="./assets/icon/skeleton-circle.png" alt="" />
+                                  </ion-col>
+                                  <ion-col size="9">
+                                    <ion-row size="12">
+                                      <ion-col size="12">
+                                        <div>
+                                          <h3 class="title-tareas">TEMPERATURA DE CERVEZA</h3>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <div>
+                                          <span>
+                                            Reporta desde esta sección productos que lleven
+                                            mucho sin utilizarse.
+                                          </span>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <span class="title-progress-bar">Nivel de progreso</span>
+                                        &nbsp;
+                                        <ion-progress-bar color="warning" value=".9"></ion-progress-bar>
+                                        &nbsp;
+                                        <div class="margin-completado">
+                                          <!-- {{data[2].percentage}} -->
+                                          <span class="title-progress-bar">0% completado</span>
+                                        </div>
+                                      </ion-col>
+                                    </ion-row>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-card-content>
+                            </ion-card>
+                          </ion-col>
+                          <!-- ------------T E M P E R A T U R A  D E  R E F R E S C O------------ -->
+                          <!-- *ngIf="data[2]" -->
+                          <ion-col size="6">
+                            <ion-card>
+                              <ion-card-content>
+                                <ion-row size="12">
+                                  <ion-col size="3" class="ion-align-self-center">
+                                    <img src="./assets/icon/skeleton-circle.png" alt="" />
+                                  </ion-col>
+                                  <ion-col size="9">
+                                    <ion-row size="12">
+                                      <ion-col size="12">
+                                        <div>
+                                          <h3 class="title-tareas">TEMPERATURA DE REFRESCO</h3>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <div>
+                                          <span>
+                                            Reporta desde esta sección productos que lleven
+                                            mucho sin utilizarse.
+                                          </span>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <span class="title-progress-bar">Nivel de progreso</span>
+                                        &nbsp;
+                                        <ion-progress-bar color="success" value="1"></ion-progress-bar>
+                                        &nbsp;
+                                        <div class="margin-completado">
+                                          <!-- {{data[2].percentage}} -->
+                                          <span class="title-progress-bar">100% completado</span>
+                                        </div>
+                                      </ion-col>
+                                    </ion-row>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-card-content>
+                            </ion-card>
+                          </ion-col>
+                          <!-- ------------ A U D I O  Y  V I D E O----------- -->
+                          <!-- *ngIf="data[2]" -->
+                          <ion-col size="6">
+                            <ion-card>
+                              <ion-card-content>
+                                <ion-row size="12">
+                                  <ion-col size="3" class="ion-align-self-center">
+                                    <img src="./assets/icon/skeleton-circle.png" alt="" />
+                                  </ion-col>
+                                  <ion-col size="9">
+                                    <ion-row size="12">
+                                      <ion-col size="12">
+                                        <div>
+                                          <h3 class="title-tareas">AUDIO Y VIDEO</h3>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <div>
+                                          <span>
+                                            Reporta desde esta sección productos que lleven
+                                            mucho sin utilizarse.
+                                          </span>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <span class="title-progress-bar">Nivel de progreso</span>
+                                        &nbsp;
+                                        <ion-progress-bar color="success" value="1"></ion-progress-bar>
+                                        &nbsp;
+                                        <div class="margin-completado">
+                                          <!-- {{data[2].percentage}} -->
+                                          <span class="title-progress-bar">100% completado</span>
+                                        </div>
+                                      </ion-col>
+                                    </ion-row>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-card-content>
+                            </ion-card>
+                          </ion-col>
+                          <!-- ------------F O C O S----------- -->
+                          <!-- *ngIf="data[2]" -->
+                          <ion-col size="6">
+                            <ion-card>
+                              <ion-card-content>
+                                <ion-row size="12">
+                                  <ion-col size="3" class="ion-align-self-center">
+                                    <img src="./assets/icon/skeleton-circle.png" alt="" />
+                                  </ion-col>
+                                  <ion-col size="9">
+                                    <ion-row size="12">
+                                      <ion-col size="12">
+                                        <div>
+                                          <h3 class="title-tareas">FOCOS</h3>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <div>
+                                          <span>
+                                            Reporta desde esta sección productos que lleven
+                                            mucho sin utilizarse.
+                                          </span>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <span class="title-progress-bar">Nivel de progreso</span>
+                                        &nbsp;
+                                        <ion-progress-bar color="warning" value=".9"></ion-progress-bar>
+                                        &nbsp;
+                                        <div class="margin-completado">
+                                          <!-- {{data[2].percentage}} -->
+                                          <span class="title-progress-bar">90% completado</span>
+                                        </div>
+                                      </ion-col>
+                                    </ion-row>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-card-content>
+                            </ion-card>
+                          </ion-col>
+                          <!-- ------------S U R T I D O  D E  C H I P S----------- -->
+                          <!-- *ngIf="data[2]" -->
+                          <ion-col size="6">
+                            <ion-card>
+                              <ion-card-content>
+                                <ion-row size="12">
+                                  <ion-col size="3" class="ion-align-self-center">
+                                    <img src="./assets/icon/skeleton-circle.png" alt="" />
+                                  </ion-col>
+                                  <ion-col size="9">
+                                    <ion-row size="12">
+                                      <ion-col size="12">
+                                        <div>
+                                          <h3 class="title-tareas">SURTIDO DE CHIPS</h3>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <div>
+                                          <span>
+                                            Reporta desde esta sección productos que lleven
+                                            mucho sin utilizarse.
+                                          </span>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <span class="title-progress-bar">Nivel de progreso</span>
+                                        &nbsp;
+                                        <ion-progress-bar color="success" value="1"></ion-progress-bar>
+                                        &nbsp;
+                                        <div class="margin-completado">
+                                          <!-- {{data[2].percentage}} -->
+                                          <span class="title-progress-bar">100% completado</span>
+                                        </div>
+                                      </ion-col>
+                                    </ion-row>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-card-content>
+                            </ion-card>
+                          </ion-col>
+                          <!-- ------------L I M P I E Z A  E N  B A R R A----------- -->
+                          <!-- *ngIf="data[2]" -->
+                          <ion-col size="6">
+                            <ion-card>
+                              <ion-card-content>
+                                <ion-row size="12">
+                                  <ion-col size="3" class="ion-align-self-center">
+                                    <img src="./assets/icon/skeleton-circle.png" alt="" />
+                                  </ion-col>
+                                  <ion-col size="9">
+                                    <ion-row size="12">
+                                      <ion-col size="12">
+                                        <div>
+                                          <h3 class="title-tareas">LIMPIEZA EN BARRA</h3>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <div>
+                                          <span>
+                                            Reporta desde esta sección productos que lleven
+                                            mucho sin utilizarse.
+                                          </span>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <span class="title-progress-bar">Nivel de progreso</span>
+                                        &nbsp;
+                                        <ion-progress-bar color="warning" value=".9"></ion-progress-bar>
+                                        &nbsp;
+                                        <div class="margin-completado">
+                                          <!-- {{data[2].percentage}} -->
+                                          <span class="title-progress-bar">90% completado</span>
+                                        </div>
+                                      </ion-col>
+                                    </ion-row>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-card-content>
+                            </ion-card>
+                          </ion-col>
+                          <!-- ------------R E F R I G E R A D O R E S----------- -->
+                          <!-- *ngIf="data[2]" -->
+                          <ion-col size="6">
+                            <ion-card>
+                              <ion-card-content>
+                                <ion-row size="12">
+                                  <ion-col size="3" class="ion-align-self-center">
+                                    <img src="./assets/icon/skeleton-circle.png" alt="" />
+                                  </ion-col>
+                                  <ion-col size="9">
+                                    <ion-row size="12">
+                                      <ion-col size="12">
+                                        <div>
+                                          <h3 class="title-tareas">REFRIGERADORES</h3>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <div>
+                                          <span>
+                                            Reporta desde esta sección productos que lleven
+                                            mucho sin utilizarse.
+                                          </span>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="12">
+                                        <span class="title-progress-bar">Nivel de progreso</span>
+                                        &nbsp;
+                                        <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                                        &nbsp;
+                                        <div class="margin-completado">
+                                          <!-- {{data[2].percentage}} -->
+                                          <span class="title-progress-bar">10% completado</span>
+                                        </div>
+                                      </ion-col>
+                                    </ion-row>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-card-content>
+                            </ion-card>
+                          </ion-col>
+                        </ion-row>
+
+                        <ion-card *ngSwitchCase="'baño'">
+                          <ion-card-header>
+                            Change baño
+                          </ion-card-header>
+                          <ion-card-content>
+                            Your change password form here
+                          </ion-card-content>
+                        </ion-card>
+                        <ion-card *ngSwitchCase="'sistema'">
+                          <ion-card-header>
+                            Change sistema
+                          </ion-card-header>
+                          <ion-card-content>
+                            Your change password form here
+                          </ion-card-content>
+                        </ion-card>
+                        <ion-card *ngSwitchCase="'mantenimiento'">
+                          <ion-card-header>
+                            Change mantenimiento
+                          </ion-card-header>
+                          <ion-card-content>
+                            Your change password form here
+                          </ion-card-content>
+                        </ion-card>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+      </ion-grid>
+    </div>
+  </ion-content>
+  <!-------------------------------------------------------------->
+  <!---------------------skeleton--------------------------------->
+  <!-- content con data skeleton -->
+  <ion-content *ngIf="data.length === 0" fullscreen="false">
+    <div class="justify">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div>
+              <p class="ion-align-items-start return">
+                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+              </p>
+            </div>
+          </ion-col>
+        </ion-row>
+        <!-- iteracion de data  -->
+
+        <ion-row size="12">
+          <ion-col size="6" class="ion-align-items-start">
+            <h2 class="title-red">
+              <ion-skeleton-text animated width="60%"></ion-skeleton-text>
+            </h2>
+          </ion-col>
+          <ion-col size="3"></ion-col>
+          <ion-col size="3" class="ion-align-items-end">
+            <div class="align-end-text">
+              <ion-button shape="round" color="danger" expand="full">
+                <ion-skeleton-text animated width="20%"></ion-skeleton-text>
+              </ion-button>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row size="12">
+          <!-- -----------asistencias ---------------->
+          <!-- *ngIf="data[0]" -->
+          <ion-col size="6" *ngFor="let item of [1, 1, 1, 1, 1, 1, 1, 1]" class="ion-padding animated flash slow">
+            <ion-card>
+              <ion-card-content>
+                <ion-row size="12">
+                  <ion-col size="3" class="ion-align-self-center">
+                    <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                  </ion-col>
+                  <ion-col size="9">
+                    <ion-row size="12">
+                      <ion-col size="12">
+                        <div>
+                          <h3 class="title-tareas">
+                            <ion-skeleton-text animated width="70%"></ion-skeleton-text>
+                          </h3>
+                        </div>
+                      </ion-col>
+                      <ion-col size="12">
+                        <div>
+                          <span>
+                            <ion-skeleton-text animated width="100%"></ion-skeleton-text>
+                          </span>
+                        </div>
+                      </ion-col>
+                      <ion-col size="12">
+                        <span class="title-progress-bar">
+                          <ion-skeleton-text animated width="90%"></ion-skeleton-text>
+                        </span>
+                        &nbsp;
+                        <!-- [color]="data[0].color"
+                        [value]="data[0].percentage -->
+                        <ion-progress-bar color="danger" value="0"></ion-progress-bar>
+                        &nbsp;
+                        <div class="margin-completado">
+                          <!-- {{ data[0].percentage }} -->
+                          <span class="title-progress-bar">
+                            <ion-skeleton-text animated width="20%"></ion-skeleton-text>
+                          </span>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-content>
+</ion-app>

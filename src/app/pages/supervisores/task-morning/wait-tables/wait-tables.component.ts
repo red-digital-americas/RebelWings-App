@@ -28,7 +28,7 @@ export class WaitTablesComponent implements OnInit {
   }
   return() {
     window.history.back();
-    // this.router.navigateByUrl('horario/control-matutino');
+    // this.router.navigateByUrl('supervisor/control-matutino');
   }
   save() {
     console.log('toggle', this.data.waitlistTables);
@@ -48,7 +48,7 @@ export class WaitTablesComponent implements OnInit {
         if (resp.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', resp);
-          this.router.navigateByUrl('horario/control-matutino');
+          this.router.navigateByUrl('supervisor/control-matutino');
         }
       });
   }

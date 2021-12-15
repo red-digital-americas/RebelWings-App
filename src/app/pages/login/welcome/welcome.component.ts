@@ -17,11 +17,11 @@ export class WelcomeComponent implements OnInit {
     console.log('user', this.user);
     if (this.user.roleId === 1) {
       setTimeout(() => {
-        this.router.navigateByUrl('horario');
+        this.router.navigateByUrl('supervisor');
       }, 2000);
     } else if (this.user.roleId === 2) {
       setTimeout(() => {
-        this.router.navigateByUrl('horario-regional');
+        this.router.navigateByUrl('regional');
       }, 2000);
     }
   }

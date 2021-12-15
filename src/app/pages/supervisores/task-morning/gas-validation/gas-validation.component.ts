@@ -66,7 +66,7 @@ export class GasValidationComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl('horario/control-matutino');
+    this.router.navigateByUrl('supervisor/control-matutino');
   }
   async addPhotoToGallery() {
     const name = new Date().toISOString();
@@ -147,7 +147,7 @@ export class GasValidationComponent implements OnInit {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('horario/control-matutino');
+          this.router.navigateByUrl('supervisor/control-matutino');
         }
       });
   }
@@ -159,7 +159,7 @@ export class GasValidationComponent implements OnInit {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('horario/control-matutino');
+          this.router.navigateByUrl('supervisor/control-matutino');
         }
       });
   }

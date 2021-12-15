@@ -44,7 +44,7 @@ export class SalesExpectationComponent implements OnInit {
   }
   return() {
     window.history.back();
-    // this.router.navigateByUrl('horario/control-matutino');
+    // this.router.navigateByUrl('supervisor/control-matutino');
   }
 
   async addPackage(idPack: number) {
@@ -77,6 +77,6 @@ export class SalesExpectationComponent implements OnInit {
       });
   }
   save() {
-    this.router.navigateByUrl('horario/control-matutino');
+    this.router.navigateByUrl('supervisor/control-matutino');
   }
 }

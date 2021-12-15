@@ -57,3 +57,12 @@ ion-footer {
 .align-end-text {
   text-align: end;
 }
+
+// estilos para skeleton text
+.custom-skeleton ion-skeleton-text {
+  line-height: 13px;
+}
+
+.custom-skeleton ion-skeleton-text:last-child {
+  margin-bottom: 5px;
+}

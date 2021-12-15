@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { ForgotPasswordComponent } from './pages/login/forgot-password/forgot-password.component';
 import { WelcomeComponent } from './pages/login/welcome/welcome.component';
-// rutas a verificar
 
-import { ScheduleComponent } from './pages/supervisores/schedule/schedule.component';
+
+// aqui se carga por modulos
 
 const routes: Routes = [
   {
@@ -13,14 +13,14 @@ const routes: Routes = [
       import('./pages/login/login.module').then((m) => m.LoginModule),
   },
   {
-    path: 'horario',
+    path: 'supervisor',
     loadChildren: () =>
       import('./pages/supervisores/supervisores.module').then(
         (m) => m.SupervisoresModule
       ),
   },
   {
-    path: 'horario-regional',
+    path: 'regional',
     loadChildren: () =>
       import('./pages/regionales/regionales.module').then((m) => m.RegionalesModule
       ),

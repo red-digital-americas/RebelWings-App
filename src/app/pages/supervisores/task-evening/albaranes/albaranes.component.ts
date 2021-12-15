@@ -43,17 +43,16 @@ export class AlbaranesComponent implements OnInit {
   }
   return() {
     window.history.back();
-    // this.router.navigateByUrl('horario/control-matutino');
+    // this.router.navigateByUrl('supervisor/control-matutino');
   }
-  async addAlbaran(idAlbar: number, status: number, nomSucursal: string) {
-    console.log('id paquete', idAlbar, 'status', status);
+  async addAlbaran(dataAlbaran, status: number) {
+    console.log('data', dataAlbaran, 'status', status);
     // package = 0 es nuevo registos, si es != 0 es update
     const modal = await this.modalController.create({
       component: DialogAddAlbaranesComponent,
       cssClass: 'my-custom-class',
       componentProps: {
-        nombre: nomSucursal,
-        idAlbaran: idAlbar,
+        objAlbaran: dataAlbaran,
         idStatus: status,
       },
     });
