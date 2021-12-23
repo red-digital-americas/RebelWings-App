@@ -162,7 +162,7 @@ export class DialogAddTransferComponent implements OnInit {
         .subscribe((resp) => {
           if (resp.success) {
             console.log('get coincidencias', resp.result);
-            if (resp.result.length === 0) {
+            if (resp.result?.length !== 0 && resp.result !== null) {
               return;
             } else {
               this.data.amount = resp.result[0];

@@ -27,7 +27,7 @@ export class CentroControlMatutinoComponent implements OnInit {
   getDataControl() {
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet(`ControlCenter/${this.user.branch}/${this.matutino}`)
+      .serviceGeneralGet(`ControlCenter/${this.user.branch}/${this.matutino}/Manager`)
       .subscribe((resp) => {
         if (resp.success) {
           console.log('control', resp.result);

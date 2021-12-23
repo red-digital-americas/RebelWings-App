@@ -39,11 +39,11 @@ export class CentroControlComponent implements OnInit {
   getDataControl() {
     // this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet(`ControlCenter/${this.user.branch}/${this.vespertino}`)
+      .serviceGeneralGet(`ControlCenter/${this.user.branch}/1/Regional`)
       .subscribe((resp) => {
         if (resp.success) {
-          console.log('control vespertino', resp.result);
-          this.data = resp.result;
+          this.data = resp.result.controlCenters;
+          console.log('control vespertino', this.data);
         }
       });
   }
@@ -84,4 +84,91 @@ export class CentroControlComponent implements OnInit {
         }
       });
   }
+  //----------------------tareas de cocina---------------------
+  ordenCocina() {
+    // if (id === null) {
+    //   id = 0;
+    // }
+    this.router.navigateByUrl('regional/ordenes/' + this.user.branch);
+  }
+  refrigeradorCocina() {
+    // if (id === null) {
+    //   id = 0;
+    // }
+    this.router.navigateByUrl('regional/refrigeradores-cocina/' + this.user.branch);
+  }
+  polloPrecoccionCocina() {
+    // if (id === null) {
+    //   id = 0;
+    // }
+    this.router.navigateByUrl('regional/pollo-precoccion/' + this.user.branch);
+  }
+  productosCompletosCocina() {
+    // if (id === null) {
+    //   id = 0;
+    // }
+    this.router.navigateByUrl('regional/productos-completos-orden/' + this.user.branch);
+  }
+  limpiezaFreidorasCocina() {
+    // if (id === null) {
+    //   id = 0;
+    // }
+    this.router.navigateByUrl('regional/limpieza-freidoras/' + this.user.branch);
+  }
+  //----------------------tareas de salon---------------------
+  conteoPersonasSalon() {
+    // if (id === null) {
+    //   id = 0;
+    // }
+    this.router.navigateByUrl('regional/conteo-personas/' + this.user.branch);
+  }
+  encuestaSalon() {
+    // if (id === null) {
+    //   id = 0;
+    // }
+    this.router.navigateByUrl('regional/encuesta/' + this.user.branch);
+  }
+  limpiezaGeneralSalon() {
+    // if (id === null) {
+    //   id = 0;
+    // }
+    this.router.navigateByUrl('regional/limpieza-general/' + this.user.branch);
+  }
+  estacionSalon() {
+    // if (id === null) {
+    //   id = 0;
+    // }
+    this.router.navigateByUrl('regional/estacion/' + this.user.branch);
+  }
+  temperaturaBebidaSalon() {
+    // if (id === null) {
+    //   id = 0;
+    // }
+    this.router.navigateByUrl('regional/temperatura-bebidas/' + this.user.branch);
+  }
+  audioVideoSalon() {
+    // if (id === null) {
+    //   id = 0;
+    // }
+    this.router.navigateByUrl('regional/audio-video/' + this.user.branch);
+  }
+  focosSalon() {
+    // if (id === null) {
+    //   id = 0;
+    // }
+    this.router.navigateByUrl('regional/focos/' + this.user.branch);
+  }
+  limpiezaBarraSalon() {
+    // if (id === null) {
+    //   id = 0;
+    // }
+    this.router.navigateByUrl('regional/limpieza-barra/' + this.user.branch);
+  }
+  refrigeradoresSalon() {
+    // if (id === null) {
+    //   id = 0;
+    // }
+    this.router.navigateByUrl('regional/refrigeradores-salon/' + this.user.branch);
+  }
+
 }

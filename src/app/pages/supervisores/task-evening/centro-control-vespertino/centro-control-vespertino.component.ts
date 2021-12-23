@@ -32,7 +32,7 @@ export class CentroControlVespertinoComponent implements OnInit {
   getDataControl() {
     // this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet(`ControlCenter/${this.user.branch}/${this.vespertino}`)
+      .serviceGeneralGet(`ControlCenter/${this.user.branch}/${this.vespertino}/Manager`)
       .subscribe((resp) => {
         if (resp.success) {
           console.log('control vespertino', resp.result);

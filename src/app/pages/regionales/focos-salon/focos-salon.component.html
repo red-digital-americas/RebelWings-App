@@ -1,0 +1,70 @@
+<ion-app>
+  <ion-header class="ion-no-border ion-padding">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div>
+            <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR</p> </div> </ion-col> </ion-row> <ion-row size="12">
+                <ion-col size="1">
+                  <img src="./assets/icon/ilustracion_focos.png" alt="Validaccion de assistencia" />
+                </ion-col>
+                <ion-col size="11" class="ion-align-self-center">
+                  <h3 class="title">FOCOS</h3>
+                </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-header>
+  <ion-content fullscreen="false" class="ion-padding">
+    <!-- titulo de empresa -->
+    <ion-grid>
+      <ion-row size="12">
+        <ion-col size="4">
+          <h5 class="subtitle-negro">SUCURSAL MASARIK</h5>
+        </ion-col>
+        <ion-col size="8">
+          <span class="date-grey">
+            {{ today | date: "dd MMM yyy" }}
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!-----------------faslse chicken----------------->
+    <ion-grid>
+      <!--chicken in table-->
+      <ion-row>
+        <!----------------- tv -------------------------->
+        <ion-col size="6">
+          <ion-row size="12">
+            <ion-col size="12">
+              <span class="titleProduct">¿Hay algún foco descompuesto?</span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-toggle [(ngModel)]="data.brokenSpotlight" color="success"></ion-toggle>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6" *ngIf="data.brokenSpotlight === true">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea [(ngModel)]="data.comment" rows="6" cols="20">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <br><br>
+    </ion-grid>
+  </ion-content>
+  <ion-footer *ngIf="activeData === true" no-border>
+    <ion-grid>
+      <!-- footer boton -->
+      <ion-row size="12" class="footer">
+        <ion-col size="3" offset="8">
+          <ion-button (click)="save()" shape="round" color="danger" expand="full">
+            GUARDAR
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>
+</ion-app>
