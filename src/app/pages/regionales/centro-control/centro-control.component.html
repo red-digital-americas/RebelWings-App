@@ -34,712 +34,1096 @@
     <div class="justify">
       <ion-grid>
         <ion-row>
-          <ion-col>
+          <ion-col size="12">
             <div>
               <p (click)="return()" class="ion-align-items-start return">
-                < REGRESAR </p> </div> </ion-col> </ion-row> <!-- iteracion de data -->
-
-                  <ion-row size="12">
-                    <ion-col size="5" class="ion-align-items-start">
-                      <h2 class="title-red">TAREAS DE SUCURSAL</h2>
-                    </ion-col>
-                    <ion-col size="1"></ion-col>
-                    <ion-col size="3">
-                      <div class="align-end-text">
-                        <ion-button (click)="terminarTurno()" shape="round" color="warning" expand="full">
-                          <span>
-                            LEVANTAR TICKET
-                          </span>
-                        </ion-button>
-                      </div>
-                    </ion-col>
-                    <ion-col size="3" class="ion-align-items-end">
-                      <div class="align-end-text">
-                        <ion-button (click)="terminarTurno()" shape="round" color="danger" expand="full">
-                          <span>
-                            TERMINAR TURNO
-                          </span>
-                        </ion-button>
-                      </div>
-                    </ion-col>
-                  </ion-row>
-                  <!-- ----------- M E N U  S E C C I O N A D O-------------->
-                  <ion-row size="12" class="background">
-                    <ion-col size="12">
-                      <ion-segment mode="ios" scrollable [(ngModel)]="task">
-                        <ion-segment-button value="cocina">
-                          <span class="btnMenu">COCINA</span>
-                        </ion-segment-button>
-                        <ion-segment-button value="salon">
-                          <span class="btnMenu">SALÓN</span>
-                        </ion-segment-button>
-                        <ion-segment-button disabled value="baño">
-                          <span class="btnMenu">BAÑOS</span>
-                        </ion-segment-button>
-                        <ion-segment-button disabled value="sistema">
-                          <span class="btnMenu">SISTEMA Y CAJA</span>
-                        </ion-segment-button>
-                        <ion-segment-button disabled value="mantenimiento">
-                          <span class="btnMenu">MANTENIMIENTO</span>
-                        </ion-segment-button>
-                      </ion-segment>
-                    </ion-col>
-                    <ion-col size="12">
-                      <!-- <ion-row>
+                < REGRESAR </p>
+            </div>
+          </ion-col>
+        </ion-row> <!-- iteracion de data -->
+        <ion-row size="12">
+          <ion-col size="5" class="ion-align-items-start">
+            <!-- *ngIf="nameBranch !== ''" -->
+            <h2 class="title-red">TAREAS DE {{nameBranch}}</h2>
+          </ion-col>
+          <ion-col size="1"></ion-col>
+          <ion-col size="3">
+            <div class="align-end-text">
+              <ion-button (click)="terminarTurno()" shape="round" color="warning" expand="full">
+                <span>
+                  LEVANTAR TICKET
+                </span>
+              </ion-button>
+            </div>
+          </ion-col>
+          <ion-col size="3" class="ion-align-items-end">
+            <div class="align-end-text">
+              <ion-button (click)="terminarTurno()" shape="round" color="danger" expand="full">
+                <span>
+                  TERMINAR TURNO
+                </span>
+              </ion-button>
+            </div>
+          </ion-col>
+        </ion-row>
+        <!-- ----------- M E N U  S E C C I O N A D O-------------->
+        <ion-row size="12" class="background">
+          <ion-col size="12">
+            <ion-segment mode="ios" scrollable [(ngModel)]="task">
+              <ion-segment-button value="cocina">
+                <span class="btnMenu">COCINA</span>
+              </ion-segment-button>
+              <ion-segment-button value="salon">
+                <span class="btnMenu">SALÓN</span>
+              </ion-segment-button>
+              <ion-segment-button value="baño">
+                <span class="btnMenu">BAÑOS</span>
+              </ion-segment-button>
+              <ion-segment-button value="sistema">
+                <span class="btnMenu">SISTEMA Y CAJA</span>
+              </ion-segment-button>
+              <ion-segment-button  value="mantenimiento">
+                <span class="btnMenu">MANTENIMIENTO</span>
+              </ion-segment-button>
+            </ion-segment>
+          </ion-col>
+          <ion-col size="12">
+            <!-- <ion-row>
                         <ion-col size="1"></ion-col>
                         <ion-col size="10"> -->
-                      <span class="title-progress-bar">Nivel de progreso</span>
-                      &nbsp;
-                      <ion-progress-bar mode="ios" color="warning" value=".8"></ion-progress-bar>
-                      &nbsp;
-                      <div class="margin-completado">
-                        <span class="title-progress-bar">% completado</span>
-                      </div>
-                      <!-- </ion-col>
+            <span class="title-progress-bar">Nivel de progreso</span>
+            &nbsp;
+            <ion-progress-bar mode="ios" color="warning" value=".8"></ion-progress-bar>
+            &nbsp;
+            <div class="margin-completado">
+              <span class="title-progress-bar">% completado</span>
+            </div>
+            <!-- </ion-col>
                         <ion-col size="1"></ion-col>
                       </ion-row> -->
-                    </ion-col>
-                    <ion-col size="12">
-                      <div [ngSwitch]="task">
-                        <!--*********************S E C C I O N  C O C I N A ***************-->
-                        <ion-row size="12" *ngSwitchCase="'cocina'">
-                          <!-- ------------O R D E N E S------------ -->
-                          <!-- *ngIf="data[2]" -->
-                          <ion-col *ngIf="data[0]" size="6">
-                            <ion-card (click)="ordenCocina()">
-                              <ion-card-content>
-                                <ion-row size="12">
-                                  <ion-col size="3" class="ion-align-self-center">
-                                    <img src="./assets/icon/ilustracion_ordenes.png" alt="" />
-                                  </ion-col>
-                                  <ion-col size="9">
-                                    <ion-row size="12">
-                                      <ion-col size="12">
-                                        <div>
-                                          <h3 class="title-tareas">ÓRDENES</h3>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <div>
-                                          <span>
-                                            Reporta desde esta sección productos que lleven
-                                            mucho sin utilizarse.
-                                          </span>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <span class="title-progress-bar">Nivel de progreso</span>
-                                        &nbsp;
-                                        <ion-progress-bar *ngIf="data[0].isComplete === true" color="success"
-                                          value="100">
-                                        </ion-progress-bar>
+          </ion-col>
+          <ion-col size="12">
+            <div [ngSwitch]="task">
+              <!--***** S E C C I O N   C O C I N A ******-->
+              <ion-row size="12" *ngSwitchCase="'cocina'">
+                <!-- ------------O R D E N E S------------ -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col *ngIf="data[0]" size="6">
+                  <ion-card (click)="ordenCocina()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_ordenes.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">ÓRDENES</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar *ngIf="data[0].isComplete === true" color="success" value="100">
+                              </ion-progress-bar>
 
-                                        <ion-progress-bar *ngIf="data[0].isComplete !== true" color="danger" value=".1">
-                                        </ion-progress-bar>
-                                        &nbsp;
-                                        <div class="margin-completado">
-                                          <span *ngIf="data[0].isComplete === true" class="title-progress-bar">100%
-                                            completado</span>
-                                          <span *ngIf="data[0].isComplete !== true" class="title-progress-bar">0%
-                                            completado</span>
+                              <ion-progress-bar *ngIf="data[0].isComplete !== true" color="danger" value=".1">
+                              </ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span *ngIf="data[0].isComplete === true" class="title-progress-bar">100%
+                                  completado</span>
+                                <span *ngIf="data[0].isComplete !== true" class="title-progress-bar">0%
+                                  completado</span>
 
-                                        </div>
-                                      </ion-col>
-                                    </ion-row>
-                                  </ion-col>
-                                </ion-row>
-                              </ion-card-content>
-                            </ion-card>
-                          </ion-col>
-                          <!-- ------------R E F R I G E R A D O R E S------------ -->
-                          <!-- *ngIf="data[2]" -->
-                          <ion-col *ngIf="data[1]" size="6">
-                            <ion-card (click)="refrigeradorCocina()">
-                              <ion-card-content>
-                                <ion-row size="12">
-                                  <ion-col size="3" class="ion-align-self-center">
-                                    <img src="./assets/icon/ilustracion_refrigeradores.png" alt="" />
-                                  </ion-col>
-                                  <ion-col size="9">
-                                    <ion-row size="12">
-                                      <ion-col size="12">
-                                        <div>
-                                          <h3 class="title-tareas">REFRIGERADORES</h3>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <div>
-                                          <span>
-                                            Reporta desde esta sección productos que lleven
-                                            mucho sin utilizarse.
-                                          </span>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <span class="title-progress-bar">Nivel de progreso</span>
-                                        &nbsp;
-                                        <ion-progress-bar *ngIf="data[1].isComplete === true" color="success"
-                                          value="100">
-                                        </ion-progress-bar>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------R E F R I G E R A D O R E S------------ -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col *ngIf="data[1]" size="6">
+                  <ion-card (click)="refrigeradorCocina()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_refrigeradores.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">REFRIGERADORES</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar *ngIf="data[1].isComplete === true" color="success" value="100">
+                              </ion-progress-bar>
 
-                                        <ion-progress-bar *ngIf="data[1].isComplete !== true" color="danger" value=".1">
-                                        </ion-progress-bar>
-                                        &nbsp;
-                                        <div class="margin-completado">
-                                          <span *ngIf="data[1].isComplete === true" class="title-progress-bar">100%
-                                            completado</span>
-                                          <span *ngIf="data[1].isComplete !== true" class="title-progress-bar">0%
-                                            completado</span>
-                                        </div>
-                                      </ion-col>
-                                    </ion-row>
-                                  </ion-col>
-                                </ion-row>
-                              </ion-card-content>
-                            </ion-card>
-                          </ion-col>
-                          <!-- ------------P O L L O   C O N  P R E C O C C I O N------------ -->
-                          <!-- *ngIf="data[2]" -->
-                          <ion-col *ngIf="data[2]" size="6">
-                            <ion-card (click)="polloPrecoccionCocina()">
-                              <ion-card-content>
-                                <ion-row size="12">
-                                  <ion-col size="3" class="ion-align-self-center">
-                                    <img src="./assets/icon/ilustracion_pollo_precocido.png" alt="" />
-                                  </ion-col>
-                                  <ion-col size="9">
-                                    <ion-row size="12">
-                                      <ion-col size="12">
-                                        <div>
-                                          <h3 class="title-tareas">POLLO CON PRECOCCIÓN</h3>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <div>
-                                          <span>
-                                            Reporta desde esta sección productos que lleven
-                                            mucho sin utilizarse.
-                                          </span>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <span class="title-progress-bar">Nivel de progreso</span>
-                                        &nbsp;
-                                        <ion-progress-bar *ngIf="data[2].isComplete === true" color="success"
-                                          value="100">
-                                        </ion-progress-bar>
+                              <ion-progress-bar *ngIf="data[1].isComplete !== true" color="danger" value=".1">
+                              </ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span *ngIf="data[1].isComplete === true" class="title-progress-bar">100%
+                                  completado</span>
+                                <span *ngIf="data[1].isComplete !== true" class="title-progress-bar">0%
+                                  completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------P O L L O   C O N  P R E C O C C I O N------------ -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col *ngIf="data[2]" size="6">
+                  <ion-card (click)="polloPrecoccionCocina()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_pollo_precocido.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">POLLO CON PRECOCCIÓN</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar *ngIf="data[2].isComplete === true" color="success" value="100">
+                              </ion-progress-bar>
 
-                                        <ion-progress-bar *ngIf="data[2].isComplete !== true" color="danger" value=".1">
-                                        </ion-progress-bar>
-                                        &nbsp;
-                                        <div class="margin-completado">
-                                         <span *ngIf="data[2].isComplete === true" class="title-progress-bar">100%
-                                           completado</span>
-                                         <span *ngIf="data[2].isComplete !== true" class="title-progress-bar">0%
-                                           completado</span>
-                                        </div>
-                                      </ion-col>
-                                    </ion-row>
-                                  </ion-col>
-                                </ion-row>
-                              </ion-card-content>
-                            </ion-card>
-                          </ion-col>
-                          <!-- ------------P R O D U C T O S  C O M P L E T O S ------------ -->
-                          <!-- *ngIf="data[2]" -->
-                          <ion-col *ngIf="data[3]" size="6">
-                            <ion-card (click)="productosCompletosCocina()">
-                              <ion-card-content>
-                                <ion-row size="12">
-                                  <ion-col size="3" class="ion-align-self-center">
-                                    <img src="./assets/icon/ilustracion_productos_completos.png" alt="" />
-                                  </ion-col>
-                                  <ion-col size="9">
-                                    <ion-row size="12">
-                                      <ion-col size="12">
-                                        <div>
-                                          <h3 class="title-tareas">PRODUCTOS COMPLETOS Y EN ÓRDEN</h3>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <div>
-                                          <span>
-                                            Reporta desde esta sección productos que lleven
-                                            mucho sin utilizarse.
-                                          </span>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <span class="title-progress-bar">Nivel de progreso</span>
-                                        &nbsp;
-                                        <ion-progress-bar *ngIf="data[3].isComplete === true" color="success"
-                                          value="100">
-                                        </ion-progress-bar>
+                              <ion-progress-bar *ngIf="data[2].isComplete !== true" color="danger" value=".1">
+                              </ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span *ngIf="data[2].isComplete === true" class="title-progress-bar">100%
+                                  completado</span>
+                                <span *ngIf="data[2].isComplete !== true" class="title-progress-bar">0%
+                                  completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------P R O D U C T O S  C O M P L E T O S ------------ -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col *ngIf="data[3]" size="6">
+                  <ion-card (click)="productosCompletosCocina()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_productos_completos.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">PRODUCTOS COMPLETOS Y EN ÓRDEN</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar *ngIf="data[3].isComplete === true" color="success" value="100">
+                              </ion-progress-bar>
 
-                                        <ion-progress-bar *ngIf="data[3].isComplete !== true" color="danger" value=".1">
-                                        </ion-progress-bar>
-                                        &nbsp;
-                                        <div class="margin-completado">
-                                         <span *ngIf="data[3].isComplete === true" class="title-progress-bar">100%
-                                           completado</span>
-                                         <span *ngIf="data[3].isComplete !== true" class="title-progress-bar">0%
-                                           completado</span>
-                                        </div>
-                                      </ion-col>
-                                    </ion-row>
-                                  </ion-col>
-                                </ion-row>
-                              </ion-card-content>
-                            </ion-card>
-                          </ion-col>
-                          <!-- ------------L I M P I E Z A  D E  F R E I D O R A S------------ -->
-                          <!-- *ngIf="data[2]" -->
-                          <ion-col *ngIf="data[4]" size="6">
-                            <ion-card (click)="limpiezaFreidorasCocina()">
-                              <ion-card-content>
-                                <ion-row size="12">
-                                  <ion-col size="3" class="ion-align-self-center">
-                                    <img src="./assets/icon/ilustracion_limpieza_de_freidoras.png" alt="" />
-                                  </ion-col>
-                                  <ion-col size="9">
-                                    <ion-row size="12">
-                                      <ion-col size="12">
-                                        <div>
-                                          <h3 class="title-tareas">LIMPIEZA DE FREIDORAS</h3>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <div>
-                                          <span>
-                                            Reporta desde esta sección productos que lleven
-                                            mucho sin utilizarse.
-                                          </span>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <span class="title-progress-bar">Nivel de progreso</span>
-                                        &nbsp;
-                                        <ion-progress-bar *ngIf="data[4].isComplete === true" color="success"
-                                          value="100">
-                                        </ion-progress-bar>
+                              <ion-progress-bar *ngIf="data[3].isComplete !== true" color="danger" value=".1">
+                              </ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span *ngIf="data[3].isComplete === true" class="title-progress-bar">100%
+                                  completado</span>
+                                <span *ngIf="data[3].isComplete !== true" class="title-progress-bar">0%
+                                  completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------L I M P I E Z A  D E  F R E I D O R A S------------ -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col *ngIf="data[4]" size="6">
+                  <ion-card (click)="limpiezaFreidorasCocina()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_limpieza_de_freidoras.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">LIMPIEZA DE FREIDORAS</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar *ngIf="data[4].isComplete === true" color="success" value="100">
+                              </ion-progress-bar>
 
-                                        <ion-progress-bar *ngIf="data[4].isComplete !== true" color="danger" value=".1">
-                                        </ion-progress-bar>
-                                        &nbsp;
-                                        <div class="margin-completado">
-                                         <span *ngIf="data[4].isComplete === true" class="title-progress-bar">100%
-                                           completado</span>
-                                         <span *ngIf="data[4].isComplete !== true" class="title-progress-bar">0%
-                                           completado</span>
-                                        </div>
-                                      </ion-col>
-                                    </ion-row>
-                                  </ion-col>
-                                </ion-row>
-                              </ion-card-content>
-                            </ion-card>
-                          </ion-col>
-                        </ion-row>
-                        <!--*********************S E C C I O N  S A L O N  ***************-->
-                        <ion-row size="12" *ngSwitchCase="'salon'">
-                          <!-- ----------- C O N T E O  D E  P E R S O N A S------------ -->
-                          <!-- *ngIf="data[2]" -->
-                          <ion-col size="6">
-                            <ion-card (click)="conteoPersonasSalon()">
-                              <ion-card-content>
-                                <ion-row size="12">
-                                  <ion-col size="3" class="ion-align-self-center">
-                                    <img src="./assets/icon/ilustracion_conteo_de_personas.png" alt="" />
-                                  </ion-col>
-                                  <ion-col size="9">
-                                    <ion-row size="12">
-                                      <ion-col size="12">
-                                        <div>
-                                          <h3 class="title-tareas">CONTEO DE PERSONAS</h3>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <div>
-                                          <span>
-                                            Reporta desde esta sección productos que lleven
-                                            mucho sin utilizarse.
-                                          </span>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <span class="title-progress-bar">Nivel de progreso</span>
-                                        &nbsp;
-                                        <ion-progress-bar color="success" value="1"></ion-progress-bar>
-                                        &nbsp;
-                                        <div class="margin-completado">
-                                          <!-- {{data[2].percentage}} -->
-                                          <span class="title-progress-bar">0% completado</span>
-                                        </div>
-                                      </ion-col>
-                                    </ion-row>
-                                  </ion-col>
-                                </ion-row>
-                              </ion-card-content>
-                            </ion-card>
-                          </ion-col>
-                          <!-- ------------E N C U E S T A------------ -->
-                          <!-- *ngIf="data[2]" -->
-                          <ion-col size="6">
-                            <ion-card (click)="encuestaSalon()">
-                              <ion-card-content>
-                                <ion-row size="12">
-                                  <ion-col size="3" class="ion-align-self-center">
-                                    <img src="./assets/icon/ilustracion_encuesta.png" alt="" />
-                                  </ion-col>
-                                  <ion-col size="9">
-                                    <ion-row size="12">
-                                      <ion-col size="12">
-                                        <div>
-                                          <h3 class="title-tareas">ENCUESTA</h3>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <div>
-                                          <span>
-                                            Reporta desde esta sección productos que lleven
-                                            mucho sin utilizarse.
-                                          </span>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <span class="title-progress-bar">Nivel de progreso</span>
-                                        &nbsp;
-                                        <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
-                                        &nbsp;
-                                        <div class="margin-completado">
-                                          <!-- {{data[2].percentage}} -->
-                                          <span class="title-progress-bar">0% completado</span>
-                                        </div>
-                                      </ion-col>
-                                    </ion-row>
-                                  </ion-col>
-                                </ion-row>
-                              </ion-card-content>
-                            </ion-card>
-                          </ion-col>
-                          <!-- ------------L I M P I E Z A  G E N E R A L----------- -->
-                          <!-- *ngIf="data[2]" -->
-                          <ion-col size="6">
-                            <ion-card (click)="limpiezaGeneralSalon()">
-                              <ion-card-content>
-                                <ion-row size="12">
-                                  <ion-col size="3" class="ion-align-self-center">
-                                    <img src="./assets/icon/ilustracion_limpieza_salon.png" alt="" />
-                                  </ion-col>
-                                  <ion-col size="9">
-                                    <ion-row size="12">
-                                      <ion-col size="12">
-                                        <div>
-                                          <h3 class="title-tareas">LIMPIEZA GENERAL</h3>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <div>
-                                          <span>
-                                            Reporta desde esta sección productos que lleven
-                                            mucho sin utilizarse.
-                                          </span>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <span class="title-progress-bar">Nivel de progreso</span>
-                                        &nbsp;
-                                        <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
-                                        &nbsp;
-                                        <div class="margin-completado">
-                                          <!-- {{data[2].percentage}} -->
-                                          <span class="title-progress-bar">0% completado</span>
-                                        </div>
-                                      </ion-col>
-                                    </ion-row>
-                                  </ion-col>
-                                </ion-row>
-                              </ion-card-content>
-                            </ion-card>
-                          </ion-col>
-                          <!-- ------------E S T A C I O N ------------ -->
-                          <!-- *ngIf="data[2]" -->
-                          <ion-col size="6">
-                            <ion-card (click)="estacionSalon()">
-                              <ion-card-content>
-                                <ion-row size="12">
-                                  <ion-col size="3" class="ion-align-self-center">
-                                    <img src="./assets/icon/ilustracion_estaci_n.png" alt="" />
-                                  </ion-col>
-                                  <ion-col size="9">
-                                    <ion-row size="12">
-                                      <ion-col size="12">
-                                        <div>
-                                          <h3 class="title-tareas">ESTACIÓN</h3>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <div>
-                                          <span>
-                                            Reporta desde esta sección productos que lleven
-                                            mucho sin utilizarse.
-                                          </span>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <span class="title-progress-bar">Nivel de progreso</span>
-                                        &nbsp;
-                                        <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
-                                        &nbsp;
-                                        <div class="margin-completado">
-                                          <!-- {{data[2].percentage}} -->
-                                          <span class="title-progress-bar">0% completado</span>
-                                        </div>
-                                      </ion-col>
-                                    </ion-row>
-                                  </ion-col>
-                                </ion-row>
-                              </ion-card-content>
-                            </ion-card>
-                          </ion-col>
-                          <!-- ------------T E M P E R A T U R A  D E  B E B I D A------------ -->
-                          <!-- *ngIf="data[2]" -->
-                          <ion-col size="6">
-                            <ion-card (click)="temperaturaBebidaSalon()">
-                              <ion-card-content>
-                                <ion-row size="12">
-                                  <ion-col size="3" class="ion-align-self-center">
-                                    <img src="./assets/icon/ilustracion_temperatura_de_bebidas.png" alt="" />
-                                  </ion-col>
-                                  <ion-col size="9">
-                                    <ion-row size="12">
-                                      <ion-col size="12">
-                                        <div>
-                                          <h3 class="title-tareas">TEMPERATURA DE BEBIDAS</h3>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <div>
-                                          <span>
-                                            Reporta desde esta sección productos que lleven
-                                            mucho sin utilizarse.
-                                          </span>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <span class="title-progress-bar">Nivel de progreso</span>
-                                        &nbsp;
-                                        <ion-progress-bar color="warning" value=".9"></ion-progress-bar>
-                                        &nbsp;
-                                        <div class="margin-completado">
-                                          <!-- {{data[2].percentage}} -->
-                                          <span class="title-progress-bar">0% completado</span>
-                                        </div>
-                                      </ion-col>
-                                    </ion-row>
-                                  </ion-col>
-                                </ion-row>
-                              </ion-card-content>
-                            </ion-card>
-                          </ion-col>
-                          <!-- ------------ A U D I O  Y  V I D E O----------- -->
-                          <!-- *ngIf="data[2]" -->
-                          <ion-col size="6">
-                            <ion-card (click)="audioVideoSalon()">
-                              <ion-card-content>
-                                <ion-row size="12">
-                                  <ion-col size="3" class="ion-align-self-center">
-                                    <img src="./assets/icon/ilustracion_audio_y_video.png" alt="" />
-                                  </ion-col>
-                                  <ion-col size="9">
-                                    <ion-row size="12">
-                                      <ion-col size="12">
-                                        <div>
-                                          <h3 class="title-tareas">AUDIO Y VIDEO</h3>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <div>
-                                          <span>
-                                            Reporta desde esta sección productos que lleven
-                                            mucho sin utilizarse.
-                                          </span>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <span class="title-progress-bar">Nivel de progreso</span>
-                                        &nbsp;
-                                        <ion-progress-bar color="success" value="1"></ion-progress-bar>
-                                        &nbsp;
-                                        <div class="margin-completado">
-                                          <!-- {{data[2].percentage}} -->
-                                          <span class="title-progress-bar">100% completado</span>
-                                        </div>
-                                      </ion-col>
-                                    </ion-row>
-                                  </ion-col>
-                                </ion-row>
-                              </ion-card-content>
-                            </ion-card>
-                          </ion-col>
-                          <!-- ------------F O C O S----------- -->
-                          <!-- *ngIf="data[2]" -->
-                          <ion-col size="6">
-                            <ion-card (click)="focosSalon()">
-                              <ion-card-content>
-                                <ion-row size="12">
-                                  <ion-col size="3" class="ion-align-self-center">
-                                    <img src="./assets/icon/ilustracion_focos.png" alt="" />
-                                  </ion-col>
-                                  <ion-col size="9">
-                                    <ion-row size="12">
-                                      <ion-col size="12">
-                                        <div>
-                                          <h3 class="title-tareas">FOCOS</h3>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <div>
-                                          <span>
-                                            Reporta desde esta sección productos que lleven
-                                            mucho sin utilizarse.
-                                          </span>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <span class="title-progress-bar">Nivel de progreso</span>
-                                        &nbsp;
-                                        <ion-progress-bar color="warning" value=".9"></ion-progress-bar>
-                                        &nbsp;
-                                        <div class="margin-completado">
-                                          <!-- {{data[2].percentage}} -->
-                                          <span class="title-progress-bar">90% completado</span>
-                                        </div>
-                                      </ion-col>
-                                    </ion-row>
-                                  </ion-col>
-                                </ion-row>
-                              </ion-card-content>
-                            </ion-card>
-                          </ion-col>
-                          <!-- ------------L I M P I E Z A  E N  B A R R A----------- -->
-                          <!-- *ngIf="data[2]" -->
-                          <ion-col size="6">
-                            <ion-card (click)="limpiezaBarraSalon()">
-                              <ion-card-content>
-                                <ion-row size="12">
-                                  <ion-col size="3" class="ion-align-self-center">
-                                    <img src="./assets/icon/ilustracion_limpieza_en_barra.png" alt="" />
-                                  </ion-col>
-                                  <ion-col size="9">
-                                    <ion-row size="12">
-                                      <ion-col size="12">
-                                        <div>
-                                          <h3 class="title-tareas">LIMPIEZA EN BARRA</h3>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <div>
-                                          <span>
-                                            Reporta desde esta sección productos que lleven
-                                            mucho sin utilizarse.
-                                          </span>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <span class="title-progress-bar">Nivel de progreso</span>
-                                        &nbsp;
-                                        <ion-progress-bar color="warning" value=".9"></ion-progress-bar>
-                                        &nbsp;
-                                        <div class="margin-completado">
-                                          <!-- {{data[2].percentage}} -->
-                                          <span class="title-progress-bar">90% completado</span>
-                                        </div>
-                                      </ion-col>
-                                    </ion-row>
-                                  </ion-col>
-                                </ion-row>
-                              </ion-card-content>
-                            </ion-card>
-                          </ion-col>
-                          <!-- ------------R E F R I G E R A D O R E S----------- -->
-                          <!-- *ngIf="data[2]" -->
-                          <ion-col size="6">
-                            <ion-card (click)="refrigeradoresSalon()">
-                              <ion-card-content>
-                                <ion-row size="12">
-                                  <ion-col size="3" class="ion-align-self-center">
-                                    <img src="./assets/icon/ilustracion_refrigeradores.png" alt="" />
-                                  </ion-col>
-                                  <ion-col size="9">
-                                    <ion-row size="12">
-                                      <ion-col size="12">
-                                        <div>
-                                          <h3 class="title-tareas">REFRIGERADORES</h3>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <div>
-                                          <span>
-                                            Reporta desde esta sección productos que lleven
-                                            mucho sin utilizarse.
-                                          </span>
-                                        </div>
-                                      </ion-col>
-                                      <ion-col size="12">
-                                        <span class="title-progress-bar">Nivel de progreso</span>
-                                        &nbsp;
-                                        <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
-                                        &nbsp;
-                                        <div class="margin-completado">
-                                          <!-- {{data[2].percentage}} -->
-                                          <span class="title-progress-bar">10% completado</span>
-                                        </div>
-                                      </ion-col>
-                                    </ion-row>
-                                  </ion-col>
-                                </ion-row>
-                              </ion-card-content>
-                            </ion-card>
-                          </ion-col>
-                        </ion-row>
-                        <!----------------B A Ñ O-------------------------------------------->
-                        <ion-card *ngSwitchCase="'baño'">
-                          <ion-card-header>
-                            Change baño
-                          </ion-card-header>
-                          <ion-card-content>
-                            Your change password form here
-                          </ion-card-content>
-                        </ion-card>
-                        <!----------------S I S T E M A   ----------------------------------->
-                        <ion-card *ngSwitchCase="'sistema'">
-                          <ion-card-header>
-                            Change sistema
-                          </ion-card-header>
-                          <ion-card-content>
-                            Your change password form here
-                          </ion-card-content>
-                        </ion-card>
-                        <!----------------M A N T E N I M I E N T O  ------------------------>
-                        <ion-card *ngSwitchCase="'mantenimiento'">
-                          <ion-card-header>
-                            Change mantenimiento
-                          </ion-card-header>
-                          <ion-card-content>
-                            Your change password form here
-                          </ion-card-content>
-                        </ion-card>
-                      </div>
-                    </ion-col>
-                  </ion-row>
+                              <ion-progress-bar *ngIf="data[4].isComplete !== true" color="danger" value=".1">
+                              </ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span *ngIf="data[4].isComplete === true" class="title-progress-bar">100%
+                                  completado</span>
+                                <span *ngIf="data[4].isComplete !== true" class="title-progress-bar">0%
+                                  completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+
+              <!--*** S E C C I O N   S A L O N  ******-->
+              <ion-row size="12" *ngSwitchCase="'salon'">
+                <!-- ----------- C O N T E O  D E  P E R S O N A S------------ -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card (click)="conteoPersonasSalon()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_conteo_de_personas.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">CONTEO DE PERSONAS</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar color="success" value="1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <!-- {{data[2].percentage}} -->
+                                <span class="title-progress-bar">0% completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------E N C U E S T A------------ -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card (click)="encuestaSalon()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_encuesta.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">ENCUESTA</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <!-- {{data[2].percentage}} -->
+                                <span class="title-progress-bar">0% completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------L I M P I E Z A  G E N E R A L----------- -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card (click)="limpiezaGeneralSalon()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_limpieza_salon.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">LIMPIEZA GENERAL</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <!-- {{data[2].percentage}} -->
+                                <span class="title-progress-bar">0% completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------E S T A C I O N ------------ -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card (click)="estacionSalon()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_estaci_n.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">ESTACIÓN</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <!-- {{data[2].percentage}} -->
+                                <span class="title-progress-bar">0% completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------T E M P E R A T U R A  D E  B E B I D A------------ -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card (click)="temperaturaBebidaSalon()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_temperatura_de_bebidas.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">TEMPERATURA DE BEBIDAS</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar color="warning" value=".9"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <!-- {{data[2].percentage}} -->
+                                <span class="title-progress-bar">0% completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------ A U D I O  Y  V I D E O----------- -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card (click)="audioVideoSalon()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_audio_y_video.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">AUDIO Y VIDEO</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar color="success" value="1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <!-- {{data[2].percentage}} -->
+                                <span class="title-progress-bar">100% completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------F O C O S----------- -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card (click)="focosSalon()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_focos.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">FOCOS</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar color="warning" value=".9"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <!-- {{data[2].percentage}} -->
+                                <span class="title-progress-bar">90% completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------L I M P I E Z A  E N  B A R R A----------- -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card (click)="limpiezaBarraSalon()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_limpieza_en_barra.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">LIMPIEZA EN BARRA</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar color="warning" value=".9"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <!-- {{data[2].percentage}} -->
+                                <span class="title-progress-bar">90% completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------R E F R I G E R A D O R E S----------- -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card (click)="refrigeradoresSalon()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_refrigeradores.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">REFRIGERADORES</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <!-- {{data[2].percentage}} -->
+                                <span class="title-progress-bar">10% completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+
+              <!--*** S E C C I O N   B A Ñ O  ******-->
+
+              <ion-row size="12" *ngSwitchCase="'baño'">
+                <!---------- E S T A D O  G E N E R A L--------->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <!--  -->
+                  <ion-card (click)="estadoGeneral()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_ba_os.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">ESTADO GENERAL</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span class="title-progress-bar">0% completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!------L A V A B O S   C O N   J A B O N ------>
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <!--  -->
+                  <ion-card (click)="lavabosBano()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_papel_higienico.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">LAVABOS CON JABÓN Y PAPEL</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <!-- {{data[2].percentage}} -->
+                                <span class="title-progress-bar">0% completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+
+              <!--*** S I S T E M A   Y  C A J A  ******-->
+              <ion-row size="12" *ngSwitchCase="'sistema'">
+                <!---------T I C K E T  Y  M E S A--------->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card (click)="ticketMesa()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_ticket_y_mesa.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">TICKET Y MESA</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar color="success" value="1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <!-- {{data[2].percentage}} -->
+                                <span class="title-progress-bar">0% completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!------E N T R A D A S  C A R G A D A S----->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card (click)="entradasCargadas()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_albaranes.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">ENTRADAS CARGADAS COMO ALBARÁN</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <!-- {{data[2].percentage}} -->
+                                <span class="title-progress-bar">0% completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!---- R E V I S I O N  D E  P E D I D O---->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card (click)="revisionPedido()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_calendario.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">REVISIÓN DE PEDIDO VS CALENDARIO</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span class="title-progress-bar">0% completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!----R E V I S I O N  D E  M E S A S--->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card (click)="revisionMesas()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_salon_montado.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">REVISIÓN DE MESAS</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span class="title-progress-bar">0% completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+
+
+              <!--*** M A N T E N I M I E N T O  ******-->
+              <ion-row size="12" *ngSwitchCase="'mantenimiento'">
+                <!---------C O C I N A --------->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card (click)="cocinaMantenimiento()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_cocina.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">COCINA</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar color="success" value="1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <!-- {{data[2].percentage}} -->
+                                <span class="title-progress-bar">0% completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!------ S A L O N----->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card (click)="salonMantenimiento()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_salon.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">SALÓN</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <!-- {{data[2].percentage}} -->
+                                <span class="title-progress-bar">0% completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!---- B A Ñ O S---->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card (click)="banosMantenimiento()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_ba_os.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">BAÑOS</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span class="title-progress-bar">0% completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!---B A R R A S--->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card (click)="barraMantenimiento()">
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/ilustracion_barra.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">BARRA</h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  Reporta desde esta sección productos que lleven
+                                  mucho sin utilizarse.
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">Nivel de progreso</span>
+                              &nbsp;
+                              <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span class="title-progress-bar">0% completado</span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+            </div>
+          </ion-col>
+        </ion-row>
       </ion-grid>
     </div>
   </ion-content>
   <!-------------------------------------------------------------->
   <!---------------------skeleton--------------------------------->
   <!-- content con data skeleton -->
-  <ion-content *ngIf="data.length === 0" fullscreen="false">
+  <!-- contenedor con data -->
+  <ion-content *ngIf="data.length === 0" fullscreen="false" class="ion-padding">
     <div class="justify">
       <ion-grid>
         <ion-row>
@@ -750,71 +1134,734 @@
               </p>
             </div>
           </ion-col>
-        </ion-row>
-        <!-- iteracion de data  -->
+        </ion-row> <!-- iteracion de data -->
 
         <ion-row size="12">
-          <ion-col size="6" class="ion-align-items-start">
+          <ion-col size="5" class="ion-align-items-start">
+            <!-- *ngIf="nameBranch !== ''" -->
             <h2 class="title-red">
-              <ion-skeleton-text animated width="60%"></ion-skeleton-text>
+              <ion-skeleton-text animated width="10%"></ion-skeleton-text>
             </h2>
           </ion-col>
-          <ion-col size="3"></ion-col>
+          <ion-col size="1"></ion-col>
+          <ion-col size="3">
+            <div class="align-end-text">
+              <ion-button shape="round" color="warning" expand="full">
+                <span>
+                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                </span>
+              </ion-button>
+            </div>
+          </ion-col>
           <ion-col size="3" class="ion-align-items-end">
             <div class="align-end-text">
               <ion-button shape="round" color="danger" expand="full">
-                <ion-skeleton-text animated width="20%"></ion-skeleton-text>
+                <span>
+                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                </span>
               </ion-button>
             </div>
           </ion-col>
         </ion-row>
-        <ion-row size="12">
-          <!-- -----------asistencias ---------------->
-          <!-- *ngIf="data[0]" -->
-          <ion-col size="6" *ngFor="let item of [1, 1, 1, 1, 1, 1, 1, 1]" class="ion-padding animated flash slow">
-            <ion-card>
-              <ion-card-content>
-                <ion-row size="12">
-                  <ion-col size="3" class="ion-align-self-center">
-                    <ion-skeleton-text animated width="10%"></ion-skeleton-text>
-                  </ion-col>
-                  <ion-col size="9">
-                    <ion-row size="12">
-                      <ion-col size="12">
-                        <div>
-                          <h3 class="title-tareas">
-                            <ion-skeleton-text animated width="70%"></ion-skeleton-text>
-                          </h3>
-                        </div>
-                      </ion-col>
-                      <ion-col size="12">
-                        <div>
-                          <span>
-                            <ion-skeleton-text animated width="100%"></ion-skeleton-text>
-                          </span>
-                        </div>
-                      </ion-col>
-                      <ion-col size="12">
-                        <span class="title-progress-bar">
-                          <ion-skeleton-text animated width="90%"></ion-skeleton-text>
-                        </span>
-                        &nbsp;
-                        <!-- [color]="data[0].color"
-                        [value]="data[0].percentage -->
-                        <ion-progress-bar color="danger" value="0"></ion-progress-bar>
-                        &nbsp;
-                        <div class="margin-completado">
-                          <!-- {{ data[0].percentage }} -->
-                          <span class="title-progress-bar">
-                            <ion-skeleton-text animated width="20%"></ion-skeleton-text>
-                          </span>
-                        </div>
-                      </ion-col>
-                    </ion-row>
-                  </ion-col>
-                </ion-row>
-              </ion-card-content>
-            </ion-card>
+        <!-- ----------- M E N U  S E C C I O N A D O-------------->
+        <ion-row size="12" class="background">
+          <ion-col size="12">
+            <ion-segment mode="ios" scrollable [(ngModel)]="task">
+              <ion-segment-button value="cocina">
+                <span class="btnMenu">
+                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                </span>
+              </ion-segment-button>
+              <ion-segment-button value="salon">
+                <span class="btnMenu">
+                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                </span>
+              </ion-segment-button>
+              <ion-segment-button disabled value="baño">
+                <span class="btnMenu">
+                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                </span>
+              </ion-segment-button>
+              <ion-segment-button disabled value="sistema">
+                <span class="btnMenu">
+                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                </span>
+              </ion-segment-button>
+              <ion-segment-button disabled value="mantenimiento">
+                <span class="btnMenu">
+                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                </span>
+              </ion-segment-button>
+            </ion-segment>
+          </ion-col>
+          <ion-col size="12">
+            <span class="title-progress-bar">
+              <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+            </span>
+            &nbsp;
+            <ion-progress-bar mode="ios" color="warning" value=".8"></ion-progress-bar>
+            &nbsp;
+            <div class="margin-completado">
+              <span class="title-progress-bar">
+                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+              </span>
+            </div>
+          </ion-col>
+          <ion-col size="12">
+            <div [ngSwitch]="task">
+              <!--*********************S E C C I O N  C O C I N A ***************-->
+              <ion-row size="12" *ngSwitchCase="'cocina'">
+                <!-- ------------O R D E N E S------------ -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col>
+                  <ion-card>
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/skeleton-circle.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">
+                                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                              </span>
+                              &nbsp;
+                              <ion-progress-bar color="danger" value=".1">
+                              </ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span class="title-progress-bar">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------R E F R I G E R A D O R E S------------ -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card>
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/skeleton-circle.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">
+                                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                              </span>
+                              &nbsp;
+                              <ion-progress-bar color="danger" value=".1">
+                              </ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span class="title-progress-bar">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------P O L L O   C O N  P R E C O C C I O N------------ -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card>
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/skeleton-circle.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">
+                                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                              </span>
+                              &nbsp;
+
+                              <ion-progress-bar color="danger" value=".1">
+                              </ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span class="title-progress-bar">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------P R O D U C T O S  C O M P L E T O S ------------ -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card>
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/skeleton-circle.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">
+                                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                              </span>
+                              &nbsp;
+                              <ion-progress-bar color="danger" value=".1">
+                              </ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span class="title-progress-bar">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------L I M P I E Z A  D E  F R E I D O R A S------------ -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card>
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/skeleton-circle.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">
+                                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                              </span>
+                              &nbsp;
+                              <ion-progress-bar color="danger" value=".1">
+                              </ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span class="title-progress-bar">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+              <!--*********************S E C C I O N  S A L O N  ***************-->
+              <ion-row size="12" *ngSwitchCase="'salon'">
+                <!-- ----------- C O N T E O  D E  P E R S O N A S------------ -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card>
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/skeleton-circle.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">
+                                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                              </span>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span class="title-progress-bar">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------E N C U E S T A------------ -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card>
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/skeleton-circle.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">
+                                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                              </span>
+                              &nbsp;
+                              <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span class="title-progress-bar">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------L I M P I E Z A  G E N E R A L----------- -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card>
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/skeleton-circle.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">
+                                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                              </span>
+                              &nbsp;
+                              <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span class="title-progress-bar">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------E S T A C I O N ------------ -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card>
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/skeleton-circle.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">
+                                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                              </span>
+                              &nbsp;
+                              <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span class="title-progress-bar">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------T E M P E R A T U R A  D E  B E B I D A------------ -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card>
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/skeleton-circle.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">
+                                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                              </span>
+                              &nbsp;
+                              <ion-progress-bar color="warning" value=".9"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span class="title-progress-bar">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------ A U D I O  Y  V I D E O----------- -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card>
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/skeleton-circle.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">
+                                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                              </span>
+                              &nbsp;
+                              <ion-progress-bar color="success" value="1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span class="title-progress-bar">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------F O C O S----------- -->
+                <ion-col size="6">
+                  <ion-card>
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/skeleton-circle.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">
+                                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                              </span>
+                              &nbsp;
+                              <ion-progress-bar color="warning" value=".9"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span class="title-progress-bar">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------L I M P I E Z A  E N  B A R R A----------- -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card>
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/skeleton-circle.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">
+                                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                              </span>
+                              &nbsp;
+                              <ion-progress-bar color="warning" value=".9"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span class="title-progress-bar">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <!-- ------------R E F R I G E R A D O R E S----------- -->
+                <!-- *ngIf="data[2]" -->
+                <ion-col size="6">
+                  <ion-card>
+                    <ion-card-content>
+                      <ion-row size="12">
+                        <ion-col size="3" class="ion-align-self-center">
+                          <img src="./assets/icon/skeleton-circle.png" alt="" />
+                        </ion-col>
+                        <ion-col size="9">
+                          <ion-row size="12">
+                            <ion-col size="12">
+                              <div>
+                                <h3 class="title-tareas">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </h3>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <div>
+                                <span>
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                            <ion-col size="12">
+                              <span class="title-progress-bar">
+                                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                              </span>
+                              &nbsp;
+                              <ion-progress-bar color="danger" value=".1"></ion-progress-bar>
+                              &nbsp;
+                              <div class="margin-completado">
+                                <span class="title-progress-bar">
+                                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                                </span>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+              <!----------------B A Ñ O------------------------------>
+              <ion-card *ngSwitchCase="'baño'">
+                <ion-card-header>
+                  Change baño
+                </ion-card-header>
+                <ion-card-content>
+                  Your change password form here
+                </ion-card-content>
+              </ion-card>
+              <!----------------S I S T E M A ---------------------->
+              <ion-card *ngSwitchCase="'sistema'">
+                <ion-card-header>
+                  Change sistema
+                </ion-card-header>
+                <ion-card-content>
+                  Your change password form here
+                </ion-card-content>
+              </ion-card>
+              <!----------------M A N T E N I M I E N T O ----------->
+              <ion-card *ngSwitchCase="'mantenimiento'">
+                <ion-card-header>
+                  Change mantenimiento
+                </ion-card-header>
+                <ion-card-content>
+                  Your change password form here
+                </ion-card-content>
+              </ion-card>
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>

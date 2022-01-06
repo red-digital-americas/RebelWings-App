@@ -1,26 +1,30 @@
 <ion-app>
-  <ion-header class="ion-no-border ion-padding">
+  <!-- ******************* data *************************** -->
+  <ion-header *ngIf="activeData === true" class="ion-no-border ion-padding">
     <ion-grid>
       <ion-row>
         <ion-col>
           <div>
             <p (click)="return()" class="ion-align-items-start return">
-              < REGRESAR</p> </div> </ion-col> </ion-row> <ion-row size="12">
-                <ion-col size="1">
-                  <img src="./assets/icon/ilustracion_pollo_precocido.png" alt="Validaccion de assistencia" />
-                </ion-col>
-                <ion-col size="11" class="ion-align-self-center">
-                  <h3 class="title">POLLO CON PRECOCCIÓN</h3>
-                </ion-col>
+              < REGRESAR</p>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="1">
+          <img src="./assets/icon/ilustracion_pollo_precocido.png" alt="Validaccion de assistencia" />
+        </ion-col>
+        <ion-col size="11" class="ion-align-self-center">
+          <h3 class="title">POLLO CON PRECOCCIÓN</h3>
+        </ion-col>
       </ion-row>
     </ion-grid>
-  </ion-header>
-  <ion-content fullscreen="false" class="ion-padding">
+    <br>
     <!-- titulo de empresa -->
     <ion-grid>
       <ion-row size="12">
         <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL MASARIK</h5>
+          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
         </ion-col>
         <ion-col size="8">
           <span class="date-grey">
@@ -29,6 +33,10 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+
+  </ion-header>
+  <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
+
     <!----------------true chicken-------------------->
     <ion-grid *ngIf="toggleChicken === true">
       <!--chicken in table-->
@@ -221,4 +229,128 @@
       </ion-row>
     </ion-grid>
   </ion-footer>
+  <!-- ******************* skeletor *************************** -->
+  <ion-header *ngIf="activeData === false" class="ion-no-border ion-padding">
+    <ion-grid>
+      <ion-row size="12">
+        <ion-col size="1">
+          <div>
+            <p class="ion-align-items-start return">
+              <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+            </p>
+          </div>
+        </ion-col>
+        <ion-col size="11"></ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="1">
+          <img src="./assets/icon/skeleton-circle.png" alt="Validaccion de assistencia" />
+        </ion-col>
+        <ion-col size="11" class="ion-align-self-center">
+          <h3 class="title">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-header>
+  <ion-content *ngIf="activeData === false" fullscreen="false" class="ion-padding">
+    <!-- titulo de empresa -->
+    <ion-grid>
+      <ion-row size="12">
+        <ion-col size="4">
+          <h5 class="subtitle-negro">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </h5>
+        </ion-col>
+        <ion-col size="8">
+          <span class="date-grey">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!----------------true chicken-------------------->
+    <ion-grid>
+      <!--chicken in table-->
+      <ion-row size="12">
+        <ion-col size="6">
+          <span>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <ion-toggle disabled color="success">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </ion-toggle>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </ion-label>
+          <ion-card class="closed">
+            <ion-input type="number" min="0">
+              <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+            </ion-input>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <!-- chicken general -->
+      <ion-row size="12">
+        <ion-col size="6">
+          <span>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <ion-toggle disabled color="success">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </ion-toggle>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </ion-label>
+          <ion-card class="closed">
+            <ion-input>
+              <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+            </ion-input>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <!-- boneless  -->
+      <ion-row size="12">
+        <ion-col size="6">
+          <span>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <ion-toggle disabled color="success"></ion-toggle>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>
+            <ion-skeleton-text animated width="10%">
+              <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+            </ion-skeleton-text>
+          </ion-label>
+          <ion-card class="closed">
+            <ion-input>
+              <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+            </ion-input>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+  <ion-footer *ngIf="activeData === false" no-border>
+    <ion-grid>
+      <!-- footer boton -->
+      <ion-row size="12" class="footer">
+        <ion-col size="3" offset="8">
+          <ion-button shape="round" color="danger" expand="full">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>
+
 </ion-app>

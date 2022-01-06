@@ -32,6 +32,7 @@ export class SalesExpectationComponent implements OnInit {
   ngOnInit() {}
 
   getData() {
+    this.load.presentLoading('Cargando..');
     this.service
       .serviceGeneralGet('StockChicken/By-Branch/' + this.idSucursal)
       .subscribe((resp) => {

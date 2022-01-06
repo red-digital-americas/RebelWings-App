@@ -52,7 +52,7 @@ export class ResguardoPropinaComponent implements OnInit {
 
   ngOnInit() {}
   getData() {
-    // this.load.presentLoading('Cargando..');
+    this.load.presentLoading('Cargando..');
     this.service
       .serviceGeneralGet('Tip/' + this.idPropina)
       .subscribe((resp) => {

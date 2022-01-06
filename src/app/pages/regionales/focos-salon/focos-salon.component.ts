@@ -12,8 +12,10 @@ export class FocosSalonComponent implements OnInit {
   public user: any;
   public data: PrecookedChickenModel = new PrecookedChickenModel();
   public dataId = false; //sirve para identificar si el get trae informacion y diferencia entre el post y put
-  public idBranch: string;
-  public disabled = false;
+  public branchId;
+  public dataBranch: any[] = [];
+  public nameBranch = '';
+   public disabled = false;
   public activeData = false;
   constructor(public router: Router,
     public routerActive: ActivatedRoute,
@@ -23,15 +25,17 @@ export class FocosSalonComponent implements OnInit {
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.routerActive.snapshot.paramMap.get('id'));
-    this.idBranch = this.routerActive.snapshot.paramMap.get('id');
+    this.branchId = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
+    this.getBranch();
+
   }
   ngOnInit() { }
   // get data foco
   getData() {
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('Spotlight/' + this.idBranch)
+      .serviceGeneralGet('Spotlight/' + this.branchId)
       .subscribe((resp) => {
         if (resp.success) {
           if (resp.result?.length !== 0 && resp.result !== null) {
@@ -52,12 +56,31 @@ export class FocosSalonComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl('regional/centro-control');
+    this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+  }
+  // get  name sucursal
+  getBranch() {
+    let branchIdNumber = 0;
+    branchIdNumber = Number(this.branchId);
+    console.log('branchIdNumber', branchIdNumber);
+    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+      if (resp.success) {
+        this.dataBranch = resp.result;
+        console.log('get branch', this.dataBranch);
+        this.dataBranch.forEach(element => {
+          if (element.branchId === branchIdNumber) {
+            this.nameBranch = element.branchName;
+            this.nameBranch = this.nameBranch.toUpperCase();
+            console.log('nombre', this.nameBranch);
+          }
+        });
+      }
+    });
   }
   save() {
     this.disabled = true;
     // esto se pone aqui por que aun no se estrae la data de un get
-    this.data.branchId = this.user.branch;
+    this.data.branchId = this.branchId;
     this.data.updatedBy = this.user.id;
     this.data.updatedDate = this.today;
     // si no hay registro en el get sera un post
@@ -77,7 +100,7 @@ export class FocosSalonComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
-          this.router.navigateByUrl('regional/centro-control');
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
         }
       });
   }
@@ -89,7 +112,7 @@ export class FocosSalonComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
-          this.router.navigateByUrl('regional/centro-control');
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
         }
       });
   }

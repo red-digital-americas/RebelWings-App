@@ -1,0 +1,289 @@
+<ion-app>
+  <ion-header *ngIf="activeData === true" class="ion-no-border ion-padding">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div>
+            <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR</p>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="1">
+          <img src="./assets/icon/ilustracion_ba_os.png" alt="Validaccion de assistencia" />
+        </ion-col>
+        <ion-col size="11" class="ion-align-self-center">
+          <h3 class="title">ESTADO GENERAL</h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <br>
+    <!-- titulo de empresa -->
+    <ion-grid>
+      <ion-row size="12">
+        <ion-col size="4">
+          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
+        </ion-col>
+        <ion-col size="8">
+          <span class="date-grey">
+            {{ today | date: "dd MMM yyy" }}
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-header>
+  <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
+
+    <!-----------------faslse chicken----------------->
+    <ion-grid>
+      <!--chicken in table-->
+      <ion-row>
+        <ion-col size="12">
+          <span>Baños de mujeres</span>
+        </ion-col>
+        <!----------------- tv -------------------------->
+        <ion-col size="6">
+          <ion-row size="12">
+            <ion-col size="12">
+              <span class="titleProduct">¿Algún baño tiene gotera?</span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-toggle [(ngModel)]="data.doesAnyBathroomLeakWomen" color="success"></ion-toggle>
+            </ion-col>
+            <ion-col size="12" *ngIf="data.doesAnyBathroomLeakWomen === false">
+              <ion-label>Comentario</ion-label>
+              <ion-card>
+                <ion-textarea [(ngModel)]="data.commentDoesAnyBathroomLeakWomen" rows="6" cols="20">
+                </ion-textarea>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <!----------------- mujeres -------------------------->
+        <ion-col size="6">
+          <ion-row size="12">
+            <ion-col size="12">
+              <span class="titleProduct">¿Hay alguna falla en las chapas?</span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-toggle [(ngModel)]="data.isThereAnyFaultsMen" color="success"></ion-toggle>
+            </ion-col>
+            <ion-col size="12" *ngIf="data.isThereAnyFaultsMen === false">
+              <ion-label>Comentario</ion-label>
+              <ion-card>
+                <ion-textarea [(ngModel)]="data.commentAreThereAnyFaultsMen" rows="6" cols="20">
+                </ion-textarea>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <!----------------- hombres -------------------------->
+      <ion-row>
+        <ion-col size="12">
+          <span>Baños de hombres</span>
+        </ion-col>
+        <ion-col size="6">
+          <ion-row size="12">
+            <ion-col size="12">
+              <span class="titleProduct">¿Algún baño tiene gotera?</span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-toggle [(ngModel)]="data.doesAnyBathroomLeakMen" color="success"></ion-toggle>
+            </ion-col>
+            <ion-col size="12" *ngIf="data.doesAnyBathroomLeakMen === false">
+              <ion-label>Comentario</ion-label>
+              <ion-card>
+                <ion-textarea [(ngModel)]="data.commentDoesAnyBathroomLeakMen" rows="6" cols="20">
+                </ion-textarea>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <!----------------- hombre chapas -------------------------->
+        <ion-col size="6">
+          <ion-row size="12">
+            <ion-col size="12">
+              <span class="titleProduct">¿Hay alguna falla en las chapas?</span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-toggle [(ngModel)]="data.isThereAnyFaultsWomen" color="success"></ion-toggle>
+            </ion-col>
+            <ion-col size="12" *ngIf="data.isThereAnyFaultsWomen === false">
+              <ion-label>Comentario</ion-label>
+              <ion-card>
+                <ion-textarea [(ngModel)]="data.commentAreThereAnyFaultsWomen" rows="6" cols="20">
+                </ion-textarea>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <br><br>
+    </ion-grid>
+  </ion-content>
+  <ion-footer *ngIf="activeData === true" no-border>
+    <ion-grid>
+      <!-- footer boton -->
+      <ion-row size="12" class="footer">
+        <ion-col size="3" offset="8">
+          <ion-button (click)="save()" shape="round" color="danger" expand="full">
+            GUARDAR
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>
+
+  <!-- ******************* skeletor *************************** -->
+  <ion-header *ngIf="activeData === false" class="ion-no-border ion-padding">
+    <ion-grid>
+      <ion-row size="12">
+        <ion-col size="1">
+          <div>
+            <p class="ion-align-items-start return">
+              <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+            </p>
+          </div>
+        </ion-col>
+        <ion-col size="11"></ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="1">
+          <img src="./assets/icon/skeleton-circle.png" alt="Validaccion de assistencia" />
+        </ion-col>
+        <ion-col size="11" class="ion-align-self-center">
+          <h3 class="title">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-header>
+  <ion-content *ngIf="activeData === false" fullscreen="false" class="ion-padding">
+    <!-- titulo de empresa -->
+    <ion-grid>
+      <ion-row size="12">
+        <ion-col size="4">
+          <h5 class="subtitle-negro">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </h5>
+        </ion-col>
+        <ion-col size="8">
+          <span class="date-grey">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!-----------------faslse chicken----------------->
+    <ion-grid>
+      <!--chicken in table-->
+      <ion-row>
+        <!----------------- tv -------------------------->
+        <ion-col size="6">
+          <ion-row size="12">
+            <ion-col size="12">
+              <span class="titleProduct">
+                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+              </span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-toggle disabled color="success"></ion-toggle>
+            </ion-col>
+            <ion-col size="12">
+              <ion-label>
+                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+              </ion-label>
+              <ion-card>
+                <ion-textarea rows="6" cols="20">
+
+                </ion-textarea>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <!----------------- bocina -------------------------->
+        <ion-col size="6">
+          <ion-row size="12">
+            <ion-col size="12">
+              <span class="titleProduct">
+                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+              </span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-toggle disabled color="success"></ion-toggle>
+            </ion-col>
+            <ion-col size="12">
+              <ion-label>
+                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+              </ion-label>
+              <ion-card>
+                <ion-textarea rows="6" cols="20">
+                </ion-textarea>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <!----------------- tv terraza -------------------------->
+        <ion-col size="6">
+          <ion-row size="12">
+            <ion-col size="12">
+              <span class="titleProduct">
+                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+              </span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-toggle disabled color="success"></ion-toggle>
+            </ion-col>
+            <ion-col size="12">
+              <ion-label>
+                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+              </ion-label>
+              <ion-card>
+                <ion-textarea rows="6" cols="20">
+                </ion-textarea>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <!----------------- bocina terraza -------------------------->
+        <ion-col size="6">
+          <ion-row size="12">
+            <ion-col size="12">
+              <span class="titleProduct">
+                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+              </span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-toggle disabled color="success"></ion-toggle>
+            </ion-col>
+            <ion-col size="12">
+              <ion-label>
+                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+              </ion-label>
+              <ion-card>
+                <ion-textarea rows="6" cols="20">
+                </ion-textarea>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <br><br>
+    </ion-grid>
+  </ion-content>
+  <ion-footer *ngIf="activeData === false" no-border>
+    <ion-grid>
+      <!-- footer boton -->
+      <ion-row size="12" class="footer">
+        <ion-col size="3" offset="8">
+          <ion-button shape="round" color="danger" expand="full">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>
+</ion-app>

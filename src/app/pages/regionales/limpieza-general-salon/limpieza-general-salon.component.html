@@ -15,13 +15,12 @@
                 </ion-col>
       </ion-row>
     </ion-grid>
-  </ion-header>
-  <ion-content fullscreen="false" *ngIf="activeData === true" class="ion-padding">
+    <br>
     <ion-grid>
       <!-- titulo de empresa -->
       <ion-row size="12">
         <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL MASARIK</h5>
+          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
         </ion-col>
         <ion-col size="8">
           <span class="date-grey">
@@ -29,6 +28,10 @@
           </span>
         </ion-col>
       </ion-row>
+    </ion-grid>
+  </ion-header>
+  <ion-content fullscreen="false" *ngIf="activeData === true" class="ion-padding">
+    <ion-grid>
       <ion-row size="12">
         <ion-col size="6">
           <ion-label floating>Número de mesa</ion-label>
@@ -173,7 +176,7 @@
       </ion-row>
       <ion-row size="12">
         <ion-col size="1">
-          <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          <img src="./assets/icon/skeleton-circle.png" alt="Validaccion de assistencia" />
         </ion-col>
         <ion-col size="11" class="ion-align-self-center">
           <h3 class="title">
@@ -189,51 +192,97 @@
       <ion-row size="12">
         <ion-col size="4">
           <h5 class="subtitle-negro">
-            <ion-skeleton-text animated width="40%"></ion-skeleton-text>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
           </h5>
         </ion-col>
         <ion-col size="8">
           <span class="date-grey">
-            <ion-skeleton-text animated width="80%"></ion-skeleton-text>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
           </span>
         </ion-col>
       </ion-row>
       <ion-row size="12">
         <ion-col size="6">
           <ion-label floating>
-            <ion-skeleton-text animated width="60%"></ion-skeleton-text>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
           </ion-label>
           <ion-card class="closed">
-            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+            <ion-input>
+              <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+            </ion-input>
           </ion-card>
         </ion-col>
         <ion-col size="6"></ion-col>
       </ion-row>
+      <!-- --------------Limpieza en salon---------------------- -->
       <ion-row size="12">
+        <ion-col size="12">
+          <span>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+        </ion-col>
+        <ion-col size="6"><span>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <ion-toggle disabled color="success"></ion-toggle>
+        </ion-col>
         <ion-col size="6">
           <ion-label>
             <ion-skeleton-text animated width="10%"></ion-skeleton-text>
           </ion-label>
           <ion-card style="height: 9rem" class="center">
             <div style="margin-top: 2rem">
-              <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
             </div>
           </ion-card>
+        </ion-col>
+      </ion-row>
+      <!-- -------------limpieza en cubetas------------------- -->
+      <ion-row>
+        <ion-col size="12">
+          <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+        </ion-col>
+        <ion-col size="6"><span>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <ion-toggle disabled color="success"></ion-toggle>
         </ion-col>
         <ion-col size="6">
           <ion-label>
             <ion-skeleton-text animated width="10%"></ion-skeleton-text>
           </ion-label>
-          <ion-card>
-            <br />
-            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
-            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
-            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
-            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
-            <br />
+          <ion-card style="height: 9rem" class="center">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
           </ion-card>
         </ion-col>
       </ion-row>
+      <!-- -------------limpieza en booths------------------- -->
+      <ion-row>
+        <ion-col size="12">
+          <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+        </ion-col>
+        <ion-col size="6"><span>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <ion-toggle disabled color="success"></ion-toggle>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </ion-label>
+          <ion-card style="height: 9rem" class="center">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <br><br><br>
     </ion-grid>
   </ion-content>
   <ion-footer *ngIf="activeData === false" no-border>

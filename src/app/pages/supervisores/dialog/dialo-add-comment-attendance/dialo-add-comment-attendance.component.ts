@@ -36,6 +36,7 @@ export class DialoAddCommentAttendanceComponent implements OnInit {
   }
 
   getData() {
+    this.load.presentLoading('Cargando..');
     this.servicio
       .serviceGeneralGet(`ValidateAttendance/${this.id}`)
       .subscribe((resp) => {

@@ -55,7 +55,7 @@ export class VoladoEfectivoComponent implements OnInit {
 
   ngOnInit() {}
   getData() {
-    // this.load.presentLoading('Cargando..');
+    this.load.presentLoading('Cargando..');
     this.service
       .serviceGeneralGet('CashRegisterShortage/' + this.idEfectivo)
       .subscribe((resp) => {

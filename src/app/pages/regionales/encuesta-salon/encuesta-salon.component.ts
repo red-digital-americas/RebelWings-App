@@ -10,7 +10,9 @@ import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.comp
 export class EncuestaSalonComponent implements OnInit {
   public today = new Date();
   public user: any;
-  public idBranch: string;
+  public branchId;
+  public dataBranch: any[] = [];
+  public nameBranch = '';
   // public data: EncuestaModel = new EncuestaModel();
   data;
   public dataId = false; //sirve para identificar si el get trae informacion y diferencia entre el post y put
@@ -27,7 +29,7 @@ export class EncuestaSalonComponent implements OnInit {
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.routerActive.snapshot.paramMap.get('id'));
-    this.idBranch = this.routerActive.snapshot.paramMap.get('id');
+    this.branchId = this.routerActive.snapshot.paramMap.get('id');
     this.data = new EncuestaModel();
 
   //  this.getData();
@@ -35,12 +37,14 @@ export class EncuestaSalonComponent implements OnInit {
     console.log('Completar la tarea');
     this.dataId = false; //no hay registro entonces se hara un post
     this.activeData = true;
+    this.getBranch();
+
   }
   ngOnInit() { }
   getData() {
-    // this.load.presentLoading('Cargando..');
+    this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('SatisfactionSurvey/' + this.idBranch)
+      .serviceGeneralGet('SatisfactionSurvey/' + this.branchId)
       .subscribe((resp) => {
         if (resp.success) {
           if (resp.result?.length !== 0 && resp.result !== null) {
@@ -58,12 +62,31 @@ export class EncuestaSalonComponent implements OnInit {
         }
       });
   }
+  // get  name sucursal
+  getBranch() {
+    let branchIdNumber = 0;
+    branchIdNumber = Number(this.branchId);
+    console.log('branchIdNumber', branchIdNumber);
+    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+      if (resp.success) {
+        this.dataBranch = resp.result;
+        console.log('get branch', this.dataBranch);
+        this.dataBranch.forEach(element => {
+          if (element.branchId === branchIdNumber) {
+            this.nameBranch = element.branchName;
+            this.nameBranch = this.nameBranch.toUpperCase();
+            console.log('nombre', this.nameBranch);
+          }
+        });
+      }
+    });
+  }
   onRateChange(e){
     console.log('start', e);
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl('regional/centro-control');
+    this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
   }
   validateSave() {
     if (
@@ -98,10 +121,10 @@ export class EncuestaSalonComponent implements OnInit {
   save() {
     this.disabled = true;
     // esto se pone aqui por que aun no se estrae la data de un get
-    this.data.branchId = this.user.branch;
+    this.data.branchId = this.branchId;
     this.data.updatedBy = this.user.id;
     this.data.updatedDate = this.today;
-    // if (this.idBranch === '0') {
+    // if (this.branchId === '0') {
       this.addPropina();
     // } else {
     //   this.updatePropina();
@@ -130,7 +153,7 @@ export class EncuestaSalonComponent implements OnInit {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
         console.log('data', data);
-        this.router.navigateByUrl('regional/centro-control');
+        this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
       }
     });
   }

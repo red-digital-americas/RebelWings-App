@@ -1,0 +1,274 @@
+<ion-app>
+  <ion-header *ngIf="activeData === true" class="ion-no-border ion-padding">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div>
+            <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR</p>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="1">
+          <img src="./assets/icon/ilustracion_salon_montado.png" alt="Validaccion de assistencia" />
+        </ion-col>
+        <ion-col size="11" class="ion-align-self-center">
+          <h3 class="title">REVISIÓN DE MESAS</h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <br>
+    <!-- titulo de empresa -->
+    <ion-grid>
+      <ion-row size="12">
+        <ion-col size="4">
+          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
+        </ion-col>
+        <ion-col size="8">
+          <span class="date-grey">
+            {{ today | date: "dd MMM yyy" }}
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-header>
+  <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
+    <ion-grid>
+      <!-- TABLE -->
+      <ion-row size="12">
+        <ion-col size="6">
+          <ion-label floating>Revisión de mesa</ion-label>
+          <ion-card class="closed">
+            <ion-input [(ngModel)]="data.numTable" placeholder="Mesa 4">
+            </ion-input>
+          </ion-card>
+          </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+
+      <ion-row>
+        <!----------------- producto 1 -------------------------->
+        <ion-col size="6">
+          <ion-row size="12">
+            <ion-col size="12">
+              <span class="titleProduct">¿Está en la mesa el producto 1?</span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-toggle [(ngModel)]="data.productOne" color="success"></ion-toggle>
+            </ion-col>
+            <ion-col size="12" *ngIf="data.productOne === false">
+              <ion-label>Comentario</ion-label>
+              <ion-card>
+                <ion-textarea [(ngModel)]="data.commentProductOne" rows="6" cols="20">
+                </ion-textarea>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <!----------------- producto 2 -------------------------->
+        <ion-col size="6">
+          <ion-row size="12">
+            <ion-col size="12">
+              <span class="titleProduct">¿Está en la mesa el producto 2?</span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-toggle [(ngModel)]="data.productTwo" color="success"></ion-toggle>
+            </ion-col>
+            <ion-col size="12" *ngIf="data.productTwo === false">
+              <ion-label>Comentario</ion-label>
+              <ion-card>
+                <ion-textarea [(ngModel)]="data.commentProductTwo" rows="6" cols="20">
+                </ion-textarea>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <!----------------- producto 3  -------------------------->
+      <ion-row>
+        <ion-col size="6">
+          <ion-row size="12">
+            <ion-col size="12">
+              <span class="titleProduct">¿Está en la mesa el producto 3?</span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-toggle [(ngModel)]="data.productThree" color="success"></ion-toggle>
+            </ion-col>
+            <ion-col size="12" *ngIf="data.productThree === false">
+              <ion-label>Comentario</ion-label>
+              <ion-card>
+                <ion-textarea [(ngModel)]="data.commentProductThree" rows="6" cols="20">
+                </ion-textarea>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <!----------------- producto 4 -------------------------->
+        <ion-col size="6">
+          <ion-row size="12">
+            <ion-col size="12">
+              <span class="titleProduct">¿Está en la mesa el producto 4?</span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-toggle [(ngModel)]="data.productFour" color="success"></ion-toggle>
+            </ion-col>
+            <ion-col size="12" *ngIf="data.productFour === false">
+              <ion-label>Comentario</ion-label>
+              <ion-card>
+                <ion-textarea [(ngModel)]="data.commentProductFour" rows="6" cols="20">
+                </ion-textarea>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <br><br>
+    </ion-grid>
+  </ion-content>
+  <ion-footer *ngIf="activeData === true" no-border>
+    <ion-grid>
+      <!-- footer boton -->
+      <ion-row size="12" class="footer">
+        <ion-col size="3" offset="8">
+          <ion-button (click)="save()" shape="round" color="danger" expand="full">
+            GUARDAR
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>
+
+  <!-- ******************* skeletor *************************** -->
+  <ion-header *ngIf="activeData === false" class="ion-no-border ion-padding">
+    <ion-grid>
+      <ion-row size="12">
+        <ion-col size="1">
+          <div>
+            <p class="ion-align-items-start return">
+              <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+            </p>
+          </div>
+        </ion-col>
+        <ion-col size="11"></ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="1">
+          <img src="./assets/icon/skeleton-circle.png" alt="Validaccion de assistencia" />
+        </ion-col>
+        <ion-col size="11" class="ion-align-self-center">
+          <h3 class="title">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-header>
+  <ion-content *ngIf="activeData === false" fullscreen="false" class="ion-padding">
+    <ion-grid>
+      <!-- TABLE -->
+      <ion-row size="12">
+        <ion-col size="6">
+          <ion-label floating><ion-skeleton-text animated width="10%"></ion-skeleton-text></ion-label>
+          <ion-card class="closed">
+            <ion-input>
+            </ion-input>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+
+      <ion-row>
+        <!----------------- producto 1 -------------------------->
+        <ion-col size="6">
+          <ion-row size="12">
+            <ion-col size="12">
+              <span class="titleProduct"><ion-skeleton-text animated width="10%"></ion-skeleton-text></span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-toggle disabled color="success"></ion-toggle>
+            </ion-col>
+            <ion-col size="12">
+              <ion-label><ion-skeleton-text animated width="10%"></ion-skeleton-text></ion-label>
+              <ion-card>
+                <ion-textarea rows="6" cols="20">
+                </ion-textarea>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <!----------------- producto 2 -------------------------->
+        <ion-col size="6">
+          <ion-row size="12">
+            <ion-col size="12">
+              <span class="titleProduct"><ion-skeleton-text animated width="10%"></ion-skeleton-text></span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-toggle disabled color="success"></ion-toggle>
+            </ion-col>
+            <ion-col size="12">
+              <ion-label><ion-skeleton-text animated width="10%"></ion-skeleton-text></ion-label>
+              <ion-card>
+                <ion-textarea rows="6" cols="20">
+                </ion-textarea>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <!----------------- producto 3  -------------------------->
+      <ion-row>
+        <ion-col size="6">
+          <ion-row size="12">
+            <ion-col size="12">
+              <span class="titleProduct"><ion-skeleton-text animated width="10%"></ion-skeleton-text></span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-toggle disabled color="success"></ion-toggle>
+            </ion-col>
+            <ion-col size="12">
+              <ion-label><ion-skeleton-text animated width="10%"></ion-skeleton-text></ion-label>
+              <ion-card>
+                <ion-textarea disabled rows="6" cols="20">
+                </ion-textarea>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <!----------------- producto 4 -------------------------->
+        <ion-col size="6">
+          <ion-row size="12">
+            <ion-col size="12">
+              <span class="titleProduct"><ion-skeleton-text animated width="10%"></ion-skeleton-text></span>
+            </ion-col>
+            <ion-col size="12">
+              <ion-toggle disabled color="success"></ion-toggle>
+            </ion-col>
+            <ion-col size="12">
+              <ion-label><ion-skeleton-text animated width="10%"></ion-skeleton-text></ion-label>
+              <ion-card>
+                <ion-textarea rows="6" cols="20">
+                </ion-textarea>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <br><br>
+    </ion-grid>
+
+
+  </ion-content>
+  <ion-footer *ngIf="activeData === false" no-border>
+    <ion-grid>
+      <!-- footer boton -->
+      <ion-row size="12" class="footer">
+        <ion-col size="3" offset="8">
+          <ion-button shape="round" color="danger" expand="full">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>
+</ion-app>

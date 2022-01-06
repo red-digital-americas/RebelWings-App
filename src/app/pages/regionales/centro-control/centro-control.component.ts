@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
@@ -15,15 +15,18 @@ export class CentroControlComponent implements OnInit {
   public vespertino = 2;
   public data: any[] = [];
   public dataNotification: any = [];
+  public branchId;
+  public dataBranch: any[] = [];
+  public nameBranch = '';
   // variable menu seleccionable
   public task = 'cocina';
 
   constructor(
-    public router: Router,
+    public router: Router, public routerActive: ActivatedRoute,
     public service: ServiceGeneralService,
     public load: LoaderComponent,
     public modalController: ModalController
-  ) {}
+  ) { }
   // segment
   segmentChanged(ev: any) {
     console.log('Segment changed', ev);
@@ -31,15 +34,18 @@ export class CentroControlComponent implements OnInit {
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log('user', this.user);
+    console.log(this.routerActive.snapshot.paramMap.get(`id`));
+    this.branchId = this.routerActive.snapshot.paramMap.get(`id`);
     this.getDataControl();
+    this.getBranch();
     this.getNotification();
   }
-  ngOnInit() {}
+  ngOnInit() { }
   // obtiene el estatus de cada tarea
   getDataControl() {
     // this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet(`ControlCenter/${this.user.branch}/1/Regional`)
+      .serviceGeneralGet(`ControlCenter/${this.branchId}/1/Regional`)
       .subscribe((resp) => {
         if (resp.success) {
           this.data = resp.result.controlCenters;
@@ -63,7 +69,7 @@ export class CentroControlComponent implements OnInit {
       cssClass: 'my-custom-class',
       swipeToClose: true,
       componentProps: {
-        id: this.user.branch, //se envia el id de sucursal
+        id: this.branchId, //se envia el id de sucursal
       },
     });
     modal.onDidDismiss().then((data) => {
@@ -76,7 +82,7 @@ export class CentroControlComponent implements OnInit {
   // notificaciones de regional
   getNotification() {
     this.service
-      .serviceGeneralGet('Transfer/Notifications?id=' + this.user.branch)
+      .serviceGeneralGet('Transfer/Notifications?id=' + this.branchId)
       .subscribe((resp) => {
         if (resp.success) {
           this.dataNotification = resp.result;
@@ -84,91 +90,144 @@ export class CentroControlComponent implements OnInit {
         }
       });
   }
+  // get  name sucursal
+  getBranch() {
+    let branchIdNumber = 0;
+    branchIdNumber = Number(this.branchId);
+    console.log('branchIdNumber', branchIdNumber);
+    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+      if (resp.success) {
+        this.dataBranch = resp.result;
+        console.log('get branch', this.dataBranch);
+        this.dataBranch.forEach(element => {
+          if (element.branchId === branchIdNumber) {
+            this.nameBranch = element.branchName;
+            this.nameBranch = this.nameBranch.toUpperCase();
+            console.log('nombre', this.nameBranch);
+          }
+        });
+      }
+    });
+  }
   //----------------------tareas de cocina---------------------
   ordenCocina() {
     // if (id === null) {
     //   id = 0;
     // }
-    this.router.navigateByUrl('regional/ordenes/' + this.user.branch);
+    this.router.navigateByUrl('regional/ordenes/' + this.branchId);
   }
   refrigeradorCocina() {
     // if (id === null) {
     //   id = 0;
     // }
-    this.router.navigateByUrl('regional/refrigeradores-cocina/' + this.user.branch);
+    this.router.navigateByUrl('regional/refrigeradores-cocina/' + this.branchId);
   }
   polloPrecoccionCocina() {
     // if (id === null) {
     //   id = 0;
     // }
-    this.router.navigateByUrl('regional/pollo-precoccion/' + this.user.branch);
+    this.router.navigateByUrl('regional/pollo-precoccion/' + this.branchId);
   }
   productosCompletosCocina() {
     // if (id === null) {
     //   id = 0;
     // }
-    this.router.navigateByUrl('regional/productos-completos-orden/' + this.user.branch);
+    this.router.navigateByUrl('regional/productos-completos-orden/' + this.branchId);
   }
   limpiezaFreidorasCocina() {
     // if (id === null) {
     //   id = 0;
     // }
-    this.router.navigateByUrl('regional/limpieza-freidoras/' + this.user.branch);
+    this.router.navigateByUrl('regional/limpieza-freidoras/' + this.branchId);
   }
   //----------------------tareas de salon---------------------
   conteoPersonasSalon() {
     // if (id === null) {
     //   id = 0;
     // }
-    this.router.navigateByUrl('regional/conteo-personas/' + this.user.branch);
+    this.router.navigateByUrl('regional/conteo-personas/' + this.branchId);
   }
   encuestaSalon() {
     // if (id === null) {
     //   id = 0;
     // }
-    this.router.navigateByUrl('regional/encuesta/' + this.user.branch);
+    this.router.navigateByUrl('regional/encuesta/' + this.branchId);
   }
   limpiezaGeneralSalon() {
     // if (id === null) {
     //   id = 0;
     // }
-    this.router.navigateByUrl('regional/limpieza-general/' + this.user.branch);
+    this.router.navigateByUrl('regional/limpieza-general/' + this.branchId);
   }
   estacionSalon() {
     // if (id === null) {
     //   id = 0;
     // }
-    this.router.navigateByUrl('regional/estacion/' + this.user.branch);
+    this.router.navigateByUrl('regional/estacion/' + this.branchId);
   }
   temperaturaBebidaSalon() {
     // if (id === null) {
     //   id = 0;
     // }
-    this.router.navigateByUrl('regional/temperatura-bebidas/' + this.user.branch);
+    this.router.navigateByUrl('regional/temperatura-bebidas/' + this.branchId);
   }
   audioVideoSalon() {
     // if (id === null) {
     //   id = 0;
     // }
-    this.router.navigateByUrl('regional/audio-video/' + this.user.branch);
+    this.router.navigateByUrl('regional/audio-video/' + this.branchId);
   }
   focosSalon() {
     // if (id === null) {
     //   id = 0;
     // }
-    this.router.navigateByUrl('regional/focos/' + this.user.branch);
+    this.router.navigateByUrl('regional/focos/' + this.branchId);
   }
   limpiezaBarraSalon() {
     // if (id === null) {
     //   id = 0;
     // }
-    this.router.navigateByUrl('regional/limpieza-barra/' + this.user.branch);
+    this.router.navigateByUrl('regional/limpieza-barra/' + this.branchId);
   }
   refrigeradoresSalon() {
     // if (id === null) {
     //   id = 0;
     // }
-    this.router.navigateByUrl('regional/refrigeradores-salon/' + this.user.branch);
+    this.router.navigateByUrl('regional/refrigeradores-salon/' + this.branchId);
   }
 
+  //---------------------- baño---------------------
+
+  lavabosBano() {
+    this.router.navigateByUrl('regional/lavabos-jabon-papel/' + this.branchId);
+  }
+  estadoGeneral() {
+    this.router.navigateByUrl('regional/estado-general/' + this.branchId);
+  }
+  //---------------------- sistema y caja---------------------
+  ticketMesa() {
+    this.router.navigateByUrl('regional/ticket-mesa/' + this.branchId);
+  }
+  entradasCargadas() {
+    this.router.navigateByUrl('regional/entradas-cargadas/' + this.branchId);
+  }
+  revisionPedido() {
+    this.router.navigateByUrl('regional/revision-pedido/' + this.branchId);
+  }
+  revisionMesas() {
+    this.router.navigateByUrl('regional/revision-mesas/' + this.branchId);
+  }
+  //---------------------- MANTENIMIENTO---------------------
+  cocinaMantenimiento() {
+    this.router.navigateByUrl('regional/cocina-mantenimiento/' + this.branchId);
+  }
+  salonMantenimiento() {
+    this.router.navigateByUrl('regional/salon-mantenimiento/' + this.branchId);
+  }
+  banosMantenimiento() {
+    this.router.navigateByUrl('regional/baño-mantenimiento/' + this.branchId);
+  }
+  barraMantenimiento() {
+    this.router.navigateByUrl('regional/barra-mantenimiento/' + this.branchId);
+  }
 }

@@ -17,7 +17,9 @@ import { ActionSheetController } from '@ionic/angular';
 export class LimpiezaBarraSalonComponent implements OnInit {
   public today = new Date();
   public user: any;
-  public idBranch: string;
+  public branchId;
+  public dataBranch: any[] = [];
+  public nameBranch = '';
   public data: BarCleaningModel = new BarCleaningModel();
   public dataId = false; //sirve para identificar si el get trae informacion y diferencia entre el post y put
   public base64 = 'data:image/jpeg;base64';
@@ -38,8 +40,10 @@ export class LimpiezaBarraSalonComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     console.log('user', this.user);
-    this.idBranch = this.routerActive.snapshot.paramMap.get('id');
+    this.branchId = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
+    this.getBranch();
+
   }
   ngOnInit() { }
 
@@ -48,7 +52,7 @@ export class LimpiezaBarraSalonComponent implements OnInit {
     this.load.presentLoading('Cargando..');
     this.service
       // this.user.branch
-      .serviceGeneralGet('BarCleaning/' + this.idBranch)
+      .serviceGeneralGet('BarCleaning/' + this.branchId)
       .subscribe((resp) => {
         if (resp.success) {
           // comprobar si tiene registros por dia
@@ -70,7 +74,26 @@ export class LimpiezaBarraSalonComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl('regional/centro-control');
+    this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+  }
+  // get  name sucursal
+  getBranch() {
+    let branchIdNumber = 0;
+    branchIdNumber = Number(this.branchId);
+    console.log('branchIdNumber', branchIdNumber);
+    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+      if (resp.success) {
+        this.dataBranch = resp.result;
+        console.log('get branch', this.dataBranch);
+        this.dataBranch.forEach(element => {
+          if (element.branchId === branchIdNumber) {
+            this.nameBranch = element.branchName;
+            this.nameBranch = this.nameBranch.toUpperCase();
+            console.log('nombre', this.nameBranch);
+          }
+        });
+      }
+    });
   }
   // eliminar indice de orden
   async addPhotoToGallery() {
@@ -156,7 +179,7 @@ export class LimpiezaBarraSalonComponent implements OnInit {
     await actionSheet.present();
   }
   save() {
-    this.data.branchId = this.user.branch;
+    this.data.branchId = this.branchId;
     this.data.updatedBy = this.user.id;
     this.data.updatedDate = this.today;
     this.disabled = true;
@@ -179,7 +202,7 @@ export class LimpiezaBarraSalonComponent implements OnInit {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('regional/centro-control');
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
         }
       });
   }
@@ -200,7 +223,7 @@ export class LimpiezaBarraSalonComponent implements OnInit {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('regional/centro-control');
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
         }
       });
   }

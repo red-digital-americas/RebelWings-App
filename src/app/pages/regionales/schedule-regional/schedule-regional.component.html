@@ -1,3 +1,39 @@
-<p>
-  schedule-regional works!
-</p>
+<ion-app>
+  <ion-content fullscreen="false" class="ion-padding">
+    <div class="justify">
+      <ion-grid>
+        <!-- titulo -->
+        <ion-row>
+          <ion-col class="logo">
+            <h2>SELECCIÓN DE SUCURSAL</h2>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid>
+        <ion-row class="login">
+          <ion-col size="12">
+            <ion-list>
+              <ion-list-header>
+                <ion-label> Selecciona la sucursal </ion-label>
+              </ion-list-header>
+              <ion-item>
+                <ion-label>Sucursal</ion-label>
+                <ion-select [(ngModel)]="branchId">
+                  <ion-select-option *ngFor="let item of dataBranch" [value]="item.branchId">{{item.branchName}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        <ion-row class="login">
+          <ion-col size="12">
+            <div class="logo">
+              <ion-button (click)="selecSchedule()" shape="round" color="danger" expand="full">INGRESAR</ion-button>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-content>
+</ion-app>

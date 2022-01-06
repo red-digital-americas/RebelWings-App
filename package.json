@@ -41,6 +41,7 @@
     "cordova-plugin-datepicker": "^0.9.3",
     "cordova-plugin-dialogs": "^2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
+    "date-fns": "^2.28.0",
     "ionic-rating": "^2.0.0",
     "ionic-selectable": "^4.9.0",
     "ngx-filter-pipe": "^2.1.2",

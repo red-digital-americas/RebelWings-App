@@ -33,6 +33,7 @@ export class TransferenciasComponent implements OnInit {
   }
   ngOnInit() {}
   getData() {
+    this.load.presentLoading('Cargando..');
     this.service
       .serviceGeneralGet('Transfer/BranchList/' + this.user.branch)
       .subscribe((resp) => {

@@ -17,8 +17,9 @@ import { ActionSheetController } from '@ionic/angular';
 export class LimpiezaFreidorasCocinaComponent implements OnInit {
   public today = new Date();
   public user: any;
-  public idBranch: string;
-  // public data: ProductoModel = new ProductoModel();
+  public branchId;
+  public dataBranch: any[] = [];
+  public nameBranch = '';  // public data: ProductoModel = new ProductoModel();
   public objProduct: any[] = [];
   public dataId = false; //sirve para identificar si el get trae informacion y diferencia entre el post y put
   public base64 = 'data:image/jpeg;base64';
@@ -40,15 +41,16 @@ export class LimpiezaFreidorasCocinaComponent implements OnInit {
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.routerActive.snapshot.paramMap.get('id'));
-    this.idBranch = this.routerActive.snapshot.paramMap.get('id');
+    this.branchId = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
+    this.getBranch();
   }
   ngOnInit() { }
   // get data refrigerador
   getData() {
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('Fryer/' + this.idBranch)
+      .serviceGeneralGet('Fryer/' + this.branchId)
       .subscribe((resp) => {
         if (resp.success) {
           if (resp.result?.length !== 0 && resp.result !== null) {
@@ -80,7 +82,26 @@ export class LimpiezaFreidorasCocinaComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl('regional/centro-control');
+    this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+  }
+  // get  name sucursal
+  getBranch() {
+    let branchIdNumber = 0;
+    branchIdNumber = Number(this.branchId);
+    console.log('branchIdNumber', branchIdNumber);
+    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+      if (resp.success) {
+        this.dataBranch = resp.result;
+        console.log('get branch', this.dataBranch);
+        this.dataBranch.forEach(element => {
+          if (element.branchId === branchIdNumber) {
+            this.nameBranch = element.branchName;
+            this.nameBranch = this.nameBranch.toUpperCase();
+            console.log('nombre', this.nameBranch);
+          }
+        });
+      }
+    });
   }
   // ---------add product complete----------
   addProductRisk() {
@@ -233,7 +254,7 @@ export class LimpiezaFreidorasCocinaComponent implements OnInit {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.objProduct);
-          this.router.navigateByUrl('regional/centro-control');
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
         }
       });
   }
@@ -257,7 +278,7 @@ export class LimpiezaFreidorasCocinaComponent implements OnInit {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.objProduct);
-          this.router.navigateByUrl('regional/centro-control');
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
         }
       });
   }

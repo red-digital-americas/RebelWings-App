@@ -54,6 +54,7 @@ export class GasValidationComponent implements OnInit {
   async ngOnInit() {}
 
   getData() {
+    this.load.presentLoading('Cargando..');
     this.service
       .serviceGeneralGet('ValidationGas/' + this.idGas)
       .subscribe((resp) => {

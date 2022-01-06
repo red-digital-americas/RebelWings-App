@@ -17,7 +17,9 @@ import { ActionSheetController } from '@ionic/angular';
 export class LimpiezaGeneralSalonComponent implements OnInit {
   public today = new Date();
   public user: any;
-  public idBranch: string;
+  public branchId;
+  public dataBranch: any[] = [];
+  public nameBranch = '';
   public data: CleanGeneralModel = new CleanGeneralModel();
   public dataId = false; //sirve para identificar si el get trae informacion y diferencia entre el post y put
   public disabled = false;
@@ -42,15 +44,17 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.routerActive.snapshot.paramMap.get('id'));
-    this.idBranch = this.routerActive.snapshot.paramMap.get('id');
+    this.branchId = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
+    this.getBranch();
+
   }
 
   ngOnInit() { }
   getData() {
-    // this.load.presentLoading('Cargando..');
+    this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('GeneralCleaning/' + this.idBranch)
+      .serviceGeneralGet('GeneralCleaning/' + this.branchId)
       .subscribe((resp) => {
         if (resp.success) {
           if (resp.result?.length !== 0 && resp.result !== null) {
@@ -69,7 +73,26 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl('regional/centro-control');
+    this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+  }
+  // get  name sucursal
+  getBranch() {
+    let branchIdNumber = 0;
+    branchIdNumber = Number(this.branchId);
+    console.log('branchIdNumber', branchIdNumber);
+    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+      if (resp.success) {
+        this.dataBranch = resp.result;
+        console.log('get branch', this.dataBranch);
+        this.dataBranch.forEach(element => {
+          if (element.branchId === branchIdNumber) {
+            this.nameBranch = element.branchName;
+            this.nameBranch = this.nameBranch.toUpperCase();
+            console.log('nombre', this.nameBranch);
+          }
+        });
+      }
+    });
   }
 
   validateSave() {
@@ -181,7 +204,7 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
     this.disabled = true;
     this.fotosCleanBooths = [];
     // esto se pone aqui por que aun no se estrae la data de un get
-    this.data.branchId = this.user.branch;
+    this.data.branchId = this.branchId;
     this.data.updatedBy = this.user.id;
     this.data.updatedDate = this.today;
     console.log('Obj To send => ', this.data);
@@ -202,7 +225,7 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
-          this.router.navigateByUrl('regional/centro-control');
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
         }
       });
   }
@@ -220,7 +243,7 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
         console.log('data', data);
-        this.router.navigateByUrl('regional/centro-control');
+        this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
       }
     });
   }
