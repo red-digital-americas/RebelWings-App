@@ -15,15 +15,13 @@ export class WelcomeComponent implements OnInit {
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log('user', this.user);
-    if (this.user.roleId === 2) {
-      // if (this.user.roleId === 1) {
-
+    // supervisor
+    if (this.user.roleId === 1) {
       setTimeout(() => {
         this.router.navigateByUrl('supervisor');
       }, 2000);
-      // } else if (this.user.roleId === 2) {
-    } else if (this.user.roleId === 1) {
-
+      // regional
+    } else if (this.user.roleId === 2) {
       setTimeout(() => {
         this.router.navigateByUrl('regional');
       }, 2000);

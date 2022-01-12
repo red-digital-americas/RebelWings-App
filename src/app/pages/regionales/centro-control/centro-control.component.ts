@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ModalController } from '@ionic/angular';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import { DialogNotificationComponent } from 'src/app/pages/nav/dialog-notification/dialog-notification.component';
+import { ModalController, PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'app-centro-control',
@@ -25,7 +25,9 @@ export class CentroControlComponent implements OnInit {
     public router: Router, public routerActive: ActivatedRoute,
     public service: ServiceGeneralService,
     public load: LoaderComponent,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public popoverCtrl: PopoverController
+
   ) { }
   // segment
   segmentChanged(ev: any) {
@@ -230,4 +232,10 @@ export class CentroControlComponent implements OnInit {
   barraMantenimiento() {
     this.router.navigateByUrl('regional/barra-mantenimiento/' + this.branchId);
   }
+  async cerrarSesion() {
+    console.log('cerrar sesion');
+    localStorage.removeItem('userData');
+    this.router.navigateByUrl('login');
+  }
+
 }
