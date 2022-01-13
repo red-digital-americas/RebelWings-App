@@ -88,6 +88,9 @@ export class SalonMantenimientoComponent implements OnInit {
     });
   }
 
+  levantamientoTicket(id) {
+    this.router.navigateByUrl('regional/levantamiento-ticket/' + id);
+  }
   save() {
     this.disabled = true;
     // esto se pone aqui por que aun no se estrae la data de un get

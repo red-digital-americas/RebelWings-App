@@ -62,6 +62,9 @@ export class BarraMantenimientoComponent implements OnInit {
     // window.history.back();
     this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
   }
+  levantamientoTicket(id) {
+    this.router.navigateByUrl('regional/levantamiento-ticket/' + id);
+  }
   // get  name sucursal
   getBranch() {
     let branchIdNumber = 0;

@@ -21,10 +21,20 @@
         <ion-col size="4">
           <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
         </ion-col>
-        <ion-col size="8">
+        <ion-col size="4">
           <span class="date-grey">
             {{ today | date: "dd MMM yyy" }}
           </span>
+        </ion-col>
+        <ion-col size="1"></ion-col>
+        <ion-col size="3">
+          <div class="align-end-text">
+            <ion-button (click)="levantamientoTicket(0)" shape="round" color="warning" expand="full">
+              <span>
+                LEVANTAR TICKET
+              </span>
+            </ion-button>
+          </div>
         </ion-col>
       </ion-row>
     </ion-grid>

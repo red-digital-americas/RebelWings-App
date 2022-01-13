@@ -60,6 +60,10 @@ export class CentroControlComponent implements OnInit {
     this.router.navigateByUrl('regional');
     // window.history.back();
   }
+  levantamientoTicket(id) {
+    this.router.navigateByUrl('regional/levantamiento-ticket/' + id);
+  }
+
   terminarTurno() {
     this.router.navigateByUrl('regional');
   }

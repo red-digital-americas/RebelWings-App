@@ -30,6 +30,7 @@ import { CocinaMantenimientoComponent } from './cocina-mantenimiento/cocina-mant
 import { SalonMantenimientoComponent } from './salon-mantenimiento/salon-mantenimiento.component';
 import { BanosMantenimientoComponent } from './banos-mantenimiento/banos-mantenimiento.component';
 import { BarraMantenimientoComponent } from './barra-mantenimiento/barra-mantenimiento.component';
+import { LevantamientoTicketComponent } from './levantamiento-ticket/levantamiento-ticket.component';
 const routes: Routes = [
   {
     path: '',
@@ -135,6 +136,10 @@ const routes: Routes = [
   {
     path: 'barra-mantenimiento/:id',
     component: BarraMantenimientoComponent,
+  },
+  {
+    path: 'levantamiento-ticket/:id',
+    component: LevantamientoTicketComponent,
   },
 ];
 @NgModule({

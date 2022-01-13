@@ -10,18 +10,20 @@ import {
 import { ActionSheetController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-entradas-cargadas-sistema-caja',
-  templateUrl: './entradas-cargadas-sistema-caja.component.html',
-  styleUrls: ['./entradas-cargadas-sistema-caja.component.scss'],
+  selector: 'app-levantamiento-ticket',
+  templateUrl: './levantamiento-ticket.component.html',
+  styleUrls: ['./levantamiento-ticket.component.scss'],
 })
-export class EntradasCargadasSistemaCajaComponent implements OnInit {
-
+export class LevantamientoTicketComponent implements OnInit {
   public today = new Date();
   public user: any;
-  public data: EntriesChargedModel = new EntriesChargedModel();
+  public data: LevantamientoTicketModel = new LevantamientoTicketModel();
   public dataId = false; //sirve para identificar si el get trae informacion y diferencia entre el post y put
   public branchId;
   public dataBranch: any[] = [];
+  public dataBranchLocate: any[] = [];
+  public dataCategory: any[] = [];
+
   public nameBranch = '';
   public base64 = 'data:image/jpeg;base64';
   public disabled = false;
@@ -42,13 +44,16 @@ export class EntradasCargadasSistemaCajaComponent implements OnInit {
     this.branchId = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
     this.getBranch();
+    this.getLocation();
+    this.getCategory();
+
   }
-  ngOnInit() {}
+  ngOnInit() { }
   // get data refrigerador
   getData() {
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('EntriesChargedAsDeliveryNote/' + this.branchId)
+      .serviceGeneralGet('Ticketing/' + this.branchId)
       .subscribe((resp) => {
         if (resp.success) {
           if (resp.result?.length !== 0 && resp.result !== null) {
@@ -66,6 +71,27 @@ export class EntradasCargadasSistemaCajaComponent implements OnInit {
         }
       });
   }
+
+  getLocation() {
+    let branchIdNumber = 0;
+    branchIdNumber = Number(this.branchId);
+    console.log('branchIdNumber', branchIdNumber);
+    this.service.serviceGeneralGet(`Ticketing/Catalogue/BranchLocate`).subscribe(resp => {
+        if (resp.success) {
+          this.dataBranchLocate = resp.result;
+          console.log('get specific station', this.dataBranchLocate);
+        }
+      });
+  }
+  getCategory() {
+    this.service.serviceGeneralGet(`Ticketing/Catalogue/Category`).subscribe(resp => {
+        if (resp.success) {
+          this.dataCategory = resp.result;
+          console.log('get status', this.dataCategory);
+        }
+      });
+  }
+
   return() {
     // window.history.back();
     this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
@@ -99,17 +125,15 @@ export class EntradasCargadasSistemaCajaComponent implements OnInit {
     // agregaremos las fotos pero con id type de acuerdo al caso
     // al agregar las fotos en storage, las pasamos por lista
     console.log('obj fotos', this.photoService);
-    this.data.photoEntriesChargedAsDeliveryNotes.push({
+    this.data.photoTicketings.push({
       id: 0,
-      entriesChargedAsDeliveryNoteId: this.data.id,
-      type: idType,
+      ticketingId: this.data.id,
       photo: this.photoService.photos[0].webviewPath,
       photoPath: 'jpeg',
       createdBy: this.user.id,
       createdDate: this.today,
       updatedBy: this.user.id,
       updatedDate: this.today,
-      filepath: ''
     });
     console.log('fotos chicken', this.data);
 
@@ -129,7 +153,7 @@ export class EntradasCargadasSistemaCajaComponent implements OnInit {
           handler: () => {
             this.photoService.deletePicture(photo, position);
             //
-            this.data.photoEntriesChargedAsDeliveryNotes.splice(position, 1);
+            this.data.photoTicketings.splice(position, 1);
           },
         },
         {
@@ -155,7 +179,7 @@ export class EntradasCargadasSistemaCajaComponent implements OnInit {
           icon: 'trash',
           handler: () => {
             this.service
-              .serviceGeneralDelete(`EntriesChargedAsDeliveryNote/${id}/Photo`)
+              .serviceGeneralDelete(`Ticketing/${id}/Photo`)
               .subscribe((data) => {
                 if (data.success) {
                   this.load.presentLoading('Eliminando..');
@@ -178,10 +202,17 @@ export class EntradasCargadasSistemaCajaComponent implements OnInit {
     await actionSheet.present();
   }
   save() {
+    let branchIdNumber = 0;
+    branchIdNumber = Number(this.branchId);
     this.disabled = true;
     this.fotosProducto = [];
+    this.data.status= true;
+    this.data.commentTicketings = [];
+    this.data.specificLocation = '';
+    this.data.noTicket= '';
+    this.data.dateOpen = this.today;
     // esto se pone aqui por que aun no se estrae la data de un get
-    this.data.branchId = this.branchId;
+    this.data.branchId = branchIdNumber;
     this.data.updatedBy = this.user.id;
     this.data.updatedDate = this.today;
     // si no hay registro en el get sera un post
@@ -196,7 +227,7 @@ export class EntradasCargadasSistemaCajaComponent implements OnInit {
     this.data.createdDate = this.today;
     console.log('Obj To send  post=> ', this.data);
     this.service
-      .serviceGeneralPostWithUrl('EntriesChargedAsDeliveryNote', this.data)
+      .serviceGeneralPostWithUrl('Ticketing', this.data)
       .subscribe((data) => {
         if (data.success) {
           this.load.presentLoading('Guardando..');
@@ -208,8 +239,8 @@ export class EntradasCargadasSistemaCajaComponent implements OnInit {
   }
   updateData() {
     // al realizar el get el path viene null, al hacer el put marca error si no se manda una cadena de texto
-    if (this.data.photoEntriesChargedAsDeliveryNotes.length !== 0) {
-      this.data.photoEntriesChargedAsDeliveryNotes.forEach((photo) => {
+    if (this.data.photoTicketings.length !== 0) {
+      this.data.photoTicketings.forEach((photo) => {
         if (photo.id !== 0) {
           photo.photoPath = '';
         }
@@ -217,7 +248,7 @@ export class EntradasCargadasSistemaCajaComponent implements OnInit {
     }
     console.log('Obj To send put => ', this.data);
     this.service
-      .serviceGeneralPut('EntriesChargedAsDeliveryNote', this.data)
+      .serviceGeneralPut('Ticketing', this.data)
       .subscribe((data) => {
         if (data.success) {
           this.load.presentLoading('Actualizando..');
@@ -228,32 +259,41 @@ export class EntradasCargadasSistemaCajaComponent implements OnInit {
       });
   }
 }
-class EntriesChargedModel {
+class LevantamientoTicketModel {
   id: number;
   branchId: number;
-  commentDirectDeliveriesPerDay: string;
-  revisionNumber: number;
-  commentRevisionNumber: string;
+  status: boolean;
+  whereAreYouLocated: number;
+  specificLocation: string;
+  category: number;
+  noTicket: string;
+  dateOpen: Date;
+  dateClosed: Date;
+  describeProblem: string;
   createdBy: number;
   createdDate: Date;
   updatedBy: number;
   updatedDate: Date;
-  photoEntriesChargedAsDeliveryNotes: PhotoEntriesChargedModel[] = [];
+  commentTicketings: CommentTicketingsModel[] = [];
+  photoTicketings: PhotoTicketingsModel[] = [];
 }
-class PhotoEntriesChargedModel {
+class PhotoTicketingsModel {
   id: number;
-  entriesChargedAsDeliveryNoteId: number;
-  type: number;
+  ticketingId: number;
   photo: string;
   photoPath: string;
   createdBy: number;
   createdDate: Date;
   updatedBy: number;
   updatedDate: Date;
-  filepath: string; //no es parte del modelo solo es para eliminar todas las fotos filesystem
-
 }
-
-
-
+class CommentTicketingsModel {
+  id: number;
+  ticketingId: number;
+  comment: string;
+  createdBy: number;
+  createdDate: Date;
+  updatedBy: number;
+  updatedDate: Date;
+}
 

@@ -38,6 +38,7 @@ import { CocinaMantenimientoComponent } from './cocina-mantenimiento/cocina-mant
 import { SalonMantenimientoComponent } from './salon-mantenimiento/salon-mantenimiento.component';
 import { BanosMantenimientoComponent } from './banos-mantenimiento/banos-mantenimiento.component';
 import { BarraMantenimientoComponent } from './barra-mantenimiento/barra-mantenimiento.component';
+import { LevantamientoTicketComponent } from './levantamiento-ticket/levantamiento-ticket.component';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { BarraMantenimientoComponent } from './barra-mantenimiento/barra-manteni
     CocinaMantenimientoComponent,
     SalonMantenimientoComponent,
     BanosMantenimientoComponent,
-    BarraMantenimientoComponent
+    BarraMantenimientoComponent,
+    LevantamientoTicketComponent
   ],
   imports: [
     CommonModule,
