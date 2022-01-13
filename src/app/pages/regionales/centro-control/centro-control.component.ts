@@ -38,16 +38,16 @@ export class CentroControlComponent implements OnInit {
     console.log('user', this.user);
     console.log(this.routerActive.snapshot.paramMap.get(`id`));
     this.branchId = this.routerActive.snapshot.paramMap.get(`id`);
-    this.getDataControl();
+    this.getDataControl(1);
     this.getBranch();
     this.getNotification();
   }
   ngOnInit() { }
   // obtiene el estatus de cada tarea
-  getDataControl() {
+  getDataControl(task) {
     // this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet(`ControlCenter/${this.branchId}/1/Regional`)
+      .serviceGeneralGet(`ControlCenter/${this.branchId}/${task}/Regional`)
       .subscribe((resp) => {
         if (resp.success) {
           this.data = resp.result.controlCenters;

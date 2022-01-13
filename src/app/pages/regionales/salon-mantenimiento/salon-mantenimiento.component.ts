@@ -105,11 +105,9 @@ export class SalonMantenimientoComponent implements OnInit {
   addData() {
     this.data.createdBy = this.user.id;
     this.data.createdDate = this.today;
-    const list: any[] = [];
-    list.push(this.data);
-    console.log('Obj To send  post=> ', list);
+    console.log('Obj To send  post=> ', this.data);
     this.service
-      .serviceGeneralPostWithUrl('Salon/', list)
+      .serviceGeneralPostWithUrl('Salon/', this.data)
       .subscribe((data) => {
         if (data.success) {
           this.load.presentLoading('Guardando..');
@@ -119,10 +117,8 @@ export class SalonMantenimientoComponent implements OnInit {
       });
   }
   updateData() {
-    const list: any[] = [];
-    list.push(this.data);
-    console.log('Obj To send put => ', list);
-    this.service.serviceGeneralPut('Salon/', list).subscribe((data) => {
+    console.log('Obj To send put => ', this.data);
+    this.service.serviceGeneralPut('Salon/', this.data).subscribe((data) => {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
         console.log('data', data);
