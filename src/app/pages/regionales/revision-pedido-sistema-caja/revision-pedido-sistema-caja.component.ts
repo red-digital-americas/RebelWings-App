@@ -61,7 +61,7 @@ export class RevisionPedidoSistemaCajaComponent implements OnInit {
     this.load.presentLoading('Cargando..');
     this.service
       // this.user.branch
-      .serviceGeneralGet('BarCleaning/' + this.branchId)
+      .serviceGeneralGet('OrderScheduleReview/' + this.branchId)
       .subscribe((resp) => {
         if (resp.success) {
           // comprobar si tiene registros por dia
@@ -112,9 +112,9 @@ export class RevisionPedidoSistemaCajaComponent implements OnInit {
     await this.photoService.loadSaved();
     // al agregar las fotos en storage, las pasamos por lista
     console.log('obj fotos', this.photoService);
-    this.data.photoBarCleanings.push({
+    this.data.photoOrderScheduleReviews.push({
       id: 0,
-      barCleaningId: this.data.id,
+      orderScheduleReviewId: this.data.id,
       photo: this.photoService.photos[0].webviewPath,
       photoPath: 'jpeg',
       createdBy: this.user.id,
@@ -139,7 +139,7 @@ export class RevisionPedidoSistemaCajaComponent implements OnInit {
           handler: () => {
             this.photoService.deletePicture(photo, position);
             //
-            this.data.photoBarCleanings.splice(position, 1);
+            this.data.photoOrderScheduleReviews.splice(position, 1);
 
           },
         },
@@ -166,7 +166,7 @@ export class RevisionPedidoSistemaCajaComponent implements OnInit {
           icon: 'trash',
           handler: () => {
             this.service
-              .serviceGeneralDelete(`BarCleaning/${id}/Photo`)
+              .serviceGeneralDelete(`OrderScheduleReview/${id}/Photo`)
               .subscribe((data) => {
                 if (data.success) {
                   this.load.presentLoading('Eliminando..');
@@ -206,7 +206,7 @@ export class RevisionPedidoSistemaCajaComponent implements OnInit {
     this.data.createdDate = this.today;
     console.log('Obj To send post => ', this.data);
     this.service
-      .serviceGeneralPostWithUrl('BarCleaning', this.data)
+      .serviceGeneralPostWithUrl('OrderScheduleReview', this.data)
       .subscribe((data) => {
         if (data.success) {
           this.load.presentLoading('Guardando..');
@@ -218,8 +218,8 @@ export class RevisionPedidoSistemaCajaComponent implements OnInit {
   }
   updateData() {
     // al realizar el get el path viene null, al hacer el put marca error si no se manda una cadena de texto
-    if (this.data.photoBarCleanings.length !== 0) {
-      this.data.photoBarCleanings.forEach((photo) => {
+    if (this.data.photoOrderScheduleReviews.length !== 0) {
+      this.data.photoOrderScheduleReviews.forEach((photo) => {
         if (photo.id !== 0) {
           photo.photoPath = '';
         }
@@ -227,7 +227,7 @@ export class RevisionPedidoSistemaCajaComponent implements OnInit {
     }
     console.log('Obj To send put=> ', this.data);
     this.service
-      .serviceGeneralPut('BarCleaning', this.data)
+      .serviceGeneralPut('OrderScheduleReview', this.data)
       .subscribe((data) => {
         if (data.success) {
           this.load.presentLoading('Actualizando..');
@@ -241,17 +241,16 @@ export class RevisionPedidoSistemaCajaComponent implements OnInit {
 class ChecksistemModel {
   id: number;
   branchId: number;
-  isClean: boolean;
   comment: string;
   createdBy: number;
   createdDate: Date;
   updatedBy: number;
   updatedDate: Date;
-  photoBarCleanings: PhotoBarCleaningsModel[] = [];
+  photoOrderScheduleReviews: PhotoOrderScheduleModel[] = [];
 }
-class PhotoBarCleaningsModel {
+class PhotoOrderScheduleModel {
   id: number;
-  barCleaningId: number;
+  orderScheduleReviewId: number;
   photo: string;
   photoPath: string;
   createdBy: number;
