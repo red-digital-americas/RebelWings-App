@@ -208,7 +208,6 @@ export class LevantamientoTicketComponent implements OnInit {
     this.fotosProducto = [];
     this.data.status= true;
     this.data.commentTicketings = [];
-    this.data.specificLocation = '';
     this.data.noTicket= '';
     this.data.dateOpen = this.today;
     // esto se pone aqui por que aun no se estrae la data de un get
@@ -233,6 +232,7 @@ export class LevantamientoTicketComponent implements OnInit {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
+          this.ionViewWillEnter();
           this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
         }
       });
@@ -254,6 +254,7 @@ export class LevantamientoTicketComponent implements OnInit {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
+          this.ionViewWillEnter();
           this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
         }
       });

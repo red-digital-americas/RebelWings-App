@@ -20,6 +20,7 @@ import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { FilterPipeModule } from 'ngx-filter-pipe';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { PopoverTransferRequestComponent } from './pages/supervisores/popover/popover-transfer-request/popover-transfer-request.component';
+import { LogoutComponent } from './pages/popover/logout/logout.component';
 
 
 
@@ -30,7 +31,8 @@ import { PopoverTransferRequestComponent } from './pages/supervisores/popover/po
     DialogGeneralConfirmationMessageComponent,
     SidebarComponent,
     DialogNotificationComponent,
-    PopoverTransferRequestComponent
+    PopoverTransferRequestComponent,
+    LogoutComponent
   ],
   entryComponents: [],
   imports: [

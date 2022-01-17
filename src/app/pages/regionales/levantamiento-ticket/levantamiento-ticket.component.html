@@ -51,11 +51,12 @@
             </ion-item>
           </ion-card>
         </ion-col>
+
         <ion-col size="6">
-          <ion-label floating>Seleccina el lugar específico</ion-label>
+          <ion-label floating>Seleccina la categoria</ion-label>
           <ion-card class="closed">
             <ion-item>
-              <ion-label>Lugar</ion-label>
+              <ion-label>Categoria</ion-label>
               <ion-select [(ngModel)]="data.category">
                 <ion-select-option *ngFor="let item of dataCategory" [value]="item.id">
                   {{ item.category }}
@@ -64,6 +65,13 @@
             </ion-item>
           </ion-card>
         </ion-col>
+        <ion-col size="6">
+          <ion-label floating>Sección</ion-label>
+          <ion-card class="closed">
+            <ion-input [(ngModel)]="data.specificLocation" type="text" placeholder="Sección"></ion-input>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6"></ion-col>
         <ion-col size="6">
           <ion-label>Fotografía</ion-label>
           <!-- se manda id type 2 para general -->

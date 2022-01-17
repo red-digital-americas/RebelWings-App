@@ -14,20 +14,22 @@
         </ion-col>
         <ion-col size="2" class="ion-align-items-end">
           <div class="align-end-text">
-            <ion-icon size="large" style="color: white" name="notifications-outline">
+            <ion-icon (click)="openNotification()" size="large" style="color: white" name="notifications-outline">
             </ion-icon>
-            <ion-badge (click)="openNotification()" *ngIf="dataNotification" style="color: #ffce00">
+            <ion-badge  *ngIf="dataNotification" style="color: #ffce00">
               {{ dataNotification.length }}</ion-badge>
           </div>
         </ion-col>
         <ion-col size="1" class="ion-align-items-end">
           <div class="align-end-text">
-            <ion-button>
+            <ion-button id="logout">
               <ion-icon size="large" style="color: white" name="menu-outline">
               </ion-icon>
             </ion-button>
+
           </div>
         </ion-col>
+
       </ion-row>
     </ion-grid>
   </ion-header>
@@ -92,24 +94,20 @@
             </ion-segment>
           </ion-col>
           <ion-col size="12">
-            <!-- <ion-row>
-                        <ion-col size="1"></ion-col>
-                        <ion-col size="10"> -->
-            <span class="title-progress-bar">Nivel de progreso</span>
-            &nbsp;
-            <ion-progress-bar mode="ios" color="warning" value=".8"></ion-progress-bar>
-            &nbsp;
-            <div class="margin-completado">
-              <span class="title-progress-bar">% completado</span>
-            </div>
-            <!-- </ion-col>
-                        <ion-col size="1"></ion-col>
-                      </ion-row> -->
-          </ion-col>
-          <ion-col size="12">
             <div [ngSwitch]="task">
               <!--***** S E C C I O N   C O C I N A ******-->
               <ion-row size="12" *ngSwitchCase="'cocina'">
+                <!-- progress bar -->
+                <ion-col size="12">
+                  <span class="title-progress-bar">Nivel de progreso</span>
+                  &nbsp;
+                  <ion-progress-bar mode="ios" color="{{color}}" [value]="barProgressTask / 100"></ion-progress-bar>
+                  &nbsp;
+                  <div class="margin-completado">
+                    <span class="title-progress-bar">{{barProgressTask | number}}% completado</span>
+                    <!-- .1 * 100 -->
+                  </div>
+                </ion-col>
                 <!-- ------------O R D E N E S------------ -->
                 <!-- *ngIf="data[2]" -->
                 <ion-col *ngIf="data[0]" size="6">
@@ -345,6 +343,15 @@
 
               <!--*** S E C C I O N   S A L O N  ******-->
               <ion-row size="12" *ngSwitchCase="'salon'">
+                <ion-col size="12">
+                  <span class="title-progress-bar">Nivel de progreso</span>
+                  &nbsp;
+                  <ion-progress-bar mode="ios" color="{{color}}" [value]="barProgressTask / 100"></ion-progress-bar>
+                  &nbsp;
+                  <div class="margin-completado">
+                    <span class="title-progress-bar">{{barProgressTask | number}}% completado</span>
+                  </div>
+                </ion-col>
                 <!-- ----------- C O N T E O  D E  P E R S O N A S------------ -->
                 <!-- *ngIf="data[2]" -->
                 <ion-col size="6" *ngIf="data[0]">
@@ -760,6 +767,15 @@
               <!--*** S E C C I O N   B A Ñ O  ******-->
 
               <ion-row size="12" *ngSwitchCase="'baño'">
+                <ion-col size="12">
+                  <span class="title-progress-bar">Nivel de progreso</span>
+                  &nbsp;
+                  <ion-progress-bar mode="ios" color="{{color}}" [value]="barProgressTask / 100"></ion-progress-bar>
+                  &nbsp;
+                  <div class="margin-completado">
+                    <span class="title-progress-bar">{{barProgressTask | number}}% completado</span>
+                  </div>
+                </ion-col>
                 <!---------- E S T A D O  G E N E R A L--------->
                 <ion-col *ngIf="data[0]" size="6">
                   <!--  -->
@@ -855,6 +871,15 @@
 
               <!--*** S I S T E M A   Y  C A J A  ******-->
               <ion-row size="12" *ngSwitchCase="'sistema'">
+                <ion-col size="12">
+                  <span class="title-progress-bar">Nivel de progreso</span>
+                  &nbsp;
+                  <ion-progress-bar mode="ios" color="{{color}}" [value]="barProgressTask / 100"></ion-progress-bar>
+                  &nbsp;
+                  <div class="margin-completado">
+                    <span class="title-progress-bar">{{barProgressTask | number}}% completado</span>
+                  </div>
+                </ion-col>
                 <!---------T I C K E T  Y  M E S A--------->
                 <ion-col size="6" *ngIf="data[0]">
                   <ion-card (click)="ticketMesa()">
@@ -1040,6 +1065,15 @@
 
               <!--*** M A N T E N I M I E N T O  ******-->
               <ion-row size="12" *ngSwitchCase="'mantenimiento'">
+                <ion-col size="12">
+                  <span class="title-progress-bar">Nivel de progreso</span>
+                  &nbsp;
+                  <ion-progress-bar mode="ios" color="{{color}}" [value]="barProgressTask / 100"></ion-progress-bar>
+                  &nbsp;
+                  <div class="margin-completado">
+                    <span class="title-progress-bar">{{barProgressTask | number}}% completado</span>
+                  </div>
+                </ion-col>
                 <!---------C O C I N A --------->
                 <ion-col size="6" *ngIf="data[0]">
                   <ion-card (click)="cocinaMantenimiento()">

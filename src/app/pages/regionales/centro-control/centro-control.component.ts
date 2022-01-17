@@ -4,6 +4,7 @@ import { ServiceGeneralService } from 'src/app/core/services/service-general/ser
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import { DialogNotificationComponent } from 'src/app/pages/nav/dialog-notification/dialog-notification.component';
 import { ModalController, PopoverController } from '@ionic/angular';
+import { LogoutComponent } from '../../popover/logout/logout.component';
 
 @Component({
   selector: 'app-centro-control',
@@ -14,6 +15,8 @@ export class CentroControlComponent implements OnInit {
   public user: any;
   public vespertino = 2;
   public data: any[] = [];
+  public barProgressTask: number;
+  public color: string;
   public dataNotification: any = [];
   public branchId;
   public dataBranch: any[] = [];
@@ -26,7 +29,7 @@ export class CentroControlComponent implements OnInit {
     public service: ServiceGeneralService,
     public load: LoaderComponent,
     public modalController: ModalController,
-    public popoverCtrl: PopoverController
+    public popoverCtrl: PopoverController,
 
   ) { }
   // segment
@@ -51,7 +54,17 @@ export class CentroControlComponent implements OnInit {
       .subscribe((resp) => {
         if (resp.success) {
           this.data = resp.result.controlCenters;
-          console.log('control vespertino', this.data);
+          this.barProgressTask = resp.result.progress;
+          if (this.barProgressTask === 0){
+            this.color = 'danger';
+          }
+          else if (this.barProgressTask === 100){
+            this.color = 'success';
+          }
+          else{
+            this.color = 'warning';
+          }
+          console.log('control vespertino', resp.result);
         }
       });
   }
@@ -84,6 +97,17 @@ export class CentroControlComponent implements OnInit {
     });
     this.modalController.dismiss();
     return await modal.present();
+  }
+  async logout() {
+    const popover = await this.popoverCtrl.create({
+      component: LogoutComponent,
+      cssClass: 'my-custom-class',
+      translucent: true,
+      mode: 'ios', //sirve para tomar el diseño de ios
+      // backdropDismiss: true,
+    });
+    return await popover.present();
+
   }
   // notificaciones de regional
   getNotification() {
