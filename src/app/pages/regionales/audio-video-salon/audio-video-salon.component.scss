@@ -65,3 +65,51 @@ ion-footer {
 .custom-skeleton ion-skeleton-text:last-child {
   margin-bottom: 5px;
 }
+
+// estilos para toggle
+ion-toggle {
+  // color de fondo
+  --background: #F3F3F3;
+  --background-checked: #26a844;
+  // color de circulito
+  --handle-background: #ad182d;
+  --handle-background-checked: white;
+}
+
+ion-toggle[aria-checked="false"] {
+
+  // position: relative;
+  &::before {
+    position: absolute;
+    content: "";
+  }
+
+  &::after {
+    position: absolute;
+    content: "NO";
+    color: #ad182d;
+    font-size: 10px;
+    // line-height: 32px;
+    left: 33px;
+    top: 8px;
+  }
+}
+
+ion-toggle[aria-checked="true"] {
+
+  // position: relative;
+  &::before {
+    position: absolute;
+    content: "";
+  }
+
+  &::after {
+    position: absolute;
+    content: "SI";
+    font-size: 10px;
+    // line-height: 36px;
+    left: 10px;
+    top: 8px;
+    color: #fff;
+  }
+}

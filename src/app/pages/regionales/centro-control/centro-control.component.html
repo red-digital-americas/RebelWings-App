@@ -13,23 +13,21 @@
           </div>
         </ion-col>
         <ion-col size="2" class="ion-align-items-end">
-          <div class="align-end-text">
+          <!-- <div class="align-end-text">
             <ion-icon (click)="openNotification()" size="large" style="color: white" name="notifications-outline">
             </ion-icon>
             <ion-badge  *ngIf="dataNotification" style="color: #ffce00">
               {{ dataNotification.length }}</ion-badge>
-          </div>
+          </div> -->
         </ion-col>
         <ion-col size="1" class="ion-align-items-end">
           <div class="align-end-text">
-            <ion-button id="logout">
-              <ion-icon size="large" style="color: white" name="menu-outline">
+            <!-- <ion-button  id="logout"> -->
+              <ion-icon (click)="logout($event)" size="large" style="color: white" name="menu-outline">
               </ion-icon>
-            </ion-button>
-
+            <!-- </ion-button> -->
           </div>
         </ion-col>
-
       </ion-row>
     </ion-grid>
   </ion-header>

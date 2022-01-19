@@ -1,5 +1,7 @@
 import { PopoverController, NavParams } from '@ionic/angular';
 import { Component, Input, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-logout',
@@ -8,11 +10,14 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class LogoutComponent implements OnInit {
 
-  constructor(private popoverCtrl: PopoverController) { }
+  constructor(private popoverCtrl: PopoverController, public router: Router,
+  ) { }
 
-  ngOnInit() {}
-  logout(){
+  ngOnInit() { }
+  logout() {
     console.log('cerrar session');
+    this.popoverCtrl.dismiss();
+    this.router.navigateByUrl('login');
     localStorage.removeItem('userData');
 
   }

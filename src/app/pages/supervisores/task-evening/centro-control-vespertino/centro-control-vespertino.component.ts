@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import { DialogNotificationComponent } from 'src/app/pages/nav/dialog-notification/dialog-notification.component';
+import { LogoutComponent } from 'src/app/pages/popover/logout/logout.component';
 
 @Component({
   selector: 'app-centro-control-vespertino',
@@ -20,7 +21,9 @@ export class CentroControlVespertinoComponent implements OnInit {
     public router: Router,
     public service: ServiceGeneralService,
     public load: LoaderComponent,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public popoverCtrl: PopoverController,
+
   ) {}
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
@@ -63,6 +66,20 @@ export class CentroControlVespertinoComponent implements OnInit {
     this.modalController.dismiss();
     return await modal.present();
   }
+
+  async logout(e: any) {
+    const popover = await this.popoverCtrl.create({
+      component: LogoutComponent,
+      cssClass: 'my-custom-class',
+      event: e,
+      translucent: true,
+      mode: 'ios', //sirve para tomar el diseño de ios
+      backdropDismiss: true,
+    });
+    return await popover.present();
+
+  }
+
 
   validacionAsistencia() {
     this.router.navigateByUrl('supervisor/validacion-assistencia/2');

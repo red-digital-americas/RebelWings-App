@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import {
+  UserPhoto,
+  PhotoService,
+} from 'src/app/core/services/services/photo.service';
+import { ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: 'app-cocina-mantenimiento',
@@ -18,10 +24,18 @@ export class CocinaMantenimientoComponent implements OnInit {
   public dataId = false; //sirve para identificar si el get trae informacion y diferencia entre el post y put
   public disabled = false;
   public activeData = false;
+  // ******fotos*********
+  public base64 = 'data:image/jpeg;base64';
+  public fotosCleanRoom: any;
+  public fotosCleanCubeta: any;
+  public fotosCleanBooths: any;
+  public url = 'http://34.237.214.147/back/api_rebel_wings/';
+
   constructor(public router: Router,
     public routerActive: ActivatedRoute,
     public service: ServiceGeneralService,
-    public load: LoaderComponent) { }
+    public load: LoaderComponent, private camera: Camera, public actionSheetController: ActionSheetController,
+    public photoService: PhotoService) { }
 
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
@@ -31,7 +45,7 @@ export class CocinaMantenimientoComponent implements OnInit {
     this.getBranch();
 
   }
-  ngOnInit() {}
+  ngOnInit() { }
   getData() {
     this.load.presentLoading('Cargando..');
     this.service
@@ -59,7 +73,7 @@ export class CocinaMantenimientoComponent implements OnInit {
             this.data.refrigerator = false;
             this.data.interiorTemperature = false;
             this.data.strainer = false;
-            this.data.electricalConnections= false;
+            this.data.electricalConnections = false;
           }
         }
       });
@@ -89,6 +103,90 @@ export class CocinaMantenimientoComponent implements OnInit {
         });
       }
     });
+  }
+  // agregar fotos de limpieza de salon
+  async addPhotoToGallery(idType: number) {
+    const name = new Date().toISOString();
+    await this.photoService.addNewToGallery();
+    await this.photoService.loadSaved();
+    // agregaremos las fotos pero con id type de acuerdo al caso
+    // al agregar las fotos en storage, las pasamos por lista
+    console.log('obj fotos', this.photoService);
+    this.data.photoKitchens.push({
+      id: 0,
+      kitchenId: this.data.id,
+      photo: this.photoService.photos[0].webviewPath,
+      photoPath: 'jpeg',
+      type: idType,
+      createdBy: this.user.id,
+      createdDate: this.today,
+      updatedBy: this.user.id,
+      updatedDate: this.today,
+    });
+    console.log('fotos chicken', this.data);
+  }
+  // acciones para las fotos de limpieza de salon
+  public async showActionSheet(photo, position: number) {
+    console.log('photo', photo);
+    console.log('posicion', position);
+
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Photos',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.photoService.deletePicture(photo, position);
+            //
+            this.data.photoKitchens.splice(position, 1);
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            // Nothing to do, action sheet is automatically closed
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
+  //eliminar imagenes bd
+  public async deleteImgShowAction(id) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Photos',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.service
+              .serviceGeneralDelete(`GeneralCleaning/${id}/Photo`)
+              .subscribe((data) => {
+                if (data.success) {
+                  this.load.presentLoading('Eliminando..');
+                  console.log('data', data);
+                  this.ionViewWillEnter();
+                }
+              });
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            // Nothing to do, action sheet is automatically closed
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
   }
 
   save() {
@@ -139,16 +237,39 @@ class CookModel {
   id: number;
   branchId: number;
   sink: boolean;
+  commentSink: string;
   mixer: boolean;
+  commentMixer: string;
   strainer: boolean;
+  commentStrainer: string;
   fryer: boolean;
+  commentFryer: string;
   extractor: boolean;
+  commentExtractor: string;
   refrigerator: boolean;
+  commentRefrigerator: string;
   interiorTemperature: boolean;
+  commentInteriorTemperature: string;
   doors: boolean;
+  commentDoors: string;
   correctDistance: boolean;
+  commentCorrectDistance: string;
   electricalConnections: boolean;
+  commentElectricalConnections: string;
   luminaires: boolean;
+  commentLuminaires: string;
+  createdBy: number;
+  createdDate: Date;
+  updatedBy: number;
+  updatedDate: Date;
+  photoKitchens: PhotoKitchensModel[] = [];
+}
+class PhotoKitchensModel {
+  id: number;
+  kitchenId: number;
+  photo: string;
+  photoPath: string;
+  type: number;
   createdBy: number;
   createdDate: Date;
   updatedBy: number;

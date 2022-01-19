@@ -7,16 +7,17 @@
             <img style="width: 50%" src="./assets/RW_LogoWEB.png" alt="" />
           </div>
         </ion-col>
-        <ion-col size="4" class="ion-align-items-start">
+        <ion-col size="7" class="ion-align-items-start">
           <div>
             <span class="ion-align-items-start color-text-white"
               >CENTRO DE CONTROL</span
             >
           </div>
         </ion-col>
-        <ion-col size="6" class="ion-align-items-end">
+        <ion-col size="2" class="ion-align-items-end"></ion-col>
+        <ion-col size="1" class="ion-align-items-end">
           <div class="align-end-text">
-            <ion-icon color="light" name="menu-outline"></ion-icon>
+            <ion-icon (click)="logout($event)" size="large"  color="light" name="menu-outline"></ion-icon>
           </div>
         </ion-col>
       </ion-row>
@@ -139,7 +140,7 @@
                         &nbsp;
                         <div class="margin-completado">
                           <span class="title-progress-bar">
-                            10{{ data[1].percentage }}% completado</span
+                            {{ data[1].percentage }}% completado</span
                           >
                         </div>
                       </ion-col>
@@ -188,7 +189,7 @@
                         &nbsp;
                         <div class="margin-completado">
                           <span class="title-progress-bar"
-                            >10{{ data[2].percentage }}% completado</span
+                            >{{ data[2].percentage }}% completado</span
                           >
                         </div>
                       </ion-col>

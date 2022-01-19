@@ -98,13 +98,14 @@ export class CentroControlComponent implements OnInit {
     this.modalController.dismiss();
     return await modal.present();
   }
-  async logout() {
+  async logout(e: any) {
     const popover = await this.popoverCtrl.create({
       component: LogoutComponent,
       cssClass: 'my-custom-class',
+      event: e,
       translucent: true,
       mode: 'ios', //sirve para tomar el diseño de ios
-      // backdropDismiss: true,
+      backdropDismiss: true,
     });
     return await popover.present();
 
