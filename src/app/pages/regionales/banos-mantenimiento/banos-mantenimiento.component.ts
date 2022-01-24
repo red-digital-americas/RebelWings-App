@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import {
+  UserPhoto,
+  PhotoService,
+} from 'src/app/core/services/services/photo.service';
+import { ActionSheetController } from '@ionic/angular';
 @Component({
   selector: 'app-banos-mantenimiento',
   templateUrl: './banos-mantenimiento.component.html',
@@ -18,10 +24,15 @@ export class BanosMantenimientoComponent implements OnInit {
   public dataId = false; //sirve para identificar si el get trae informacion y diferencia entre el post y put
   public disabled = false;
   public activeData = false;
+  public base64 = 'data:image/jpeg;base64';
+  public url = 'http://34.237.214.147/back/api_rebel_wings/';
+
   constructor(public router: Router,
     public routerActive: ActivatedRoute,
     public service: ServiceGeneralService,
-    public load: LoaderComponent) { }
+    public load: LoaderComponent,
+    private camera: Camera, public actionSheetController: ActionSheetController,
+    public photoService: PhotoService) { }
 
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
@@ -61,8 +72,8 @@ export class BanosMantenimientoComponent implements OnInit {
     // window.history.back();
     this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
   }
-  levantamientoTicket(id) {
-    this.router.navigateByUrl('regional/levantamiento-ticket/' + id);
+  levantamientoTicket() {
+    this.router.navigateByUrl('regional/levantamiento-ticket/' + this.branchId);
   }
   // get  name sucursal
   getBranch() {
@@ -82,6 +93,91 @@ export class BanosMantenimientoComponent implements OnInit {
         });
       }
     });
+  }
+
+  // agregar fotos de limpieza de salon
+  async addPhotoToGallery(idType: number) {
+    const name = new Date().toISOString();
+    await this.photoService.addNewToGallery();
+    await this.photoService.loadSaved();
+    // agregaremos las fotos pero con id type de acuerdo al caso
+    // al agregar las fotos en storage, las pasamos por lista
+    console.log('obj fotos', this.photoService);
+    this.data.photoBathrooms.push({
+      id: 0,
+      bathroomId: this.data.id,
+      photo: this.photoService.photos[0].webviewPath,
+      photoPath: 'jpeg',
+      type: idType,
+      createdBy: this.user.id,
+      createdDate: this.today,
+      updatedBy: this.user.id,
+      updatedDate: this.today,
+    });
+    console.log('fotos chicken', this.data);
+  }
+  // acciones para las fotos de limpieza de salon
+  public async showActionSheet(photo, position: number) {
+    console.log('photo', photo);
+    console.log('posicion', position);
+
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Photos',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.photoService.deletePicture(photo, position);
+            //
+            this.data.photoBathrooms.splice(position, 1);
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            // Nothing to do, action sheet is automatically closed
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
+  //eliminar imagenes bd
+  public async deleteImgShowAction(id) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Photos',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.service
+              .serviceGeneralDelete(`Bathroom/${id}/Photo`)
+              .subscribe((data) => {
+                if (data.success) {
+                  this.load.presentLoading('Eliminando..');
+                  console.log('data', data);
+                  this.ionViewWillEnter();
+                }
+              });
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            // Nothing to do, action sheet is automatically closed
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
   }
 
   save() {
@@ -131,10 +227,26 @@ export class BanosMantenimientoComponent implements OnInit {
 class BethroomModel {
   id: number;
   branchId: number;
-  urinals: boolean;
-  handWashBasin: boolean;
-  luminaires: boolean;
-  doors: boolean;
+  urinals: boolean; //type 1
+  commentUrinals: string;
+  handWashBasin: boolean; //type 2
+  commentHandWashBasin: string;
+  luminaires: boolean; //type 3
+  commentLuminaires: string;
+  doors: boolean; //type 4
+  commentDoors: string;
+  createdBy: number;
+  createdDate: Date;
+  updatedBy: number;
+  updatedDate: Date;
+  photoBathrooms: PhotoBathroomsModel[] = [];
+}
+class PhotoBathroomsModel{
+  id: number;
+  bathroomId: number;
+  photo: string;
+  photoPath: string;
+  type: number;
   createdBy: number;
   createdDate: Date;
   updatedBy: number;

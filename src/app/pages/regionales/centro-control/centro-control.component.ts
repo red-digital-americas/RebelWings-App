@@ -13,7 +13,6 @@ import { LogoutComponent } from '../../popover/logout/logout.component';
 })
 export class CentroControlComponent implements OnInit {
   public user: any;
-  public vespertino = 2;
   public data: any[] = [];
   public barProgressTask: number;
   public color: string;
@@ -73,8 +72,8 @@ export class CentroControlComponent implements OnInit {
     this.router.navigateByUrl('regional');
     // window.history.back();
   }
-  levantamientoTicket(id) {
-    this.router.navigateByUrl('regional/levantamiento-ticket/' + id);
+  levantamientoTicket() {
+    this.router.navigateByUrl('regional/levantamiento-ticket/' + this.branchId);
   }
 
   terminarTurno() {
@@ -120,6 +119,9 @@ export class CentroControlComponent implements OnInit {
           console.log('notificaciones', this.dataNotification);
         }
       });
+  }
+  ticketList(){
+    this.router.navigateByUrl('historial-ticket/' + this.branchId);
   }
   // get  name sucursal
   getBranch() {

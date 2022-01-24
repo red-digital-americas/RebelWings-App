@@ -77,8 +77,8 @@ export class FocosSalonComponent implements OnInit {
       }
     });
   }
-  levantamientoTicket(id) {
-    this.router.navigateByUrl('regional/levantamiento-ticket/' + id);
+  levantamientoTicket() {
+    this.router.navigateByUrl('regional/levantamiento-ticket/' + this.branchId);
   }
   save() {
     this.disabled = true;

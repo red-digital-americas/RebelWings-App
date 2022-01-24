@@ -68,8 +68,8 @@ export class EstadoGeneralBanosComponent implements OnInit {
     // window.history.back();
     this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
   }
-  levantamientoTicket(id) {
-    this.router.navigateByUrl('regional/levantamiento-ticket/' + id);
+  levantamientoTicket() {
+    this.router.navigateByUrl('regional/levantamiento-ticket/' + this.branchId);
   }
   // get  name sucursal
   getBranch() {

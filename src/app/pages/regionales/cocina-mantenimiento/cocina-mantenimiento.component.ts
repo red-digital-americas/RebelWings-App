@@ -26,9 +26,6 @@ export class CocinaMantenimientoComponent implements OnInit {
   public activeData = false;
   // ******fotos*********
   public base64 = 'data:image/jpeg;base64';
-  public fotosCleanRoom: any;
-  public fotosCleanCubeta: any;
-  public fotosCleanBooths: any;
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
 
   constructor(public router: Router,
@@ -82,8 +79,8 @@ export class CocinaMantenimientoComponent implements OnInit {
     // window.history.back();
     this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
   }
-  levantamientoTicket(id) {
-    this.router.navigateByUrl('regional/levantamiento-ticket/' + id);
+  levantamientoTicket() {
+    this.router.navigateByUrl('regional/levantamiento-ticket/' + this.branchId);
   }
   // get  name sucursal
   getBranch() {
@@ -166,7 +163,7 @@ export class CocinaMantenimientoComponent implements OnInit {
           icon: 'trash',
           handler: () => {
             this.service
-              .serviceGeneralDelete(`GeneralCleaning/${id}/Photo`)
+              .serviceGeneralDelete(`Kitchen/${id}/Photo`)
               .subscribe((data) => {
                 if (data.success) {
                   this.load.presentLoading('Eliminando..');
@@ -236,27 +233,27 @@ export class CocinaMantenimientoComponent implements OnInit {
 class CookModel {
   id: number;
   branchId: number;
-  sink: boolean;
+  sink: boolean; //type 1
   commentSink: string;
-  mixer: boolean;
+  mixer: boolean; //type 2
   commentMixer: string;
-  strainer: boolean;
+  strainer: boolean; //type 3
   commentStrainer: string;
-  fryer: boolean;
+  fryer: boolean; //type 4
   commentFryer: string;
-  extractor: boolean;
+  extractor: boolean; //type 5
   commentExtractor: string;
-  refrigerator: boolean;
+  refrigerator: boolean; //type 9
   commentRefrigerator: string;
-  interiorTemperature: boolean;
+  interiorTemperature: boolean; //type 6
   commentInteriorTemperature: string;
-  doors: boolean;
+  doors: boolean; //type 7
   commentDoors: string;
-  correctDistance: boolean;
+  correctDistance: boolean; //type 8
   commentCorrectDistance: string;
-  electricalConnections: boolean;
+  electricalConnections: boolean; //type 10
   commentElectricalConnections: string;
-  luminaires: boolean;
+  luminaires: boolean; //type 11
   commentLuminaires: string;
   createdBy: number;
   createdDate: Date;

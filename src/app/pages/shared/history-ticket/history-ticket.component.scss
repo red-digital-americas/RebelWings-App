@@ -42,6 +42,14 @@ ion-footer {
 .center {
   text-align: center;
 }
+.table{
+  font-size: 0.8rem;
+  font-weight: normal !important;
+}
+
+.end {
+  text-align: end;
+}
 
 .sizePhoto {
   width: 5rem;
@@ -50,7 +58,7 @@ ion-footer {
 
 .titleProduct {
   color: grey;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 
@@ -62,6 +70,7 @@ ion-footer {
 .custom-skeleton ion-skeleton-text:last-child {
   margin-bottom: 5px;
 }
+
 
 // estilos para toggle
 ion-toggle {
@@ -104,8 +113,9 @@ ion-toggle[aria-checked="true"] {
     position: absolute;
     content: "SI";
     font-size: 10px;
-    left: 0.6rem;
-    top: 0.5rem;
+    // line-height: 36px;
+    left: 10px;
+    top: 8px;
     color: #fff;
   }
 }

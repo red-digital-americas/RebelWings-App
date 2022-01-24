@@ -21,6 +21,8 @@ import { FilterPipeModule } from 'ngx-filter-pipe';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { PopoverTransferRequestComponent } from './pages/supervisores/popover/popover-transfer-request/popover-transfer-request.component';
 import { LogoutComponent } from './pages/popover/logout/logout.component';
+import { HistoryTicketComponent } from './pages/shared/history-ticket/history-ticket.component';
+import { OpenTicketComponent } from './pages/shared/open-ticket/open-ticket.component';
 
 
 
@@ -32,7 +34,9 @@ import { LogoutComponent } from './pages/popover/logout/logout.component';
     SidebarComponent,
     DialogNotificationComponent,
     PopoverTransferRequestComponent,
-    LogoutComponent
+    LogoutComponent,
+    HistoryTicketComponent,
+    OpenTicketComponent
   ],
   entryComponents: [],
   imports: [

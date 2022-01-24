@@ -98,8 +98,8 @@ export class AudioVideoSalonComponent implements OnInit {
       this.updateVideo();
     }
   }
-  levantamientoTicket(id) {
-    this.router.navigateByUrl('regional/levantamiento-ticket/' + id);
+  levantamientoTicket() {
+    this.router.navigateByUrl('regional/levantamiento-ticket/' + this.branchId);
   }
   addVideo() {
     this.data.createdBy = this.user.id;

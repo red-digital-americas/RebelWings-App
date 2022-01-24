@@ -34,7 +34,7 @@
         <ion-col size="1"></ion-col>
         <ion-col size="3">
           <div class="align-end-text">
-            <ion-button (click)="levantamientoTicket(0)" shape="round" color="warning" expand="full">
+            <ion-button (click)="levantamientoTicket()" shape="round" color="warning" expand="full">
               <span>
                 LEVANTAR TICKET
               </span>
@@ -47,42 +47,192 @@
   <ion-content fullscreen="false" *ngIf="activeData === true" class="ion-padding">
 
     <ion-grid>
+      <!-----------------Mingitorios--------------->
       <ion-row size="12">
-        <!-- ------------------------------------ -->
-        <!-- Mingitorios -->
-        <ion-col size="4">
+        <ion-col size="12">
           <span class="titleProduct">Mingitorios</span>
           <br>
           <span>¿Se encuentra en buen estado?</span>
           <br>
           <ion-toggle [(ngModel)]="data.urinals"></ion-toggle>
         </ion-col>
-        <!-- Lavamanos -->
-        <ion-col size="4">
+      </ion-row>
+      <!-------------fotos de Mingitorios----------------->
+      <ion-row *ngIf="data.urinals === false" size="12">
+        <ion-col size="6">
+          <ion-label>Fotografía</ion-label>
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(1)">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea [(ngModel)]="data.commentUrinals" rows="6" cols="20">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="data.urinals === false" size="12">
+        <ion-col size="6">
+          <!-- fotos sin id -->
+          <ion-row>
+            <ion-col size="3" *ngFor="let photo of data.photoBathrooms; index as position">
+              <!-- se mostara esta imagen si no tiene id  -->
+              <ion-img *ngIf="photo.id === 0 && photo.type === 1" src="{{ base64 }},{{ photo.photo }}"
+                (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- se mostrara esta imagen si esta guardada -->
+              <ion-img *ngIf="photo.id !== 0 && photo.type === 1" src="{{ url }}{{ photo.photo }}"
+                (click)="deleteImgShowAction(photo.id)">
+              </ion-img>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+
+      <!---------------Lavamanos--------------->
+      <ion-row size="12">
+        <ion-col size="12">
           <span class="titleProduct">Lavamanos</span>
           <br>
           <span>¿Tienen fugas? ¿Funcionan correctamente?</span>
           <br>
           <ion-toggle [(ngModel)]="data.handWashBasin"></ion-toggle>
         </ion-col>
-        <!-- Luminarias -->
-        <ion-col size="4">
+      </ion-row>
+      <!-------------fotos de Lavamanos----------------->
+      <ion-row *ngIf="data.handWashBasin === false" size="12">
+        <ion-col size="6">
+          <ion-label>Fotografía</ion-label>
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(2)">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea [(ngModel)]="data.commentHandWashBasin" rows="6" cols="20">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="data.handWashBasin === false" size="12">
+        <ion-col size="6">
+          <!-- fotos sin id -->
+          <ion-row>
+            <ion-col size="3" *ngFor="let photo of data.photoBathrooms; index as position">
+              <!-- se mostara esta imagen si no tiene id  -->
+              <ion-img *ngIf="photo.id === 0 && photo.type === 2" src="{{ base64 }},{{ photo.photo }}"
+                (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- se mostrara esta imagen si esta guardada -->
+              <ion-img *ngIf="photo.id !== 0 && photo.type === 2" src="{{ url }}{{ photo.photo }}"
+                (click)="deleteImgShowAction(photo.id)">
+              </ion-img>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+
+      <!---------------Luminarias--------------->
+      <ion-row size="12">
+        <ion-col size="12">
           <span class="titleProduct">Luminarias</span>
           <br>
           <span>¿Completos y funcionando?</span>
           <br>
           <ion-toggle [(ngModel)]="data.luminaires"></ion-toggle>
         </ion-col>
-        <!------------------------------------------->
-        <!-- Puertas -->
-        <ion-col size="4">
+      </ion-row>
+      <!-------------fotos de Luminarias----------------->
+      <ion-row *ngIf="data.luminaires === false" size="12">
+        <ion-col size="6">
+          <ion-label>Fotografía</ion-label>
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(3)">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea [(ngModel)]="data.commentLuminaires" rows="6" cols="20">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="data.luminaires === false" size="12">
+        <ion-col size="6">
+          <!-- fotos sin id -->
+          <ion-row>
+            <ion-col size="3" *ngFor="let photo of data.photoBathrooms; index as position">
+              <!-- se mostara esta imagen si no tiene id  -->
+              <ion-img *ngIf="photo.id === 0 && photo.type === 3" src="{{ base64 }},{{ photo.photo }}"
+                (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- se mostrara esta imagen si esta guardada -->
+              <ion-img *ngIf="photo.id !== 0 && photo.type === 3" src="{{ url }}{{ photo.photo }}"
+                (click)="deleteImgShowAction(photo.id)">
+              </ion-img>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+
+      <!---------------Puertas--------------->
+      <ion-row size="12">
+        <ion-col size="12">
           <span class="titleProduct">Puertas</span>
           <br>
           <span>¿En buen estado y funcionando?</span>
           <br>
           <ion-toggle [(ngModel)]="data.doors"></ion-toggle>
         </ion-col>
-
+      </ion-row>
+      <!-------------fotos de Puertas----------------->
+      <ion-row *ngIf="data.doors === false" size="12">
+        <ion-col size="6">
+          <ion-label>Fotografía</ion-label>
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(4)">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea [(ngModel)]="data.commentDoors" rows="6" cols="20">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="data.doors === false" size="12">
+        <ion-col size="6">
+          <!-- fotos sin id -->
+          <ion-row>
+            <ion-col size="3" *ngFor="let photo of data.photoBathrooms; index as position">
+              <!-- se mostara esta imagen si no tiene id  -->
+              <ion-img *ngIf="photo.id === 0 && photo.type === 4" src="{{ base64 }},{{ photo.photo }}"
+                (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- se mostrara esta imagen si esta guardada -->
+              <ion-img *ngIf="photo.id !== 0 && photo.type === 4" src="{{ url }}{{ photo.photo }}"
+                (click)="deleteImgShowAction(photo.id)">
+              </ion-img>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6"></ion-col>
       </ion-row>
       <br><br><br>
     </ion-grid>

@@ -1,0 +1,197 @@
+<ion-app>
+  <!-- data -->
+  <ion-header *ngIf="activeData === true" class="ion-no-border ion-padding">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div>
+            <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR </p>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="1">
+          <img src="./assets/icon/ilustracion_ticket.png" alt="Validaccion de assistencia" />
+        </ion-col>
+        <ion-col size="11" class="ion-align-self-center">
+          <h3 class="title">TICKET {{idTicket}}</h3>
+        </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="4">
+          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
+        </ion-col>
+        <ion-col size="2">
+          <span class="date-grey">
+            {{ data.dateOpen | date: "dd MMM yyy" }}
+          </span>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label floating>Estatus</ion-label>
+          <ion-card class="closed">
+            <ion-item>
+              <ion-label>Estatus</ion-label>
+              <ion-select [(ngModel)]="data.status">
+                <ion-select-option [value]="true">
+                  Abierto
+                </ion-select-option>
+                <ion-select-option [value]="false">
+                  Cerrado
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-header>
+  <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
+    <ion-grid>
+      <ion-row size="12">
+        <!--selects-->
+        <ion-col size="6">
+          <ion-row size="12">
+            <ion-col size="12">
+              <ion-label floating>Lugar específico</ion-label>
+              <ion-card class="closed">
+                <span>{{data.whereAreYouLocatedNavigation[0].locate}}</span>
+              </ion-card>
+            </ion-col>
+            <ion-col size="12">
+              <ion-label floating>Parte de la sucursal</ion-label>
+              <ion-card class="closed">
+                <ion-item>
+                  {{data.categoryNavigation[0].category}}
+                </ion-item>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <!-- coment -->
+        <ion-col size="6">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea disabled [(ngModel)]="data.describeProblem" rows="6" cols="20">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="12">
+          <h5>Fotografías</h5>
+        </ion-col>
+        <!-- fotos  -->
+        <ion-col size="6" *ngFor="let photo of data.photoTicketings; index as position">
+          <!-- imagenes en bd -->
+          <ion-img src="{{ url }}{{ photo.photo }}" (click)="deleteImgShowAction(photo.id)">
+          </ion-img>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+  <!-- skeletor -->
+  <ion-header *ngIf="activeData === false" class="ion-no-border ion-padding">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div>
+            <p class="ion-align-items-start return">
+              <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+            </p>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="1">
+          <img src="./assets/icon/skeleton-circle.png" alt="Validaccion de assistencia" />
+        </ion-col>
+        <ion-col size="11" class="ion-align-self-center">
+          <h3 class="title">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </h3>
+        </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="4">
+          <h5 class="subtitle-negro">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </h5>
+        </ion-col>
+        <ion-col size="2">
+          <span class="date-grey">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label floating>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </ion-label>
+          <ion-card class="closed">
+            <ion-item>
+              <ion-label>
+                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+              </ion-label>
+            </ion-item>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-header>
+  <ion-content *ngIf="activeData === false" fullscreen="false" class="ion-padding">
+    <ion-grid>
+      <ion-row size="12">
+        <!--selects-->
+        <ion-col size="6">
+          <ion-row size="12">
+            <ion-col size="12">
+              <ion-label floating>
+                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+              </ion-label>
+              <ion-card class="closed">
+                <ion-item>
+                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+
+                </ion-item>
+              </ion-card>
+            </ion-col>
+            <ion-col size="12">
+              <ion-label floating>
+                <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+              </ion-label>
+              <ion-card class="closed">
+                <ion-item>
+                  <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                </ion-item>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <!-- coment -->
+        <ion-col size="6">
+          <ion-label>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </ion-label>
+          <ion-card>
+            <ion-textarea disabled rows="6" cols="20">
+              <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="12">
+          <h5>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </h5>
+        </ion-col>
+        <!-- fotos  -->
+        <ion-col size="6" **ngFor="let item of [1, 1, 1, 1, 1, 1]">
+          <!-- imagenes en bd -->
+          <ion-img src="./assets/icon/rectangulo-skeleton.png">
+          </ion-img>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+</ion-app>
