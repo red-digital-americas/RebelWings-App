@@ -22,6 +22,10 @@ export class ResguardoTabletaComponent implements OnInit {
   public disabled = false;
   public fotosTablet;
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
+  // nombre de sucursal
+  public branchId;
+  public nameBranch = '';
+  public dataBranch: any[] = [];
 
   constructor(
     public router: Router,
@@ -31,12 +35,15 @@ export class ResguardoTabletaComponent implements OnInit {
     public load: LoaderComponent,
     public actionSheetController: ActionSheetController,
     public photoService: PhotoService
-  ) {}
+  ) { }
 
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idTablet = this.routerActive.snapshot.paramMap.get('id');
+    // get name de sucursal
+    this.branchId = this.user.branch;
+    this.getBranch();
     if (this.idTablet === '0') {
       console.log('Completar la tarea');
     } else {
@@ -44,7 +51,7 @@ export class ResguardoTabletaComponent implements OnInit {
       this.getData();
     }
   }
-  ngOnInit() {}
+  ngOnInit() { }
 
   getData() {
     this.load.presentLoading('Cargando..');
@@ -61,15 +68,48 @@ export class ResguardoTabletaComponent implements OnInit {
     // window.history.back();
     this.router.navigateByUrl('supervisor/control-vespertino');
   }
+
+  // get  name sucursal
+  getBranch() {
+    let branchIdNumber = 0;
+    branchIdNumber = Number(this.branchId);
+    console.log('branchIdNumber', branchIdNumber);
+    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+      if (resp.success) {
+        this.dataBranch = resp.result;
+        console.log('get branch', this.dataBranch);
+        this.dataBranch.forEach(element => {
+          if (element.branchId === branchIdNumber) {
+            this.nameBranch = element.branchName;
+            this.nameBranch = this.nameBranch.toUpperCase();
+            console.log('nombre', this.nameBranch);
+          }
+        });
+      }
+    });
+  }
+
   async addPhotoToGallery() {
     const name = new Date().toISOString();
     await this.photoService.addNewToGallery();
     await this.photoService.loadSaved();
-
-    this.fotosTablet = this.photoService.photos;
-    console.log('fotos tablet', this.fotosTablet);
+    // agregaremos las fotos pero con id type de acuerdo al caso
+    // al agregar las fotos en storage, las pasamos por lista
+    console.log('obj fotos', this.photoService);
+    this.data.photoTabletSageKeepings.push({
+      id: 0,
+      tabletSafeKeepingId: this.data.id,
+      photo: this.photoService.photos[0].webviewPath,
+      photoPath: 'jpeg',
+      createdBy: this.user.id,
+      createdDate: this.today,
+      updatedBy: this.user.id,
+      updatedDate: this.today,
+    });
+    console.log('fotos chicken', this.data);
   }
-  public async showActionSheet(photo: UserPhoto, position: number) {
+
+  public async showActionSheet(photo, position: number) {
     console.log('photo', photo);
     console.log('posicion', position);
 
@@ -82,6 +122,8 @@ export class ResguardoTabletaComponent implements OnInit {
           icon: 'trash',
           handler: () => {
             this.photoService.deletePicture(photo, position);
+            //
+            this.data.photoTabletSageKeepings.splice(position, 1);
           },
         },
         {
@@ -96,6 +138,41 @@ export class ResguardoTabletaComponent implements OnInit {
     });
     await actionSheet.present();
   }
+
+  //eliminar imagenes bd
+  public async deleteImgShowAction(id) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Photos',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.service
+              .serviceGeneralDelete(`TabletSafeKeeping/${id}/Photo`)
+              .subscribe((data) => {
+                if (data.success) {
+                  this.load.presentLoading('Eliminando..');
+                  console.log('data', data);
+                  this.ionViewWillEnter();
+                }
+              });
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            // Nothing to do, action sheet is automatically closed
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
+
   save() {
     this.disabled = true;
     this.fotosTablet = [];
@@ -103,23 +180,6 @@ export class ResguardoTabletaComponent implements OnInit {
     this.data.branchId = this.user.branch;
     this.data.updatedBy = this.user.id;
     this.data.updatedDate = this.today;
-    this.fotosTablet = this.photoService.photos;
-    console.log('fotos tablet', this.fotosTablet);
-    if (this.fotosTablet.length !== 0) {
-      this.fotosTablet.forEach((foto) => {
-        this.data.photoTabletSageKeepings.push({
-          tabletSafeKeepingId: 0,
-          photoPath: 'jpeg',
-          photo: foto.webviewPath,
-          createdBy: this.user.id,
-          createdDate: this.today,
-          updatedBy: this.user.id,
-          updatedDate: this.today,
-          filepath: foto.filepath,
-        });
-      });
-    }
-
     console.log('Obj To send => ', this.data);
 
     if (this.idTablet === '0') {
@@ -138,6 +198,7 @@ export class ResguardoTabletaComponent implements OnInit {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
+          this.disabled = false;
           this.router.navigateByUrl('supervisor/control-vespertino');
         }
       });
@@ -145,7 +206,9 @@ export class ResguardoTabletaComponent implements OnInit {
   updateTablet() {
     if (this.data.photoTabletSageKeepings.length !== 0) {
       this.data.photoTabletSageKeepings.forEach((element) => {
-        element.photoPath = '';
+        if (element.id !== 0) {
+          element.photoPath = '';
+        }
       });
     }
     this.service
@@ -154,6 +217,7 @@ export class ResguardoTabletaComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
+          this.disabled = false;
           this.photoService.deleteAllPhoto(this.data);
           this.router.navigateByUrl('supervisor/control-vespertino');
         }
@@ -171,6 +235,7 @@ class TabletModel {
   photoTabletSageKeepings: PhotoTabletModel[] = [];
 }
 class PhotoTabletModel {
+  id: number;
   tabletSafeKeepingId: number;
   photo: string;
   photoPath: string;
@@ -178,6 +243,5 @@ class PhotoTabletModel {
   createdDate: Date;
   updatedBy: number;
   updatedDate: Date;
-  filepath: string; //no es parte del modelo solo es para eliminar todas las fotos filesystem
 }
 

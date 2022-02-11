@@ -23,6 +23,10 @@ ion-header {
 .align-end-text {
   text-align: end;
 }
+.align-center-text {
+  text-align: center;
+  align-items: center;
+}
 .return {
   color: #d0122d;
 }
@@ -36,3 +40,7 @@ ion-header {
   margin-bottom: 5px;
 }
 
+.avatar {
+  border-radius: 50%;
+
+}

@@ -17,11 +17,17 @@ import { ActionSheetController } from '@ionic/angular';
 export class LoungeMountedComponent implements OnInit {
   public today = new Date();
   public user: any;
-  public idLounge: string;
+  public branchId;
+  public dataId = false; //sirve para identificar si el get trae informacion y diferencia entre el post y put
   public data: SalonDataModel = new SalonDataModel();
+  public dataBranch: any[] = [];
+  public nameBranch;
   public base64 = 'data:image/jpeg;base64';
   public disabled = false;
   public fotosSalon;
+  public url = 'http://34.237.214.147/back/api_rebel_wings/';
+  public activeData = false;
+
 
   constructor(
     public router: Router,
@@ -31,15 +37,18 @@ export class LoungeMountedComponent implements OnInit {
     public load: LoaderComponent,
     public actionSheetController: ActionSheetController,
     public photoService: PhotoService
-  ) {}
-  ionViewWillEnter(){
+  ) { }
+  ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.routerActive.snapshot.paramMap.get('id'));
-    this.idLounge = this.routerActive.snapshot.paramMap.get('id');
-    if (this.idLounge === '0') {
+    this.branchId = this.routerActive.snapshot.paramMap.get('id');
+    if (this.branchId === '0') {
       console.log('Completar la tarea');
+      this.activeData = true;
     } else {
       console.log('Actualizar la tarea');
+      this.getData();
+
     }
   }
 
@@ -49,15 +58,58 @@ export class LoungeMountedComponent implements OnInit {
     // window.history.back();
     this.router.navigateByUrl('supervisor/control-matutino');
   }
+  getData() {
+    this.load.presentLoading('Cargando..');
+    this.service
+      .serviceGeneralGet('ToSetTable/' + this.branchId)
+      .subscribe((resp) => {
+        if (resp.success) {
+          this.activeData = true;
+          this.data = resp.result;
+          console.log('get data', this.data);
+        }
+      });
+  }
+  // get  name sucursal
+  getBranch() {
+    let branchIdNumber = 0;
+    branchIdNumber = Number(this.branchId);
+    console.log('branchIdNumber', branchIdNumber);
+    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+      if (resp.success) {
+        this.dataBranch = resp.result;
+        console.log('get branch', this.dataBranch);
+        this.dataBranch.forEach(element => {
+          if (element.branchId === branchIdNumber) {
+            this.nameBranch = element.branchName;
+            this.nameBranch = this.nameBranch.toUpperCase();
+            console.log('nombre', this.nameBranch);
+          }
+        });
+      }
+    });
+  }
   async addPhotoToGallery() {
     const name = new Date().toISOString();
     await this.photoService.addNewToGallery();
     await this.photoService.loadSaved();
 
-    this.fotosSalon = this.photoService.photos;
-    console.log('fotos salon', this.fotosSalon);
+    // agregaremos las fotos pero con id type de acuerdo al caso
+    // al agregar las fotos en storage, las pasamos por lista
+    console.log('obj fotos', this.photoService);
+    this.data.photoToSetTables.push({
+      id: 0,
+      toSetTableId: this.data.id,
+      photo: this.photoService.photos[0].webviewPath,
+      photoPath: 'jpeg',
+      createdBy: this.user.id,
+      createdDate: this.today,
+      updatedBy: this.user.id,
+      updatedDate: this.today,
+    });
+    console.log('fotos salon montado', this.data);
   }
-  public async showActionSheet(photo: UserPhoto, position: number) {
+  public async showActionSheet(photo, position: number) {
     console.log('photo', photo);
     console.log('posicion', position);
 
@@ -70,6 +122,42 @@ export class LoungeMountedComponent implements OnInit {
           icon: 'trash',
           handler: () => {
             this.photoService.deletePicture(photo, position);
+            //
+            this.data.photoToSetTables.splice(position, 1);
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            // Nothing to do, action sheet is automatically closed
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
+
+  //eliminar imagenes bd
+  public async deleteImgShowAction(id) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Photos',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.service
+              .serviceGeneralDelete(`ToSetTable/${id}/Photo`)
+              .subscribe((data) => {
+                if (data.success) {
+                  this.load.presentLoading('Eliminando..');
+                  console.log('data', data);
+                  this.ionViewWillEnter();
+                }
+              });
           },
         },
         {
@@ -88,30 +176,19 @@ export class LoungeMountedComponent implements OnInit {
   save() {
     this.disabled = true;
     this.fotosSalon = [];
-    // esto se pone aqui por que aun no se estrae la data de un get
+    if (this.data.photoToSetTables.length !== 0) {
+      this.data.photoToSetTables.forEach((photo) => {
+        if (photo.id !== 0) {
+          photo.photoPath = '';
+        }
+      });
+    }
     this.data.branch = this.user.branch;
     this.data.updatedBy = this.user.id;
     this.data.updatedDate = this.today;
-    this.fotosSalon = this.photoService.photos;
-    console.log('fotos gas', this.fotosSalon);
-    if (this.fotosSalon.length !== 0) {
-      this.fotosSalon.forEach((foto) => {
-        this.data.photoToSetTables.push({
-          toSetTableId: 0,
-          photoPath: 'jpeg',
-          photo: foto.webviewPath,
-          createdBy: this.user.id,
-          createdDate: this.today,
-          updatedBy: this.user.id,
-          updatedDate: this.today,
-          filepath: foto.filepath,
-        });
-      });
-    }
-
     console.log('Obj To send => ', this.data);
 
-    if (this.idLounge === '0') {
+    if (this.branchId === '0') {
       this.addSalon();
     } else {
       this.updateSAlon();
@@ -131,10 +208,25 @@ export class LoungeMountedComponent implements OnInit {
         }
       });
   }
-  updateSAlon() {}
+  updateSAlon() {
+    this.service
+      .serviceGeneralPut('ToSetTable', this.data)
+      .subscribe((data) => {
+        if (data.success) {
+          this.load.presentLoading('Actualizando..');
+          console.log('data', data);
+          this.photoService.deleteAllPhoto(this.data);
+          this.router.navigateByUrl('supervisor/control-matutino');
+          this.disabled = false;
+        } else {
+          this.disabled = false;
+        }
+      });
+  }
 }
 
 class SalonDataModel {
+  id: number;
   branch: number;
   comment: string;
   createdBy: number;
@@ -144,6 +236,7 @@ class SalonDataModel {
   photoToSetTables: PhotoTableModel[] = [];
 }
 class PhotoTableModel {
+  id: number;
   toSetTableId: number;
   photoPath: string;
   photo: string;
@@ -151,5 +244,4 @@ class PhotoTableModel {
   createdDate: Date;
   updatedBy: number;
   updatedDate: Date;
-  filepath: string; //no es parte del modelo solo es para eliminar todas las fotos filesystem
 }

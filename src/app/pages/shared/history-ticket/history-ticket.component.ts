@@ -37,6 +37,11 @@ export class HistoryTicketComponent implements OnInit {
         if (resp.success) {
           this.data = resp.result;
           console.log('get data', this.data);
+          if(this.data.length === 0 ){
+            this.data.push({
+              regional: 'No hay tickets en esta sucursal'
+            });
+          }
         }
       });
   }

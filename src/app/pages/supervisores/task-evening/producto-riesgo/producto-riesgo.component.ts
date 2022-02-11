@@ -14,46 +14,38 @@ export class ProductoRiesgoComponent implements OnInit {
   public idProductoRiesgo: string;
   public data: ProductoRiesgoModel = new ProductoRiesgoModel();
   public disabled = false;
+  public activeData = false;
   public objProduct;
   public search: string;
   public selectCatalogs: any[] = [];
+  // nombre de sucursal
+  public branchId;
+  public nameBranch = '';
+  public dataBranch: any[] = [];
+  // identificador de nuevo registro
+  public newProduct: boolean;
 
   constructor(
     public router: Router,
     public routerActive: ActivatedRoute,
     public service: ServiceGeneralService,
     public load: LoaderComponent
-  ) {}
+  ) { }
 
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log('user', this.user);
 
-    console.log(this.routerActive.snapshot.paramMap.get('id'));
+    // console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idProductoRiesgo = this.routerActive.snapshot.paramMap.get('id');
-    if (this.idProductoRiesgo === '0') {
-      console.log('Completar la tarea');
-      this.objProduct = [
-        {
-          id: 0,
-          branchId: this.user.branch,
-          productId: 0,
-          code: '',
-          comment: '',
-          createdBy: this.user.id,
-          createdDate: this.today,
-          updatedBy: this.user.id,
-          updatedDate: this.today,
-          search: '',
-        },
-      ];
-    } else {
-      console.log('Actualizar la tarea');
-      this.getData();
-    }
+    console.log('id producto en riesgo ', this.idProductoRiesgo);
+    // get nema de sucursal
+    this.branchId = this.user.branch;
+    this.getBranch();
+    this.getData();
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
   return() {
     // window.history.back();
     this.router.navigateByUrl('supervisor/control-vespertino');
@@ -80,14 +72,58 @@ export class ProductoRiesgoComponent implements OnInit {
   getData() {
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('RiskProduct/' + this.idProductoRiesgo)
+      .serviceGeneralGet(`RiskProduct/${this.idProductoRiesgo}/Branch/`)
       .subscribe((resp) => {
         if (resp.success) {
-          this.objProduct = resp.result;
-          console.log('get data', this.objProduct);
-          this.getCatalog(this.objProduct.productId);
+          // si no hay registros en la sucursal
+          if (resp.result?.length === 0) {
+            this.newProduct = true;
+            console.log('Completar la tarea');
+            this.objProduct = [
+              {
+                id: 0,
+                branchId: this.user.branch,
+                productId: 0,
+                code: '',
+                comment: '',
+                createdBy: this.user.id,
+                createdDate: this.today,
+                updatedBy: this.user.id,
+                updatedDate: this.today,
+                search: '',
+              },
+            ];
+            this.activeData = true;
+
+          } else {
+            this.newProduct = false;
+            this.objProduct = resp.result;
+            console.log('get data', this.objProduct);
+            console.log('Actualizar la tarea');
+            this.activeData = true;
+
+          }
         }
       });
+  }
+  // get  name sucursal
+  getBranch() {
+    let branchIdNumber = 0;
+    branchIdNumber = Number(this.branchId);
+    console.log('branchIdNumber', branchIdNumber);
+    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+      if (resp.success) {
+        this.dataBranch = resp.result;
+        console.log('get branch', this.dataBranch);
+        this.dataBranch.forEach(element => {
+          if (element.branchId === branchIdNumber) {
+            this.nameBranch = element.branchName;
+            this.nameBranch = this.nameBranch.toUpperCase();
+            console.log('nombre', this.nameBranch);
+          }
+        });
+      }
+    });
   }
 
   addProductRisk() {
@@ -116,7 +152,7 @@ export class ProductoRiesgoComponent implements OnInit {
   save() {
     this.disabled = true;
     // esto se pone aqui por que aun no se estrae la data de un get
-    if (this.idProductoRiesgo === '0') {
+    if (this.newProduct === true) {
       this.addProductoRiesgo();
     } else {
       this.updateProductoRiesgo();
@@ -136,8 +172,10 @@ export class ProductoRiesgoComponent implements OnInit {
   }
 
   updateProductoRiesgo() {
-    this.objProduct.updatedBy = this.user.id;
-    this.objProduct.updatedDate = this.today;
+    this.objProduct.forEach(obj => {
+      obj.updatedBy = this.user.id;
+      obj.updatedDate = this.today;
+    });
     this.service
       .serviceGeneralPut('RiskProduct', this.objProduct)
       .subscribe((data) => {

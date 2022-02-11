@@ -40,12 +40,11 @@
           <ion-label>Hora a la que llegó</ion-label>
           <ion-card class="ion-align-self-center">
             <ion-datetime
-              [disabled]="data.id !== 0"
               (focus)="activeTime = false"
               required
-              type="date"
+              type="time"
               [value]="today"
-              [(ngModel)]="data.timeArrive"
+              [(ngModel)]="data.albaranTime"
               displayFormat="HH:mm a"
             ></ion-datetime>
           </ion-card>
@@ -59,7 +58,7 @@
             <ion-textarea
               (focus)="activeComment = false"
               required
-              [(ngModel)]="data.comment"
+              [(ngModel)]="data.albaranDescription"
               rows="6"
               cols="20"
             ></ion-textarea>

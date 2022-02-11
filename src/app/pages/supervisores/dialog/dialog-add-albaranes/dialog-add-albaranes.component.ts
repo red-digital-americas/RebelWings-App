@@ -32,6 +32,8 @@ export class DialogAddAlbaranesComponent implements OnInit {
 
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
+    console.log('user', this.user);
+
     console.log('data que recibe', this.navParams.data);
     this.objAlbaran = this.navParams.data.objAlbaran;
     this.idStatus = this.navParams.data.idStatus;
@@ -48,7 +50,7 @@ export class DialogAddAlbaranesComponent implements OnInit {
       .subscribe((resp) => {
         if (resp.success) {
           this.data = resp.result;
-          console.log('get albaran', this.data);
+          console.log('get albaran', this.data.result);
         }
       });
   }
@@ -79,9 +81,9 @@ export class DialogAddAlbaranesComponent implements OnInit {
       this.activeTime = false;
     }
     if (
-      this.data.comment === '' ||
-      this.data.comment === undefined ||
-      this.data.comment === null
+      this.data.albaranDescription === '' ||
+      this.data.albaranDescription === undefined ||
+      this.data.albaranDescription === null
     ) {
       this.activeComment = true;
     } else {
@@ -91,15 +93,15 @@ export class DialogAddAlbaranesComponent implements OnInit {
       if (
         this.data.albaranTime === '' ||
         this.data.albaranTime === undefined ||
-        this.data.comment === '' ||
-        this.data.comment === undefined
+        this.data.albaranDescription === '' ||
+        this.data.albaranDescription === undefined
       ) {
         return;
       } else {
         this.save();
       }
     } else {
-      if (this.data.comment === '' || this.data.comment === undefined) {
+      if (this.data.albaranDescription === '' || this.data.albaranDescription === undefined) {
         return;
       } else {
         this.save();
@@ -109,41 +111,44 @@ export class DialogAddAlbaranesComponent implements OnInit {
   getFormatTimeStamp() {
     if (this.idStatus === 3) {
       // si el estatus es no llego se asigna la hora y tiempo actual
-      this.data.timeArrive = this.today;
+      this.data.albaranTime = this.today;
     }
-    this.data.timeArrive = new Date(this.data.timeArrive);
-    console.log('time', this.data.timeArrive);
+    this.data.albaranTime = new Date(this.data.albaranTime);
+    console.log('time', this.data.albaranTime);
 
     this.datetime =
       '' +
-      this.data.timeArrive.getHours() +
+      this.data.albaranTime.getHours() +
       ':' +
-      this.data.timeArrive.getMinutes() +
+      this.data.albaranTime.getMinutes() +
       ':' +
-      this.data.timeArrive.getSeconds() +
+      this.data.albaranTime.getSeconds() +
       '.' +
-      this.data.timeArrive.getMilliseconds();
+      this.data.albaranTime.getMilliseconds();
     console.log('timestamp', this.datetime);
   }
   save() {
     if (this.objAlbaran.id === 0) {
-      this.addAlbarares();
+      this.addData();
     } else {
-      this.updateAlbaranes();
+      this.updateData();
     }
   }
-  addAlbarares() {
+  addData() {
     this.getFormatTimeStamp();
+    // albaran el modelo no es correcto aun falta por definir
     const obj = {
+      id: 0,
+      branchId: this.user.branch,
       albaranDate: this.objAlbaran.albaranDate,
-      albaranTime: this.objAlbaran.albaranTime,
+      albaranTime: this.objAlbaran.timeArrive,
       albaranDescription: this.objAlbaran.descripcion,
       numSerie: this.objAlbaran.numSerie,
       numAlbaran: this.objAlbaran.numAlbaran,
       n: this.objAlbaran.n,
       statusId: this.idStatus,
       timeArrive: this.datetime,
-      comment: this.data.comment,
+      comment: this.data.albaranDescription,
       createdBy: this.user.id,
       createdDate: this.today,
       updatedBy: this.user.id,
@@ -160,7 +165,7 @@ export class DialogAddAlbaranesComponent implements OnInit {
       }
     });
   }
-  updateAlbaranes() {
+  updateData() {
     // if (this.data.timeArrive.length > 8) {
     //   this.getFormatTimeStamp();
     // }
@@ -174,7 +179,7 @@ export class DialogAddAlbaranesComponent implements OnInit {
       n: this.objAlbaran.n,
       statusId: this.idStatus,
       timeArrive: this.data.timeArrive,
-      comment: this.data.comment,
+      comment: this.data.albaranDescription,
       createdBy: this.data.createdBy,
       createdDate: this.data.createdDate,
       updatedBy: this.user.id,

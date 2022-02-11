@@ -20,14 +20,18 @@ export class CentroControlMatutinoComponent implements OnInit {
     public load: LoaderComponent,
     public popoverCtrl: PopoverController,
 
-  ) {}
+  ) { }
 
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log('user', this.user);
     this.getDataControl();
   }
-  ngOnInit() {}
+  ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('userData'));
+    console.log('user', this.user);
+    this.getDataControl();
+  }
   getDataControl() {
     this.load.presentLoading('Cargando..');
     this.service
@@ -61,12 +65,15 @@ export class CentroControlMatutinoComponent implements OnInit {
     this.router.navigateByUrl('supervisor/validacion-assistencia/1');
   }
   validacionGas(id: number) {
-    if(id === null){
+    if (id === null) {
       id = 0;
     }
     this.router.navigateByUrl('supervisor/validacion-gas/' + id);
   }
   salonMontado(id: number) {
+    if (id === null) {
+      id = 0;
+    }
     this.router.navigateByUrl('supervisor/salon-montado/' + id);
   }
   stockPollo(id: number) {

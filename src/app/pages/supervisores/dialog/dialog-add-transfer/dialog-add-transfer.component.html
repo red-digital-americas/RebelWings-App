@@ -47,7 +47,7 @@
               <ion-item>
                 <ion-label>Estatus</ion-label>
                 <ion-select
-                  [(ngModel)]="data.status"
+                  [(ngModel)]="data.type"
                   (focus)="activeStatus = false"
                   required
                 >
@@ -92,7 +92,7 @@
             <ion-datetime
               (focus)="activeTime = false"
               required
-              type="date"
+              type="time"
               [value]="today"
               [(ngModel)]="data.time"
               displayFormat="HH:mm a"

@@ -10,9 +10,12 @@ import { ModalController, Platform } from '@ionic/angular';
 export class ScheduleComponent implements OnInit {
   public schedule: string;
   public showHeader = false;
-  constructor(public platform: Platform, public router: Router) {}
+  public user;
+  constructor(public platform: Platform, public router: Router) { }
 
   ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('userData'));
+    console.log('user', this.user);
     if (this.platform.is('android')) {
       this.showHeader = false;
     } else if (this.platform.is('ios')) {

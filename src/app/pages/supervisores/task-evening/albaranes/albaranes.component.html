@@ -22,13 +22,11 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-  </ion-header>
-  <ion-content *ngIf="data.length !== 0" fullscreen="false" class="ion-padding">
     <ion-grid>
       <!-- titulo de empresa -->
       <ion-row size="12">
         <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL MASARIK</h5>
+          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
         </ion-col>
         <ion-col size="8">
           <span class="date-grey">
@@ -36,6 +34,11 @@
           </span>
         </ion-col>
       </ion-row>
+    </ion-grid>
+  </ion-header>
+  <ion-content *ngIf="data.length !== 0" fullscreen="false" class="ion-padding">
+    <ion-grid>
+
 
       <ion-card *ngFor="let item of data">
         <ion-row size="12">
@@ -171,7 +174,7 @@
 
       <ion-card *ngFor="let item of [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]">
         <ion-row size="12">
-          <ion-item-sliding id="item100">
+          <ion-item-sliding>
             <ion-item>
               <ion-grid>
                 <ion-row>

@@ -16,6 +16,10 @@ export class TransferenciasComponent implements OnInit {
   public data: any[] = [];
   public idSucursal: string;
   public disabled = false;
+  // nombre de sucursal
+  public branchId;
+  public nameBranch = '';
+  public dataBranch: any[] = [];
   constructor(
     public router: Router,
     public modalController: ModalController,
@@ -29,6 +33,9 @@ export class TransferenciasComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idSucursal = this.routerActive.snapshot.paramMap.get('id');
+    // get nema de sucursal
+    this.branchId = this.user.branch;
+    this.getBranch();
     this.getData();
   }
   ngOnInit() {}
@@ -47,6 +54,25 @@ export class TransferenciasComponent implements OnInit {
   return() {
     // window.history.back();
     this.router.navigateByUrl('supervisor/control-vespertino');
+  }
+  // get  name sucursal
+  getBranch() {
+    let branchIdNumber = 0;
+    branchIdNumber = Number(this.branchId);
+    console.log('branchIdNumber', branchIdNumber);
+    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+      if (resp.success) {
+        this.dataBranch = resp.result;
+        console.log('get branch', this.dataBranch);
+        this.dataBranch.forEach(element => {
+          if (element.branchId === branchIdNumber) {
+            this.nameBranch = element.branchName;
+            this.nameBranch = this.nameBranch.toUpperCase();
+            console.log('nombre', this.nameBranch);
+          }
+        });
+      }
+    });
   }
   async openNotification(ev: any, obj, idType, branch) {
     console.log('data', obj, 'type', idType);
@@ -102,7 +128,7 @@ export class TransferenciasComponent implements OnInit {
     });
     modal.onDidDismiss().then((data) => {
       console.log(data);
-      this.ngOnInit();
+      this.ionViewWillEnter();
     });
     this.modalController.dismiss();
     return await modal.present();

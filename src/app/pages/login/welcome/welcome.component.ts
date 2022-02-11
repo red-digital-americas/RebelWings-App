@@ -19,12 +19,12 @@ export class WelcomeComponent implements OnInit {
     if (this.user.roleId === 1) {
       setTimeout(() => {
         this.router.navigateByUrl('supervisor');
-      }, 2000);
+      }, 3000);
       // regional
     } else if (this.user.roleId === 2) {
       setTimeout(() => {
         this.router.navigateByUrl('regional');
-      }, 2000);
+      }, 3000);
     }
   }
 }

@@ -1,6 +1,6 @@
 <ion-app>
   <!-- **********************data*******************  -->
-  <ion-header class="ion-no-border ion-padding">
+  <ion-header *ngIf="activeData === true" class="ion-no-border ion-padding">
     <ion-grid>
       <ion-row>
         <ion-col>
@@ -24,12 +24,12 @@
       </ion-row>
     </ion-grid>
   </ion-header>
-  <ion-content fullscreen="false" class="ion-padding">
+  <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
     <ion-grid>
       <!-- titulo de empresa -->
       <ion-row size="12">
         <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL MASARIK</h5>
+          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
         </ion-col>
         <ion-col size="8">
           <span class="date-grey">
@@ -37,7 +37,7 @@
           </span>
         </ion-col>
       </ion-row>
-      <ion-row size="12" *ngIf="idProductoRiesgo === '0'">
+      <ion-row size="12" *ngIf="newProduct === true">
         <ion-col size="9"></ion-col>
         <ion-col size="3" class="ion-align-items-end">
           <div class="align-end-text">
@@ -55,7 +55,7 @@
       <br />
     </ion-grid>
     <!-- agregar varios registros -->
-    <div *ngIf="idProductoRiesgo === '0'">
+    <div *ngIf="newProduct === true">
       <ion-grid *ngFor="let item of objProduct; index as index">
         <ion-row size="12">
           <ion-col size="9"></ion-col>
@@ -73,8 +73,9 @@
         <ion-row size="12">
           <ion-col size="6">
             <ion-row size="12">
-              <ion-col size="12">
-                <ion-label floating>Selecciona el producto en riesgo</ion-label>
+              <!-- buscar producto cuando no hay id de registro -->
+              <ion-col   size="12">
+                <ion-label floating>Selecciona el producto en riesgo nuevo</ion-label>
                 <ion-card class="closed">
                   <ion-list>
                     <ion-list-header>
@@ -98,6 +99,53 @@
                         </ion-select-option>
                       </ion-select>
                     </ion-item>
+                  </ion-list>
+                </ion-card>
+              </ion-col>
+
+              <ion-col size="12">
+                <ion-label floating>Código del paquete</ion-label>
+                <ion-card class="closed">
+                  <ion-input
+                    [(ngModel)]="item.code"
+                    type="text"
+                    placeholder="Codigo"
+                  ></ion-input>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          <ion-col size="6">
+            <ion-label>Comentarios</ion-label>
+            <ion-card>
+              <ion-textarea
+                [(ngModel)]="item.comment"
+                rows="6"
+                cols="20"
+              ></ion-textarea>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <br /><br />
+      </ion-grid>
+    </div>
+    <!-- actualizar registro -->
+    <div *ngIf="newProduct === false">
+      <ion-grid *ngFor="let item of objProduct; index as index">
+        <ion-row size="12">
+          <ion-col size="6">
+            <ion-row size="12">
+              <ion-col size="12">
+                <ion-label floating>Producto en riesgo</ion-label>
+                <ion-card class="closed">
+                  <ion-list>
+                    <ion-list-header>
+                      <ion-input
+                        [(ngModel)]="item.product"
+                        disabled
+                      ></ion-input>
+                    </ion-list-header>
+
                   </ion-list>
                 </ion-card>
               </ion-col>
@@ -127,67 +175,8 @@
         <br /><br />
       </ion-grid>
     </div>
-    <!-- actualizar registro -->
-    <div *ngIf="idProductoRiesgo !== '0' && objProduct">
-      <ion-grid>
-        <ion-row size="12">
-          <ion-col size="6">
-            <ion-row size="12">
-              <ion-col size="12">
-                <ion-label floating>Selecciona el producto en riesgo</ion-label>
-                <ion-card class="closed">
-                  <ion-list>
-                    <ion-list-header>
-                      <ion-searchbar
-                        placeholder="Buscar"
-                        [(ngModel)]="search"
-                      ></ion-searchbar>
-                    </ion-list-header>
-                    <ion-item>
-                      <ion-label>Producto </ion-label>
-                      <ion-select
-                        (click)="getCatalog(search)"
-                        [(ngModel)]="objProduct.productId"
-                      >
-                        <ion-select-option
-                          *ngFor="let data of selectCatalogs"
-                          [value]="data.codarticulo"
-                        >
-                          {{ data.descripcion }}
-                        </ion-select-option>
-                      </ion-select>
-                    </ion-item>
-                  </ion-list>
-                </ion-card>
-              </ion-col>
-              <ion-col size="12">
-                <ion-label floating>Código del paquete</ion-label>
-                <ion-card class="closed">
-                  <ion-input
-                    [(ngModel)]="objProduct.code"
-                    type="text"
-                    placeholder="Codigo"
-                  ></ion-input>
-                </ion-card>
-              </ion-col>
-            </ion-row>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label>Comentarios</ion-label>
-            <ion-card>
-              <ion-textarea
-                [(ngModel)]="objProduct.comment"
-                rows="6"
-                cols="20"
-              ></ion-textarea>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-        <br /><br />
-      </ion-grid>
-    </div>
   </ion-content>
-  <ion-footer no-border>
+  <ion-footer *ngIf="activeData === true" no-border>
     <ion-grid>
       <!-- footer boton -->
       <ion-row size="12" class="footer">
@@ -208,7 +197,7 @@
   <!--**************** skeletor ***************-->
   <!-- no se ocupara aun por que no trae get de data -->
   <ion-header
-    *ngIf="idProductoRiesgo !== '0'"
+    *ngIf="activeData === false"
     class="ion-no-border ion-padding"
   >
     <ion-grid>
@@ -235,7 +224,7 @@
     </ion-grid>
   </ion-header>
   <ion-content
-    *ngIf="idProductoRiesgo !== '0'"
+    *ngIf="activeData === false"
     fullscreen="false"
     class="ion-padding"
   >
@@ -329,7 +318,7 @@
       </ion-grid>
     </div>
   </ion-content>
-  <ion-footer no-border *ngIf="idProductoRiesgo !== '0'">
+  <ion-footer no-border *ngIf="activeData === false">
     <ion-grid>
       <!-- footer boton -->
       <ion-row size="12" class="footer">

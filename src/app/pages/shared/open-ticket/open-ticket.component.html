@@ -14,18 +14,8 @@
         <ion-col size="1">
           <img src="./assets/icon/ilustracion_ticket.png" alt="Validaccion de assistencia" />
         </ion-col>
-        <ion-col size="11" class="ion-align-self-center">
-          <h3 class="title">TICKET {{idTicket}}</h3>
-        </ion-col>
-      </ion-row>
-      <ion-row size="12">
-        <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
-        </ion-col>
-        <ion-col size="2">
-          <span class="date-grey">
-            {{ data.dateOpen | date: "dd MMM yyy" }}
-          </span>
+        <ion-col size="5" class="ion-align-self-center">
+          <h3 class="title">TICKET {{data.noTicket}}</h3>
         </ion-col>
         <ion-col size="6">
           <ion-label floating>Estatus</ion-label>
@@ -44,6 +34,42 @@
           </ion-card>
         </ion-col>
       </ion-row>
+      <ion-row size="12">
+        <ion-col size="4" class="ion-align-self-center">
+          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
+        </ion-col>
+        <ion-col size="2" class="ion-align-self-center">
+          <span class="date-grey">
+            {{ data.dateOpen | date: "dd MMM yyy" }}
+          </span>
+        </ion-col>
+        <ion-col size="6" class="ion-align-self-center">
+          <ion-row size="12">
+            <ion-col size="2">
+              <img class="avatar" src="./assets/icon/skeleton-circle.png" alt="avatar" />
+            </ion-col>
+            <ion-col size="10">
+              <ion-row size="12">
+                <ion-col size="12">
+                  <span *ngIf="data.createdByNavigation.roleId === 1">
+                    <b>
+                      Supervisor
+                    </b>
+                  </span>
+                  <span *ngIf="data.createdByNavigation.roleId === 2">
+                    <b>
+                      Regional
+                    </b>
+                  </span>
+                </ion-col>
+                <ion-col size="12">
+                  <span class="nameticket">{{ data.createdByNavigation.name}} {{data.createdByNavigation.lastName}}</span>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
     </ion-grid>
   </ion-header>
   <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
@@ -55,14 +81,18 @@
             <ion-col size="12">
               <ion-label floating>Lugar específico</ion-label>
               <ion-card class="closed">
-                <span>{{data.whereAreYouLocatedNavigation[0].locate}}</span>
+                <ion-item>
+                  <span>
+                    {{data.whereAreYouLocatedNavigation.locate}}
+                  </span>
+                </ion-item>
               </ion-card>
             </ion-col>
             <ion-col size="12">
               <ion-label floating>Parte de la sucursal</ion-label>
               <ion-card class="closed">
                 <ion-item>
-                  {{data.categoryNavigation[0].category}}
+                  {{data.categoryNavigation.category}}
                 </ion-item>
               </ion-card>
             </ion-col>
@@ -78,18 +108,40 @@
         </ion-col>
       </ion-row>
       <ion-row size="12">
+        <ion-col size="6">
+          <ion-label floating>Precio</ion-label>
+          <ion-card class="closed">
+            <ion-input [(ngModel)]="data.cost" required placeholder=" $ MXN">
+            </ion-input>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+      <ion-row size="12">
         <ion-col size="12">
-          <h5>Fotografías</h5>
+          <span class="titleProduct">Fotografías</span>
         </ion-col>
         <!-- fotos  -->
         <ion-col size="6" *ngFor="let photo of data.photoTicketings; index as position">
           <!-- imagenes en bd -->
-          <ion-img src="{{ url }}{{ photo.photo }}" (click)="deleteImgShowAction(photo.id)">
+          <ion-img src="{{ url }}{{ photo.photo }}">
           </ion-img>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-content>
+  <ion-footer *ngIf="activeData === true" no-border>
+    <ion-grid>
+      <!-- footer boton -->
+      <ion-row size="12" class="footer">
+        <ion-col size="3" offset="8">
+          <ion-button [disabled]="disabled === true" (click)="save()" shape="round" color="danger" expand="full">
+            GUARDAR
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>
   <!-- skeletor -->
   <ion-header *ngIf="activeData === false" class="ion-no-border ion-padding">
     <ion-grid>

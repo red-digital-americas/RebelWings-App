@@ -67,6 +67,7 @@ export class LoginComponent implements OnInit {
     }
   }
   login(correo, contrasena) {
+    this.load.presentLoading('Cargando..');
     this.disabled = true;
     const loginObj = `?email=${correo}&password=${contrasena}`;
     this.service.login(loginObj).subscribe(
@@ -81,6 +82,7 @@ export class LoginComponent implements OnInit {
 
           this.router.navigateByUrl('bienvenido');
         } else {
+          this.load.presentLoading('Error al iniciar sesión..');
           this.generalMessage(resp.message);
           this.disabled = false;
         }

@@ -4,16 +4,14 @@
       <ion-row>
         <ion-col>
           <div>
-            <p  (click)="return()" class="ion-align-items-start return">< REGRESAR</p>
+            <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR</p>
           </div>
         </ion-col>
       </ion-row>
       <ion-row size="12">
         <ion-col size="1">
-          <img
-            src="./assets/icon/ilustracion_mesas_en_espera.png"
-            alt="Validaccion de assistencia"
-          />
+          <img src="./assets/icon/ilustracion_mesas_en_espera.png" alt="Validaccion de assistencia" />
         </ion-col>
         <ion-col size="11" class="ion-align-self-center">
           <h3 class="title">MESAS EN ESPERA</h3>
@@ -35,32 +33,25 @@
         </ion-col>
       </ion-row>
       <ion-row size="12">
+        <ion-col size="12">
+          <span>Recuerda que esta tarea se deberá revisar de 5 al cierre..</span>
+        </ion-col>
         <ion-col size="6">
           <span>¿Hubo mesas en espera?</span>
           <br>
           <ion-toggle [(ngModel)]="data.waitlistTables"></ion-toggle>
         </ion-col>
         <ion-col size="6"></ion-col>
-        <ion-col size="6">
-          <ion-label>¿Cuántas mesas hubo en espera?</ion-label>
-          <ion-card class="closed">
-            <ion-input
-              [(ngModel)]="data.howManyTables"
-              type="number"
-              min="0"
-              placeholder="Mesas"
-            ></ion-input>
-          </ion-card>
-        </ion-col>
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="data.waitlistTables === true" >
           <ion-label>Número de personas en espera por mesa</ion-label>
           <ion-card class="closed">
-            <ion-input
-              [(ngModel)]="data.numberPeople"
-              type="number"
-              min="0"
-              placeholder="Personas"
-            ></ion-input>
+            <ion-input [(ngModel)]="data.numberPeople" type="number" min="0" placeholder="Personas"></ion-input>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6" *ngIf="data.waitlistTables === true">
+          <ion-label>¿Cuántas mesas hubo en espera?</ion-label>
+          <ion-card class="closed">
+            <ion-input [(ngModel)]="data.howManyTables" type="number" min="0" placeholder="Mesas"></ion-input>
           </ion-card>
         </ion-col>
       </ion-row>
@@ -70,11 +61,7 @@
         <ion-col size="3" offset="8">
           <ion-button
             [disabled]="(data.howManyTables === undefined || data.howManyTables === null) || (data.numberPeople === undefined || data.numberPeople === null)"
-            (click)="save()"
-            shape="round"
-            color="danger"
-            expand="full"
-          >
+            (click)="save()" shape="round" color="danger" expand="full">
             GUARDAR
           </ion-button>
         </ion-col>

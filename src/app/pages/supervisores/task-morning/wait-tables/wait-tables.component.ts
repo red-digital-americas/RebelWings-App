@@ -48,6 +48,7 @@ export class WaitTablesComponent implements OnInit {
         if (resp.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', resp);
+          this.ngOnInit();
           this.router.navigateByUrl('supervisor/control-matutino');
         }
       });

@@ -11,12 +11,14 @@ import { ActionSheetController } from '@ionic/angular';
 })
 export class OpenTicketComponent implements OnInit {
   public user: any;
-  public data: LevantamientoTicketModel = new LevantamientoTicketModel();
+  // public data: LevantamientoTicketModel = new LevantamientoTicketModel();
+  public data;
   public branchId;
   public idTicket;
   public dataBranch: any[] = [];
   public nameBranch = '';
   public activeData = false;
+  public disabled = false;
   public today = new Date();
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
 
@@ -75,38 +77,26 @@ export class OpenTicketComponent implements OnInit {
       }
     });
   }
-  //eliminar imagenes bd
-  public async deleteImgShowAction(id) {
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Photos',
-      buttons: [
-        {
-          text: 'Delete',
-          role: 'destructive',
-          icon: 'trash',
-          handler: () => {
-            this.service
-              .serviceGeneralDelete(`Ticketing/${id}/Photo`)
-              .subscribe((data) => {
-                if (data.success) {
-                  this.load.presentLoading('Eliminando..');
-                  console.log('data', data);
-                  this.ionViewWillEnter();
-                }
-              });
-          },
-        },
-        {
-          text: 'Cancel',
-          icon: 'close',
-          role: 'cancel',
-          handler: () => {
-            // Nothing to do, action sheet is automatically closed
-          },
-        },
-      ],
-    });
-    await actionSheet.present();
+  save() {
+    this.disabled = true;
+    this.data.userId = this.user.id;
+    this.data.closedDate = this.today;
+    this.updateData();
+  }
+
+  updateData() {
+    console.log('Obj To send put => ', this.data);
+    this.service
+      .serviceGeneralPut(`Ticketing/${this.idTicket}/Status`, this.data)
+      .subscribe((data) => {
+        if (data.success) {
+          this.load.presentLoading('Actualizando..');
+          console.log('data', data);
+          this.ionViewWillEnter();
+          this.disabled = false;
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+        }
+      });
   }
 
 

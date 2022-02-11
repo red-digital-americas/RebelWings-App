@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
-
+import { DialogGeneralMessageComponent } from 'src/app/pages/dialog-general/dialog-general-message/dialog-general-message.component';
 @Component({
   selector: 'app-dialog-add-package',
   templateUrl: './dialog-add-package.component.html',
@@ -22,7 +22,7 @@ export class DialogAddPackageComponent implements OnInit {
     public navParams: NavParams,
     public service: ServiceGeneralService,
     public load: LoaderComponent
-  ) {}
+  ) { }
 
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
@@ -33,7 +33,7 @@ export class DialogAddPackageComponent implements OnInit {
       this.getPackage();
     }
   }
-  ngOnInit() {}
+  ngOnInit() { }
 
   getPackage() {
     this.service
@@ -81,6 +81,19 @@ export class DialogAddPackageComponent implements OnInit {
         }
       });
   }
+  async generalMessage(title, message) {
+    const modal = await this.modalController.create({
+      component: DialogGeneralMessageComponent,
+      cssClass: 'my-custom-popup',
+      // cssClass: 'my-custom-class',
+      // .setCssClass('profalert');
+      componentProps: {
+        header: title,
+        body: message,
+      },
+    });
+    return await modal.present();
+  }
   updatePackage() {
     const obj = {
       id: this.data.id,
@@ -97,6 +110,13 @@ export class DialogAddPackageComponent implements OnInit {
             dismissed: true,
           });
         }
-      });
+        else {
+          this.generalMessage('Error', resp.message);
+        }
+      },
+        (error) => {
+          this.generalMessage('Error', error.error.message);
+          console.log(error);
+        });
   }
 }

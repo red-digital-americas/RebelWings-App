@@ -33,7 +33,7 @@
       <!-- titulo de empresa -->
       <ion-row size="12">
         <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL MASARIK</h5>
+          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
         </ion-col>
         <ion-col size="8">
           <span class="date-grey">
@@ -96,24 +96,17 @@
       </ion-row>
       <ion-row size="12">
         <ion-col size="6">
-          <ion-row *ngIf="photoService.photos.length !== 0">
-            <ion-col
-              size="3"
-              *ngFor="let photo of photoService.photos; index as position"
-            >
-              <ion-img
-                src="{{ base64 }},{{ photo.webviewPath }}"
-                (click)="showActionSheet(photo, position)"
-              >
+          <!-- fotos sin id -->
+          <ion-row>
+            <ion-col size="3" *ngFor="let photo of data.photoCashRegisterShortages; index as position">
+              <!-- se mostara esta imagen si no tiene id  -->
+              <ion-img *ngIf="photo.id === 0 " src="{{ base64 }},{{ photo.photo }}"
+                (click)="showActionSheet(photo, position)">
               </ion-img>
-            </ion-col>
-          </ion-row>
-          <ion-row *ngIf="data.id !== 0">
-            <ion-col
-              size="3"
-              *ngFor="let item of data.photoCashRegisterShortages"
-            >
-              <ion-img src="{{ url }}{{ item.photo }}"> </ion-img>
+              <!-- se mostrara esta imagen si esta guardada -->
+              <ion-img *ngIf="photo.id !== 0 " src="{{ url }}{{ photo.photo }}"
+                (click)="deleteImgShowAction(photo.id)">
+              </ion-img>
             </ion-col>
           </ion-row>
         </ion-col>

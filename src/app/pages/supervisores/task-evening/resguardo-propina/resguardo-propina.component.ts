@@ -27,6 +27,10 @@ export class ResguardoPropinaComponent implements OnInit {
   // ******variables de validacion ********
   public activeAmount = false;
   public activeComment = false;
+  // nombre de sucursal
+  public branchId;
+  public nameBranch = '';
+  public dataBranch: any[] = [];
 
   constructor(
     public router: Router,
@@ -41,6 +45,9 @@ export class ResguardoPropinaComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idPropina = this.routerActive.snapshot.paramMap.get('id');
+    // get nema de sucursal
+    this.branchId = this.user.branch;
+    this.getBranch();
     if (this.idPropina === '0') {
       console.log('Completar la tarea');
       this.activeData = true;
@@ -67,15 +74,46 @@ export class ResguardoPropinaComponent implements OnInit {
     // window.history.back();
     this.router.navigateByUrl('supervisor/control-vespertino');
   }
+  // get  name sucursal
+  getBranch() {
+    let branchIdNumber = 0;
+    branchIdNumber = Number(this.branchId);
+    console.log('branchIdNumber', branchIdNumber);
+    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+      if (resp.success) {
+        this.dataBranch = resp.result;
+        console.log('get branch', this.dataBranch);
+        this.dataBranch.forEach(element => {
+          if (element.branchId === branchIdNumber) {
+            this.nameBranch = element.branchName;
+            this.nameBranch = this.nameBranch.toUpperCase();
+            console.log('nombre', this.nameBranch);
+          }
+        });
+      }
+    });
+  }
   async addPhotoToGallery() {
     const name = new Date().toISOString();
     await this.photoService.addNewToGallery();
     await this.photoService.loadSaved();
 
-    this.fotosPropina = this.photoService.photos;
-    console.log('fotos propina', this.fotosPropina);
+    // agregaremos las fotos pero con id type de acuerdo al caso
+    // al agregar las fotos en storage, las pasamos por lista
+    console.log('obj fotos', this.photoService);
+    this.data.photoTips.push({
+      id: 0,
+      tipId: this.data.id,
+      photo: this.photoService.photos[0].webviewPath,
+      photoPath: 'jpeg',
+      createdBy: this.user.id,
+      createdDate: this.today,
+      updatedBy: this.user.id,
+      updatedDate: this.today,
+    });
+    console.log('fotos chicken', this.data);
   }
-  public async showActionSheet(photo: UserPhoto, position: number) {
+  public async showActionSheet(photo, position: number) {
     console.log('photo', photo);
     console.log('posicion', position);
 
@@ -88,6 +126,41 @@ export class ResguardoPropinaComponent implements OnInit {
           icon: 'trash',
           handler: () => {
             this.photoService.deletePicture(photo, position);
+            //
+            this.data.photoTips.splice(position, 1);
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            // Nothing to do, action sheet is automatically closed
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
+  //eliminar imagenes bd
+  public async deleteImgShowAction(id) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Photos',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.service
+              .serviceGeneralDelete(`Tip/${id}/Photo`)
+              .subscribe((data) => {
+                if (data.success) {
+                  this.load.presentLoading('Eliminando..');
+                  console.log('data', data);
+                  this.ionViewWillEnter();
+                }
+              });
           },
         },
         {
@@ -140,23 +213,6 @@ export class ResguardoPropinaComponent implements OnInit {
     this.data.branchId = this.user.branch;
     this.data.updatedBy = this.user.id;
     this.data.updatedDate = this.today;
-    this.fotosPropina = this.photoService.photos;
-    console.log('fotos propina', this.fotosPropina);
-    if (this.fotosPropina.length !== 0) {
-      this.fotosPropina.forEach((foto) => {
-        this.data.photoTips.push({
-          tipId: 0,
-          photoPath: 'jpeg',
-          photo: foto.webviewPath,
-          createdBy: this.user.id,
-          createdDate: this.today,
-          updatedBy: this.user.id,
-          updatedDate: this.today,
-          filepath: foto.filepath,
-        });
-      });
-    }
-
     console.log('Obj To send => ', this.data);
 
     if (this.idPropina === '0') {
@@ -182,7 +238,9 @@ export class ResguardoPropinaComponent implements OnInit {
   updatePropina() {
     if (this.data.photoTips.length !== 0) {
       this.data.photoTips.forEach((element) => {
-        element.photoPath = '';
+        if(element.id !== 0){
+          element.photoPath = '';
+        }
       });
     }
     this.service.serviceGeneralPut('Tip', this.data).subscribe((data) => {
@@ -207,6 +265,7 @@ class PropinaModel {
   photoTips: PhotoPropinaModel[] = [];
 }
 class PhotoPropinaModel {
+  id: number;
   tipId: number;
   photo: string;
   photoPath: string;
@@ -214,5 +273,4 @@ class PhotoPropinaModel {
   createdDate: Date;
   updatedBy: number;
   updatedDate: Date;
-  filepath: string; //no es parte del modelo solo es para eliminar todas las fotos filesystem
 }

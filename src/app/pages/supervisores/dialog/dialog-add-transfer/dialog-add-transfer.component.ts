@@ -86,7 +86,7 @@ export class DialogAddTransferComponent implements OnInit {
       this.getTransfer();
     }
   }
-  ngOnInit() {}
+  ngOnInit() { }
 
   getTransfer() {
     this.service
@@ -162,7 +162,7 @@ export class DialogAddTransferComponent implements OnInit {
         .subscribe((resp) => {
           if (resp.success) {
             console.log('get coincidencias', resp.result);
-            if (resp.result?.length !== 0 && resp.result !== null) {
+            if (resp.result?.length === 0 || resp.result === null) {
               return;
             } else {
               this.data.amount = resp.result[0];
@@ -176,9 +176,9 @@ export class DialogAddTransferComponent implements OnInit {
 
   validateSave() {
     if (
-      this.data.status === '' ||
-      this.data.status === undefined ||
-      this.data.status === null
+      this.data.type === '' ||
+      this.data.type === undefined ||
+      this.data.type === null
     ) {
       this.activeStatus = true;
     } else {
@@ -239,8 +239,8 @@ export class DialogAddTransferComponent implements OnInit {
       this.activeComment = false;
     }
     if (
-      this.data.status === '' ||
-      this.data.status === undefined ||
+      this.data.type === '' ||
+      this.data.type === undefined ||
       this.data.date === '' ||
       this.data.date === undefined ||
       this.data.time === '' ||
@@ -268,8 +268,8 @@ export class DialogAddTransferComponent implements OnInit {
   getFormatTimeStamp() {
     this.data.time = new Date(this.data.time);
     console.log('time', this.data.time);
-
-    this.datetime =
+    let datetime = '';
+    datetime =
       '' +
       this.data.time.getHours() +
       ':' +
@@ -278,7 +278,8 @@ export class DialogAddTransferComponent implements OnInit {
       this.data.time.getSeconds() +
       '.' +
       this.data.time.getMilliseconds();
-    console.log('timestamp', this.datetime);
+    console.log('timestamp', datetime);
+    this.data.time = datetime;
   }
   //  HACER UNA TRANSFERENCIA/SOLICITAR UNA TRANSFERENCIA
   addTransference() {
@@ -288,12 +289,12 @@ export class DialogAddTransferComponent implements OnInit {
     }
     this.disabled = true;
     const obj = {
-      type: this.type,
-      status: this.data.status,
+      type: this.data.type,
+      status: this.data.type,
       fromBranchId: this.user.branch,
       toBranchId: this.branchId,
       date: this.data.date,
-      time: this.datetime,
+      time: this.data.time,
       productId: this.data.productId,
       code: this.data.code,
       amount: this.data.amount,
@@ -319,20 +320,31 @@ export class DialogAddTransferComponent implements OnInit {
     this.disabled = false;
   }
   // solicitar transferencia
+  sliceHora(){
+    let time = '';
+    time = this.data.time;
+    time = time.slice(0, 12);
+    this.data.time = time;
+    console.log('slice time', this.data.time);
+  }
+
   updateTransference() {
     if (this.data.time.length > 8) {
+      this.sliceHora();
+    }else{
       this.getFormatTimeStamp();
     }
-    this.data.time = this.data.time.Timestamp;
+    // this.data.time = this.data.time.Timestamp;
     this.disabled = true;
     const obj = {
       id: this.data.id,
       type: this.data.type,
-      status: this.data.status,
+      status: this.data.type,
       fromBranchId: this.user.branch,
       toBranchId: this.branchId,
       date: this.data.date,
-      time: this.datetime,
+      // time: this.datetime,
+      time: this.data.time,
       productId: this.data.productId,
       code: this.data.code,
       amount: this.data.amount,
