@@ -101,6 +101,9 @@ export class ProductoRiesgoComponent implements OnInit {
             console.log('get data', this.objProduct);
             console.log('Actualizar la tarea');
             this.activeData = true;
+            this.objProduct.forEach(obj => {
+              this.getCatalog(obj.product);
+            });
 
           }
         }

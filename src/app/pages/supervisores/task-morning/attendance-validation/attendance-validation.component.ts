@@ -4,7 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { DialoAddCommentAttendanceComponent } from '../../dialog/dialo-add-comment-attendance/dialo-add-comment-attendance.component';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
-
+import { LoaderGeneralService } from 'src/app/pages/dialog-general/loader-general.service';
 @Component({
   selector: 'app-attendance-validation',
   templateUrl: './attendance-validation.component.html',
@@ -25,6 +25,7 @@ export class AttendanceValidationComponent implements OnInit {
     public modalController: ModalController,
     public service: ServiceGeneralService,
     public load: LoaderComponent,
+    public loader: LoaderGeneralService,
     public routerActive: ActivatedRoute
   ) { }
 
@@ -33,7 +34,6 @@ export class AttendanceValidationComponent implements OnInit {
     console.log(this.routerActive.snapshot.paramMap.get('turno'));
     this.turno = this.routerActive.snapshot.paramMap.get('turno');
     this.user = JSON.parse(localStorage.getItem('userData'));
-    // this.load.presentLoading('Cargando..');
     // get nema de sucursal
     this.branchId = this.user.branch;
     this.getBranch();
@@ -41,10 +41,27 @@ export class AttendanceValidationComponent implements OnInit {
     this.service
       .serviceGeneralGet(`ValidateAttendance/All/${this.user.branch}`)
       .subscribe((resp) => {
+        this.loader.loadingPresent();
         if (resp.success) {
           this.data = resp.result;
           console.log('resp', this.data);
+          if (this.data.length === 0) {
+            this.data.push({
+              jobTitle: 'No data'
+            });
+          }
+          this.loader.loadingDismiss();
         }
+        else {
+          console.log('no data');
+          this.data.push({
+            jobTitle: 'No data'
+          });
+          this.loader.loadingDismiss();
+        }
+      }, error =>{
+        console.log('Error', error);
+
       });
   }
 
@@ -65,6 +82,7 @@ export class AttendanceValidationComponent implements OnInit {
         jobTitle: trabajo,
       },
     });
+    this.ionViewWillEnter();
     return await modal.present();
   }
   // get  name sucursal
@@ -84,7 +102,11 @@ export class AttendanceValidationComponent implements OnInit {
           }
         });
       }
-    });
+    },
+       error => {
+        console.log('Error', error);
+      }
+    );
   }
 }
 

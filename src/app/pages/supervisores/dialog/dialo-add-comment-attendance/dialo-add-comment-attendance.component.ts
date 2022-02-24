@@ -77,6 +77,7 @@ export class DialoAddCommentAttendanceComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
+          this.ionViewWillEnter();
           this.dismiss();
         }
       });
@@ -90,6 +91,7 @@ export class DialoAddCommentAttendanceComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
+          this.ionViewWillEnter();
           this.dismiss();
         }
       });

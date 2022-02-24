@@ -15,8 +15,8 @@ export class DialogAddTransferComponent implements OnInit {
   @Input() nameSucursal: string;
   @ViewChild('mySelect') selectRef: IonSelect;
 
-  // public data: TransferModel = new TransferModel();
-  public data: any = [];
+  public data: TransferModel = new TransferModel();
+  // public data: any = [];
   public user: any;
   public today = new Date();
   public disabled = false;
@@ -25,6 +25,9 @@ export class DialogAddTransferComponent implements OnInit {
   public selectCatalogs = [];
   public datetime;
   public visible = false;
+
+  // sirve solo para el update identifica si la hora cambio
+  public timestamp;
 
   customYearValues = [2020, 2016, 2008, 2004, 2000, 1996];
   customDayShortNames = [
@@ -46,6 +49,9 @@ export class DialogAddTransferComponent implements OnInit {
   public activeCode = false;
   public activeAmount = false;
   public activeComment = false;
+  // nombre de sucursal
+  public fromBranch = '';
+  public dataBranch: any[] = [];
 
   constructor(
     public modalController: ModalController,
@@ -81,7 +87,7 @@ export class DialogAddTransferComponent implements OnInit {
     this.type = this.navParams.data.type;
     this.nameSucursal = this.navParams.data.nameSucursal;
     this.getStatus();
-
+    this.getBranch();
     if (this.idRegister !== 0) {
       this.getTransfer();
     }
@@ -95,15 +101,44 @@ export class DialogAddTransferComponent implements OnInit {
         if (resp.success) {
           this.data = resp.result;
           console.log('get transfer', this.data);
-          // document.getElementById('clickSearch').click();
-          // this.selectRef.close();
           this.getCatalog(this.data.product);
+          // para identificar que se cambio la hora igualamos variables
+          this.timestamp = this.data.time;
+          this.getFomName();
         }
       });
   }
   dismiss() {
     this.modalController.dismiss({
       dismissed: true,
+    });
+  }
+  // get  name sucursal
+  getBranch() {
+    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+      if (resp.success) {
+        this.dataBranch = resp.result;
+        console.log('get branch', this.dataBranch);
+        this.getName();
+      }
+    });
+  }
+  getName() {
+    this.dataBranch.forEach(element => {
+      if (element.branchId === this.user.branch) {
+        this.nameSucursal = element.branchName;
+        this.nameSucursal = this.nameSucursal.toUpperCase();
+        console.log('nombre from', this.nameSucursal);
+      }
+    });
+  }
+  getFomName() {
+    this.dataBranch.forEach(element => {
+      if (element.branchId === this.data.fromBranchId) {
+        this.fromBranch = element.branchName;
+        this.fromBranch = this.fromBranch.toUpperCase();
+        console.log('nombre from', this.fromBranch);
+      }
     });
   }
   // trae coincidencias de productos segun su busqueda
@@ -176,7 +211,6 @@ export class DialogAddTransferComponent implements OnInit {
 
   validateSave() {
     if (
-      this.data.type === '' ||
       this.data.type === undefined ||
       this.data.type === null
     ) {
@@ -185,7 +219,6 @@ export class DialogAddTransferComponent implements OnInit {
       this.activeStatus = false;
     }
     if (
-      this.data.date === '' ||
       this.data.date === undefined ||
       this.data.date === null
     ) {
@@ -212,7 +245,6 @@ export class DialogAddTransferComponent implements OnInit {
       this.activeTime = false;
     }
     if (
-      this.data.productId === '' ||
       this.data.productId === undefined ||
       this.data.productId === null
     ) {
@@ -239,13 +271,10 @@ export class DialogAddTransferComponent implements OnInit {
       this.activeComment = false;
     }
     if (
-      this.data.type === '' ||
       this.data.type === undefined ||
-      this.data.date === '' ||
       this.data.date === undefined ||
       this.data.time === '' ||
       this.data.time === undefined ||
-      this.data.productId === '' ||
       this.data.productId === undefined ||
       this.data.amount === '' ||
       this.data.amount === undefined ||
@@ -266,52 +295,46 @@ export class DialogAddTransferComponent implements OnInit {
     }
   }
   getFormatTimeStamp() {
-    this.data.time = new Date(this.data.time);
-    console.log('time', this.data.time);
-    let datetime = '';
-    datetime =
-      '' +
-      this.data.time.getHours() +
-      ':' +
-      this.data.time.getMinutes() +
-      ':' +
-      this.data.time.getSeconds() +
-      '.' +
-      this.data.time.getMilliseconds();
-    console.log('timestamp', datetime);
-    this.data.time = datetime;
+    // this.data.time = new Date(this.data.time);
+    // "15:55"
+    if (this.data.time.length === 5) {
+      console.log('time', this.data.time);
+      let datetime = '';
+      datetime = `${this.data.time}:00`;
+      this.data.time = datetime;
+    }
+    //   '' +
+    //   this.data.time.getHours() +
+    //   ':' +
+    //   this.data.time.getMinutes() +
+    //   ':' + 0 + '';
+    // this.data.time.getSeconds();
+    console.log('timestamp', this.data.time);
   }
   //  HACER UNA TRANSFERENCIA/SOLICITAR UNA TRANSFERENCIA
   addTransference() {
     this.getFormatTimeStamp();
+    this.data.type = this.type;
+    this.data.fromBranchId = this.user.branch;
+    this.data.toBranchId = this.branchId;
+    this.data.createdBy = this.user.id;
+    this.data.createdDate = this.today;
+    this.data.updatedBy = this.user.id;
+    this.data.updatedDate = this.today;
+
     if (this.data.code === undefined) {
       this.data.code = '';
     }
     this.disabled = true;
-    const obj = {
-      type: this.data.type,
-      status: this.data.type,
-      fromBranchId: this.user.branch,
-      toBranchId: this.branchId,
-      date: this.data.date,
-      time: this.data.time,
-      productId: this.data.productId,
-      code: this.data.code,
-      amount: this.data.amount,
-      comment: this.data.comment,
-      createdBy: this.user.id,
-      createdDate: this.today,
-      updatedBy: this.user.id,
-      updatedDate: this.today,
-    };
-    console.log('obj a guardar', obj);
+    console.log('obj a guardar', this.data);
     this.service
-      .serviceGeneralPostWithUrl('Transfer', obj)
+      .serviceGeneralPostWithUrl('Transfer', this.data)
       .subscribe((resp) => {
         if (resp.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', resp);
           this.disabled = false;
+          this.ionViewWillEnter();
           this.modalController.dismiss({
             dismissed: true,
           });
@@ -319,46 +342,24 @@ export class DialogAddTransferComponent implements OnInit {
       });
     this.disabled = false;
   }
-  // solicitar transferencia
-  sliceHora(){
-    let time = '';
-    time = this.data.time;
-    time = time.slice(0, 12);
-    this.data.time = time;
-    console.log('slice time', this.data.time);
-  }
-
   updateTransference() {
-    if (this.data.time.length > 8) {
-      this.sliceHora();
-    }else{
+    // si la variable time se modifico se agrega formato
+    if (this.data.time !== this.timestamp) {
       this.getFormatTimeStamp();
     }
-    // this.data.time = this.data.time.Timestamp;
+    this.data.type = 1;
+    this.data.fromBranchId = this.user.branch;
+    this.data.toBranchId = this.branchId;
+    this.data.updatedBy = this.user.id;
+    this.data.updatedDate = this.today;
     this.disabled = true;
-    const obj = {
-      id: this.data.id,
-      type: this.data.type,
-      status: this.data.type,
-      fromBranchId: this.user.branch,
-      toBranchId: this.branchId,
-      date: this.data.date,
-      // time: this.datetime,
-      time: this.data.time,
-      productId: this.data.productId,
-      code: this.data.code,
-      amount: this.data.amount,
-      comment: this.data.comment,
-      createdBy: this.data.createdBy,
-      createdDate: this.data.createdDate,
-      updatedBy: this.user.id,
-      updatedDate: this.today,
-    };
-    console.log('obj a guardar', obj);
-    this.service.serviceGeneralPut('Transfer', obj).subscribe((resp) => {
+
+    console.log('obj a guardar', this.data);
+    this.service.serviceGeneralPut('Transfer', this.data).subscribe((resp) => {
       if (resp.success) {
         this.load.presentLoading('Actualizando ..');
         console.log('data', resp);
+        this.ionViewWillEnter();
         this.modalController.dismiss({
           dismissed: true,
         });
@@ -366,19 +367,21 @@ export class DialogAddTransferComponent implements OnInit {
     });
   }
 }
-// class TransferModel {
-//   id: number;
-//   type: number;
-//   fromBranchId: number;
-//   toBranchId: number;
-//   date: Date;
-//   time: Timestamp;
-//   productId: number;
-//   code: string;
-//   amount: string;
-//   comment: string;
-//   createdBy: 0;
-//   createdDate: Date;
-//   updatedBy: 0;
-//   updatedDate: Date;
-// }
+class TransferModel {
+  id: number;
+  type: number;
+  status: number;
+  product: string;
+  fromBranchId: number;
+  toBranchId: number;
+  date: Date;
+  time: string;
+  productId: number;
+  code: string;
+  amount: string;
+  comment: string;
+  createdBy: 0;
+  createdDate: Date;
+  updatedBy: 0;
+  updatedDate: Date;
+}

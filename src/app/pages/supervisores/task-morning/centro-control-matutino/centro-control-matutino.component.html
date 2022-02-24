@@ -62,7 +62,7 @@
             </div>
           </ion-col>
           <ion-col size="12" class="ion-align-items-start">
-            <h2 class="title-red">Sucursal {{ user.branchName}}</h2>
+            <h2 class="title-red">Sucursal {{nameBranch}}</h2>
           </ion-col>
         </ion-row>
         <ion-row size="12">
@@ -199,7 +199,7 @@
           <!-- -----------STOCK DE POLLO------------ -->
           <ion-col size="6" *ngIf="data[4]">
             <!-- aqui se envia el id de sucursal -->
-            <ion-card (click)="stockPollo(1)">
+            <ion-card (click)="stockPollo(user.branch)">
               <ion-card-content>
                 <ion-row size="12">
                   <ion-col size="3" class="ion-align-self-center">
@@ -238,7 +238,7 @@
           <!-- -----------MESAS EN ESPERA------------ -->
           <ion-col size="6" *ngIf="data[3]">
             <!-- aqui se envia el id de sucursal -->
-            <ion-card (click)="mesas(user.branch)">
+            <ion-card (click)="mesas(data[3].id)">
               <ion-card-content>
                 <ion-row size="12">
                   <ion-col size="3" class="ion-align-self-center">
@@ -262,9 +262,9 @@
                       <ion-col size="12">
                         <span class="title-progress-bar">Nivel de progreso</span>
                         &nbsp;
-                        <ion-progress-bar *ngIf="data[3].isComplete === false" color="{{ data[2].color }}" value="0.1">
+                        <ion-progress-bar *ngIf="data[3].isComplete === false" color="{{ data[3].color }}" value="0.1">
                         </ion-progress-bar>
-                        <ion-progress-bar *ngIf="data[3].isComplete === true" color="{{ data[2].color }}" value="1">
+                        <ion-progress-bar *ngIf="data[3].isComplete === true" color="{{ data[3].color }}" value="1">
                         </ion-progress-bar>
                         &nbsp;
                         <div class="margin-completado">

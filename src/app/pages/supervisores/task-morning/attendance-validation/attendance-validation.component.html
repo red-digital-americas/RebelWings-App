@@ -6,26 +6,18 @@
         <ion-col>
           <div>
             <p (click)="return()" class="ion-align-items-start return">
-              < REGRESAR
-            </p>
+              < REGRESAR </p>
           </div>
         </ion-col>
       </ion-row>
       <ion-row size="12">
         <ion-col size="1">
-          <img
-            src="./assets/icon/ilustracion_asistencias.png"
-            alt="Validaccion de assistencia"
-          />
+          <img src="./assets/icon/ilustracion_asistencias.png" alt="Validaccion de assistencia" />
         </ion-col>
         <ion-col size="11" class="ion-align-self-center">
           <h3 class="title">VALIDACIÓN DE ASISTENCIAS</h3>
         </ion-col>
       </ion-row>
-    </ion-grid>
-  </ion-header>
-  <ion-content *ngIf="data.length !== 0" fullscreen="false" class="ion-padding">
-    <ion-grid>
       <!-- titulo de empresa -->
       <ion-row size="12">
         <ion-col size="4">
@@ -37,6 +29,11 @@
           </span>
         </ion-col>
       </ion-row>
+    </ion-grid>
+  </ion-header>
+  <ion-content *ngIf="data.length !== 0" fullscreen="false" class="ion-padding">
+    <ion-grid>
+
       <ion-card *ngFor="let person of data">
         <ion-row size="12">
           <ion-item-sliding id="item100">
@@ -45,34 +42,26 @@
                 <ion-row>
                   <ion-col size="1" class="ion-align-self-center">
                     <div>
-                      <img
-                        *ngIf="person.avatar !== ''"
-                        src="{{ person.avatar }}"
-                        alt=""
-                      />
-                      <img
-                        *ngIf="person.avatar === ''"
-                        src="./assets/avatar.png"
-                        alt=""
-                      />
+                      <img *ngIf="person.avatar !== ''" src="{{ person.avatar }}" alt="" />
+                      <img *ngIf="person.avatar === ''" src="./assets/avatar.png" alt="" />
                     </div>
                   </ion-col>
                   <ion-col size="2" class="ion-align-self-center">
                     <div>
                       <span>{{
                         person.name.length > 15
-                          ? (person.name | slice: 0:15) + "..."
-                          : person.name
-                      }}</span>
+                        ? (person.name | slice: 0:15) + "..."
+                        : person.name
+                        }}</span>
                     </div>
                   </ion-col>
                   <ion-col size="2" class="ion-align-self-center">
                     <div>
                       <span>{{
                         person.jobTitle.length > 15
-                          ? (person.jobTitle | slice: 0:15) + "..."
-                          : person.jobTitle
-                      }}</span>
+                        ? (person.jobTitle | slice: 0:15) + "..."
+                        : person.jobTitle
+                        }}</span>
                     </div>
                   </ion-col>
                   <ion-col size="2" class="ion-align-self-center">
@@ -94,46 +83,27 @@
                   </ion-col>
                   <ion-col size="1" class="ion-align-self-center">
                     <div>
-                      <img
-                        *ngIf="person.status === 1"
-                        src="./assets/icon/icon_asisti.png"
-                        alt=""
-                      />
+                      <img *ngIf="person.status === 1" src="./assets/icon/icon_asisti.png" alt="" />
                       <!-- no llego -->
-                      <img
-                        *ngIf="person.status === 2"
-                        src="./assets/icon/icon_falt.png"
-                        alt=""
-                      />
+                      <img *ngIf="person.status === 2" src="./assets/icon/icon_falt.png" alt="" />
                       <!-- retardo -->
-                      <img
-                        *ngIf="person.status === 3"
-                        src="./assets/icon/icon_lleg_tarde.png"
-                        alt=""
-                      />
+                      <img *ngIf="person.status === 3" src="./assets/icon/icon_lleg_tarde.png" alt="" />
                     </div>
                   </ion-col>
                 </ion-row>
               </ion-grid>
             </ion-item>
-            <!--  -->
-            <ion-item-options
-              *ngIf="person.status === 3 || person.status === 1"
-              side="end"
-            >
+            <!-- *ngIf="person.status === 3 || person.status === 1" -->
+            <ion-item-options side="end">
               <ion-item-option color="warning">
-                <ion-icon
-                  (click)="
+                <ion-icon (click)="
                     commentAttendance(
                       person.attendanceId,
                       person.clabTrab,
                       person.name,
                       person.jobTitle
                     )
-                  "
-                  slot="icon-only"
-                  name="document-text-outline"
-                ></ion-icon>
+                  " slot="icon-only" name="document-text-outline"></ion-icon>
               </ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
@@ -166,11 +136,7 @@
       </ion-row>
     </ion-grid>
   </ion-header>
-  <ion-content
-    *ngIf="data.length === 0"
-    fullscreen="false"
-    class="ion-padding animated flash slow"
-  >
+  <ion-content *ngIf="data.length === 0" fullscreen="false" class="ion-padding animated flash slow">
     <ion-grid>
       <!-- titulo de empresa -->
       <ion-row size="12">

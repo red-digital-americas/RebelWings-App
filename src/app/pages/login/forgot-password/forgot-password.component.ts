@@ -4,6 +4,8 @@ import { ModalController, Platform } from '@ionic/angular';
 import { LoginService } from 'src/app/core/services/login/login.service';
 import { DialogGeneralMessageComponent } from '../../dialog-general/dialog-general-message/dialog-general-message.component';
 import { LoaderComponent } from '../../dialog-general/loader/loader.component';
+import { LoaderGeneralService } from '../../dialog-general/loader-general.service';
+
 
 @Component({
   selector: 'app-forgot-password',
@@ -19,8 +21,10 @@ export class ForgotPasswordComponent implements OnInit {
     public router: Router,
     public service: LoginService,
     public modalController: ModalController,
-    public load: LoaderComponent
-  ) {}
+    public load: LoaderComponent,
+    public loader: LoaderGeneralService,
+
+  ) { }
 
   ngOnInit() {
     if (this.platform.is('android')) {
@@ -46,7 +50,8 @@ export class ForgotPasswordComponent implements OnInit {
     return await modal.present();
   }
   forgot(email: string) {
-    this.load.presentLoading('Espere..');
+    // this.load.presentLoading('Espere..');
+    this.loader.loadingPresent();
 
     const obj = `?email=${email}`;
     this.service.forgotPassword(obj).subscribe(
@@ -57,7 +62,10 @@ export class ForgotPasswordComponent implements OnInit {
             'Exito',
             'Recibiras un correo para restablecer tu contraseña'
           );
+          this.loader.loadingDismiss();
+
         } else {
+          this.loader.loadingDismiss();
           this.generalMessage('Error', resp.message);
         }
       },

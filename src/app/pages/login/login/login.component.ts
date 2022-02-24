@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { LoginService } from './../../../core/services/login/login.service';
 import { DialogGeneralMessageComponent } from '../../dialog-general/dialog-general-message/dialog-general-message.component';
 import { LoaderComponent } from '../../dialog-general/loader/loader.component';
+import { LoaderGeneralService } from '../../dialog-general/loader-general.service';
 
 @Component({
   selector: 'app-login',
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit {
     public router: Router,
     public service: LoginService,
     public modalController: ModalController,
+    public loader:  LoaderGeneralService,
     public load: LoaderComponent
   ) {}
 
@@ -67,7 +69,8 @@ export class LoginComponent implements OnInit {
     }
   }
   login(correo, contrasena) {
-    this.load.presentLoading('Cargando..');
+    // this.load.presentLoading('Cargando..');
+    this.loader.loadingPresent();
     this.disabled = true;
     const loginObj = `?email=${correo}&password=${contrasena}`;
     this.service.login(loginObj).subscribe(
@@ -75,13 +78,13 @@ export class LoginComponent implements OnInit {
         if (resp.success) {
           this.disabled = false;
           this.dataProfile = resp.result;
-          this.load.presentLoading('Iniciando sesion..');
+          // this.load.presentLoading('Iniciando sesion..');
           console.log('data profile', this.dataProfile);
-
           localStorage.setItem('userData', JSON.stringify(this.dataProfile));
-
+          this.loader.loadingDismiss();
           this.router.navigateByUrl('bienvenido');
         } else {
+          this.loader.loadingDismiss();
           this.load.presentLoading('Error al iniciar sesión..');
           this.generalMessage(resp.message);
           this.disabled = false;

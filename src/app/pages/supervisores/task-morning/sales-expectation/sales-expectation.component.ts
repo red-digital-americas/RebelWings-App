@@ -13,6 +13,7 @@ export class SalesExpectationComponent implements OnInit {
   public today = new Date();
   public user: any;
   public data: any[] = [];
+  public dataStock: any;
   public idSucursal: string;
   public disabled = false;
 
@@ -28,6 +29,7 @@ export class SalesExpectationComponent implements OnInit {
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idSucursal = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
+    this.stockChicken();
   }
   ngOnInit() {}
 
@@ -38,7 +40,19 @@ export class SalesExpectationComponent implements OnInit {
       .subscribe((resp) => {
         if (resp.success) {
           this.data = resp.result;
-          console.log(this.data);
+          console.log(resp);
+        }
+      });
+    console.log('sin data');
+  }
+  stockChicken(){
+    this.load.presentLoading('Cargando..');
+    this.service
+      .serviceGeneralGet(`StockChicken/${this.idSucursal}/Sales-Expectation`)
+      .subscribe((resp) => {
+        if (resp.success) {
+          this.dataStock = resp.result;
+          console.log(resp);
         }
       });
     console.log('sin data');

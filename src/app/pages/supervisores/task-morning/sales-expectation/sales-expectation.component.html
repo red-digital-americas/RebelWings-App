@@ -26,7 +26,7 @@
   <ion-content fullscreen="false" class="ion-padding">
     <ion-grid>
       <!-- titulo de empresa -->
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="dataStock" >
         <ion-col size="4">
           <h5 class="subtitle-negro">SUCURSAL MASARIK</h5>
         </ion-col>
@@ -36,17 +36,19 @@
           </span>
         </ion-col>
         <ion-col size="12">
-          <span class="money"> $ 25,000.00 MXN / 145 Kg de pollo </span>
+          <span class="money"> $ {{dataStock.salesExpectationTotal}} MXN / {{dataStock.amountTotal}} Kg de pollo </span>
         </ion-col>
       </ion-row>
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="dataStock">
         <ion-col size="6">
           <span class="title-progress-bar">Expectativa de Venta</span>
           &nbsp;
-          <ion-progress-bar color="warning" value=".8"></ion-progress-bar>
+          <ion-progress-bar *ngIf="dataStock.completePercentage !== 100"  color="warning" value=".{{dataStock.completePercentage}}"></ion-progress-bar>
+          <ion-progress-bar *ngIf="dataStock.completePercentage === 100" color="success"
+            value="{{dataStock.completePercentage}}"></ion-progress-bar>
           &nbsp;
           <div class="margin-completado">
-            <span class="title-progress-bar">% completado</span>
+            <span class="title-progress-bar">% {{dataStock.completePercentage}} completado</span>
           </div>
         </ion-col>
         <ion-col size="3" offset="3" class="ion-align-items-center">
