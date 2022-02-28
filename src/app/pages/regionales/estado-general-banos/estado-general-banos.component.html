@@ -77,12 +77,12 @@
               <span class="titleProduct">¿Hay alguna falla en las chapas?</span>
             </ion-col>
             <ion-col size="12">
-              <ion-toggle [(ngModel)]="data.isThereAnyFaultsMen"></ion-toggle>
+              <ion-toggle [(ngModel)]="data.isThereAnyFaultsWomen"></ion-toggle>
             </ion-col>
-            <ion-col size="12" *ngIf="data.isThereAnyFaultsMen === false">
+            <ion-col size="12" *ngIf="data.isThereAnyFaultsWomen === false">
               <ion-label>Comentario</ion-label>
               <ion-card>
-                <ion-textarea [(ngModel)]="data.commentAreThereAnyFaultsMen" rows="6" cols="20">
+                <ion-textarea [(ngModel)]="data.commentAreThereAnyFaultsWomen" rows="6" cols="20">
                 </ion-textarea>
               </ion-card>
             </ion-col>
@@ -118,12 +118,12 @@
               <span class="titleProduct">¿Hay alguna falla en las chapas?</span>
             </ion-col>
             <ion-col size="12">
-              <ion-toggle [(ngModel)]="data.isThereAnyFaultsWomen"></ion-toggle>
+              <ion-toggle [(ngModel)]="data.isThereAnyFaultsMen"></ion-toggle>
             </ion-col>
-            <ion-col size="12" *ngIf="data.isThereAnyFaultsWomen === false">
+            <ion-col size="12" *ngIf="data.isThereAnyFaultsMen === false">
               <ion-label>Comentario</ion-label>
               <ion-card>
-                <ion-textarea [(ngModel)]="data.commentAreThereAnyFaultsWomen" rows="6" cols="20">
+                <ion-textarea [(ngModel)]="data.commentAreThereAnyFaultsMen" rows="6" cols="20">
                 </ion-textarea>
               </ion-card>
             </ion-col>
