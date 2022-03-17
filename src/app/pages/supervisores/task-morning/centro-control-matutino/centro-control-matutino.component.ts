@@ -30,7 +30,7 @@ export class CentroControlMatutinoComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log('user', this.user);
     // obtener el nombre de sucursal
-    this.branchId = this.user.branch;
+    this.branchId = this.user.branchId;
     this.getBranch();
     this.getDataControl();
   }
@@ -42,7 +42,7 @@ export class CentroControlMatutinoComponent implements OnInit {
   getDataControl() {
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet(`ControlCenter/${this.user.branch}/${this.matutino}/Manager`)
+      .serviceGeneralGet(`ControlCenter/${this.user.branchId}/${this.matutino}/Manager`)
       .subscribe((resp) => {
         if (resp.success) {
           console.log('control', resp.result);
@@ -112,6 +112,6 @@ export class CentroControlMatutinoComponent implements OnInit {
     if (id === null) {
       id = 0;
     }
-    this.router.navigateByUrl('supervisor/mesa-espera/' + id);
+    this.router.navigateByUrl(`supervisor/mesa-espera/1/${id}`);
   }
 }

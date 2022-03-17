@@ -26,9 +26,9 @@
   <ion-content  fullscreen="false" class="ion-padding">
     <ion-grid>
       <!-- titulo de empresa -->
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="user" >
         <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
+          <h5 class="subtitle-negro">SUCURSAL {{user.branchName}}</h5>
         </ion-col>
         <ion-col size="8">
           <span class="date-grey">
@@ -37,7 +37,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-card>
+      <ion-card *ngIf="swiremi === false" >
         <ion-row size="12">
           <ion-item-sliding id="item100">
             <ion-item>
@@ -50,7 +50,7 @@
                   </ion-col>
                   <ion-col size="1" class="ion-align-self-center">
                     <div>
-                      <span><b>5</b></span>
+                      <span><b>0</b></span>
                     </div>
                   </ion-col>
                   <ion-col size="10" class="ion-align-self-center">

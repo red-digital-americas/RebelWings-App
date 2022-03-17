@@ -1,6 +1,6 @@
 <ion-app>
   <!-- data -->
-  <ion-header *ngIf="data.length !== 0" class="ion-no-border ion-padding">
+  <ion-header *ngIf="activeData === true" class="ion-no-border ion-padding">
     <ion-grid>
       <ion-row>
         <ion-col>
@@ -21,7 +21,7 @@
       <!-- titulo de empresa -->
       <ion-row size="12">
         <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
+          <h5 class="subtitle-negro">SUCURSAL {{user.branchName}}</h5>
         </ion-col>
         <ion-col size="8">
           <span class="date-grey">
@@ -31,7 +31,7 @@
       </ion-row>
     </ion-grid>
   </ion-header>
-  <ion-content *ngIf="data.length !== 0" fullscreen="false" class="ion-padding">
+  <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
     <ion-grid>
 
       <ion-card *ngFor="let person of data">
@@ -95,15 +95,15 @@
             </ion-item>
             <!-- *ngIf="person.status === 3 || person.status === 1" -->
             <ion-item-options side="end">
-              <ion-item-option color="warning">
-                <ion-icon (click)="
+              <ion-item-option color="warning" (click)="
                     commentAttendance(
                       person.attendanceId,
                       person.clabTrab,
                       person.name,
                       person.jobTitle
                     )
-                  " slot="icon-only" name="document-text-outline"></ion-icon>
+                  ">
+                <ion-icon slot="icon-only" name="document-text-outline"></ion-icon>
               </ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
@@ -112,7 +112,7 @@
     </ion-grid>
   </ion-content>
   <!-- skeletor -->
-  <ion-header *ngIf="data.length === 0" class="ion-no-border ion-padding">
+  <ion-header *ngIf="activeData === false" class="ion-no-border ion-padding">
     <ion-grid class="animated flash slow">
       <ion-row size="12">
         <ion-col size="1">
@@ -136,7 +136,7 @@
       </ion-row>
     </ion-grid>
   </ion-header>
-  <ion-content *ngIf="data.length === 0" fullscreen="false" class="ion-padding animated flash slow">
+  <ion-content *ngIf="activeData === false" fullscreen="false" class="ion-padding animated flash slow">
     <ion-grid>
       <!-- titulo de empresa -->
       <ion-row size="12">

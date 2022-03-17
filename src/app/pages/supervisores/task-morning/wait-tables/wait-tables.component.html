@@ -22,9 +22,9 @@
   <ion-content fullscreen="false" class="ion-padding">
     <ion-grid>
       <!-- titulo de empresa -->
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="user" >
         <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
+          <h5 class="subtitle-negro">SUCURSAL {{user.branchName}}</h5>
         </ion-col>
         <ion-col size="8">
           <span class="date-grey">
@@ -33,7 +33,10 @@
         </ion-col>
       </ion-row>
       <ion-row size="12">
-        <ion-col size="12">
+        <ion-col size="12" *ngIf="turno === '1'" >
+          <span>Recuerda que esta tarea se deberá revisar de 10 a 5.</span>
+        </ion-col>
+        <ion-col size="12" *ngIf="turno === '2'" >
           <span>Recuerda que esta tarea se deberá revisar de 5 al cierre.</span>
         </ion-col>
         <ion-col size="6">

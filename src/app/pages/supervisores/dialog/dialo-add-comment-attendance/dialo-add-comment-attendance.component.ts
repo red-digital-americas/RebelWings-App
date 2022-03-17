@@ -52,7 +52,7 @@ export class DialoAddCommentAttendanceComponent implements OnInit {
     });
   }
   save() {
-    this.data.branchId = this.user.branch;
+    this.data.branchId = this.user.branchId;
     this.data.clabTrab = this.clabTrab;
     this.data.time = this.today;
     if (this.navParams.data.id === 0) {

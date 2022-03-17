@@ -60,7 +60,7 @@ export class RevisionPedidoSistemaCajaComponent implements OnInit {
     console.log('get de revision de sistema');
     this.load.presentLoading('Cargando..');
     this.service
-      // this.user.branch
+      // this.user.branchId
       .serviceGeneralGet('OrderScheduleReview/' + this.branchId)
       .subscribe((resp) => {
         if (resp.success) {

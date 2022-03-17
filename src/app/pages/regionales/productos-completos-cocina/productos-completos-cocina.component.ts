@@ -67,7 +67,7 @@ export class ProductosCompletosCocinaComponent implements OnInit {
             this.objProduct = [
               {
                 id: 0,
-                branchId: this.user.branch,
+                branchId: this.branchId,
                 code: '',
                 comment: '',
                 createdBy: this.user.id,
@@ -110,7 +110,7 @@ export class ProductosCompletosCocinaComponent implements OnInit {
     console.log('push');
     this.objProduct.push({
       id: 0,
-      branchId: this.user.branch,
+      branchId: this.branchId,
       code: '',
       comment: '',
       createdBy: this.user.id,

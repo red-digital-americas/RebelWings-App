@@ -68,7 +68,7 @@ export class RefrigeradoresSalonComponent implements OnInit {
             this.objProduct = [
               {
                 id: 0,
-                branchId: this.user.branch,
+                branchId: this.user.branchId,
                 layOut: false,
                 shortage: false,
                 comment: '',
@@ -111,7 +111,7 @@ export class RefrigeradoresSalonComponent implements OnInit {
     console.log('push');
     this.objProduct.push({
       id: 0,
-      branchId: this.user.branch,
+      branchId: this.user.branchId,
       layOut: false,
       shortage: false,
       comment: '',

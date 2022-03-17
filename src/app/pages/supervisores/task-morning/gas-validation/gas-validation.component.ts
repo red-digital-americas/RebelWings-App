@@ -165,7 +165,7 @@ export class GasValidationComponent implements OnInit {
       });
     }
     // esto se pone aqui por que aun no se estrae la data de un get
-    this.data.branch = this.user.branch;
+    this.data.branch = this.user.branchId;
     this.data.updatedBy = this.user.id;
     this.data.updatedDate = this.today;
     this.fotosGas = this.photoService.photos;

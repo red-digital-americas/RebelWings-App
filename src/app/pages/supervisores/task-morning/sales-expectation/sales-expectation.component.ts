@@ -36,7 +36,7 @@ export class SalesExpectationComponent implements OnInit {
   getData() {
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('StockChicken/By-Branch/' + this.idSucursal)
+      .serviceGeneralGet('StockChicken/By-Branch/' + this.user.branchId)
       .subscribe((resp) => {
         if (resp.success) {
           this.data = resp.result;
@@ -48,7 +48,7 @@ export class SalesExpectationComponent implements OnInit {
   stockChicken(){
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet(`StockChicken/${this.idSucursal}/Sales-Expectation`)
+      .serviceGeneralGet(`StockChicken/${this.user.branchId}/Sales-Expectation`)
       .subscribe((resp) => {
         if (resp.success) {
           this.dataStock = resp.result;

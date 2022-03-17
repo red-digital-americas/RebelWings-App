@@ -22,7 +22,7 @@ export class ScheduleComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log('user', this.user);
     // obtener el nombre de sucursal
-    this.branchId = this.user.branch;
+    this.branchId = this.user.branchId;
     this.getBranch();
     if (this.platform.is('android')) {
       this.showHeader = false;

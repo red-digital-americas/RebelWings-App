@@ -30,11 +30,11 @@ export class LoginComponent implements OnInit {
     public router: Router,
     public service: LoginService,
     public modalController: ModalController,
-    public loader:  LoaderGeneralService,
+    public loader: LoaderGeneralService,
     public load: LoaderComponent
-  ) {}
+  ) { }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     console.log('pass', this.password);
 
   }
@@ -82,7 +82,13 @@ export class LoginComponent implements OnInit {
           console.log('data profile', this.dataProfile);
           localStorage.setItem('userData', JSON.stringify(this.dataProfile));
           this.loader.loadingDismiss();
-          this.router.navigateByUrl('bienvenido');
+          if (this.dataProfile.roleId !== 3) {
+            this.router.navigateByUrl('bienvenido');
+          }
+          else {
+            this.load.presentLoading('Error no tienes permisos para iniciar sessión');
+
+          }
         } else {
           this.loader.loadingDismiss();
           this.load.presentLoading('Error al iniciar sesión..');

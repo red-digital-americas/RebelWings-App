@@ -139,7 +139,7 @@ export class DialogAddAlbaranesComponent implements OnInit {
     // albaran el modelo no es correcto aun falta por definir
     const obj = {
       id: 0,
-      branchId: this.user.branch,
+      branchId: this.user.branchId,
       albaranDate: this.objAlbaran.albaranDate,
       albaranTime: this.objAlbaran.timeArrive,
       albaranDescription: this.objAlbaran.descripcion,

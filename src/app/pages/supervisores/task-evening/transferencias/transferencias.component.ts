@@ -16,10 +16,10 @@ export class TransferenciasComponent implements OnInit {
   public data: any[] = [];
   public idSucursal: string;
   public disabled = false;
+  public activeData = false;
   // nombre de sucursal
   public branchId;
   public nameBranch = '';
-  public dataBranch: any[] = [];
   constructor(
     public router: Router,
     public modalController: ModalController,
@@ -27,52 +27,34 @@ export class TransferenciasComponent implements OnInit {
     public service: ServiceGeneralService,
     public load: LoaderComponent,
     public popoverCtrl: PopoverController
-  ) {}
+  ) { }
 
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
+    console.log('user', this.user);
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idSucursal = this.routerActive.snapshot.paramMap.get('id');
-    // get nema de sucursal
-    this.branchId = this.user.branch;
-    this.getBranch();
     this.getData();
   }
-  ngOnInit() {}
+  ngOnInit() { }
   getData() {
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('Transfer/BranchList/' + this.user.branch)
+      .serviceGeneralGet('Transfer/BranchList/' + this.user.branchId)
       .subscribe((resp) => {
         if (resp.success) {
           this.data = resp.result;
           console.log(this.data);
+          this.activeData = true;
         }
       });
+    this.activeData = true;
+
     console.log('sin data', this.data);
   }
   return() {
     // window.history.back();
     this.router.navigateByUrl('supervisor/control-vespertino');
-  }
-  // get  name sucursal
-  getBranch() {
-    let branchIdNumber = 0;
-    branchIdNumber = Number(this.branchId);
-    console.log('branchIdNumber', branchIdNumber);
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
-      if (resp.success) {
-        this.dataBranch = resp.result;
-        console.log('get branch', this.dataBranch);
-        this.dataBranch.forEach(element => {
-          if (element.branchId === branchIdNumber) {
-            this.nameBranch = element.branchName;
-            this.nameBranch = this.nameBranch.toUpperCase();
-            console.log('nombre', this.nameBranch);
-          }
-        });
-      }
-    });
   }
   async openNotification(ev: any, obj, idType, branch) {
     console.log('data', obj, 'type', idType);
@@ -97,8 +79,8 @@ export class TransferenciasComponent implements OnInit {
     const { data } = await popover.onWillDismiss();
     console.log('Respuesta de popover', data);
     // al elegir una opcion en popover abrir modal de transferencia
-    if(data !== undefined){
-      this.addTransfer(data.id, branch, data.type, '' );
+    if (data !== undefined) {
+      this.addTransfer(data.id, branch, data.type, '');
     }
   }
 
@@ -111,7 +93,7 @@ export class TransferenciasComponent implements OnInit {
   ) {
     // idRT = id del registro ya sea trans o reque
     // idBranch = id de sucursal
-    // idtype = transfer = 1 y request = 2
+    // idtype = transfer = 2 y request = 1
     console.log(
       `Data recibida id ${idRT} idBranch ${idBranch} idtype ${idtype}`
     );

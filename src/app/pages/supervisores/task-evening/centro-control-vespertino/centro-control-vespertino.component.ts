@@ -33,7 +33,7 @@ export class CentroControlVespertinoComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log('user', this.user);
     // obtener el nombre de sucursal
-    this.branchId = this.user.branch;
+    this.branchId = this.user.branchId;
     this.getBranch();
 
     this.getDataControl();
@@ -48,7 +48,7 @@ export class CentroControlVespertinoComponent implements OnInit {
   getDataControl() {
     // this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet(`ControlCenter/${this.user.branch}/${this.vespertino}/Manager`)
+      .serviceGeneralGet(`ControlCenter/${this.user.branchId}/${this.vespertino}/Manager`)
       .subscribe((resp) => {
         if (resp.success) {
           console.log('control vespertino', resp.result);
@@ -89,7 +89,7 @@ export class CentroControlVespertinoComponent implements OnInit {
       cssClass: 'my-custom-class',
       swipeToClose: true,
       componentProps: {
-        id: this.user.branch, //se envia el id de sucursal
+        id: this.user.branchId, //se envia el id de sucursal
       },
     });
     modal.onDidDismiss().then((data) => {
@@ -128,7 +128,7 @@ export class CentroControlVespertinoComponent implements OnInit {
   }
   getNotification() {
     this.service
-      .serviceGeneralGet('Transfer/Notifications?id=' + this.user.branch)
+      .serviceGeneralGet('Transfer/Notifications?id=' + this.user.branchId)
       .subscribe((resp) => {
         if (resp.success) {
           this.dataNotification = resp.result;
@@ -189,7 +189,7 @@ export class CentroControlVespertinoComponent implements OnInit {
     if (id === null) {
       id = 0;
     }
-    this.router.navigateByUrl('supervisor/mesa-espera/' + id);
+    this.router.navigateByUrl(`supervisor/mesa-espera/2/${id}`);
   }
   stockPollo(id: number) {
     if (id === null) {

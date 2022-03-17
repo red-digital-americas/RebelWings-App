@@ -51,7 +51,7 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
     console.log('get de lavabos');
     this.load.presentLoading('Cargando..');
     this.service
-      // this.user.branch
+      // this.user.branchId
       .serviceGeneralGet('WashBasinWithSoapPaper/' + this.branchId)
       .subscribe((resp) => {
         if (resp.success) {

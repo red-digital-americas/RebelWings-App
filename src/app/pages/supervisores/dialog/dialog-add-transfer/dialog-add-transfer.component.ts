@@ -11,7 +11,8 @@ import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.comp
 export class DialogAddTransferComponent implements OnInit {
   @Input() idRegister: number;
   @Input() branchId: number;
-  @Input() type: number; // transferencia  1 request 2
+  @Input() type: number; //  transfer = 2 y request = 1
+
   @Input() nameSucursal: string;
   @ViewChild('mySelect') selectRef: IonSelect;
 
@@ -125,7 +126,7 @@ export class DialogAddTransferComponent implements OnInit {
   }
   getName() {
     this.dataBranch.forEach(element => {
-      if (element.branchId === this.user.branch) {
+      if (element.branchId === this.user.branchId) {
         this.nameSucursal = element.branchName;
         this.nameSucursal = this.nameSucursal.toUpperCase();
         console.log('nombre from', this.nameSucursal);
@@ -147,7 +148,7 @@ export class DialogAddTransferComponent implements OnInit {
     this.selectCatalogs = [];
     if (search.length > 2) {
       this.service
-        .serviceGeneralGet(`Items/${this.user.branch}/${search}`)
+        .serviceGeneralGet(`Items/${this.user.branchId}/${search}`)
         .subscribe((resp) => {
           if (resp.success) {
             console.log('get productos', resp);
@@ -169,21 +170,22 @@ export class DialogAddTransferComponent implements OnInit {
       .serviceGeneralGet(`Transfer/Catalogue/Status`)
       .subscribe((resp) => {
         if (resp.success) {
+          this.dataStatus = resp.result;
           // si type es 1 = transferir se quita el estatus Solicitado
           // si type es 2 = request se quita el estatus Transferido
-          if (this.type === 1) {
-            resp.result.forEach((element) => {
-              if (element.status !== 'Solicitado') {
-                this.dataStatus.push(element);
-              }
-            });
-          } else {
-            resp.result.forEach((element) => {
-              if (element.status !== 'Transferido') {
-                this.dataStatus.push(element);
-              }
-            });
-          }
+          // if (this.type === 1) {
+          //   resp.result.forEach((element) => {
+          //     if (element.status !== 'Solicitado') {
+          //       this.dataStatus.push(element);
+          //     }
+          //   });
+          // } else {
+          //   resp.result.forEach((element) => {
+          //     if (element.status !== 'Transferido') {
+          //       this.dataStatus.push(element);
+          //     }
+          //   });
+          // }
           console.log('get status', this.dataStatus);
         }
       });
@@ -211,8 +213,8 @@ export class DialogAddTransferComponent implements OnInit {
 
   validateSave() {
     if (
-      this.data.type === undefined ||
-      this.data.type === null
+      this.data.status === undefined ||
+      this.data.status === null
     ) {
       this.activeStatus = true;
     } else {
@@ -271,7 +273,7 @@ export class DialogAddTransferComponent implements OnInit {
       this.activeComment = false;
     }
     if (
-      this.data.type === undefined ||
+      this.data.status === undefined ||
       this.data.date === undefined ||
       this.data.time === '' ||
       this.data.time === undefined ||
@@ -315,7 +317,7 @@ export class DialogAddTransferComponent implements OnInit {
   addTransference() {
     this.getFormatTimeStamp();
     this.data.type = this.type;
-    this.data.fromBranchId = this.user.branch;
+    this.data.fromBranchId = this.user.branchId;
     this.data.toBranchId = this.branchId;
     this.data.createdBy = this.user.id;
     this.data.createdDate = this.today;
@@ -348,7 +350,7 @@ export class DialogAddTransferComponent implements OnInit {
       this.getFormatTimeStamp();
     }
     this.data.type = 1;
-    this.data.fromBranchId = this.user.branch;
+    this.data.fromBranchId = this.user.branchId;
     this.data.toBranchId = this.branchId;
     this.data.updatedBy = this.user.id;
     this.data.updatedDate = this.today;

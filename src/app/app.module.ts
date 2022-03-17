@@ -1,6 +1,6 @@
 import { DialogNotificationComponent } from './pages/nav/dialog-notification/dialog-notification.component';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -23,6 +23,7 @@ import { PopoverTransferRequestComponent } from './pages/supervisores/popover/po
 import { LogoutComponent } from './pages/popover/logout/logout.component';
 import { HistoryTicketComponent } from './pages/shared/history-ticket/history-ticket.component';
 import { OpenTicketComponent } from './pages/shared/open-ticket/open-ticket.component';
+import { DialogViewTransferComponent } from './pages/supervisores/dialog/dialog-view-transfer/dialog-view-transfer.component';
 
 
 
@@ -36,7 +37,8 @@ import { OpenTicketComponent } from './pages/shared/open-ticket/open-ticket.comp
     PopoverTransferRequestComponent,
     LogoutComponent,
     HistoryTicketComponent,
-    OpenTicketComponent
+    OpenTicketComponent,
+    DialogViewTransferComponent
   ],
   entryComponents: [],
   imports: [
@@ -48,13 +50,14 @@ import { OpenTicketComponent } from './pages/shared/open-ticket/open-ticket.comp
     CommonModule,
     FormsModule,
     FilterPipeModule,
-    IonicSelectableModule,
+    IonicSelectableModule
   ],
   providers: [
     LoaderComponent,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Camera,
     Dialogs,
+    DatePipe,
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

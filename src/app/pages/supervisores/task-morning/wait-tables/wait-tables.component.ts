@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { PhotoService } from 'src/app/core/services/services/photo.service';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-wait-tables',
   templateUrl: './wait-tables.component.html',
@@ -14,27 +15,26 @@ export class WaitTablesComponent implements OnInit {
   public today = new Date();
   public data: WaitTableModel = new WaitTableModel();
   public activeData = false;
+  public turno;
+  public createDate = '';
 
-  // nombre de sucursal
-  public branchId;
-  public nameBranch = '';
-  public dataBranch: any[] = [];
+
 
   constructor(
     public routerActive: ActivatedRoute,
     public router: Router,
     public photoService: PhotoService,
     public service: ServiceGeneralService,
-    public load: LoaderComponent
-  ) {}
+    public load: LoaderComponent,
+    public datepipe: DatePipe
+  ) { }
 
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idTable = this.routerActive.snapshot.paramMap.get('id');
-    // get name de sucursal
-    this.branchId = this.user.branch;
-    this.getBranch();
+    this.turno = this.routerActive.snapshot.paramMap.get('turno');
+    console.log('turno select', this.turno);
     if (this.idTable === '0') {
       console.log('Completar la tarea');
       this.activeData = true;
@@ -44,7 +44,7 @@ export class WaitTablesComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   getData() {
     this.load.presentLoading('Cargando..');
@@ -60,45 +60,54 @@ export class WaitTablesComponent implements OnInit {
   }
 
   return() {
-    window.history.back();
-    // this.router.navigateByUrl('supervisor/control-matutino');
+    // window.history.back();
+    if (this.turno === '1') {
+      this.router.navigateByUrl('supervisor/control-matutino');
+    }
+    else {
+      this.router.navigateByUrl('supervisor/control-vespertino');
+    }
   }
 
-  // get  name sucursal
-  getBranch() {
-    let branchIdNumber = 0;
-    branchIdNumber = Number(this.branchId);
-    console.log('branchIdNumber', branchIdNumber);
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
-      if (resp.success) {
-        this.dataBranch = resp.result;
-        console.log('get branch', this.dataBranch);
-        this.dataBranch.forEach(element => {
-          if (element.branchId === branchIdNumber) {
-            this.nameBranch = element.branchName;
-            this.nameBranch = this.nameBranch.toUpperCase();
-            console.log('nombre', this.nameBranch);
-          }
-        });
-      }
-    });
+  formartDate() {
+    // 2022-03-11T17:27:00
+    console.log('date', this.today);
+    let time = '';
+    const date = this.datepipe.transform(this.today, 'yyyy-MM-dd');
+    time =
+      '' +
+      this.today.getHours() +
+      ':' +
+      this.today.getMinutes() +
+      ':' +
+      this.today.getSeconds();
+    console.log('format', time);
+    console.log('date', date);
+    this.createDate = `${date}T${time}`;
+    console.log('createDate', this.createDate);
+    this.addData();
+
+    // this.data.time = datetime;
   }
 
   save() {
     console.log('toggle', this.data.waitlistTables);
-    if (this.idTable === '0'){
+    this.data.branch = this.user.branchId;
+    if (this.idTable === '0') {
       console.log('add data');
-      this.addData();
+      this.formartDate();
     }
-    else{
+    else {
       this.updateData();
     }
   }
-  addData(){
+  addData() {
+    console.log('turno', this.turno);
+
     this.data.createdBy = this.user.id;
-    this.data.createdDate =  this.today;
-    this.data.updatedBy =  this.user.id;
-    this.data.updatedDate= this.today;
+    this.data.createdDate = this.createDate;
+    this.data.updatedBy = this.user.id;
+    this.data.updatedDate = this.today;
     console.log('post data', this.data);
     this.service
       .serviceGeneralPostWithUrl('WaitListTable', this.data)
@@ -107,7 +116,12 @@ export class WaitTablesComponent implements OnInit {
           this.load.presentLoading('Guardando..');
           console.log('data', resp);
           this.ngOnInit();
-          this.router.navigateByUrl('supervisor/control-matutino');
+          if (this.turno === '1') {
+            this.router.navigateByUrl('supervisor/control-matutino');
+          }
+          else {
+            this.router.navigateByUrl('supervisor/control-vespertino');
+          }
         }
       });
   }
@@ -122,7 +136,13 @@ export class WaitTablesComponent implements OnInit {
           this.load.presentLoading('Guardando..');
           console.log('data', resp);
           this.ngOnInit();
-          this.router.navigateByUrl('supervisor/control-matutino');
+          if (this.turno === '1') {
+            this.router.navigateByUrl('supervisor/control-matutino');
+
+          }
+          else {
+            this.router.navigateByUrl('supervisor/control-vespertino');
+          }
         }
       });
   }
@@ -135,7 +155,7 @@ class WaitTableModel {
   howManyTables: number;
   numberPeople: number;
   createdBy: number;
-  createdDate: Date;
+  createdDate: string;
   updatedBy: number;
   updatedDate: Date;
 }

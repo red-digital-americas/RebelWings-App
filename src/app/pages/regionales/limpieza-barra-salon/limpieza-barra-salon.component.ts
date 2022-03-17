@@ -51,7 +51,7 @@ export class LimpiezaBarraSalonComponent implements OnInit {
     console.log('get de refrigeradores');
     this.load.presentLoading('Cargando..');
     this.service
-      // this.user.branch
+      // this.user.branchId
       .serviceGeneralGet('BarCleaning/' + this.branchId)
       .subscribe((resp) => {
         if (resp.success) {

@@ -62,7 +62,7 @@
             </div>
           </ion-col>
           <ion-col size="12" class="ion-align-items-start">
-            <h2 class="title-red">Sucursal {{nameBranch}}</h2>
+            <h2 class="title-red">Sucursal {{user.branchName}}</h2>
           </ion-col>
         </ion-row>
         <ion-row size="12">
@@ -226,7 +226,7 @@
                         <ion-progress-bar [color]="data[4].color" value=".{{ data[4].percentage }}"></ion-progress-bar>
                         &nbsp;
                         <div class="margin-completado">
-                          <span class="title-progress-bar">{{ data[4].percentage }}% completado</span>
+                          <span class="title-progress-bar">{{ data[4].percentage | number: '.1-2'}}% completado</span>
                         </div>
                       </ion-col>
                     </ion-row>

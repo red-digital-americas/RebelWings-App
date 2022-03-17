@@ -40,7 +40,7 @@ export class ProductoRiesgoComponent implements OnInit {
     this.idProductoRiesgo = this.routerActive.snapshot.paramMap.get('id');
     console.log('id producto en riesgo ', this.idProductoRiesgo);
     // get nema de sucursal
-    this.branchId = this.user.branch;
+    this.branchId = this.user.branchId;
     this.getBranch();
     this.getData();
   }
@@ -55,7 +55,7 @@ export class ProductoRiesgoComponent implements OnInit {
     this.selectCatalogs = [];
     if (search.length > 2) {
       this.service
-        .serviceGeneralGet(`Items/${this.user.branch}/${search}`)
+        .serviceGeneralGet(`Items/${this.user.branchId}/${search}`)
         .subscribe((resp) => {
           if (resp.success) {
             console.log('get productos', resp);
@@ -82,7 +82,7 @@ export class ProductoRiesgoComponent implements OnInit {
             this.objProduct = [
               {
                 id: 0,
-                branchId: this.user.branch,
+                branchId: this.user.branchId,
                 productId: 0,
                 code: '',
                 comment: '',
@@ -134,7 +134,7 @@ export class ProductoRiesgoComponent implements OnInit {
 
     this.objProduct.push({
       id: 0,
-      branchId: this.user.branch,
+      branchId: this.user.branchId,
       productId: 0,
       code: '',
       comment: '',

@@ -28,7 +28,7 @@
       <!-- titulo de empresa -->
       <ion-row size="12" *ngIf="dataStock" >
         <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL MASARIK</h5>
+          <h5 class="subtitle-negro">SUCURSAL {{user.branchName}}</h5>
         </ion-col>
         <ion-col size="8">
           <span class="date-grey">
@@ -48,7 +48,7 @@
             value="{{dataStock.completePercentage}}"></ion-progress-bar>
           &nbsp;
           <div class="margin-completado">
-            <span class="title-progress-bar">% {{dataStock.completePercentage}} completado</span>
+            <span class="title-progress-bar">% {{dataStock.completePercentage | number: '.1-2' }} completado</span>
           </div>
         </ion-col>
         <ion-col size="3" offset="3" class="ion-align-items-center">

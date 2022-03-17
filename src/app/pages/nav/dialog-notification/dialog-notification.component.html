@@ -37,7 +37,7 @@
         <ion-col size="12">
           <!-- List of Text Items -->
           <ion-list *ngFor="let item of dataNotification">
-            <ion-item>
+            <ion-item (click)="openNotification(item.id)" >
               <img
                 style="width: 2rem; margin-right: 1rem"
                 *ngIf="item.type === 'Solicitado'"
@@ -51,7 +51,7 @@
                 alt=""
               />
               <span> - {{ item.name }}</span>
-              <span> - Sucursal {{ item.branch }}</span>
+              <!-- <span> - Sucursal {{ item.branch }}</span> -->
             </ion-item>
           </ion-list>
         </ion-col>

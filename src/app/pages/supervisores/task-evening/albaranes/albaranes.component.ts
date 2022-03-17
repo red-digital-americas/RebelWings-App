@@ -11,6 +11,7 @@ import { DialogAddAlbaranesComponent } from '../../dialog/dialog-add-albaranes/d
 export class AlbaranesComponent implements OnInit {
   public today = new Date();
   public user: any;
+  public activeData = false;
   public data: any[] = [];
   public idSucursal: string;
   public disabled = false;
@@ -31,7 +32,7 @@ export class AlbaranesComponent implements OnInit {
     this.idSucursal = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
     // get nema de sucursal
-    this.branchId = this.user.branch;
+    this.branchId = this.user.branchId;
     this.getBranch();
   }
 
@@ -44,8 +45,10 @@ export class AlbaranesComponent implements OnInit {
         if (resp.success) {
           this.data = resp.result;
           console.log(this.data);
+          this.activeData = true;
         }
       });
+    this.activeData = true;
     console.log('sin data');
   }
   return() {

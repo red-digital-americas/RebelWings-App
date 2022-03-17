@@ -46,7 +46,7 @@ export class ResguardoPropinaComponent implements OnInit {
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idPropina = this.routerActive.snapshot.paramMap.get('id');
     // get nema de sucursal
-    this.branchId = this.user.branch;
+    this.branchId = this.user.branchId;
     this.getBranch();
     if (this.idPropina === '0') {
       console.log('Completar la tarea');
@@ -210,7 +210,7 @@ export class ResguardoPropinaComponent implements OnInit {
     this.disabled = true;
     this.fotosPropina = [];
     // esto se pone aqui por que aun no se estrae la data de un get
-    this.data.branchId = this.user.branch;
+    this.data.branchId = this.user.branchId;
     this.data.updatedBy = this.user.id;
     this.data.updatedDate = this.today;
     console.log('Obj To send => ', this.data);

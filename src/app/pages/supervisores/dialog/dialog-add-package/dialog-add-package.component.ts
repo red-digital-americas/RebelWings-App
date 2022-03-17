@@ -60,7 +60,7 @@ export class DialogAddPackageComponent implements OnInit {
 
   addPackage() {
     const obj = {
-      branch: this.idSucursal,
+      branch: this.user.branchId,
       code: this.data.code,
       amount: this.data.amount,
       statusId: 1, //aun no esta definido
@@ -69,6 +69,7 @@ export class DialogAddPackageComponent implements OnInit {
       updatedBy: this.user.id,
       updatedDate: this.today,
     };
+    console.log('data enviar', obj);
     this.service
       .serviceGeneralPostWithUrl('StockChicken', obj)
       .subscribe((resp) => {

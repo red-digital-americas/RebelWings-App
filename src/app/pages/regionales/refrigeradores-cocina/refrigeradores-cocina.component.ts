@@ -72,7 +72,7 @@ export class RefrigeradoresCocinaComponent implements OnInit {
             this.objProduct = [
               {
                 id: 0,
-                branchId: this.user.branch,
+                branchId: this.branchId,
                 comment: '',
                 createdBy: this.user.id,
                 createdDate: this.today,
@@ -112,7 +112,7 @@ export class RefrigeradoresCocinaComponent implements OnInit {
     console.log('push');
     this.objProduct.push({
       id: 0,
-      branchId: this.user.branch,
+      branchId: this.branchId,
       comment: '',
       createdBy: this.user.id,
       createdDate: this.today,

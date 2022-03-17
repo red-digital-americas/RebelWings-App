@@ -15,10 +15,8 @@ export class AttendanceValidationComponent implements OnInit {
   public user;
   public turno;
   public data: any[] = [];
-  // nombre de sucursal
-  public branchId;
-  public nameBranch = '';
-  public dataBranch: any[] = [];
+  public activeData = false;
+
 
   constructor(
     public router: Router,
@@ -34,17 +32,14 @@ export class AttendanceValidationComponent implements OnInit {
     console.log(this.routerActive.snapshot.paramMap.get('turno'));
     this.turno = this.routerActive.snapshot.paramMap.get('turno');
     this.user = JSON.parse(localStorage.getItem('userData'));
-    // get nema de sucursal
-    this.branchId = this.user.branch;
-    this.getBranch();
-
     this.service
-      .serviceGeneralGet(`ValidateAttendance/All/${this.user.branch}`)
+      .serviceGeneralGet(`ValidateAttendance/All/${this.user.branchId}`)
       .subscribe((resp) => {
         this.loader.loadingPresent();
         if (resp.success) {
           this.data = resp.result;
           console.log('resp', this.data);
+          this.activeData = true;
           if (this.data.length === 0) {
             this.data.push({
               jobTitle: 'No data'
@@ -52,15 +47,9 @@ export class AttendanceValidationComponent implements OnInit {
           }
           this.loader.loadingDismiss();
         }
-        else {
-          console.log('no data');
-          this.data.push({
-            jobTitle: 'No data'
-          });
-          this.loader.loadingDismiss();
-        }
-      }, error =>{
+      }, error => {
         console.log('Error', error);
+        this.activeData= true;
 
       });
   }
@@ -85,29 +74,7 @@ export class AttendanceValidationComponent implements OnInit {
     this.ionViewWillEnter();
     return await modal.present();
   }
-  // get  name sucursal
-  getBranch() {
-    let branchIdNumber = 0;
-    branchIdNumber = Number(this.branchId);
-    console.log('branchIdNumber', branchIdNumber);
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
-      if (resp.success) {
-        this.dataBranch = resp.result;
-        console.log('get branch', this.dataBranch);
-        this.dataBranch.forEach(element => {
-          if (element.branchId === branchIdNumber) {
-            this.nameBranch = element.branchName;
-            this.nameBranch = this.nameBranch.toUpperCase();
-            console.log('nombre', this.nameBranch);
-          }
-        });
-      }
-    },
-       error => {
-        console.log('Error', error);
-      }
-    );
-  }
+
 }
 
 

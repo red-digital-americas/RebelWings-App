@@ -47,7 +47,7 @@ const routes: Routes = [
     component: SalesExpectationComponent,
   },
   {
-    path: 'mesa-espera/:id',
+    path: 'mesa-espera/:turno/:id',
     component: WaitTablesComponent,
   },
   {

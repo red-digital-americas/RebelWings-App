@@ -1,31 +1,27 @@
 <ion-app>
   <!-- contenido con informacion -->
-  <ion-header *ngIf="data.length !== 0" class="ion-no-border ion-padding">
+  <ion-header *ngIf="activeData === true" class="ion-no-border ion-padding">
     <ion-grid>
       <ion-row>
         <ion-col>
           <div>
             <p (click)="return()" class="ion-align-items-start return">
-              < REGRESAR
-            </p>
+              < REGRESAR </p>
           </div>
         </ion-col>
       </ion-row>
       <ion-row size="12">
         <ion-col size="1">
-          <img
-            src="./assets/icon/ilustracion_transferencias.png"
-            alt="transferencia"
-          />
+          <img src="./assets/icon/ilustracion_transferencias.png" alt="transferencia" />
         </ion-col>
         <ion-col size="11" class="ion-align-self-center">
           <h3 class="title">TRANSFERENCIAS</h3>
         </ion-col>
       </ion-row>
       <!-- titulo de empresa -->
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="user" >
         <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
+          <h5 class="subtitle-negro">SUCURSAL {{user.branchName}}</h5>
         </ion-col>
         <ion-col size="8">
           <span class="date-grey">
@@ -35,7 +31,7 @@
       </ion-row>
     </ion-grid>
   </ion-header>
-  <ion-content *ngIf="data.length !== 0" fullscreen="false" class="ion-padding">
+  <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
     <ion-grid>
 
       <ion-card *ngFor="let item of data">
@@ -46,10 +42,7 @@
                 <ion-row>
                   <ion-col size="1" class="ion-align-self-center">
                     <div>
-                      <img
-                        src="./assets/icon/ilustracion_stock_de_pollo.png"
-                        alt=""
-                      />
+                      <img src="./assets/icon/ilustracion_stock_de_pollo.png" alt="" />
                     </div>
                   </ion-col>
                   <ion-col size="3" class="ion-align-self-center">
@@ -66,37 +59,29 @@
                   <ion-col size="2" class="ion-align-self-center">
                     <div class="align-center-text">
                       <img src="./assets/icon/icon_recibido.png" alt="" />
-                      <ion-badge
-                        (click)="
+                      <ion-badge (click)="
                           openNotification(
                             $event,
                             item.requestId,
                             1,
                             item.branchId
                           )
-                        "
-                        style="color: #d0122d; background: white"
-                        >{{ item.requestId?.length }}</ion-badge
-                      >
+                        " style="color: #d0122d; background: white">{{ item.requestId?.length }}</ion-badge>
                     </div>
                     <div class="align-center-text">Solicitado</div>
                   </ion-col>
-                  <!-- transfer -->
+                  <!-- transfer  2-->
                   <ion-col size="2" class="ion-align-self-center">
                     <div class="align-center-text">
                       <img src="./assets/icon/icon_transferido.png" alt="" />
-                      <ion-badge
-                        (click)="
+                      <ion-badge (click)="
                           openNotification(
                             $event,
                             item.tranferId,
                             2,
                             item.branchId
                           )
-                        "
-                        style="color: #d0122d; background: white"
-                        >{{ item.tranferId?.length }}</ion-badge
-                      >
+                        " style="color: #d0122d; background: white">{{ item.tranferId?.length }}</ion-badge>
                     </div>
                     <div class="align-center-text">Transferido</div>
                   </ion-col>
@@ -111,21 +96,13 @@
             </ion-item>
             <!-- **************Opciones de lista*************++ -->
             <ion-item-options side="end">
-              <ion-item-option color="warning">
+              <ion-item-option color="warning" (click)="addTransfer(0, item.branchId, 1, item.name)">
                 <!-- solicitado -->
-                <ion-icon
-                  (click)="addTransfer(0, item.branchId, 1, item.name)"
-                  slot="icon-only"
-                  src="./assets/icon/icon_recibir.svg"
-                ></ion-icon>
+                <ion-icon slot="icon-only" src="./assets/icon/icon_recibir.svg"></ion-icon>
               </ion-item-option>
-              <ion-item-option color="success">
+              <ion-item-option color="success" (click)="addTransfer(0, item.branchId, 2, item.name)">
                 <!--transferido  -->
-                <ion-icon
-                  (click)="addTransfer(0, item.branchId, 2, item.name)"
-                  slot="icon-only"
-                  src="./assets/icon/icon_transnferir.svg"
-                ></ion-icon>
+                <ion-icon slot="icon-only" src="./assets/icon/icon_transnferir.svg"></ion-icon>
               </ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
@@ -134,7 +111,7 @@
     </ion-grid>
   </ion-content>
   <!-- ion-skeleton-text -->
-  <ion-header *ngIf="data.length === 0" class="ion-no-border ion-padding">
+  <ion-header *ngIf="activeData === false" class="ion-no-border ion-padding">
     <ion-grid>
       <ion-row size="12">
         <ion-col size="1">
@@ -158,7 +135,7 @@
       </ion-row>
     </ion-grid>
   </ion-header>
-  <ion-content *ngIf="data.length === 0" fullscreen="false" class="ion-padding">
+  <ion-content *ngIf="activeData === false" fullscreen="false" class="ion-padding">
     <ion-grid>
       <!-- titulo de empresa -->
       <ion-row size="12">

@@ -74,7 +74,7 @@
             </div>
           </ion-col>
           <ion-col size="12" class="ion-align-items-start">
-            <h2 class="title-red">Sucursal {{nameBranch}}</h2>
+            <h2 class="title-red">Sucursal {{user.branchName}}</h2>
           </ion-col>
         </ion-row>
         <ion-row size="12">
@@ -164,7 +164,7 @@
           <!-- *ngIf="data[2]" -->
           <ion-col *ngIf="data[1]" size="6">
             <!-- aqui se manda el id de sucursal ya que tiene una lista de registros  -->
-            <ion-card (click)="productoRiesgo(user.branch)">
+            <ion-card (click)="productoRiesgo(user.branchId)">
               <ion-card-content>
                 <ion-row size="12">
                   <ion-col size="3" class="ion-align-self-center">
