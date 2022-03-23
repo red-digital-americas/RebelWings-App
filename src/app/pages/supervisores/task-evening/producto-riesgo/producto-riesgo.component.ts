@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-producto-riesgo',
@@ -24,12 +26,15 @@ export class ProductoRiesgoComponent implements OnInit {
   public dataBranch: any[] = [];
   // identificador de nuevo registro
   public newProduct: boolean;
+  public createDate = '';
 
   constructor(
     public router: Router,
     public routerActive: ActivatedRoute,
     public service: ServiceGeneralService,
-    public load: LoaderComponent
+    public load: LoaderComponent,
+    public datepipe: DatePipe
+
   ) { }
 
   ionViewWillEnter() {
@@ -129,6 +134,27 @@ export class ProductoRiesgoComponent implements OnInit {
     });
   }
 
+  formartDate() {
+    // 2022-03-11T17:27:00
+    console.log('date', this.today);
+    let time = '';
+    const date = this.datepipe.transform(this.today, 'yyyy-MM-dd');
+    time =
+      '' +
+      this.today.getHours() +
+      ':' +
+      this.today.getMinutes() +
+      ':' +
+      this.today.getSeconds();
+    console.log('format', time);
+    console.log('date', date);
+    this.createDate = `${date}T${time}`;
+    console.log('createDate', this.createDate);
+    this.addProductoRiesgo();
+
+    // this.data.time = datetime;
+  }
+
   addProductRisk() {
     console.log('push');
 
@@ -139,7 +165,7 @@ export class ProductoRiesgoComponent implements OnInit {
       code: '',
       comment: '',
       createdBy: this.user.id,
-      createdDate: this.today,
+      createdDate: this.createDate,
       updatedBy: this.user.id,
       updatedDate: this.today,
       search: '',
@@ -156,7 +182,7 @@ export class ProductoRiesgoComponent implements OnInit {
     this.disabled = true;
     // esto se pone aqui por que aun no se estrae la data de un get
     if (this.newProduct === true) {
-      this.addProductoRiesgo();
+      this.formartDate();
     } else {
       this.updateProductoRiesgo();
     }

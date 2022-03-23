@@ -3,6 +3,8 @@ import { ModalController, NavParams } from '@ionic/angular';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import { DialogGeneralMessageComponent } from 'src/app/pages/dialog-general/dialog-general-message/dialog-general-message.component';
+import { DatePipe } from '@angular/common';
+
 @Component({
   selector: 'app-dialog-add-package',
   templateUrl: './dialog-add-package.component.html',
@@ -16,12 +18,15 @@ export class DialogAddPackageComponent implements OnInit {
   public data: any = [];
   public user: any;
   public today = new Date();
+  public createDate = '';
+
 
   constructor(
     public modalController: ModalController,
     public navParams: NavParams,
     public service: ServiceGeneralService,
-    public load: LoaderComponent
+    public load: LoaderComponent, public datepipe: DatePipe
+
   ) { }
 
   ionViewWillEnter() {
@@ -50,9 +55,29 @@ export class DialogAddPackageComponent implements OnInit {
       dismissed: true,
     });
   }
+  formartDate() {
+    // 2022-03-11T17:27:00
+    console.log('date', this.today);
+    let time = '';
+    const date = this.datepipe.transform(this.today, 'yyyy-MM-dd');
+    time =
+      '' +
+      this.today.getHours() +
+      ':' + '00' +
+      // this.today.getMinutes() +
+      ':' +
+      this.today.getSeconds();
+    console.log('format', time);
+    console.log('date', date);
+    this.createDate = `${date}T${time}`;
+    console.log('createDate', this.createDate);
+    this.addPackage();
+
+    // this.data.time = datetime;
+  }
   save() {
     if (this.idPackage === 0) {
-      this.addPackage();
+      this.formartDate();
     } else {
       this.updatePackage();
     }
@@ -65,7 +90,7 @@ export class DialogAddPackageComponent implements OnInit {
       amount: this.data.amount,
       statusId: 1, //aun no esta definido
       createdBy: this.user.id,
-      createdDate: this.today,
+      createdDate: this.createDate,
       updatedBy: this.user.id,
       updatedDate: this.today,
     };

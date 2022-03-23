@@ -52,6 +52,7 @@ export class DialogAddTransferComponent implements OnInit {
   public activeComment = false;
   // nombre de sucursal
   public fromBranch = '';
+  public toBranch= '';
   public dataBranch: any[] = [];
 
   constructor(
@@ -106,6 +107,7 @@ export class DialogAddTransferComponent implements OnInit {
           // para identificar que se cambio la hora igualamos variables
           this.timestamp = this.data.time;
           this.getFomName();
+          this.getToName();
         }
       });
   }
@@ -139,6 +141,15 @@ export class DialogAddTransferComponent implements OnInit {
         this.fromBranch = element.branchName;
         this.fromBranch = this.fromBranch.toUpperCase();
         console.log('nombre from', this.fromBranch);
+      }
+    });
+  }
+  getToName() {
+    this.dataBranch.forEach(element => {
+      if (element.branchId === this.data.toBranchId) {
+        this.toBranch = element.branchName;
+        this.toBranch = this.toBranch.toUpperCase();
+        console.log('nombre from', this.toBranch);
       }
     });
   }

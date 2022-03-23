@@ -13,7 +13,8 @@ export class DialogViewTransferComponent implements OnInit {
   public user;
   public dataBranch: any[] = [];
   public dataStatus: any[] = [];
-  public nameSucursal;
+  public nameFromSucursal;
+  public nameToSucursal;
   customYearValues = [2020, 2016, 2008, 2004, 2000, 1996];
   customDayShortNames = [
     's\u00f8n',
@@ -83,20 +84,30 @@ export class DialogViewTransferComponent implements OnInit {
       if (resp.success) {
         this.dataBranch = resp.result;
         console.log('get branch', this.dataBranch);
-        this.getName(this.data.toBranchId);
+        this.getFromName(this.data.fromBranchId);
+        this.getToName(this.data.toBranchId);
+
       }
     });
   }
-  getName(id: number) {
+  getFromName(id: number) {
     this.dataBranch.forEach(element => {
       if (element.branchId === id) {
-        this.nameSucursal = element.branchName;
-        this.nameSucursal = this.nameSucursal.toUpperCase();
-        console.log('nombre from', this.nameSucursal);
+        this.nameFromSucursal = element.branchName;
+        this.nameFromSucursal = this.nameFromSucursal.toUpperCase();
+        console.log('nombre from', this.nameFromSucursal);
       }
     });
   }
-
+  getToName(id: number) {
+    this.dataBranch.forEach(element => {
+      if (element.branchId === id) {
+        this.nameToSucursal = element.branchName;
+        this.nameToSucursal = this.nameToSucursal.toUpperCase();
+        console.log('nombre from', this.nameToSucursal);
+      }
+    });
+  }
   dismiss() {
     this.modalController.dismiss({
       dismissed: true,

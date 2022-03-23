@@ -77,8 +77,8 @@ export class WaitTablesComponent implements OnInit {
     time =
       '' +
       this.today.getHours() +
-      ':' +
-      this.today.getMinutes() +
+      ':' + '00' +
+      // this.today.getMinutes() +
       ':' +
       this.today.getSeconds();
     console.log('format', time);

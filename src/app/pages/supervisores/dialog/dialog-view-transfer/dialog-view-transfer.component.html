@@ -23,13 +23,13 @@
       <ion-col size="1" class="ion-align-self-center">
         <img src="./assets/icon/ilustracion_transferencias.png" alt="" />
       </ion-col>
-      <ion-col size="11" class="ion-align-self-center" *ngIf="nameSucursal">
+      <ion-col size="11" class="ion-align-self-center" *ngIf="nameToSucursal">
         <div>
           <h4 class="subtitle-negro">
-            De Sucursal {{ user.branchName }}
+            De Sucursal {{ nameFromSucursal }}
           </h4>
           &nbsp;
-          <span  > A {{nameSucursal}}</span>
+          <span  > A {{nameToSucursal}}</span>
         </div>
       </ion-col>
     </ion-row>

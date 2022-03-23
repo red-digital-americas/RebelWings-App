@@ -44,7 +44,7 @@ export class TransferenciasComponent implements OnInit {
       .subscribe((resp) => {
         if (resp.success) {
           this.data = resp.result;
-          console.log(this.data);
+          console.log('get transfer', this.data);
           this.activeData = true;
         }
       });
