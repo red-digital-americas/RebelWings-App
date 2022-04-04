@@ -17,6 +17,7 @@ import { CentroControlMatutinoComponent } from './task-morning/centro-control-ma
 import { CentroControlVespertinoComponent } from './task-evening/centro-control-vespertino/centro-control-vespertino.component';
 import { AttendanceValidationComponent } from './task-morning/attendance-validation/attendance-validation.component';
 import { WaitTablesComponent } from './task-morning/wait-tables/wait-tables.component';
+import { ResguardoTabletAlarmaComponent } from './task-evening/resguardo-tablet-alarma/resguardo-tablet-alarma.component';
 const routes: Routes = [
   {
     path: '',
@@ -86,6 +87,10 @@ const routes: Routes = [
     path: 'alarma/:id',
     component: AlarmaComponent,
   },
+  {
+    path: 'resguardo-tableta/:idTablet/alarma/:idAlarma',
+    component: ResguardoTabletAlarmaComponent,
+  }
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],

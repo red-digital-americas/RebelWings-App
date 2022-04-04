@@ -20,6 +20,14 @@ export class CentroControlVespertinoComponent implements OnInit {
   public branchId;
   public nameBranch = '';
   public dataBranch: any[] = [];
+  // se juntaron tablet y alarma
+  public tabletAlarmaActive = false;
+  public completeTablAndAlarm = false;
+  public progressTablAndAlarm = 0;
+  public colorTablAndAlarm;
+
+
+
 
   constructor(
     public router: Router,
@@ -28,7 +36,7 @@ export class CentroControlVespertinoComponent implements OnInit {
     public modalController: ModalController,
     public popoverCtrl: PopoverController,
 
-  ) {}
+  ) { }
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log('user', this.user);
@@ -53,8 +61,28 @@ export class CentroControlVespertinoComponent implements OnInit {
         if (resp.success) {
           console.log('control vespertino', resp.result);
           this.data = resp.result;
+          this.activeTabletAndAlarma();
         }
       });
+  }
+  activeTabletAndAlarma() {
+    this.tabletAlarmaActive = true;
+    if (this.data[6].isComplete === false || this.data[7].isComplete === false) {
+      this.completeTablAndAlarm = false;
+      if (this.data[6].isComplete === false && this.data[7].isComplete === false) {
+        this.progressTablAndAlarm = 0;
+        this.colorTablAndAlarm = 'danger';
+      }
+      else if (this.data[6].isComplete === true || this.data[7].isComplete === true) {
+        this.progressTablAndAlarm = .50;
+        this.colorTablAndAlarm = 'warning';
+      }
+    }
+    else {
+      this.completeTablAndAlarm = true;
+      this.colorTablAndAlarm = 'success';
+      this.progressTablAndAlarm = 100;
+    }
   }
   return() {
     console.log('return');
@@ -185,6 +213,16 @@ export class CentroControlVespertinoComponent implements OnInit {
     }
     this.router.navigateByUrl('supervisor/alarma/' + id);
   }
+  tabletAndAlarma(idTablet, idAlarma) {
+    if (idTablet === null) {
+      idTablet = 0;
+    }
+    if (idAlarma === null) {
+      idAlarma = 0;
+    }
+    console.log(`id tablet ${idTablet} id tablet ${idAlarma}`);
+    this.router.navigateByUrl(`supervisor/resguardo-tableta/${idTablet}/alarma/${idAlarma}`);
+  }
   mesas(id: number) {
     if (id === null) {
       id = 0;
@@ -197,4 +235,5 @@ export class CentroControlVespertinoComponent implements OnInit {
     }
     this.router.navigateByUrl('supervisor/expectativa-venta/' + id);
   }
+
 }

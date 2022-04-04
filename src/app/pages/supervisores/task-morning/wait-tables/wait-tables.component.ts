@@ -91,7 +91,8 @@ export class WaitTablesComponent implements OnInit {
   }
 
   save() {
-    console.log('toggle', this.data.waitlistTables);
+    this.data.numberPeople = 0;
+    this.data.waitlistTables = true;
     this.data.branch = this.user.branchId;
     if (this.idTable === '0') {
       console.log('add data');

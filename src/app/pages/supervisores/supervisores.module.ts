@@ -1,3 +1,4 @@
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RemisionesComponent } from './task-evening/remisiones/remisiones.component';
 import { DialogAddAlbaranesComponent } from './dialog/dialog-add-albaranes/dialog-add-albaranes.component';
 import { AlbaranesComponent } from './task-evening/albaranes/albaranes.component';
@@ -6,7 +7,6 @@ import { TransferenciasComponent } from './task-evening/transferencias/transfere
 import { LimpiezaSalonBanosComponent } from './task-evening/limpieza-salon-banos/limpieza-salon-banos.component';
 import { ResguardoTabletaComponent } from './task-evening/resguardo-tableta/resguardo-tableta.component';
 import { AlarmaComponent } from './task-evening/alarma/alarma.component';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
@@ -29,6 +29,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { DatePicker } from '@ionic-native/date-picker/ngx';
 import { IonicSelectableModule } from 'ionic-selectable';
+import { ResguardoTabletAlarmaComponent } from './task-evening/resguardo-tablet-alarma/resguardo-tablet-alarma.component';
 
 
 
@@ -55,7 +56,8 @@ import { IonicSelectableModule } from 'ionic-selectable';
     DialogAddTransferComponent,
     AlbaranesComponent,
     DialogAddAlbaranesComponent,
-    RemisionesComponent
+    RemisionesComponent,
+    ResguardoTabletAlarmaComponent
   ],
   imports: [
     CommonModule,
@@ -67,5 +69,6 @@ import { IonicSelectableModule } from 'ionic-selectable';
     IonicSelectableModule,
   ],
   providers: [DatePicker],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SupervisoresModule {}
