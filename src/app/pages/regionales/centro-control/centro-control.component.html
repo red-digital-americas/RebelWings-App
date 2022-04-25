@@ -80,27 +80,27 @@
             <ion-segment mode="ios" scrollable [(ngModel)]="task">
               <ion-row size="12">
                 <ion-col size="2">
-                  <ion-segment-button (click)="getDataControl(1)" value="cocina">
+                  <ion-segment-button (click)="getDataControl(1)" value="1">
                     <span class="btnMenu">COCINA</span>
                   </ion-segment-button>
                 </ion-col>
                 <ion-col size="2">
-                  <ion-segment-button (click)="getDataControl(2)" value="salon">
+                  <ion-segment-button (click)="getDataControl(2)" value="2">
                     <span class="btnMenu">SALÓN</span>
                   </ion-segment-button>
                 </ion-col>
                 <ion-col size="2">
-                  <ion-segment-button (click)="getDataControl(3)" value="baño">
+                  <ion-segment-button (click)="getDataControl(3)" value="3">
                     <span class="btnMenu">BAÑOS</span>
                   </ion-segment-button>
                 </ion-col>
                 <ion-col size="3">
-                  <ion-segment-button (click)="getDataControl(4)" value="sistema">
+                  <ion-segment-button (click)="getDataControl(4)" value="4">
                     <span class="btnMenu">SISTEMA Y CAJA</span>
                   </ion-segment-button>
                 </ion-col>
                 <ion-col size="3">
-                  <ion-segment-button (click)="getDataControl(5)" value="mantenimiento">
+                  <ion-segment-button (click)="getDataControl(5)" value="5">
                     <span class="btnMenu">MANTENIMIENTO</span>
                   </ion-segment-button>
                 </ion-col>
@@ -110,7 +110,7 @@
           <ion-col size="12">
             <div [ngSwitch]="task">
               <!--***** S E C C I O N   C O C I N A ******-->
-              <ion-row size="12" *ngSwitchCase="'cocina'">
+              <ion-row size="12" *ngSwitchCase="'1'">
                 <!-- progress bar -->
                 <ion-col size="12">
                   <span class="title-progress-bar">Nivel de progreso</span>
@@ -356,7 +356,7 @@
               </ion-row>
 
               <!--*** S E C C I O N   S A L O N  ******-->
-              <ion-row size="12" *ngSwitchCase="'salon'">
+              <ion-row size="12" *ngSwitchCase="'2'">
                 <ion-col size="12">
                   <span class="title-progress-bar">Nivel de progreso</span>
                   &nbsp;
@@ -780,7 +780,7 @@
 
               <!--*** S E C C I O N   B A Ñ O  ******-->
 
-              <ion-row size="12" *ngSwitchCase="'baño'">
+              <ion-row size="12" *ngSwitchCase="'3'">
                 <ion-col size="12">
                   <span class="title-progress-bar">Nivel de progreso</span>
                   &nbsp;
@@ -884,7 +884,7 @@
               </ion-row>
 
               <!--*** S I S T E M A   Y  C A J A  ******-->
-              <ion-row size="12" *ngSwitchCase="'sistema'">
+              <ion-row size="12" *ngSwitchCase="'4'">
                 <ion-col size="12">
                   <span class="title-progress-bar">Nivel de progreso</span>
                   &nbsp;
@@ -1078,7 +1078,7 @@
 
 
               <!--*** M A N T E N I M I E N T O  ******-->
-              <ion-row size="12" *ngSwitchCase="'mantenimiento'">
+              <ion-row size="12" *ngSwitchCase="'5'">
                 <ion-col size="12">
                   <span class="title-progress-bar">Nivel de progreso</span>
                   &nbsp;

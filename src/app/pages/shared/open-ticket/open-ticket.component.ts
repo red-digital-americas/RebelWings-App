@@ -55,7 +55,7 @@ export class OpenTicketComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+    this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/1`);
   }
 
   // get  name sucursal
@@ -94,7 +94,7 @@ export class OpenTicketComponent implements OnInit {
           console.log('data', data);
           this.ionViewWillEnter();
           this.disabled = false;
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/1`);
         }
       });
   }

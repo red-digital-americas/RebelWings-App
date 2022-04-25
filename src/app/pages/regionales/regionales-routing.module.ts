@@ -38,7 +38,7 @@ const routes: Routes = [
     component: ScheduleRegionalComponent,
   },
   {
-    path: 'centro-control/:id', // child route path
+    path: 'centro-control/:id/tarea/:idTarea', // child route path
     component: CentroControlComponent, // child route component that the router renders
   },
   {

@@ -94,7 +94,7 @@ export class LevantamientoTicketComponent implements OnInit {
 
   return() {
     // window.history.back();
-    this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+    this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/1`);
   }
 
   // get  name sucursal
@@ -233,7 +233,7 @@ export class LevantamientoTicketComponent implements OnInit {
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
           this.ionViewWillEnter();
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/1`);
         }
       });
   }
@@ -255,7 +255,7 @@ export class LevantamientoTicketComponent implements OnInit {
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
           this.ionViewWillEnter();
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/1`);
         }
       });
   }

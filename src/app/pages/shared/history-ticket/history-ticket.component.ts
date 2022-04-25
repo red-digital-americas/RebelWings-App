@@ -47,7 +47,7 @@ export class HistoryTicketComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+    this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/1`);
   }
   openTicket(id: number){
     this.router.navigateByUrl(`editar-ticket/${this.branchId}/${id}`);

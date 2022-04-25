@@ -74,7 +74,7 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+    this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/3`);
   }
   // get  name sucursal
   getBranch() {
@@ -202,7 +202,7 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/3`);
         }
       });
   }
@@ -223,7 +223,7 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/3`);
         }
       });
   }

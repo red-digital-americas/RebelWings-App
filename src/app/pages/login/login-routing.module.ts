@@ -6,7 +6,15 @@ const routes: Routes = [
   {
     path: '',
     component: LoginComponent,
-  }
+
+  },
+  {
+    // el login es redirect
+    path: '**',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
+
 ];
 @NgModule({
   imports: [
@@ -14,4 +22,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class LoginRoutingModule {}
+export class LoginRoutingModule { }

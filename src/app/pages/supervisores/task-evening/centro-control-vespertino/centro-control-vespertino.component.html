@@ -211,7 +211,7 @@
           <!-- -----------ALBARANES------------ -->
           <ion-col size="6" *ngIf="data[10]">
             <!-- aqui se envia el id de sucursal -->
-            <ion-card (click)="albaranes(user.branch)">
+            <ion-card (click)="albaranes(user.branchId)">
               <ion-card-content>
                 <ion-row size="12">
                   <ion-col size="3" class="ion-align-self-center">
@@ -254,7 +254,7 @@
           <!-- -----------TRANSFERENCIAS------------ -->
           <ion-col size="6" *ngIf="data[9]">
             <!-- aqui se envia el id de sucursal -->
-            <ion-card (click)="transferencias(user.branch)">
+            <ion-card (click)="transferencias(user.branchId)">
               <ion-card-content>
                 <ion-row size="12">
                   <ion-col size="3" class="ion-align-self-center">
@@ -635,11 +635,11 @@
           <!-- -----------STOCK DE POLLO------------ -->
           <ion-col size="6" *ngIf="data[3]">
             <!-- aqui se envia el id de sucursal -->
-            <ion-card (click)="stockPollo(user.branch)">
+            <ion-card (click)="stockPollo(user.branchId)">
               <ion-card-content>
                 <ion-row size="12">
                   <ion-col size="3" class="ion-align-self-center">
-                    <img src="./assets/icon/ilustracion_stock_de_pollo.png" alt="" />
+                    <img src="./assets/icon/skeleton-circle.png" alt="" />
                   </ion-col>
                   <ion-col size="9">
                     <ion-row size="12">

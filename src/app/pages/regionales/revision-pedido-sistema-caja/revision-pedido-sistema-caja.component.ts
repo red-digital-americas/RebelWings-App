@@ -83,7 +83,7 @@ export class RevisionPedidoSistemaCajaComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+    this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/4`);
   }
   // get  name sucursal
   getBranch() {
@@ -212,7 +212,7 @@ export class RevisionPedidoSistemaCajaComponent implements OnInit {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/4`);
         }
       });
   }
@@ -233,7 +233,7 @@ export class RevisionPedidoSistemaCajaComponent implements OnInit {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/4`);
         }
       });
   }

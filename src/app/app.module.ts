@@ -25,7 +25,7 @@ import { HistoryTicketComponent } from './pages/shared/history-ticket/history-ti
 import { OpenTicketComponent } from './pages/shared/open-ticket/open-ticket.component';
 import { DialogViewTransferComponent } from './pages/supervisores/dialog/dialog-view-transfer/dialog-view-transfer.component';
 
-
+import { APP_ROUTING } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -50,7 +50,8 @@ import { DialogViewTransferComponent } from './pages/supervisores/dialog/dialog-
     CommonModule,
     FormsModule,
     FilterPipeModule,
-    IonicSelectableModule
+    IonicSelectableModule,
+    APP_ROUTING
   ],
   providers: [
     LoaderComponent,

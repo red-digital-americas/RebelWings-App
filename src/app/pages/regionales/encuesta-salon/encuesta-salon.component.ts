@@ -86,7 +86,7 @@ export class EncuestaSalonComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+    this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
   }
   validateSave() {
     if (
@@ -153,7 +153,7 @@ export class EncuestaSalonComponent implements OnInit {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
         console.log('data', data);
-        this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+        this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
       }
     });
   }

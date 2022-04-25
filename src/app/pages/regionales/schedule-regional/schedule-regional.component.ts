@@ -35,7 +35,7 @@ export class ScheduleRegionalComponent implements OnInit {
   }
   selecSchedule() {
     if (this.branchId !== undefined) {
-      this.router.navigate([`/regional/centro-control/${this.branchId}`]);
+      this.router.navigate([`/regional/centro-control/${this.branchId}/tarea/1`]);
     }
   }
 }

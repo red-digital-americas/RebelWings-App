@@ -70,7 +70,7 @@ export class BarraMantenimientoComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+    this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
   }
   levantamientoTicket() {
     this.router.navigateByUrl('regional/levantamiento-ticket/' + this.branchId);
@@ -204,7 +204,7 @@ export class BarraMantenimientoComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
         }
       });
   }
@@ -214,7 +214,7 @@ export class BarraMantenimientoComponent implements OnInit {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
         console.log('data', data);
-        this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+        this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
       }
     });
   }

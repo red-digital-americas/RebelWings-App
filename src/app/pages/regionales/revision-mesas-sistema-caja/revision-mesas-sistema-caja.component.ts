@@ -66,7 +66,7 @@ export class RevisionMesasSistemaCajaComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+    this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/4`);
   }
   // get  name sucursal
   getBranch() {
@@ -110,7 +110,7 @@ export class RevisionMesasSistemaCajaComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/4`);
         }
       });
   }
@@ -122,7 +122,7 @@ export class RevisionMesasSistemaCajaComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/4`);
         }
       });
   }

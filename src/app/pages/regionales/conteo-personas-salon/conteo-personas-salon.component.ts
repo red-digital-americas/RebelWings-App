@@ -58,7 +58,7 @@ export class ConteoPersonasSalonComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+    this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
   }
   // get  name sucursal
   getBranch() {
@@ -132,7 +132,7 @@ export class ConteoPersonasSalonComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
         }
       });
   }
@@ -144,7 +144,7 @@ export class ConteoPersonasSalonComponent implements OnInit {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
         console.log('data', data);
-        this.router.navigateByUrl(`regional/centro-control/${this.branchId}`);
+        this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
       }
     });
   }

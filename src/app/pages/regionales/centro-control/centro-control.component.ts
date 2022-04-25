@@ -21,7 +21,7 @@ export class CentroControlComponent implements OnInit {
   public dataBranch: any[] = [];
   public nameBranch = '';
   // variable menu seleccionable
-  public task = 'cocina';
+  public task;
 
   constructor(
     public router: Router, public routerActive: ActivatedRoute,
@@ -40,7 +40,8 @@ export class CentroControlComponent implements OnInit {
     console.log('user', this.user);
     console.log(this.routerActive.snapshot.paramMap.get(`id`));
     this.branchId = this.routerActive.snapshot.paramMap.get(`id`);
-    this.getDataControl(1);
+    this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
+    this.getDataControl(this.task);
     this.getBranch();
     this.getNotification();
   }

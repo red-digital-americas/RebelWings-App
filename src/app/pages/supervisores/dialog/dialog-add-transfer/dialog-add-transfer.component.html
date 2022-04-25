@@ -125,16 +125,16 @@
         </ion-col>
 
         <!-- El codigo solo se solicita cuando es un request osea cuando se hace la transferencia -->
-        <ion-col size="12" *ngIf="type !== 2">
+        <!-- <ion-col size="12" *ngIf="type !== 2">
           <ion-label>Codigo</ion-label>
           <ion-card class="closed">
             <ion-input [(ngModel)]="data.code" (focus)="activeCode = false" required value="-" type="text"
               placeholder="Codigo"></ion-input>
           </ion-card>
           <ion-label style="color: #ad182d; font-size: 12px" *ngIf="activeCode">Campo requerido</ion-label>
-        </ion-col>
+        </ion-col> -->
         <ion-col size="12">
-          <ion-label>Cantidad (Kgs)</ion-label>
+          <ion-label>Cantidad (Unidades)</ion-label>
           <ion-card class="closed">
             <ion-input (focus)="activeAmount = false" required (keyup)="getWordAmount(data.amount)"
               [(ngModel)]="data.amount" type="text" placeholder="Cantidad"></ion-input>

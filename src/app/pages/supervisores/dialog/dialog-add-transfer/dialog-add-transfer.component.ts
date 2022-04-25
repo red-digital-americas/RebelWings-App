@@ -47,7 +47,7 @@ export class DialogAddTransferComponent implements OnInit {
   public activeDate = false;
   public activeTime = false;
   public activeProductId = false;
-  public activeCode = false;
+  // public activeCode = false;
   public activeAmount = false;
   public activeComment = false;
   // nombre de sucursal
