@@ -1,0 +1,18 @@
+// .sc-ion-modal-ios-h {
+//   --width: 50%;
+//   --height: 25%;
+// }
+ion-content {
+  --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0.32);
+  --width: 25%;
+  --border-color: pink;
+}
+.modal-wrapper.sc-ion-modal-ios {
+  opacity: 1;
+  width: 40%;
+  height: 40%;
+}
+.close{
+  text-align: end;
+}

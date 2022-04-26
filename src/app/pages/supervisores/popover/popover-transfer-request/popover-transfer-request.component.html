@@ -1,0 +1,6 @@
+<ion-content>
+  <!-- detail sirve para que sea lo mismo en android y ios -->
+  <ion-item (click)="openTransferencia(item.id)" *ngFor="let item of data; let i = index;" detail>
+    <ion-label>{{ item.name }}</ion-label>
+  </ion-item>
+</ion-content>

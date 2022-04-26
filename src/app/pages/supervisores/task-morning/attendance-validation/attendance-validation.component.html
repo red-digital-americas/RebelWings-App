@@ -1,0 +1,211 @@
+<ion-app>
+  <!-- data -->
+  <ion-header *ngIf="activeData === true" class="ion-no-border ion-padding">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div>
+            <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR </p>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="1">
+          <img src="./assets/icon/ilustracion_asistencias.png" alt="Validaccion de assistencia" />
+        </ion-col>
+        <ion-col size="11" class="ion-align-self-center">
+          <h3 class="title">VALIDACIÓN DE ASISTENCIAS</h3>
+        </ion-col>
+      </ion-row>
+      <!-- titulo de empresa -->
+      <ion-row size="12">
+        <ion-col size="4">
+          <h5 class="subtitle-negro">SUCURSAL {{user.branchName}}</h5>
+        </ion-col>
+        <ion-col size="8">
+          <span class="date-grey">
+            {{ today | date: "dd MMM yyy" }}
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-header>
+  <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
+    <ion-grid>
+
+      <ion-card *ngFor="let person of data">
+        <ion-row size="12">
+          <ion-item-sliding id="item100">
+            <ion-item>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="1" class="ion-align-self-center">
+                    <div>
+                      <img *ngIf="person.avatar !== ''" src="{{ person.avatar }}" alt="" />
+                      <img *ngIf="person.avatar === ''" src="./assets/avatar.png" alt="" />
+                    </div>
+                  </ion-col>
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div>
+                      <span>{{
+                        person.name.length > 15
+                        ? (person.name | slice: 0:15) + "..."
+                        : person.name
+                        }}</span>
+                    </div>
+                  </ion-col>
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div>
+                      <span>{{
+                        person.jobTitle.length > 15
+                        ? (person.jobTitle | slice: 0:15) + "..."
+                        : person.jobTitle
+                        }}</span>
+                    </div>
+                  </ion-col>
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div>
+                      <span>{{ person.workshift }}</span>
+                    </div>
+                  </ion-col>
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div>
+                      <span>{{ person.timeDelay }} Retardos</span>
+                    </div>
+                  </ion-col>
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div>
+                      <span *ngIf="person.status === 1">Llegó</span>
+                      <span *ngIf="person.status === 2">No llegó</span>
+                      <span *ngIf="person.status === 3">Retardo</span>
+                    </div>
+                  </ion-col>
+                  <ion-col size="1" class="ion-align-self-center">
+                    <div>
+                      <img *ngIf="person.status === 1" src="./assets/icon/icon_asisti.png" alt="" />
+                      <!-- no llego -->
+                      <img *ngIf="person.status === 2" src="./assets/icon/icon_falt.png" alt="" />
+                      <!-- retardo -->
+                      <img *ngIf="person.status === 3" src="./assets/icon/icon_lleg_tarde.png" alt="" />
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+            <!-- *ngIf="person.status === 3 || person.status === 1" -->
+            <ion-item-options side="end">
+              <ion-item-option color="warning" (click)="
+                    commentAttendance(
+                      person.attendanceId,
+                      person.clabTrab,
+                      person.name,
+                      person.jobTitle
+                    )
+                  ">
+                <ion-icon slot="icon-only" name="document-text-outline"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-row>
+      </ion-card>
+    </ion-grid>
+  </ion-content>
+  <!-- skeletor -->
+  <ion-header *ngIf="activeData === false" class="ion-no-border ion-padding">
+    <ion-grid class="animated flash slow">
+      <ion-row size="12">
+        <ion-col size="1">
+          <div>
+            <p class="ion-align-items-start return">
+              <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+            </p>
+          </div>
+        </ion-col>
+        <ion-col size="11"> </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="1">
+          <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+        </ion-col>
+        <ion-col size="11" class="ion-align-self-center">
+          <h3 class="title">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-header>
+  <ion-content *ngIf="activeData === false" fullscreen="false" class="ion-padding animated flash slow">
+    <ion-grid>
+      <!-- titulo de empresa -->
+      <ion-row size="12">
+        <ion-col size="4">
+          <h5 class="subtitle-negro">
+            <ion-skeleton-text animated width="40%"></ion-skeleton-text>
+          </h5>
+        </ion-col>
+        <ion-col size="8">
+          <span class="date-grey">
+            <ion-skeleton-text animated width="60%"></ion-skeleton-text>
+          </span>
+        </ion-col>
+      </ion-row>
+      <ion-card *ngFor="let person of [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]">
+        <ion-row size="12">
+          <ion-item-sliding>
+            <ion-item>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="1" class="ion-align-self-center">
+                    <div>
+                      <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                    </div>
+                  </ion-col>
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div>
+                      <span>
+                        <ion-skeleton-text animated width="20%"></ion-skeleton-text>
+                      </span>
+                    </div>
+                  </ion-col>
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div>
+                      <span>
+                        <ion-skeleton-text animated width="20%"></ion-skeleton-text>
+                      </span>
+                    </div>
+                  </ion-col>
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div>
+                      <span>
+                        <ion-skeleton-text animated width="20%"></ion-skeleton-text>
+                      </span>
+                    </div>
+                  </ion-col>
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div>
+                      <span>
+                        <ion-skeleton-text animated width="20%"></ion-skeleton-text>
+                      </span>
+                    </div>
+                  </ion-col>
+                  <ion-col size="2" class="ion-align-self-center">
+                    <div>
+                      <ion-skeleton-text animated width="20%"></ion-skeleton-text>
+                    </div>
+                  </ion-col>
+                  <ion-col size="1" class="ion-align-self-center">
+                    <div>
+                      <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+          </ion-item-sliding>
+        </ion-row>
+      </ion-card>
+    </ion-grid>
+  </ion-content>
+</ion-app>

@@ -1,0 +1,206 @@
+<ion-app>
+  <!-- ******************* data *************************** -->
+  <ion-header *ngIf="activeData === true" class="ion-no-border ion-padding">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div>
+            <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR</p>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="1">
+          <img src="./assets/icon/ilustracion_ticket.png" alt="Ticket" />
+        </ion-col>
+        <ion-col size="11" class="ion-align-self-center">
+          <h3 class="title">LEVANTAMIENTO DE TICKET</h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <br>
+    <!-- titulo de empresa -->
+    <ion-grid>
+      <ion-row size="12">
+        <ion-col size="4">
+          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
+        </ion-col>
+        <ion-col size="8">
+          <span class="date-grey">
+            {{ today | date: "dd MMM yyy" }}
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </ion-header>
+  <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-label floating>¿En qué parte de la sucursal te encuentras?</ion-label>
+          <ion-card class="closed">
+            <ion-item>
+              <ion-label>Lugar</ion-label>
+              <ion-select [(ngModel)]="data.whereAreYouLocated">
+                <ion-select-option *ngFor="let item of dataBranchLocate" [value]="item.id">
+                  {{ item.locate }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-label floating>Seleccina la categoria</ion-label>
+          <ion-card class="closed">
+            <ion-item>
+              <ion-label>Categoria</ion-label>
+              <ion-select [(ngModel)]="data.category">
+                <ion-select-option *ngFor="let item of dataCategory" [value]="item.id">
+                  {{ item.category }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label floating>Sección</ion-label>
+          <ion-card class="closed">
+            <ion-input [(ngModel)]="data.specificLocation" type="text" placeholder="Sección"></ion-input>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+        <ion-col size="6">
+          <ion-label>Fotografía</ion-label>
+          <!-- se manda id type 2 para general -->
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(2)">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea [(ngModel)]="data.describeProblem" rows="6" cols="20">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+        <!-- fotos  -->
+        <ion-col size="6">
+          <!-- fotos sin id -->
+          <ion-row>
+            <ion-col size="3" *ngFor="let photo of data.photoTicketings; index as position">
+              <!-- imagene en storage -->
+              <ion-img *ngIf="photo.id === 0" src="{{ base64 }},{{ photo.photo }}"
+                (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- imagenes en bd -->
+              <ion-img *ngIf="photo.id !== 0" src="{{ url }}{{ photo.photo }}"
+                (click)="deleteImgShowAction(photo.id)"> </ion-img>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+      <br><br>
+    </ion-grid>
+  </ion-content>
+  <ion-footer *ngIf="activeData === true" no-border>
+    <ion-grid>
+      <!-- footer boton -->
+      <ion-row size="12" class="footer">
+        <ion-col size="3" offset="8">
+          <ion-button (click)="save()" shape="round" color="danger" expand="full">
+            GUARDAR
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <br>
+    </ion-grid>
+  </ion-footer>
+  <!-- ******************* skeletor *************************** -->
+  <ion-header *ngIf="activeData === false" class="ion-no-border ion-padding">
+    <ion-grid>
+      <ion-row size="12">
+        <ion-col size="1">
+          <div>
+            <p class="ion-align-items-start return">
+              <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+            </p>
+          </div>
+        </ion-col>
+        <ion-col size="11"></ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="1">
+          <img src="./assets/icon/skeleton-circle.png" alt="Validaccion de assistencia" />
+        </ion-col>
+        <ion-col size="11" class="ion-align-self-center">
+          <h3 class="title">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-header>
+  <ion-content *ngIf="activeData === false" fullscreen="false" class="ion-padding">
+    <ion-grid>
+      <ion-row>
+        <br>
+        <ion-col size="12">
+          <span class="titleProduct">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label floating>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </ion-label>
+          <ion-card class="closed">
+            <ion-input type="number" min="0">
+            </ion-input>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+        <ion-col size="6">
+          <ion-label>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </ion-label>
+          <!-- se manda id type 2 para general -->
+          <ion-card style="height: 9rem" class="center">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </ion-label>
+          <ion-card>
+            <ion-textarea rows="6" cols="20">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+      <br><br>
+    </ion-grid>
+  </ion-content>
+  <ion-footer *ngIf="activeData === false" no-border>
+    <ion-grid>
+      <!-- footer boton -->
+      <ion-row size="12" class="footer">
+        <ion-col size="3" offset="8">
+          <ion-button shape="round" color="danger" expand="full">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>
+
+</ion-app>

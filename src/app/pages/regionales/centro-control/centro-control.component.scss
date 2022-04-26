@@ -1,0 +1,45 @@
+ion-header {
+  background-color: #1d1d1b;
+}
+.color-text-white {
+  color: white;
+}
+.title-red {
+  color: #ad182d;
+}
+.title-tareas {
+  color: #1d1d1b;
+  font-weight: bold;
+  margin: 0px;
+}
+.title-progress-bar {
+  color: #808289;
+}
+.margin-completado {
+  text-align: end;
+  margin-top: -14px;
+}
+
+.align-end-text {
+  text-align: end;
+}
+.return {
+  color: #d0122d;
+}
+// background de opciones
+.background {
+  background-color: #f0f0f0;
+}
+// estilos para el menu
+.btnMenu {
+  margin: 1rem;
+}
+
+// estilos para skeleton text
+.custom-skeleton ion-skeleton-text {
+  line-height: 13px;
+}
+
+.custom-skeleton ion-skeleton-text:last-child {
+  margin-bottom: 5px;
+}

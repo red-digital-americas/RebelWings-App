@@ -1,0 +1,92 @@
+<ion-app>
+  <ion-header class="ion-no-border ion-padding">
+    <ion-row size="12">
+      <ion-col size="12">
+        <div class="close align-text-end">
+          <ion-icon
+            (click)="modalController.dismiss()"
+            slot="icon-only"
+            name="close-outline"
+            color="danger"
+          ></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col size="12" class="ion-align-self-center">
+        <div>
+          <h4 *ngIf="objAlbaran.id === 0" class="subtitle-negro">
+            REGISTRAR UN PROBLEMA
+          </h4>
+          <h4 *ngIf="objAlbaran.id !== 0" class="subtitle-negro">
+            <b> ACTUALIZAR EL PROBLEMA </b>
+          </h4>
+        </div>
+      </ion-col>
+      <ion-col size="1" class="ion-align-self-center">
+        <img src="./assets/icon/producto.png" alt="" />
+      </ion-col>
+      <ion-col size="11" class="ion-align-self-center">
+        <div>
+          <h4 class="subtitle-negro">
+            <h5>{{ objAlbaran.nombreComercial }}</h5>
+          </h4>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-header>
+  <ion-content fullscreen="false" class="ion-padding">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" *ngIf="idStatus !== 3" >
+          <ion-label>Hora a la que llegó</ion-label>
+          <ion-card class="ion-align-self-center">
+            <ion-datetime
+              (focus)="activeTime = false"
+              required
+              type="time"
+              [value]="today"
+              [(ngModel)]="data.albaranTime"
+              displayFormat="HH:mm a"
+            ></ion-datetime>
+          </ion-card>
+          <ion-label style="color: #ad182d; font-size: 12px" *ngIf="activeTime"
+            >Campo requerido</ion-label
+          >
+        </ion-col>
+        <ion-col size="12">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea
+              (focus)="activeComment = false"
+              required
+              [(ngModel)]="data.albaranDescription"
+              rows="6"
+              cols="20"
+            ></ion-textarea>
+          </ion-card>
+          <ion-label
+            style="color: #ad182d; font-size: 12px"
+            *ngIf="activeComment"
+            >Campo requerido</ion-label
+          >
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+  <ion-footer no-border>
+    <ion-grid>
+      <!-- footer boton -->
+      <ion-row size="12" class="footer">
+        <ion-col size="3" offset="8">
+          <ion-button
+            (click)="validateSave()"
+            shape="round"
+            color="danger"
+            expand="full"
+          >
+            GUARDAR
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>
+</ion-app>

@@ -1,0 +1,16 @@
+.align-text-end{
+  text-align: end;
+}
+.subtitle-negro {
+  color: black; font-weight: bold;
+  font-size: large;
+}
+// estilos para skeleton text
+.custom-skeleton ion-skeleton-text {
+  line-height: 13px;
+}
+
+.custom-skeleton ion-skeleton-text:last-child {
+  margin-bottom: 5px;
+}
+

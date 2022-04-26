@@ -1,0 +1,109 @@
+ion-content {
+  --ion-background-color: #fafafa;
+}
+
+ion-header {
+  background-color: #fafafa;
+}
+
+ion-footer {
+  background-color: #fafafa;
+}
+
+.title {
+  color: #ad182d;
+  font-weight: bold;
+  font-size: large;
+  margin-left: 5px;
+}
+
+.subtitle-negro {
+  color: black;
+  font-weight: bold;
+  font-size: large;
+}
+
+.date-grey {
+  font-weight: 500;
+  color: grey;
+}
+
+.return {
+  color: #d0122d;
+}
+
+.footer {
+  position: absolute;
+  width: 100%;
+  bottom: 10px;
+  left: 0;
+}
+
+.center {
+  text-align: center;
+}
+
+.end {
+  text-align: end;
+}
+
+.sizePhoto {
+  width: 5rem;
+  height: 5rem;
+}
+
+// estilos para skeleton text
+.custom-skeleton ion-skeleton-text {
+  line-height: 13px;
+}
+
+.custom-skeleton ion-skeleton-text:last-child {
+  margin-bottom: 5px;
+}
+// estilos para toggle
+ion-toggle {
+  // color de fondo
+  --background: #F3F3F3;
+  --background-checked: #26a844;
+  // color de circulito
+  --handle-background: #ad182d;
+  --handle-background-checked: white;
+}
+
+ion-toggle[aria-checked="false"] {
+
+  // position: relative;
+  &::before {
+    position: absolute;
+    content: "";
+  }
+
+  &::after {
+    position: absolute;
+    content: "NO";
+    color: #ad182d;
+    font-size: 10px;
+    // line-height: 32px;
+    left: 33px;
+    top: 8px;
+  }
+}
+
+ion-toggle[aria-checked="true"] {
+
+  // position: relative;
+  &::before {
+    position: absolute;
+    content: "";
+  }
+
+  &::after {
+    position: absolute;
+    content: "SI";
+    font-size: 10px;
+    // line-height: 36px;
+    left: 10px;
+    top: 8px;
+    color: #fff;
+  }
+}

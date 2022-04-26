@@ -1,0 +1,763 @@
+<ion-app>
+  <!-- ************ data ************ -->
+  <ion-header *ngIf="activeData === true" class="ion-no-border ion-padding">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div>
+            <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR </p>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="1">
+          <img src="./assets/icon/ilustracion_cocina.png" alt="encuesta" />
+        </ion-col>
+        <ion-col size="11" class="ion-align-self-center">
+          <h3 class="title">COCINA</h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <br>
+    <ion-grid>
+      <!-- titulo de empresa -->
+      <ion-row size="12">
+        <ion-col size="4">
+          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
+        </ion-col>
+        <ion-col size="4">
+          <span class="date-grey">
+            {{ today | date: "dd MMM yyy" }}
+          </span>
+        </ion-col>
+        <ion-col size="1"></ion-col>
+        <ion-col size="3">
+          <div class="align-end-text">
+            <ion-button (click)="levantamientoTicket()" shape="round" color="warning" expand="full">
+              <span>
+                LEVANTAR TICKET
+              </span>
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-header>
+  <ion-content fullscreen="false" *ngIf="activeData === true" class="ion-padding">
+
+    <ion-grid>
+      <!-------------------tarja--------------------->
+      <ion-row size="12">
+        <ion-col size="12">
+          <span class="titleProduct">Tarjas</span>
+          <br>
+          <span>¿Sujetas y sin fugas?</span>
+          <br>
+          <ion-toggle [(ngModel)]="data.sink"></ion-toggle>
+        </ion-col>
+      </ion-row>
+      <!-------------fotos de tarjas----------------->
+      <ion-row *ngIf="data.sink === false" size="12">
+        <ion-col size="6">
+          <ion-label>Fotografía</ion-label>
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(1)">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea [(ngModel)]="data.commentSink" rows="6" cols="20">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="data.sink === false" size="12">
+        <ion-col size="6">
+          <!-- fotos sin id -->
+          <ion-row>
+            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+              <!-- se mostara esta imagen si no tiene id  -->
+              <ion-img *ngIf="photo.id === 0 && photo.type === 1" src="{{ base64 }},{{ photo.photo }}"
+                (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- se mostrara esta imagen si esta guardada -->
+              <ion-img *ngIf="photo.id !== 0 && photo.type === 1" src="{{ url }}{{ photo.photo }}"
+                (click)="deleteImgShowAction(photo.id)">
+              </ion-img>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+      <!---------------------mezcladora---------------->
+      <ion-row size="12">
+        <ion-col size="12">
+          <span class="titleProduct">Mezcladoras</span>
+          <br>
+          <span>¿Funcionando?</span>
+          <br>
+          <ion-toggle [(ngModel)]="data.mixer"></ion-toggle>
+        </ion-col>
+      </ion-row>
+      <!-------------fotos de tarjas----------------->
+      <ion-row *ngIf="data.mixer === false" size="12">
+        <ion-col size="6">
+          <ion-label>Fotografía</ion-label>
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(2)">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea [(ngModel)]="data.commentMixer" rows="6" cols="20">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="data.mixer === false" size="12">
+        <ion-col size="6">
+          <!-- fotos sin id -->
+          <ion-row>
+            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+              <!-- se mostara esta imagen si no tiene id  -->
+              <ion-img *ngIf="photo.id === 0 && photo.type === 2" src="{{ base64 }},{{ photo.photo }}"
+                (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- se mostrara esta imagen si esta guardada -->
+              <ion-img *ngIf="photo.id !== 0 && photo.type === 2" src="{{ url }}{{ photo.photo }}"
+                (click)="deleteImgShowAction(photo.id)">
+              </ion-img>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+
+      <!----------------coladora------------------->
+      <ion-row>
+        <ion-col size="12">
+          <span class="titleProduct">Coladeras</span>
+          <br>
+          <span>¿Fijas con trampas de olor y tornillería?</span>
+          <br>
+          <ion-toggle [(ngModel)]="data.strainer"></ion-toggle>
+        </ion-col>
+      </ion-row>
+      <!-------------fotos de Coladeras----------------->
+      <ion-row *ngIf="data.strainer === false" size="12">
+        <ion-col size="6">
+          <ion-label>Fotografía</ion-label>
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(3)">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea [(ngModel)]="data.commentStrainer" rows="6" cols="20">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="data.strainer === false" size="12">
+        <ion-col size="6">
+          <!-- fotos sin id -->
+          <ion-row>
+            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+              <!-- se mostara esta imagen si no tiene id  -->
+              <ion-img *ngIf="photo.id === 0 && photo.type === 3" src="{{ base64 }},{{ photo.photo }}"
+                (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- se mostrara esta imagen si esta guardada -->
+              <ion-img *ngIf="photo.id !== 0 && photo.type === 3" src="{{ url }}{{ photo.photo }}"
+                (click)="deleteImgShowAction(photo.id)">
+              </ion-img>
+
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+
+      <!----------------Freidoras--------------------->
+      <ion-row size="12">
+        <ion-col size="12">
+          <span class="titleProduct">Freidoras</span>
+          <br>
+          <span>¿Temperatura exacta?</span>
+          <br>
+          <ion-toggle [(ngModel)]="data.fryer"></ion-toggle>
+        </ion-col>
+      </ion-row>
+      <!-------------fotos de Freidoras----------------->
+      <ion-row *ngIf="data.fryer === false" size="12">
+        <ion-col size="6">
+          <ion-label>Fotografía</ion-label>
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(4)">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea [(ngModel)]="data.commentFryer" rows="6" cols="20">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="data.fryer === false" size="12">
+        <ion-col size="6">
+          <!-- fotos sin id -->
+          <ion-row>
+            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+              <!-- se mostara esta imagen si no tiene id  -->
+              <ion-img *ngIf="photo.id === 0 && photo.type === 4" src="{{ base64 }},{{ photo.photo }}"
+                (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- se mostrara esta imagen si esta guardada -->
+              <ion-img *ngIf="photo.id !== 0 && photo.type === 4" src="{{ url }}{{ photo.photo }}"
+                (click)="deleteImgShowAction(photo.id)">
+              </ion-img>
+
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+
+      <!-----------------Extracción--------------------->
+      <ion-row size="12">
+        <ion-col size="12">
+          <span class="titleProduct">Extracción</span>
+          <br>
+          <span>¿En buen estado?</span>
+          <br>
+          <ion-toggle [(ngModel)]="data.extractor"></ion-toggle>
+        </ion-col>
+      </ion-row>
+      <!-------------fotos de Extracción----------------->
+      <ion-row *ngIf="data.extractor === false" size="12">
+        <ion-col size="6">
+          <ion-label>Fotografía</ion-label>
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(5)">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea [(ngModel)]="data.commentExtractor" rows="6" cols="20">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="data.extractor === false" size="12">
+        <ion-col size="6">
+          <!-- fotos sin id -->
+          <ion-row>
+            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+              <!-- se mostara esta imagen si no tiene id  -->
+              <ion-img *ngIf="photo.id === 0 && photo.type === 5" src="{{ base64 }},{{ photo.photo }}"
+                (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- se mostrara esta imagen si esta guardada -->
+              <ion-img *ngIf="photo.id !== 0 && photo.type === 5" src="{{ url }}{{ photo.photo }}"
+                (click)="deleteImgShowAction(photo.id)">
+              </ion-img>
+
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+
+      <!----------------Refrigeradores------------------->
+      <ion-row size="12">
+        <ion-col size="12">
+          <span class="titleProduct">Refrigeradores</span>
+          <br>
+          <span>¿Temperatura, buen estado?</span>
+          <br>
+          <ion-toggle [(ngModel)]="data.refrigerator"></ion-toggle>
+        </ion-col>
+      </ion-row>
+      <!-------------fotos de Refrigeradores----------------->
+      <ion-row *ngIf="data.refrigerator === false" size="12">
+        <ion-col size="6">
+          <ion-label>Fotografía</ion-label>
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(9)">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea [(ngModel)]="data.commentRefrigerator" rows="6" cols="20">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="data.refrigerator === false" size="12">
+        <ion-col size="6">
+          <!-- fotos sin id -->
+          <ion-row>
+            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+              <!-- se mostara esta imagen si no tiene id  -->
+              <ion-img *ngIf="photo.id === 0 && photo.type === 9" src="{{ base64 }},{{ photo.photo }}"
+                (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- se mostrara esta imagen si esta guardada -->
+              <ion-img *ngIf="photo.id !== 0 && photo.type === 9" src="{{ url }}{{ photo.photo }}"
+                (click)="deleteImgShowAction(photo.id)">
+              </ion-img>
+
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+      <!-------------Temperatura interior---------------->
+      <ion-row size="12">
+        <ion-col size="12">
+          <span class="titleProduct">Temperatura interior</span>
+          <br>
+          <span>¿Es la correcta?</span>
+          <br>
+          <ion-toggle [(ngModel)]="data.interiorTemperature"></ion-toggle>
+        </ion-col>
+      </ion-row>
+      <!-------------fotos de Temperatura----------------->
+      <ion-row *ngIf="data.interiorTemperature === false" size="12">
+        <ion-col size="6">
+          <ion-label>Fotografía</ion-label>
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(6)">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea [(ngModel)]="data.commentInteriorTemperature" rows="6" cols="20">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="data.interiorTemperature === false" size="12">
+        <ion-col size="6">
+          <!-- fotos sin id -->
+          <ion-row>
+            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+              <!-- se mostara esta imagen si no tiene id  -->
+              <ion-img *ngIf="photo.id === 0 && photo.type === 6" src="{{ base64 }},{{ photo.photo }}"
+                (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- se mostrara esta imagen si esta guardada -->
+              <ion-img *ngIf="photo.id !== 0 && photo.type === 6" src="{{ url }}{{ photo.photo }}"
+                (click)="deleteImgShowAction(photo.id)">
+              </ion-img>
+
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+
+      <!---------------Puertas--------------------------->
+      <ion-row size="12">
+        <ion-col size="12">
+          <span class="titleProduct">Puertas</span>
+          <br>
+          <span>¿Es la correcta?</span>
+          <br>
+          <ion-toggle [(ngModel)]="data.doors"></ion-toggle>
+        </ion-col>
+      </ion-row>
+      <!-------------fotos de Puertas----------------->
+      <ion-row *ngIf="data.doors === false" size="12">
+        <ion-col size="6">
+          <ion-label>Fotografía</ion-label>
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(7)">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea [(ngModel)]="data.commentDoors" rows="6" cols="20">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="data.doors === false" size="12">
+        <ion-col size="6">
+          <!-- fotos sin id -->
+          <ion-row>
+            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+              <!-- se mostara esta imagen si no tiene id  -->
+              <ion-img *ngIf="photo.id === 0 && photo.type === 7" src="{{ base64 }},{{ photo.photo }}"
+                (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- se mostrara esta imagen si esta guardada -->
+              <ion-img *ngIf="photo.id !== 0 && photo.type === 7" src="{{ url }}{{ photo.photo }}"
+                (click)="deleteImgShowAction(photo.id)">
+              </ion-img>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+
+
+      <!-------Distancia correcta hacia la pared--------->
+      <ion-row size="12">
+        <ion-col size="12">
+          <span class="titleProduct">Distancia correcta hacia la pared</span>
+          <br>
+          <span>¿Es la correcta?</span>
+          <br>
+          <ion-toggle [(ngModel)]="data.correctDistance"></ion-toggle>
+        </ion-col>
+      </ion-row>
+      <!-------------fotos de Distancia----------------->
+      <ion-row *ngIf="data.correctDistance === false" size="12">
+        <ion-col size="6">
+          <ion-label>Fotografía</ion-label>
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(8)">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea [(ngModel)]="data.commentCorrectDistance" rows="6" cols="20">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="data.correctDistance === false" size="12">
+        <ion-col size="6">
+          <!-- fotos sin id -->
+          <ion-row>
+            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+              <!-- se mostara esta imagen si no tiene id  -->
+              <ion-img *ngIf="photo.id === 0 && photo.type === 8" src="{{ base64 }},{{ photo.photo }}"
+                (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- se mostrara esta imagen si esta guardada -->
+              <ion-img *ngIf="photo.id !== 0 && photo.type === 8" src="{{ url }}{{ photo.photo }}"
+                (click)="deleteImgShowAction(photo.id)">
+              </ion-img>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+
+      <!-----------Conexiones eléctricas-------------->
+      <ion-row size="12">
+        <ion-col size="12">
+          <span class="titleProduct">Conexiones eléctricas</span>
+          <br>
+          <span>En buen estado</span>
+          <br>
+          <ion-toggle [(ngModel)]="data.electricalConnections"></ion-toggle>
+        </ion-col>
+      </ion-row>
+      <!-------------fotos de Conexiones----------------->
+      <ion-row *ngIf="data.electricalConnections === false" size="12">
+        <ion-col size="6">
+          <ion-label>Fotografía</ion-label>
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(10)">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea [(ngModel)]="data.commentElectricalConnections" rows="6" cols="20">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="data.electricalConnections === false" size="12">
+        <ion-col size="6">
+          <!-- fotos sin id -->
+          <ion-row>
+            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+              <!-- se mostara esta imagen si no tiene id  -->
+              <ion-img *ngIf="photo.id === 0 && photo.type === 10" src="{{ base64 }},{{ photo.photo }}"
+                (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- se mostrara esta imagen si esta guardada -->
+              <ion-img *ngIf="photo.id !== 0 && photo.type === 10" src="{{ url }}{{ photo.photo }}"
+                (click)="deleteImgShowAction(photo.id)">
+              </ion-img>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+
+      <!-------------Luminarias--------------------------->
+      <ion-row size="12">
+        <ion-col size="12">
+          <span class="titleProduct">Luminarias</span>
+          <br>
+          <span>Completas y funionando</span>
+          <br>
+          <ion-toggle [(ngModel)]="data.luminaires"></ion-toggle>
+        </ion-col>
+      </ion-row>
+      <!-------------fotos de Luminarias----------------->
+      <ion-row *ngIf="data.luminaires === false" size="12">
+        <ion-col size="6">
+          <ion-label>Fotografía</ion-label>
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(11)">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>Comentario</ion-label>
+          <ion-card>
+            <ion-textarea [(ngModel)]="data.commentLuminaires" rows="6" cols="20">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="data.luminaires === false" size="12">
+        <ion-col size="6">
+          <!-- fotos sin id -->
+          <ion-row>
+            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+              <!-- se mostara esta imagen si no tiene id  -->
+              <ion-img *ngIf="photo.id === 0 && photo.type === 11" src="{{ base64 }},{{ photo.photo }}"
+                (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- se mostrara esta imagen si esta guardada -->
+              <ion-img *ngIf="photo.id !== 0 && photo.type === 11" src="{{ url }}{{ photo.photo }}"
+                (click)="deleteImgShowAction(photo.id)">
+              </ion-img>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+      <br><br><br>
+    </ion-grid>
+  </ion-content>
+  <ion-footer *ngIf="activeData === true" no-border>
+    <ion-grid>
+      <!-- footer boton -->
+      <ion-row size="12" class="footer">
+        <ion-col size="3" offset="8">
+          <ion-button (click)="save()" shape="round" color="danger" expand="full">
+            GUARDAR
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>
+  <!-- *************************skeletor***********************  -->
+  <ion-header *ngIf="activeData === false" class="ion-no-border ion-padding">
+    <ion-grid>
+      <ion-row size="12">
+        <ion-col size="1">
+          <div>
+            <p class="ion-align-items-start return">
+              <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+            </p>
+          </div>
+        </ion-col>
+        <ion-col size="11"></ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="1">
+          <img src="./assets/icon/skeleton-circle.png" alt="Validaccion de assistencia" />
+        </ion-col>
+        <ion-col size="11" class="ion-align-self-center">
+          <h3 class="title">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-header>
+  <ion-content *ngIf="activeData === false" fullscreen="false" class="ion-padding">
+    <ion-grid>
+      <ion-row size="12">
+        <!-- ------------------------------------ -->
+        <!-- tarja -->
+        <ion-col size="12">
+          <span class="titleProduct">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <span>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <ion-toggle disabled></ion-toggle>
+        </ion-col>
+        <!-- mezcladora -->
+        <ion-col size="12">
+          <span class="titleProduct">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <span>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <ion-toggle disabled></ion-toggle>
+        </ion-col>
+        <!-- coladora -->
+        <ion-col size="12">
+          <span class="titleProduct">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <span>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <ion-toggle disabled></ion-toggle>
+        </ion-col>
+        <!------------------------------------------->
+        <!-- Freidoras -->
+        <ion-col size="12">
+          <span class="titleProduct">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <span>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <ion-toggle disabled></ion-toggle>
+        </ion-col>
+        <!-- Extracción -->
+        <ion-col size="12">
+          <span class="titleProduct">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <span>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <ion-toggle disabled></ion-toggle>
+        </ion-col>
+        <!-- Refrigeradores -->
+        <ion-col size="12">
+          <span class="titleProduct">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <span>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <ion-toggle disabled></ion-toggle>
+        </ion-col>
+        <!-- Temperatura interior -->
+        <ion-col size="12">
+          <span class="titleProduct">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <span>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <ion-toggle disabled></ion-toggle>
+        </ion-col>
+        <!-- Puertas -->
+        <ion-col size="12">
+          <span class="titleProduct">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <span>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <ion-toggle disabled></ion-toggle>
+        </ion-col>
+        <!-- Distancia correcta hacia la pared -->
+        <ion-col size="12">
+          <span class="titleProduct">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <span>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <ion-toggle disabled></ion-toggle>
+        </ion-col>
+        <!-- Conexiones eléctricas -->
+        <ion-col size="12">
+          <span class="titleProduct">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <span>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <ion-toggle disabled></ion-toggle>
+        </ion-col>
+        <!-- Luminarias -->
+        <ion-col size="12">
+          <span class="titleProduct">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <span>
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </span>
+          <br>
+          <ion-toggle disabled></ion-toggle>
+        </ion-col>
+      </ion-row>
+      <br><br><br>
+    </ion-grid>
+  </ion-content>
+  <ion-footer *ngIf="activeData === false" no-border>
+    <ion-grid>
+      <!-- footer boton -->
+      <ion-row size="12" class="footer">
+        <ion-col size="3" offset="8">
+          <ion-button shape="round" color="danger" expand="full">
+            <ion-skeleton-text animated width="10%"></ion-skeleton-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>
+</ion-app>
