@@ -19,7 +19,7 @@
         </ion-col>
       </ion-row>
       <!-- titulo de empresa -->
-      <ion-row size="12" *ngIf="user" >
+      <ion-row size="12" *ngIf="user">
         <ion-col size="4">
           <h5 class="subtitle-negro">SUCURSAL {{user.branchName}}</h5>
         </ion-col>
@@ -42,7 +42,7 @@
                 <ion-row>
                   <ion-col size="1" class="ion-align-self-center">
                     <div>
-                      <img src="./assets/icon/skeleton-circle.png" alt="" />
+                      <img class="img-sucursal" src="./assets/icon/sucursal.png" alt="" />
                     </div>
                   </ion-col>
                   <ion-col size="3" class="ion-align-self-center">
@@ -96,14 +96,14 @@
             </ion-item>
             <!-- **************Opciones de lista*************++ -->
             <ion-item-options side="end">
+              <!-- solicitado -->
               <ion-item-option color="warning" (click)="addTransfer(0, item.branchId, 1, item.name)">
-                <!-- solicitado -->
                 <ion-icon slot="icon-only" src="./assets/icon/icon_recibir.svg"></ion-icon>
               </ion-item-option>
-              <ion-item-option color="success" (click)="addTransfer(0, item.branchId, 2, item.name)">
-                <!--transferido  -->
+              <!--transferido  -->
+              <!-- <ion-item-option color="success" (click)="addTransfer(0, item.branchId, 2, item.name)">
                 <ion-icon slot="icon-only" src="./assets/icon/icon_transnferir.svg"></ion-icon>
-              </ion-item-option>
+              </ion-item-option> -->
             </ion-item-options>
           </ion-item-sliding>
         </ion-row>

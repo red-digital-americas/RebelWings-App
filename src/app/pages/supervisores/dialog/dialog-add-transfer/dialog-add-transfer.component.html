@@ -13,30 +13,39 @@
           </h4>
         *ngIf="idPackage !== 0" -->
           <h4 *ngIf="type === 1" class="subtitle-negro">
-            <b> HACER UNA SOLICITUD </b>
+            <b>SOLICITUD DE PRODUCTO </b>
           </h4>
           <h4 *ngIf="type === 2" class="subtitle-negro">
-            <b> HACER UNA TRANSFERENCIA </b>
+            <b>TRANSFERENCIA DE PRODUCTO </b>
           </h4>
         </div>
       </ion-col>
       <ion-col size="1" class="ion-align-self-center">
         <img src="./assets/icon/ilustracion_transferencias.png" alt="" />
       </ion-col>
-      <ion-col size="11" class="ion-align-self-center">
+      <ion-col size="8" class="ion-align-self-center">
         <div *ngIf="idRegister === 0">
           <h4 class="subtitle-negro">
-          De Sucursal {{ nameSucursal }}
+            De Sucursal {{ nameSucursal }}
           </h4>
           &nbsp;
           <span> A {{this.navParams.data.nameSucursal}}</span>
         </div>
         <div *ngIf="idRegister !== 0">
           <h4 class="subtitle-negro">
-          De Sucursal {{ fromBranch }}
+            De Sucursal {{ fromBranch }}
           </h4>
           &nbsp;
           <span> A {{toBranch}}</span>
+        </div>
+      </ion-col>
+      <ion-col size="3" class="ion-align-self-end">
+        <div *ngIf="idRegister !== 0" class="align-text-end">
+          <span class="">
+            {{ data.date | date: "dd MMM yyy" }}
+          </span>
+          <br>
+          <span> {{data.time }}</span>
         </div>
       </ion-col>
     </ion-row>
@@ -44,7 +53,8 @@
   <ion-content fullscreen="false" class="ion-padding">
     <ion-grid>
       <ion-row>
-        <ion-col size="12">
+        <!-- status -->
+        <ion-col size="12" *ngIf="idRegister !== 0">
           <ion-list>
             <ion-label> Estatus *</ion-label>
             <ion-card class="closed">
@@ -60,7 +70,7 @@
           </ion-list>
           <ion-label style="color: #ad182d; font-size: 12px" *ngIf="activeStatus">Campo requerido</ion-label>
         </ion-col>
-        <ion-col size="6">
+        <!-- <ion-col size="6">
           <ion-label>Fecha *</ion-label>
           <ion-card class="ion-align-self-center">
             <ion-datetime [(ngModel)]="data.date" (focus)="activeDate = false" required type="date" [value]="today"
@@ -68,18 +78,15 @@
               monthShortNames="ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic"></ion-datetime>
           </ion-card>
           <ion-label style="color: #ad182d; font-size: 12px" *ngIf="activeDate">Campo requerido</ion-label>
-        </ion-col>
-        <ion-col size="6">
+        </ion-col> -->
+        <!-- <ion-col size="6">
           <ion-label>Hora</ion-label>
           <ion-card class="ion-align-self-center">
             <ion-input (focus)="activeTime = false" required value="23:59" type="time" [(ngModel)]="data.time">
             </ion-input>
-
-            <!-- <ion-datetime (focus)="activeTime = false" required value="23:59" type="time" [(ngModel)]="data.time"
-              displayFormat="HH:mm"></ion-datetime> -->
           </ion-card>
           <ion-label style="color: #ad182d; font-size: 12px" *ngIf="activeTime">Campo requerido</ion-label>
-        </ion-col>
+        </ion-col> -->
 
         <!-- search  solo se muestra si el id es 0 -->
         <ion-col size="12" *ngIf="idRegister === 0">
@@ -105,8 +112,9 @@
         <!-- search  si el id es diferente de 0 -->
         <ion-col size="12" *ngIf="idRegister !== 0 && visible === true">
           <ion-label floating>Producto *</ion-label>
-          <ion-card class="closed">
-            <ion-list>
+          <ion-card class="closed padding-1">
+            <span>{{data.product}}</span>
+            <!-- <ion-list>
               <ion-list-header>
                 <ion-searchbar placeholder="Buscar" [(ngModel)]="search" (keyup)="getCatalog(search)"></ion-searchbar>
               </ion-list-header>
@@ -119,9 +127,9 @@
                   </ion-select-option>
                 </ion-select>
               </ion-item>
-            </ion-list>
+            </ion-list> -->
           </ion-card>
-          <ion-label style="color: #ad182d; font-size: 12px" *ngIf="activeProductId">Campo requerido</ion-label>
+          <!-- <ion-label style="color: #ad182d; font-size: 12px" *ngIf="activeProductId">Campo requerido</ion-label> -->
         </ion-col>
 
         <!-- El codigo solo se solicita cuando es un request osea cuando se hace la transferencia -->

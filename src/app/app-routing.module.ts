@@ -40,7 +40,6 @@ const routes: Routes = [
   { path: 'historial-ticket/:id', component: HistoryTicketComponent },
   { path: 'editar-ticket/:branch/:id', component: OpenTicketComponent },
 
-
 ];
 export const APP_ROUTING = RouterModule.forRoot(routes);
 

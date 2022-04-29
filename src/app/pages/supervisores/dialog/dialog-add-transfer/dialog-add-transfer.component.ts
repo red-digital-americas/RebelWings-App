@@ -223,40 +223,31 @@ export class DialogAddTransferComponent implements OnInit {
   }
 
   validateSave() {
-    if (
-      this.data.status === undefined ||
-      this.data.status === null
-    ) {
-      this.activeStatus = true;
-    } else {
-      this.activeStatus = false;
-    }
-    if (
-      this.data.date === undefined ||
-      this.data.date === null
-    ) {
-      this.activeDate = true;
-    } else {
-      this.activeDate = false;
-    }
-    if (
-      this.data.time === '' ||
-      this.data.time === undefined ||
-      this.data.time === null
-    ) {
-      this.activeTime = true;
-    } else {
-      this.activeTime = false;
-    }
-    if (
-      this.data.time === '' ||
-      this.data.time === undefined ||
-      this.data.time === null
-    ) {
-      this.activeTime = true;
-    } else {
-      this.activeTime = false;
-    }
+    // if (
+    //   this.data.status === undefined ||
+    //   this.data.status === null
+    // ) {
+    //   this.activeStatus = true;
+    // } else {
+    //   this.activeStatus = false;
+    // }
+    // if (
+    //   this.data.date === undefined ||
+    //   this.data.date === null
+    // ) {
+    //   this.activeDate = true;
+    // } else {
+    //   this.activeDate = false;
+    // }
+    // if (
+    //   this.data.time === '' ||
+    //   this.data.time === undefined ||
+    //   this.data.time === null
+    // ) {
+    //   this.activeTime = true;
+    // } else {
+    //   this.activeTime = false;
+    // }
     if (
       this.data.productId === undefined ||
       this.data.productId === null
@@ -284,10 +275,9 @@ export class DialogAddTransferComponent implements OnInit {
       this.activeComment = false;
     }
     if (
-      this.data.status === undefined ||
-      this.data.date === undefined ||
-      this.data.time === '' ||
-      this.data.time === undefined ||
+      // this.data.status === undefined ||
+      // this.data.date === undefined ||
+      // this.data.time === '' ||
       this.data.productId === undefined ||
       this.data.amount === '' ||
       this.data.amount === undefined ||
@@ -308,14 +298,17 @@ export class DialogAddTransferComponent implements OnInit {
     }
   }
   getFormatTimeStamp() {
+    let time = '';
+    time = `${this.today.getHours()}:${this.today.getMinutes()}:00`;
+    this.data.time = time;
     // this.data.time = new Date(this.data.time);
     // "15:55"
-    if (this.data.time.length === 5) {
-      console.log('time', this.data.time);
-      let datetime = '';
-      datetime = `${this.data.time}:00`;
-      this.data.time = datetime;
-    }
+    // if (this.data.time.length === 5) {
+    //   console.log('time', this.data.time);
+    //   let datetime = '';
+    //   datetime = `${this.data.time}:00`;
+    //   this.data.time = datetime;
+    // }
     //   '' +
     //   this.data.time.getHours() +
     //   ':' +
@@ -327,7 +320,10 @@ export class DialogAddTransferComponent implements OnInit {
   //  HACER UNA TRANSFERENCIA/SOLICITAR UNA TRANSFERENCIA
   addTransference() {
     this.getFormatTimeStamp();
-    this.data.type = this.type;
+    // ya que solo se pueden crear solicitudes id 1 entonces el status y el type es id 1
+    this.data.type = 1;
+    this.data.status = 1;
+    this.data.date = this.today;
     this.data.fromBranchId = this.user.branchId;
     this.data.toBranchId = this.branchId;
     this.data.createdBy = this.user.id;
@@ -357,10 +353,10 @@ export class DialogAddTransferComponent implements OnInit {
   }
   updateTransference() {
     // si la variable time se modifico se agrega formato
-    if (this.data.time !== this.timestamp) {
-      this.getFormatTimeStamp();
-    }
-    this.data.type = 1;
+    // if (this.data.time !== this.timestamp) {
+    //   this.getFormatTimeStamp();
+    // }
+    this.data.type = this.data.status;
     this.data.fromBranchId = this.user.branchId;
     this.data.toBranchId = this.branchId;
     this.data.updatedBy = this.user.id;
