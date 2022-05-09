@@ -4,6 +4,7 @@ import { ServiceGeneralService } from 'src/app/core/services/service-general/ser
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { LogoutComponent } from 'src/app/pages/popover/logout/logout.component';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-centro-control-matutino',
@@ -15,6 +16,7 @@ export class CentroControlMatutinoComponent implements OnInit {
   public user;
   public data: any = [];
   // nombre de sucursal
+  public today = new Date();
   public branchId;
   public nameBranch = '';
   public dataBranch: any[] = [];
@@ -23,6 +25,7 @@ export class CentroControlMatutinoComponent implements OnInit {
     public service: ServiceGeneralService,
     public load: LoaderComponent,
     public popoverCtrl: PopoverController,
+    // public alertController: AlertController,
 
   ) { }
 
@@ -33,6 +36,7 @@ export class CentroControlMatutinoComponent implements OnInit {
     this.branchId = this.user.branchId;
     this.getBranch();
     this.getDataControl();
+    // this.notificationAlarm();
   }
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('userData'));
@@ -50,6 +54,28 @@ export class CentroControlMatutinoComponent implements OnInit {
         }
       });
   }
+
+  // async notificationAlarm(){
+  //   const timeAlarmaIni = '13:00:00';
+  //   const timeAlarmaFin = '12:00:00';
+
+  //   const time = `${this.today.getHours()}:${this.today.getMinutes()}:00`;
+  //   console.log('time', time);
+  //   if( time >= timeAlarmaIni || time <= timeAlarmaFin ){
+
+  //     const alert = await this.alertController.create({
+  //       cssClass: 'my-custom-class',
+  //       header: 'Alerta',
+  //       subHeader: 'Subtitle',
+  //       message: 'Recuerda activar la Alarma, oprime ok para no volver a ver este mensaje',
+  //       buttons: ['OK']
+  //     });
+  //     await alert.present();
+  //     const { role } = await alert.onDidDismiss();
+  //     console.log('onDidDismiss resolved with role', role);
+  //   }
+
+  // }
   return() {
     console.log('return');
     this.router.navigateByUrl('supervisor');

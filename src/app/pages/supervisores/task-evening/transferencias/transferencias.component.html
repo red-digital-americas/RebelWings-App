@@ -33,8 +33,15 @@
   </ion-header>
   <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
     <ion-grid>
-
-      <ion-card *ngFor="let item of data">
+      <ion-row size="12">
+        <ion-col size="12">
+          <ion-searchbar placeholder="Buscar sucursal" [(ngModel)]="search" showCancelButton="focus" animated>
+          </ion-searchbar>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid>
+      <ion-card *ngFor="let item of data | filter:search">
         <ion-row size="12">
           <ion-item-sliding id="item100">
             <ion-item>
@@ -47,7 +54,7 @@
                   </ion-col>
                   <ion-col size="3" class="ion-align-self-center">
                     <div>
-                      <span>Sucursal {{ item.name }}</span>
+                      <span>{{ item.name }}</span>
                     </div>
                   </ion-col>
                   <ion-col size="3" class="ion-align-self-center">

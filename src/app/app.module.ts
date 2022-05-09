@@ -24,8 +24,10 @@ import { LogoutComponent } from './pages/popover/logout/logout.component';
 import { HistoryTicketComponent } from './pages/shared/history-ticket/history-ticket.component';
 import { OpenTicketComponent } from './pages/shared/open-ticket/open-ticket.component';
 import { DialogViewTransferComponent } from './pages/supervisores/dialog/dialog-view-transfer/dialog-view-transfer.component';
+// eslint-disable-next-line max-len
 
 import { APP_ROUTING } from './app-routing.module';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,7 @@ import { APP_ROUTING } from './app-routing.module';
     LogoutComponent,
     HistoryTicketComponent,
     OpenTicketComponent,
-    DialogViewTransferComponent
+    DialogViewTransferComponent,
   ],
   entryComponents: [],
   imports: [
@@ -51,7 +53,8 @@ import { APP_ROUTING } from './app-routing.module';
     FormsModule,
     FilterPipeModule,
     IonicSelectableModule,
-    APP_ROUTING
+    APP_ROUTING,
+    Ng2SearchPipeModule
   ],
   providers: [
     LoaderComponent,

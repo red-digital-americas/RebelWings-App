@@ -20,6 +20,9 @@ export class TransferenciasComponent implements OnInit {
   // nombre de sucursal
   public branchId;
   public nameBranch = '';
+
+  // filtros
+  public search: string;
   constructor(
     public router: Router,
     public modalController: ModalController,

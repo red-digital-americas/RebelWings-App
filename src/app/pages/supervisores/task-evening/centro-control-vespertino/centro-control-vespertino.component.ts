@@ -5,6 +5,8 @@ import { ServiceGeneralService } from 'src/app/core/services/service-general/ser
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import { DialogNotificationComponent } from 'src/app/pages/nav/dialog-notification/dialog-notification.component';
 import { LogoutComponent } from 'src/app/pages/popover/logout/logout.component';
+import { AlertController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-centro-control-vespertino',
@@ -25,9 +27,8 @@ export class CentroControlVespertinoComponent implements OnInit {
   public completeTablAndAlarm = false;
   public progressTablAndAlarm = 0;
   public colorTablAndAlarm;
-
-
-
+  public today = new Date();
+  public countAlarm = 0;
 
   constructor(
     public router: Router,
@@ -35,8 +36,9 @@ export class CentroControlVespertinoComponent implements OnInit {
     public load: LoaderComponent,
     public modalController: ModalController,
     public popoverCtrl: PopoverController,
-
+    public alertController: AlertController,
   ) { }
+
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log('user', this.user);
@@ -46,6 +48,8 @@ export class CentroControlVespertinoComponent implements OnInit {
 
     this.getDataControl();
     this.getNotification();
+    this.notificationAlarm();
+
   }
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('userData'));
@@ -89,7 +93,27 @@ export class CentroControlVespertinoComponent implements OnInit {
     this.router.navigateByUrl('supervisor');
     // window.history.back();
   }
-
+  async notificationAlarm() {
+    const timeAlarmaIni = '12:00:00';
+    const timeAlarmaFin = '13:00:00';
+    if (this.countAlarm === 0) {
+      const time = `${this.today.getHours()}:${this.today.getMinutes()}:00`;
+      console.log('time', time);
+      if (time >= timeAlarmaIni && time <= timeAlarmaFin) {
+        this.countAlarm += 1;
+        const alert = await this.alertController.create({
+          cssClass: 'my-custom-class',
+          header: 'Alerta',
+          message: 'Recuerda activar la Alarma y subir la evidencia correspondiente',
+          buttons: ['OK']
+        });
+        await alert.present();
+        const { role } = await alert.onDidDismiss();
+        console.log('onDidDismiss resolved with role', role);
+        console.log('count alarm', this.countAlarm);
+      }
+    }
+  }
   // get  name sucursal
   getBranch() {
     let branchIdNumber = 0;

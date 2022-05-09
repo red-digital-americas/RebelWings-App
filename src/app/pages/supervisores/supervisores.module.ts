@@ -30,7 +30,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { DatePicker } from '@ionic-native/date-picker/ngx';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { ResguardoTabletAlarmaComponent } from './task-evening/resguardo-tablet-alarma/resguardo-tablet-alarma.component';
-
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { DialogNotificationAlarmComponent } from './dialog/dialog-notification-alarm/dialog-notification-alarm.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { ResguardoTabletAlarmaComponent } from './task-evening/resguardo-tablet-
     AlbaranesComponent,
     DialogAddAlbaranesComponent,
     RemisionesComponent,
-    ResguardoTabletAlarmaComponent
+    ResguardoTabletAlarmaComponent,
+    DialogNotificationAlarmComponent,
   ],
   imports: [
     CommonModule,
@@ -67,6 +69,7 @@ import { ResguardoTabletAlarmaComponent } from './task-evening/resguardo-tablet-
     MatFormFieldModule,
     MatSelectModule,
     IonicSelectableModule,
+    Ng2SearchPipeModule,
   ],
   providers: [DatePicker],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
