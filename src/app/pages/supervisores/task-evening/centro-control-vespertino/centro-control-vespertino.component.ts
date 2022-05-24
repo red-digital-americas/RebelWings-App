@@ -94,8 +94,8 @@ export class CentroControlVespertinoComponent implements OnInit {
     // window.history.back();
   }
   async notificationAlarm() {
-    const timeAlarmaIni = '12:00:00';
-    const timeAlarmaFin = '13:00:00';
+    const timeAlarmaIni = '22:00:00';
+    const timeAlarmaFin = '23:00:00';
     if (this.countAlarm === 0) {
       const time = `${this.today.getHours()}:${this.today.getMinutes()}:00`;
       console.log('time', time);

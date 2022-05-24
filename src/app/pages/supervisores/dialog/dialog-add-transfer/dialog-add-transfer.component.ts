@@ -52,7 +52,7 @@ export class DialogAddTransferComponent implements OnInit {
   public activeComment = false;
   // nombre de sucursal
   public fromBranch = '';
-  public toBranch= '';
+  public toBranch = '';
   public dataBranch: any[] = [];
 
   constructor(
@@ -94,7 +94,7 @@ export class DialogAddTransferComponent implements OnInit {
       this.getTransfer();
     }
   }
-  ngOnInit() { }
+  ngOnInit() {}
 
   getTransfer() {
     this.service
@@ -118,16 +118,18 @@ export class DialogAddTransferComponent implements OnInit {
   }
   // get  name sucursal
   getBranch() {
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
-      if (resp.success) {
-        this.dataBranch = resp.result;
-        console.log('get branch', this.dataBranch);
-        this.getName();
-      }
-    });
+    this.service
+      .serviceGeneralGet('StockChicken/Admin/All-Branch')
+      .subscribe((resp) => {
+        if (resp.success) {
+          this.dataBranch = resp.result;
+          console.log('get branch', this.dataBranch);
+          this.getName();
+        }
+      });
   }
   getName() {
-    this.dataBranch.forEach(element => {
+    this.dataBranch.forEach((element) => {
       if (element.branchId === this.user.branchId) {
         this.nameSucursal = element.branchName;
         this.nameSucursal = this.nameSucursal.toUpperCase();
@@ -136,7 +138,7 @@ export class DialogAddTransferComponent implements OnInit {
     });
   }
   getFomName() {
-    this.dataBranch.forEach(element => {
+    this.dataBranch.forEach((element) => {
       if (element.branchId === this.data.fromBranchId) {
         this.fromBranch = element.branchName;
         this.fromBranch = this.fromBranch.toUpperCase();
@@ -145,7 +147,7 @@ export class DialogAddTransferComponent implements OnInit {
     });
   }
   getToName() {
-    this.dataBranch.forEach(element => {
+    this.dataBranch.forEach((element) => {
       if (element.branchId === this.data.toBranchId) {
         this.toBranch = element.branchName;
         this.toBranch = this.toBranch.toUpperCase();
@@ -153,17 +155,25 @@ export class DialogAddTransferComponent implements OnInit {
       }
     });
   }
-  // trae coincidencias de productos segun su busqueda
+  /*
+  trae coincidencias de productos segun su busqueda
+
+  */
+
   getCatalog(search) {
+    let searchLength = 0;
     console.log('search', search);
     this.selectCatalogs = [];
     if (search.length > 2) {
+      searchLength = search.length - 1;
+      console.log('position', searchLength);
       this.service
         .serviceGeneralGet(`Items/${this.user.branchId}/${search}`)
         .subscribe((resp) => {
           if (resp.success) {
             console.log('get productos', resp);
-            this.selectCatalogs = resp.result[2];
+            this.selectCatalogs = resp.result[searchLength];
+            console.log('value catalogo', this.selectCatalogs);
             this.visible = true;
           }
         });
@@ -248,10 +258,7 @@ export class DialogAddTransferComponent implements OnInit {
     // } else {
     //   this.activeTime = false;
     // }
-    if (
-      this.data.productId === undefined ||
-      this.data.productId === null
-    ) {
+    if (this.data.productId === undefined || this.data.productId === null) {
       this.activeProductId = true;
     } else {
       this.activeProductId = false;
@@ -299,7 +306,23 @@ export class DialogAddTransferComponent implements OnInit {
   }
   getFormatTimeStamp() {
     let time = '';
-    time = `${this.today.getHours()}:${this.today.getMinutes()}:00`;
+    const hour = this.today.getHours();
+    const minute = this.today.getMinutes();
+    let hourString = hour.toString();
+    let minuteString = minute.toString();
+
+    if (hourString.length < 2) {
+      hourString = `0${hourString}`;
+    }
+    if (minuteString.length < 2) {
+      minuteString = `0${minuteString}`;
+    }
+    console.log('hour', hourString);
+    console.log('minute', minuteString);
+    // hour = this.today.getHours();
+    // minute = this.today.getMinutes();
+
+    time = `${hourString}:${minuteString}:00`;
     this.data.time = time;
     // this.data.time = new Date(this.data.time);
     // "15:55"

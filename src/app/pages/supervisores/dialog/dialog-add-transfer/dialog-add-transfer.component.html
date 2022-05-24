@@ -61,7 +61,7 @@
               <ion-item>
                 <ion-label>Estatus</ion-label>
                 <ion-select [(ngModel)]="data.status" (focus)="activeStatus = false" required>
-                  <ion-select-option *ngFor="let item of dataStatus" [value]="item.id">
+                  <ion-select-option *ngFor="let item of dataStatus" [value]="item.id" [disabled]="item.id ===  1" >
                     {{ item.status }}
                   </ion-select-option>
                 </ion-select>
