@@ -197,8 +197,8 @@
             </ion-card>
           </ion-col>
           <!-- -----------STOCK DE POLLO------------ -->
-          <ion-col size="6" *ngIf="data[4]">
-            <!-- aqui se envia el id de sucursal -->
+          <!-- aqui se envia el id de sucursal -->
+          <!-- <ion-col size="6" *ngIf="data[4]">
             <ion-card (click)="stockPollo(user.branch)">
               <ion-card-content>
                 <ion-row size="12">
@@ -234,7 +234,7 @@
                 </ion-row>
               </ion-card-content>
             </ion-card>
-          </ion-col>
+          </ion-col> -->
           <!-- -----------MESAS EN ESPERA------------ -->
           <ion-col size="6" *ngIf="data[3]">
             <!-- aqui se envia el id de sucursal -->
@@ -260,6 +260,7 @@
                         </div>
                       </ion-col>
                       <ion-col size="12">
+                        <br>
                         <span class="title-progress-bar">Nivel de progreso</span>
                         &nbsp;
                         <ion-progress-bar *ngIf="data[3].isComplete === false" color="{{ data[3].color }}" value="0.1">

@@ -33,7 +33,6 @@ import { ResguardoTabletAlarmaComponent } from './task-evening/resguardo-tablet-
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { DialogNotificationAlarmComponent } from './dialog/dialog-notification-alarm/dialog-notification-alarm.component';
 
-
 @NgModule({
   declarations: [
     ScheduleComponent,

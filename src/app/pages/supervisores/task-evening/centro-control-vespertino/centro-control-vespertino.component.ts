@@ -29,6 +29,8 @@ export class CentroControlVespertinoComponent implements OnInit {
   public colorTablAndAlarm;
   public today = new Date();
   public countAlarm = 0;
+  public countVoladoEfectivo = 0;
+
 
   constructor(
     public router: Router,
@@ -49,6 +51,7 @@ export class CentroControlVespertinoComponent implements OnInit {
     this.getDataControl();
     this.getNotification();
     this.notificationAlarm();
+    this.notificationVoladoEfectivo();
 
   }
   ngOnInit() {
@@ -105,12 +108,35 @@ export class CentroControlVespertinoComponent implements OnInit {
           cssClass: 'my-custom-class',
           header: 'Alerta',
           message: 'Recuerda activar la Alarma y subir la evidencia correspondiente',
+          mode: 'ios', //sirve para tomar el diseño de ios
           buttons: ['OK']
         });
         await alert.present();
         const { role } = await alert.onDidDismiss();
         console.log('onDidDismiss resolved with role', role);
         console.log('count alarm', this.countAlarm);
+      }
+    }
+  }
+  async notificationVoladoEfectivo() {
+    const timeAlarmaIni = '15:00:00';
+    const timeAlarmaFin = '17:00:00';
+    if (this.countVoladoEfectivo === 0) {
+      const time = `${this.today.getHours()}:${this.today.getMinutes()}:00`;
+      console.log('time', time);
+      if (time >= timeAlarmaIni && time <= timeAlarmaFin) {
+        this.countVoladoEfectivo += 1;
+        const alert = await this.alertController.create({
+          cssClass: 'my-custom-class',
+          header: 'Realiza el volado de efectivo',
+          message: 'Se activara un cronómetro para identificar en cuánto tiempo se hizo el volado de efectivo.',
+          mode: 'ios', //sirve para tomar el diseño de ios
+          buttons: ['OK']
+        });
+        await alert.present();
+        const { role } = await alert.onDidDismiss();
+        console.log('onDidDismiss resolved with role', role);
+        console.log('count alarm', this.countVoladoEfectivo);
       }
     }
   }
