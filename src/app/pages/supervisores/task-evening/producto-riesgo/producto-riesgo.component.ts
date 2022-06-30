@@ -22,7 +22,7 @@ export class ProductoRiesgoComponent implements OnInit {
   public selectCatalogs: any[] = [];
   // nombre de sucursal
   public branchId;
-  public nameBranch = '';
+  // public nameBranch = '';
   public dataBranch: any[] = [];
   // identificador de nuevo registro
   public newProduct: boolean;
@@ -45,8 +45,8 @@ export class ProductoRiesgoComponent implements OnInit {
     this.idProductoRiesgo = this.routerActive.snapshot.paramMap.get('id');
     console.log('id producto en riesgo ', this.idProductoRiesgo);
     // get nema de sucursal
-    this.branchId = this.user.branchId;
-    this.getBranch();
+    // this.branchId = this.user.branchId;
+    // this.getBranch();
     this.getData();
   }
 
@@ -64,7 +64,7 @@ export class ProductoRiesgoComponent implements OnInit {
         .subscribe((resp) => {
           if (resp.success) {
             console.log('get productos', resp);
-            this.selectCatalogs = resp.result[2];
+            this.selectCatalogs = resp.result[search.length-1];
           }
         });
     } else {
@@ -115,24 +115,24 @@ export class ProductoRiesgoComponent implements OnInit {
       });
   }
   // get  name sucursal
-  getBranch() {
-    let branchIdNumber = 0;
-    branchIdNumber = Number(this.branchId);
-    console.log('branchIdNumber', branchIdNumber);
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
-      if (resp.success) {
-        this.dataBranch = resp.result;
-        console.log('get branch', this.dataBranch);
-        this.dataBranch.forEach(element => {
-          if (element.branchId === branchIdNumber) {
-            this.nameBranch = element.branchName;
-            this.nameBranch = this.nameBranch.toUpperCase();
-            console.log('nombre', this.nameBranch);
-          }
-        });
-      }
-    });
-  }
+  // getBranch() {
+  //   let branchIdNumber = 0;
+  //   branchIdNumber = Number(this.branchId);
+  //   console.log('branchIdNumber', branchIdNumber);
+  //   this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+  //     if (resp.success) {
+  //       this.dataBranch = resp.result;
+  //       console.log('get branch', this.dataBranch);
+  //       this.dataBranch.forEach(element => {
+  //         if (element.branchId === branchIdNumber) {
+  //           this.nameBranch = element.branchName;
+  //           this.nameBranch = this.nameBranch.toUpperCase();
+  //           console.log('nombre', this.nameBranch);
+  //         }
+  //       });
+  //     }
+  //   });
+  // }
 
   formartDate() {
     // 2022-03-11T17:27:00
@@ -155,6 +155,7 @@ export class ProductoRiesgoComponent implements OnInit {
     // this.data.time = datetime;
   }
 
+
   addProductRisk() {
     console.log('push');
 
@@ -165,7 +166,7 @@ export class ProductoRiesgoComponent implements OnInit {
       code: '',
       comment: '',
       createdBy: this.user.id,
-      createdDate: this.createDate,
+      createdDate: this.today,
       updatedBy: this.user.id,
       updatedDate: this.today,
       search: '',
@@ -184,6 +185,7 @@ export class ProductoRiesgoComponent implements OnInit {
     if (this.newProduct === true) {
       this.formartDate();
     } else {
+      // this.formartDateUpdate();
       this.updateProductoRiesgo();
     }
   }

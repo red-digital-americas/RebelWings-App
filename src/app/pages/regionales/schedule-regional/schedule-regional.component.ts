@@ -13,6 +13,9 @@ export class ScheduleRegionalComponent implements OnInit {
   public branchId: string;
   public showHeader = false;
   public dataBranch: any[] = [];
+  public catalogSucursal: any[] = [];
+  public user;
+
   constructor(public platform: Platform, public router: Router, public service: ServiceGeneralService,
     public load: LoaderComponent) { }
 
@@ -22,9 +25,22 @@ export class ScheduleRegionalComponent implements OnInit {
     } else if (this.platform.is('ios')) {
       this.showHeader = true;
     }
-    this.getBranch();
   }
-  ngOnInit() { }
+  ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('userData'));
+    console.log('user', this.user);
+    this.getCatalogSucursal(this.user.stateId);
+   }
+  getCatalogSucursal(id) {
+    this.catalogSucursal = [];
+    console.log('entra', id);
+    this.service.serviceGeneralGet(`User/GetSucursalList?idState=${id}`).subscribe((resp) => {
+      if (resp.success) {
+        this.catalogSucursal = resp.result;
+        console.log(`catalogSucursal ${this.catalogSucursal}`);
+      }
+    });
+  }
   getBranch() {
     this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
       if (resp.success) {

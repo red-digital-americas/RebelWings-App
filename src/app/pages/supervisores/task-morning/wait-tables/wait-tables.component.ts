@@ -73,15 +73,22 @@ export class WaitTablesComponent implements OnInit {
     // 2022-03-11T17:27:00
     console.log('date', this.today);
     let time = '';
+    const hour = this.today.getHours();
+    const minute = this.today.getMinutes();
+    let hourString = hour.toString();
+    let minuteString = minute.toString();
     const date = this.datepipe.transform(this.today, 'yyyy-MM-dd');
-    time =
-      '' +
-      this.today.getHours() +
-      ':' + '00' +
-      // this.today.getMinutes() +
-      ':' +
-      this.today.getSeconds();
-    console.log('format', time);
+
+    if (hourString.length < 2) {
+      hourString = `0${hourString}`;
+    }
+    if (minuteString.length < 2) {
+      minuteString = `0${minuteString}`;
+    }
+
+    console.log('hour', hourString);
+    console.log('minute', minuteString);
+    time = `${hourString}:${minuteString}:00`;
     console.log('date', date);
     this.createDate = `${date}T${time}`;
     console.log('createDate', this.createDate);

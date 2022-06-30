@@ -20,7 +20,7 @@ export class CentroControlVespertinoComponent implements OnInit {
   public dataNotification: any = [];
   // nombre de sucursal
   public branchId;
-  public nameBranch = '';
+  // public nameBranch = '';
   public dataBranch: any[] = [];
   // se juntaron tablet y alarma
   public tabletAlarmaActive = false;
@@ -46,7 +46,7 @@ export class CentroControlVespertinoComponent implements OnInit {
     console.log('user', this.user);
     // obtener el nombre de sucursal
     this.branchId = this.user.branchId;
-    this.getBranch();
+    // this.getBranch();
 
     this.getDataControl();
     this.getNotification();
@@ -141,24 +141,24 @@ export class CentroControlVespertinoComponent implements OnInit {
     }
   }
   // get  name sucursal
-  getBranch() {
-    let branchIdNumber = 0;
-    branchIdNumber = Number(this.branchId);
-    console.log('branchIdNumber', branchIdNumber);
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
-      if (resp.success) {
-        this.dataBranch = resp.result;
-        console.log('get branch', this.dataBranch);
-        this.dataBranch.forEach(element => {
-          if (element.branchId === branchIdNumber) {
-            this.nameBranch = element.branchName;
-            this.nameBranch = this.nameBranch.toUpperCase();
-            console.log('nombre', this.nameBranch);
-          }
-        });
-      }
-    });
-  }
+  // getBranch() {
+  //   let branchIdNumber = 0;
+  //   branchIdNumber = Number(this.branchId);
+  //   console.log('branchIdNumber', branchIdNumber);
+  //   this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+  //     if (resp.success) {
+  //       this.dataBranch = resp.result;
+  //       console.log('get branch', this.dataBranch);
+  //       this.dataBranch.forEach(element => {
+  //         if (element.branchId === branchIdNumber) {
+  //           this.nameBranch = element.branchName;
+  //           this.nameBranch = this.nameBranch.toUpperCase();
+  //           console.log('nombre', this.nameBranch);
+  //         }
+  //       });
+  //     }
+  //   });
+  // }
   //*****************notification*****************************
   async openNotification() {
     // package = 0 es nuevo registos, si es != 0 es update

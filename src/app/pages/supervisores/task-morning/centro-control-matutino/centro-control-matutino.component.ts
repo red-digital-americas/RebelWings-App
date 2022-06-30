@@ -18,7 +18,7 @@ export class CentroControlMatutinoComponent implements OnInit {
   // nombre de sucursal
   public today = new Date();
   public branchId;
-  public nameBranch = '';
+  // public nameBranch = '';
   public dataBranch: any[] = [];
   constructor(
     public router: Router,
@@ -34,7 +34,7 @@ export class CentroControlMatutinoComponent implements OnInit {
     console.log('user', this.user);
     // obtener el nombre de sucursal
     this.branchId = this.user.branchId;
-    this.getBranch();
+    // this.getBranch();
     this.getDataControl();
     // this.notificationAlarm();
   }
@@ -82,24 +82,24 @@ export class CentroControlMatutinoComponent implements OnInit {
     // window.history.back();
   }
   // get  name sucursal
-  getBranch() {
-    let branchIdNumber = 0;
-    branchIdNumber = Number(this.branchId);
-    console.log('branchIdNumber', branchIdNumber);
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
-      if (resp.success) {
-        this.dataBranch = resp.result;
-        console.log('get branch', this.dataBranch);
-        this.dataBranch.forEach(element => {
-          if (element.branchId === branchIdNumber) {
-            this.nameBranch = element.branchName;
-            this.nameBranch = this.nameBranch.toUpperCase();
-            console.log('nombre', this.nameBranch);
-          }
-        });
-      }
-    });
-  }
+  // getBranch() {
+  //   let branchIdNumber = 0;
+  //   branchIdNumber = Number(this.branchId);
+  //   console.log('branchIdNumber', branchIdNumber);
+  //   this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+  //     if (resp.success) {
+  //       this.dataBranch = resp.result;
+  //       console.log('get branch', this.dataBranch);
+  //       this.dataBranch.forEach(element => {
+  //         if (element.branchId === branchIdNumber) {
+  //           this.nameBranch = element.branchName;
+  //           this.nameBranch = this.nameBranch.toUpperCase();
+  //           console.log('nombre', this.nameBranch);
+  //         }
+  //       });
+  //     }
+  //   });
+  // }
   async logout(e: any) {
     const popover = await this.popoverCtrl.create({
       component: LogoutComponent,
