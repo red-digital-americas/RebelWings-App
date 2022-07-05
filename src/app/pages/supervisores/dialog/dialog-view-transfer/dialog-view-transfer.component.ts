@@ -80,7 +80,16 @@ export class DialogViewTransferComponent implements OnInit {
   }
   // get  name sucursal
   getBranch() {
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+    let db;
+    // id 1 cdmx DB2
+    if (this.user.stateId === 1) {
+      db = 'DB2';
+    }
+    // id 2 queretaro DB1
+    else if (this.user.stateId === 2) {
+      db = 'DB1';
+    }
+    this.service.serviceGeneralGet(`StockChicken/Admin/All-Branch?dataBase=${db}`).subscribe(resp => {
       if (resp.success) {
         this.dataBranch = resp.result;
         console.log('get branch', this.dataBranch);

@@ -40,10 +40,11 @@ export class TransferenciasComponent implements OnInit {
     this.getData();
   }
   ngOnInit() { }
+  // Transfer/BranchList/15 ? dataBase = DB2
   getData() {
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('Transfer/BranchList/' + this.user.branchId)
+      .serviceGeneralGet(`Transfer/BranchList/${this.user.branchId}?dataBase=${this.user.dataBase}`)
       .subscribe((resp) => {
         if (resp.success) {
           this.data = resp.result;

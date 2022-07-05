@@ -8,6 +8,8 @@ import {
   PhotoService,
 } from 'src/app/core/services/services/photo.service';
 import { ActionSheetController } from '@ionic/angular';
+import { DatePipe } from '@angular/common';
+
 @Component({
   selector: 'app-resguardo-tablet-alarma',
   templateUrl: './resguardo-tablet-alarma.component.html',
@@ -27,19 +29,18 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
   public disabled = false;
   public fotosTablet;
   public fotosAlarma;
+  public createDate = '';
 
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
-  // toggle para visualizar alarma y tablet
-  public toggTable = false;
-  public toggAlarma = false;
-
   constructor(public router: Router,
     private camera: Camera,
     public routerActive: ActivatedRoute,
     public service: ServiceGeneralService,
     public load: LoaderComponent,
     public actionSheetController: ActionSheetController,
-    public photoService: PhotoService) { }
+    public photoService: PhotoService,
+    public datepipe: DatePipe
+  ) { }
 
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
@@ -60,8 +61,6 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
       this.getDataAlarma();
     }
   }
-
-
   ngOnInit() { }
 
   getDataTablet() {
@@ -257,6 +256,33 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
     });
     await actionSheet.present();
   }
+  formartDate() {
+    // 2022-03-11T17:27:00
+    console.log('date', this.today);
+    let time = '';
+    const hour = this.today.getHours();
+    const minute = this.today.getMinutes();
+    let hourString = hour.toString();
+    let minuteString = minute.toString();
+    const date = this.datepipe.transform(this.today, 'yyyy-MM-dd');
+    if (hourString.length < 2) {
+      hourString = `0${hourString}`;
+    }
+    if (minuteString.length < 2) {
+      minuteString = `0${minuteString}`;
+    }
+    console.log('hour', hourString);
+    console.log('minute', minuteString);
+    time = `${hourString}:${minuteString}:00`;
+    console.log('date', date);
+    this.createDate = `${date}T${time}`;
+    console.log('createDate', this.createDate);
+    this.saveTablet();
+  }
+
+  allSave() {
+    this.formartDate();
+  }
 
   saveTablet() {
     this.disabled = true;
@@ -264,9 +290,7 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
     // esto se pone aqui por que aun no se estrae la data de un get
     this.dataTablet.branchId = this.user.branchId;
     this.dataTablet.updatedBy = this.user.id;
-    this.dataTablet.updatedDate = this.today;
-    console.log('Obj To send => ', this.dataTablet);
-
+    this.dataTablet.updatedDate = this.createDate;
     if (this.idTablet === '0') {
       this.addTablet();
     } else {
@@ -279,9 +303,7 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
     // esto se pone aqui por que aun no se estrae la data de un get
     this.dataAlarma.branchId = this.user.branchId;
     this.dataAlarma.updatedBy = this.user.id;
-    this.dataAlarma.updatedDate = this.today;
-    console.log('Obj To send => ', this.dataAlarma);
-
+    this.dataAlarma.updatedDate = this.createDate;
     if (this.idAlarma === '0') {
       this.addDataAlarma();
     } else {
@@ -290,16 +312,18 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
   }
   addTablet() {
     this.dataTablet.createdBy = this.user.id;
-    this.dataTablet.createdDate = this.today;
+    this.dataTablet.createdDate = this.createDate;
+    console.log('Obj a guardar =>', this.dataTablet);
     this.service
       .serviceGeneralPostWithUrl('TabletSafeKeeping', this.dataTablet)
       .subscribe((data) => {
         if (data.success) {
-          this.load.presentLoading('Guardando..');
-          console.log('data', data);
+          // this.load.presentLoading('Guardando..');
+          console.log('Resp Serv =>', data);
           this.photoService.deleteAllPhoto(this.dataTablet);
-          this.disabled = false;
-          this.router.navigateByUrl('supervisor/control-vespertino');
+          // this.disabled = false;
+          this.saveAlarma();
+          // this.router.navigateByUrl('supervisor/control-vespertino');
         }
       });
   }
@@ -317,21 +341,23 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
-          this.disabled = false;
+          // this.disabled = false;
           this.photoService.deleteAllPhoto(this.dataTablet);
-          this.router.navigateByUrl('supervisor/control-vespertino');
+          // this.router.navigateByUrl('supervisor/control-vespertino');
+          this.saveAlarma();
         }
       });
   }
   addDataAlarma() {
     this.dataAlarma.createdBy = this.user.id;
-    this.dataAlarma.createdDate = this.today;
+    this.dataAlarma.createdDate = this.createDate;
+    console.log('Obj a guardar =>', this.dataAlarma);
     this.service
       .serviceGeneralPostWithUrl('Alarm', this.dataAlarma)
       .subscribe((data) => {
         if (data.success) {
           this.load.presentLoading('Guardando..');
-          console.log('data', data);
+          console.log('Resp Serv =>', data);
           this.photoService.deleteAllPhoto(this.dataAlarma);
           this.disabled = false;
           this.router.navigateByUrl('supervisor/control-vespertino');
@@ -346,10 +372,11 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
         }
       });
     }
+    console.log('Obj a guardar =>', this.dataAlarma);
     this.service.serviceGeneralPut('Alarm', this.dataAlarma).subscribe((data) => {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
-        console.log('data', data);
+        console.log('Resp Serv =>', data);
         this.photoService.deleteAllPhoto(this.dataAlarma);
         this.disabled = false;
         this.router.navigateByUrl('supervisor/control-vespertino');
@@ -362,9 +389,9 @@ class TabletModel {
   branchId: number;
   comment: string;
   createdBy: number;
-  createdDate: Date;
+  createdDate: string;
   updatedBy: number;
-  updatedDate: Date;
+  updatedDate: string;
   photoTabletSageKeepings: PhotoTabletModel[] = [];
 }
 class PhotoTabletModel {
@@ -382,9 +409,9 @@ class AlarmModel {
   branchId: number;
   comment: string;
   createdBy: number;
-  createdDate: Date;
+  createdDate: string;
   updatedBy: number;
-  updatedDate: Date;
+  updatedDate: string;
   photoAlarms: PhotoAlarmModel[] = [];
 }
 class PhotoAlarmModel {

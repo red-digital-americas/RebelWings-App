@@ -8,6 +8,8 @@ import {
   PhotoService,
 } from 'src/app/core/services/services/photo.service';
 import { ActionSheetController } from '@ionic/angular';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-lounge-mounted',
@@ -26,6 +28,8 @@ export class LoungeMountedComponent implements OnInit {
   public fotosSalon;
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
   public activeData = false;
+  public createDate = '';
+
 
 
   constructor(
@@ -35,7 +39,9 @@ export class LoungeMountedComponent implements OnInit {
     public service: ServiceGeneralService,
     public load: LoaderComponent,
     public actionSheetController: ActionSheetController,
-    public photoService: PhotoService
+    public photoService: PhotoService,
+    public datepipe: DatePipe
+
   ) { }
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
@@ -153,6 +159,37 @@ export class LoungeMountedComponent implements OnInit {
     });
     await actionSheet.present();
   }
+  formartDate() {
+    // 2022-03-11T17:27:00
+    console.log('date', this.today);
+    let time = '';
+    const hour = this.today.getHours();
+    const minute = this.today.getMinutes();
+    let hourString = hour.toString();
+    let minuteString = minute.toString();
+    const date = this.datepipe.transform(this.today, 'yyyy-MM-dd');
+
+    if (hourString.length < 2) {
+      hourString = `0${hourString}`;
+    }
+    if (minuteString.length < 2) {
+      minuteString = `0${minuteString}`;
+    }
+
+    console.log('hour', hourString);
+    console.log('minute', minuteString);
+    time = `${hourString}:${minuteString}:00`;
+    console.log('date', date);
+    this.createDate = `${date}T${time}`;
+    console.log('createDate', this.createDate);
+    this.data.updatedBy = this.user.id;
+    this.data.updatedDate = this.createDate;
+    if (this.branchId === '0') {
+      this.addSalon();
+    } else {
+      this.updateSAlon();
+    }
+  }
 
   save() {
     this.disabled = true;
@@ -165,37 +202,35 @@ export class LoungeMountedComponent implements OnInit {
       });
     }
     this.data.branch = this.user.branchId;
-    this.data.updatedBy = this.user.id;
-    this.data.updatedDate = this.today;
-    console.log('Obj To send => ', this.data);
-
-    if (this.branchId === '0') {
-      this.addSalon();
-    } else {
-      this.updateSAlon();
-    }
+    this.formartDate();
+    // if (this.branchId === '0') {
+    // } else {
+    //   this.updateSAlon();
+    // }
   }
   addSalon() {
     this.data.createdBy = this.user.id;
-    this.data.createdDate = this.today;
+    this.data.createdDate = this.createDate;
+    console.log('Obj a guardar =>', this.data);
     this.service
       .serviceGeneralPostWithUrl('ToSetTable', this.data)
       .subscribe((data) => {
         if (data.success) {
           this.load.presentLoading('Guardando..');
-          console.log('data', data);
+          console.log('Resp Serv =>', data);
           this.photoService.deleteAllPhoto(this.data);
           this.router.navigateByUrl('supervisor/control-matutino');
         }
       });
   }
   updateSAlon() {
+    console.log('Obj a guardar =>', this.data);
     this.service
       .serviceGeneralPut('ToSetTable', this.data)
       .subscribe((data) => {
         if (data.success) {
           this.load.presentLoading('Actualizando..');
-          console.log('data', data);
+          console.log('Resp Serv =>', data);
           this.photoService.deleteAllPhoto(this.data);
           this.router.navigateByUrl('supervisor/control-matutino');
           this.disabled = false;
@@ -211,9 +246,9 @@ class SalonDataModel {
   branch: number;
   comment: string;
   createdBy: number;
-  createdDate: Date;
+  createdDate: string;
   updatedBy: number;
-  updatedDate: Date;
+  updatedDate: string;
   photoToSetTables: PhotoTableModel[] = [];
 }
 class PhotoTableModel {

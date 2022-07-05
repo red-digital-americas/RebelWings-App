@@ -56,7 +56,7 @@
         <ion-col size="6" >
           <ion-label>¿Cuántas personas hubo en espera?</ion-label>
           <ion-card class="closed">
-            <ion-input [(ngModel)]="data.howManyTables" type="number" min="0" placeholder="Numero de personas en espera"></ion-input>
+            <ion-input [(ngModel)]="data.numberPeople" type="number" min="0" placeholder="Numero de personas en espera"></ion-input>
           </ion-card>
         </ion-col>
       </ion-row>
@@ -65,7 +65,7 @@
       <ion-row size="12" class="footer">
         <ion-col size="3" offset="8">
           <ion-button
-            [disabled]="(data.howManyTables === undefined || data.howManyTables === null)"
+            [disabled]="(data.numberPeople === undefined || data.numberPeople === null)"
             (click)="save()" shape="round" color="danger" expand="full">
             GUARDAR
           </ion-button>

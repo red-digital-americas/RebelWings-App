@@ -8,6 +8,8 @@ import { ServiceGeneralService } from 'src/app/core/services/service-general/ser
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController } from '@ionic/angular';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-gas-validation',
@@ -22,6 +24,8 @@ export class GasValidationComponent implements OnInit {
   public base64 = 'data:image/jpeg;base64';
   public disabled = false;
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
+  public createDate = '';
+
 
 
   public fotosGas;
@@ -39,7 +43,9 @@ export class GasValidationComponent implements OnInit {
     public photoService: PhotoService,
     public service: ServiceGeneralService,
     public load: LoaderComponent,
-    private camera: Camera
+    private camera: Camera,
+    public datepipe: DatePipe
+
   ) { }
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
@@ -154,6 +160,35 @@ export class GasValidationComponent implements OnInit {
     });
     await actionSheet.present();
   }
+  formartDate() {
+    // 2022-03-11T17:27:00
+    console.log('date', this.today);
+    let time = '';
+    const hour = this.today.getHours();
+    const minute = this.today.getMinutes();
+    let hourString = hour.toString();
+    let minuteString = minute.toString();
+    const date = this.datepipe.transform(this.today, 'yyyy-MM-dd');
+    if (hourString.length < 2) {
+      hourString = `0${hourString}`;
+    }
+    if (minuteString.length < 2) {
+      minuteString = `0${minuteString}`;
+    }
+    console.log('hour', hourString);
+    console.log('minute', minuteString);
+    time = `${hourString}:${minuteString}:00`;
+    console.log('date', date);
+    this.createDate = `${date}T${time}`;
+    console.log('createDate', this.createDate);
+    this.data.updatedBy = this.user.id;
+    this.data.updatedDate = this.createDate;
+    if (this.idGas === '0') {
+      this.addData();
+    } else {
+      this.updateData();
+    }
+  }
   save() {
     this.disabled = true;
     this.fotosGas = [];
@@ -166,38 +201,39 @@ export class GasValidationComponent implements OnInit {
     }
     // esto se pone aqui por que aun no se estrae la data de un get
     this.data.branch = this.user.branchId;
-    this.data.updatedBy = this.user.id;
-    this.data.updatedDate = this.today;
     this.fotosGas = this.photoService.photos;
     console.log('Obj To send => ', this.data);
-    if (this.idGas === '0') {
-      this.addData();
-    } else {
-      this.updateData();
-    }
+    this.formartDate();
+
+    // if (this.idGas === '0') {
+    //   this.formartDate();
+    // } else {
+
+    //   this.updateData();
+    // }
   }
 
   addData() {
     this.data.createdBy = this.user.id;
-    this.data.createdDate = this.today;
-    this.service
-      .serviceGeneralPostWithUrl('ValidationGas', this.data)
-      .subscribe((data) => {
-        if (data.success) {
-          this.load.presentLoading('Guardando..');
-          console.log('data', data);
-          this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('supervisor/control-matutino');
-        }
-      });
+    this.data.createdDate = this.createDate;
+    console.log('Obj a guardar =>', this.data);
+    this.service.serviceGeneralPostWithUrl('ValidationGas', this.data).subscribe((data) => {
+      if (data.success) {
+        this.load.presentLoading('Guardando..');
+        console.log('Resp Serv =>', data);
+        this.photoService.deleteAllPhoto(this.data);
+        this.router.navigateByUrl('supervisor/control-matutino');
+      }
+    });
   }
   updateData() {
+    console.log('Obj a guardar =>', this.data);
     this.service
       .serviceGeneralPut('ValidationGas', this.data)
       .subscribe((data) => {
         if (data.success) {
           this.load.presentLoading('Actualizando..');
-          console.log('data', data);
+          console.log('Resp Serv =>', data);
           this.photoService.deleteAllPhoto(this.data);
           this.router.navigateByUrl('supervisor/control-matutino');
         }
@@ -211,9 +247,9 @@ class GasDataModel {
   amount: number;
   comment: string;
   createdBy: number;
-  createdDate: Date;
+  createdDate: string;
   updatedBy: number;
-  updatedDate: Date;
+  updatedDate: string;
   photoValidationGas: PhotoGasModel[] = [];
 }
 class PhotoGasModel {

@@ -39,7 +39,7 @@
         <ion-label>Abierto</ion-label>
         <ion-label>Cerrado</ion-label>
       </ion-list-header>
-      <ion-item class="center" *ngFor="let item of data">
+      <ion-item class="center" *ngFor="let item of data" (click)="openTicket(item.id)">
         <ion-label (click)="openTicket(item.id)" color="danger">
           <span class="table">{{item.noTicketing}}</span>
         </ion-label>

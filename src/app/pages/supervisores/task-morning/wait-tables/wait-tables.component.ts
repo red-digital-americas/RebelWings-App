@@ -92,37 +92,42 @@ export class WaitTablesComponent implements OnInit {
     console.log('date', date);
     this.createDate = `${date}T${time}`;
     console.log('createDate', this.createDate);
-    this.addData();
+    this.data.updatedBy = this.user.id;
+    this.data.updatedDate = this.createDate;
+    if (this.idTable === '0') {
+      console.log('add data');
+      this.addData();
+    }
+    else {
+      this.updateData();
+    }
 
     // this.data.time = datetime;
   }
 
   save() {
-    this.data.numberPeople = 0;
+    this.data.howManyTables = 0;
     this.data.waitlistTables = true;
     this.data.branch = this.user.branchId;
-    if (this.idTable === '0') {
-      console.log('add data');
-      this.formartDate();
-    }
-    else {
-      this.updateData();
-    }
+    this.formartDate();
+    // if (this.idTable === '0') {
+    //   console.log('add data');
+    //   this.formartDate();
+    // }
+    // else {
+    //   this.updateData();
+    // }
   }
   addData() {
-    console.log('turno', this.turno);
-
     this.data.createdBy = this.user.id;
     this.data.createdDate = this.createDate;
-    this.data.updatedBy = this.user.id;
-    this.data.updatedDate = this.today;
-    console.log('post data', this.data);
+    console.log('Obj a guardar =>', this.data);
     this.service
       .serviceGeneralPostWithUrl('WaitListTable', this.data)
       .subscribe((resp) => {
         if (resp.success) {
           this.load.presentLoading('Guardando..');
-          console.log('data', resp);
+          console.log('Resp Serv =>', resp);
           this.ngOnInit();
           if (this.turno === '1') {
             this.router.navigateByUrl('supervisor/control-matutino');
@@ -134,15 +139,13 @@ export class WaitTablesComponent implements OnInit {
       });
   }
   updateData() {
-    this.data.updatedBy = this.user.id;
-    this.data.updatedDate = this.today;
-    console.log('put data', this.data);
+    console.log('Obj a guardar =>', this.data);
     this.service
       .serviceGeneralPut('WaitListTable', this.data)
       .subscribe((resp) => {
         if (resp.success) {
           this.load.presentLoading('Guardando..');
-          console.log('data', resp);
+          console.log('Resp Serv =>', resp);
           this.ngOnInit();
           if (this.turno === '1') {
             this.router.navigateByUrl('supervisor/control-matutino');
@@ -165,5 +168,5 @@ class WaitTableModel {
   createdBy: number;
   createdDate: string;
   updatedBy: number;
-  updatedDate: Date;
+  updatedDate: string;
 }
