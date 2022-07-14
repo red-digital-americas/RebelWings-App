@@ -32,6 +32,13 @@ import { IonicSelectableModule } from 'ionic-selectable';
 import { ResguardoTabletAlarmaComponent } from './task-evening/resguardo-tablet-alarma/resguardo-tablet-alarma.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { DialogNotificationAlarmComponent } from './dialog/dialog-notification-alarm/dialog-notification-alarm.component';
+import { DialogUpdateStockPolloComponent } from './dialog/dialog-update-stock-pollo/dialog-update-stock-pollo.component';
+
+import { FlatpickrModule } from 'angularx-flatpickr';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -59,6 +66,7 @@ import { DialogNotificationAlarmComponent } from './dialog/dialog-notification-a
     RemisionesComponent,
     ResguardoTabletAlarmaComponent,
     DialogNotificationAlarmComponent,
+    DialogUpdateStockPolloComponent,
   ],
   imports: [
     CommonModule,
@@ -69,6 +77,12 @@ import { DialogNotificationAlarmComponent } from './dialog/dialog-notification-a
     MatSelectModule,
     IonicSelectableModule,
     Ng2SearchPipeModule,
+    NgbModalModule,
+    FlatpickrModule.forRoot(),
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   providers: [DatePicker],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -5,28 +5,20 @@
         <ion-col>
           <div>
             <p (click)="return()" class="ion-align-items-start return">
-              < REGRESAR
-            </p>
+              < REGRESAR </p>
           </div>
         </ion-col>
       </ion-row>
       <ion-row size="12">
         <ion-col size="1">
-          <img
-            src="./assets/icon/ilustracion_remisiones.png"
-            alt="Validaccion de assistencia"
-          />
+          <img src="./assets/icon/ilustracion_remisiones.png" alt="Validaccion de assistencia" />
         </ion-col>
         <ion-col size="11" class="ion-align-self-center">
-          <h3 class="title">REMISIONES</h3>
+          <h3 class="title-rem">CALENDARIO</h3>
         </ion-col>
       </ion-row>
-    </ion-grid>
-  </ion-header>
-  <ion-content  fullscreen="false" class="ion-padding">
-    <ion-grid>
       <!-- titulo de empresa -->
-      <ion-row size="12" *ngIf="user" >
+      <ion-row size="12" *ngIf="user">
         <ion-col size="4">
           <h5 class="subtitle-negro">SUCURSAL {{user.branchName}}</h5>
         </ion-col>
@@ -36,37 +28,201 @@
           </span>
         </ion-col>
       </ion-row>
-
-      <ion-card *ngIf="swiremi === false" >
-        <ion-row size="12">
-          <ion-item-sliding id="item100">
-            <ion-item>
-              <ion-grid>
-                <ion-row>
-                  <ion-col size="1" class="ion-align-self-center">
-                    <div>
-                      <img src="./assets/icon/ilustracion_remisiones.png" alt="" />
-                    </div>
-                  </ion-col>
-                  <ion-col size="1" class="ion-align-self-center">
-                    <div>
-                      <span><b>0</b></span>
-                    </div>
-                  </ion-col>
-                  <ion-col size="10" class="ion-align-self-center">
-                    <div>
-                      <span>Documentos en sistema por revisar</span>
-                    </div>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-item>
-          </ion-item-sliding>
-        </ion-row>
-      </ion-card>
     </ion-grid>
-  </ion-content>
-  <!----------------------------------------------------------------->
-  <!-- -----------------------skeleton-text-------------------------->
+  </ion-header>
+  <ion-content fullscreen="false" class="ion-padding">
+    <ion-grid size="12" class="text-center mb-5">
+      <div class="row text-center">
+        <div class=" header_calendar">
+          <div style="text-align: initial; margin: auto 0 auto 15px;">
+            <div class="btn-group">
+              <div id="month" class="btn  color_button" (click)="[setView(calendarView.Month), colorBtn('month')]"
+                [class.active]="view === calendarView.Month" style="cursor: pointer;">
+                Mes
+              </div>
+              <div id="week" class="btn  color_button" (click)="[setView(calendarView.Week), colorBtn('week') ]"
+                [class.active]="view === calendarView.Week" style="cursor: pointer;">
+                Semana
+              </div>
+              <div id="day" class="btn  color_button" (click)="[setView(calendarView.Day), colorBtn('day')]"
+                [class.active]="view === calendarView.Day" style="cursor: pointer;">
+                Dia
+              </div>
+            </div>
+          </div>
 
+
+
+          <div style="display: flex; margin: auto;">
+            <div mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+              (viewDateChange)="closeOpenMonthViewDay()">
+              <span>
+                <ion-icon name="chevron-back-outline" size="large" style="color:#d0122d;"></ion-icon>
+              </span>
+              <!-- <mat-icon style="color:#d0122d;" class="browser">arrow_back_ios</mat-icon> -->
+            </div>
+
+            <span class="text-date">{{ viewDate | date: 'EEEE, dd MMM yyy' }}</span>
+
+            <div mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">
+              <ion-icon name="chevron-forward-outline" size="large" style="color:#d0122d;"></ion-icon>
+            </div>
+          </div>
+
+          <div style="text-align: end; margin-right: 15px;">
+            <ul style="list-style:none">
+              <li class="time">
+                <div class="circuloMorning"></div>
+                Pedido
+              </li>
+              <li class="time">
+                <div class="circuloEntrega"></div>
+                Entrega
+              </li>
+              <li class="time">
+                <div class="circuloafternoon"></div>
+                En validación
+              </li>
+              <li class="time">
+                <div class="circuloMidday"></div>
+                En Proceso
+              </li>
+
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <ng-template #customCellTemplate let-day="day" let-locale="locale">
+        <div class="cal-cell-top">
+          <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
+          <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+        </div>
+        <div class="cell-totals">
+          <span *ngFor="let group of day.eventGroups" class="badge badge-{{ group[0] }}">
+            {{ group[1].length }}
+          </span>
+        </div>
+      </ng-template>
+
+      <ng-template #customEventTemplate let-weekEvent="weekEvent" let-tooltipPlacement="tooltipPlacement"
+        let-eventClicked="eventClicked" let-tooltipTemplate="tooltipTemplate"
+        let-tooltipAppendToBody="tooltipAppendToBody" let-tooltipDisabled="tooltipDisabled"
+        let-tooltipDelay="tooltipDelay" let-column="column">
+        <ng-template #groupedEventsTemplate>
+          <div style="min-width: 150px">
+            <div *ngFor="let event of weekEvent.event.meta.groupedEvents">
+              <mwl-calendar-event-actions [event]="event">
+              </mwl-calendar-event-actions>
+              &ngsp;
+              <mwl-calendar-event-title [event]="event" view="week">
+              </mwl-calendar-event-title>
+            </div>
+          </div>
+        </ng-template>
+        <!-- [ngbPopover]="groupedEventsTemplate" [disablePopover]="!weekEvent.event.meta.groupedEvents" -->
+        <!-- <div class="cal-event" [ngStyle]="{
+            backgroundColor: weekEvent.event.color?.primary,
+            borderColor: weekEvent.event.color?.primary
+          }" [mwlCalendarTooltip]="
+                !tooltipDisabled && !weekEvent.event.meta.groupedEvents
+                  ? (weekEvent.event.title
+                    | calendarEventTitle: 'weekTooltip':weekEvent.event)
+                  : ''
+              " [tooltipPlacement]="tooltipPlacement" [tooltipEvent]="weekEvent.event"
+          [tooltipTemplate]="tooltipTemplate" [tooltipAppendToBody]="tooltipAppendToBody" [tooltipDelay]="tooltipDelay"
+          (mwlClick)="eventClicked.emit()">
+          <ng-container *ngIf="!weekEvent.event.meta.groupedEvents">
+            <mwl-calendar-event-actions [event]="weekEvent.event">
+            </mwl-calendar-event-actions>
+            &ngsp;
+          </ng-container>
+          <mwl-calendar-event-title [event]="weekEvent.event" view="week">
+          </mwl-calendar-event-title>
+        </div> -->
+      </ng-template>
+
+      <div [ngSwitch]="view">
+
+        <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events"
+          [cellTemplate]="customCellTemplate" (eventTimesChanged)="eventTimesChanged($event)"
+          [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day, $event.day)"
+          (eventClicked)="handleEvent('Clicked', $event.event)">
+        </mwl-calendar-month-view>
+
+        <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events"
+          [eventTemplate]="customEventTemplate">
+        </mwl-calendar-week-view>
+
+        <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events"
+          [eventTemplate]="customEventTemplate">
+        </mwl-calendar-day-view>
+      </div>
+    </ion-grid>
+    <ng-template #modalContent let-close="close">
+      <div class="modal-header">
+        <span class="modal-titleC">Detalle de {{ modalData?.event.nombre }} </span>
+        <button type="button" class="closeBoton" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="my-2 sucursalModal ion-align-self-center">
+          <img class="sucursalImg" src="./assets/icon/sucursal.png" alt="Validaccion de assistencia" />
+          Sucursal {{modalData?.event.sucursalName}}
+        </div>
+        <div class="mb-2 ">
+          <span class="proveedorModal">
+            <b>
+              Proveedor:
+            </b>
+            {{ modalData?.event.title }}
+          </span>
+        </div>
+        <div class="mb-2 ">
+          <ion-row size="12">
+            <ion-col size="6" class="ion-align-self-center">
+              <span>Fecha: {{modalData?.event.start | date : "dd MMM yyy"}}</span>
+
+            </ion-col>
+            <ion-col size="6" class="ion-align-self-center">
+              <span>Hora: {{modalData?.event.start | date: "shortTime"}}</span>
+            </ion-col>
+
+          </ion-row>
+        </div>
+        <div class="mb-2 ">
+          <span class="proveedorModal">
+            <b>
+              Status:
+            </b>
+            {{modalData?.event.statusName }}
+          </span>
+        </div>
+        <div>
+          <div>
+            <ion-row size="12">
+              <ion-col size="12" class="ion-align-self-center">
+                <ion-label>Comentario</ion-label>
+                <ion-card>
+                  <ion-textarea [(ngModel)]="modalData?.event.coment" rows="6" cols="20">
+                  </ion-textarea>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="close()">
+          Cerrar
+        </button>
+        <button type="button" class="btn btn-warning" (click)="[guardarComent(modalData), close()]">
+          Guardar
+        </button>
+      </div>
+    </ng-template>
+
+  </ion-content>
 </ion-app>

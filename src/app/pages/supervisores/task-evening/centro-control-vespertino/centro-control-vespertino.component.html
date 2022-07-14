@@ -132,7 +132,7 @@
                     <ion-row size="12">
                       <ion-col size="12">
                         <div>
-                          <h3 class="title-tareas">REMISIONES</h3>
+                          <h3 class="title-tareas"> CALENDARIO </h3>
                         </div>
                       </ion-col>
                       <ion-col size="12">
@@ -209,8 +209,7 @@
             </ion-card>
           </ion-col>
           <!-- -----------ALBARANES------------ -->
-          <ion-col size="6" *ngIf="data[10]">
-            <!-- aqui se envia el id de sucursal -->
+          <!-- <ion-col size="6" *ngIf="data[10]">
             <ion-card (click)="albaranes(user.branchId)">
               <ion-card-content>
                 <ion-row size="12">
@@ -250,7 +249,7 @@
                 </ion-row>
               </ion-card-content>
             </ion-card>
-          </ion-col>
+          </ion-col> -->
           <!-- -----------TRANSFERENCIAS------------ -->
           <ion-col size="6" *ngIf="data[9]">
             <!-- aqui se envia el id de sucursal -->
@@ -314,7 +313,8 @@
           <!-- *ngIf="data[3]" -->
           <ion-col size="6" *ngIf="data[8]">
             <!-- aqui se envia el id de sucursal -->
-            <ion-card (click)="voladoEfectivo(data[8].id)">
+            <!-- data[8].id -->
+            <ion-card (click)="voladoEfectivo(0)">
               <ion-card-content>
                 <ion-row size="12">
                   <ion-col size="3" class="ion-align-self-center">

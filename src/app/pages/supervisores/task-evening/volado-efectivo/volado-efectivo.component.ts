@@ -34,8 +34,7 @@ export class VoladoEfectivoComponent implements OnInit {
   public nameBranch = '';
   public dataBranch: any[] = [];
   public createDate = '';
-
-
+  public voladoEfectivo;
 
   constructor(
     public router: Router,
@@ -51,7 +50,8 @@ export class VoladoEfectivoComponent implements OnInit {
 
   ionViewWillEnter() {
     console.log('data', this.data);
-
+    this.voladoEfectivo = JSON.parse(localStorage.getItem('valueVolado'));
+    console.log('nodo volado efectivo', this.voladoEfectivo);
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idEfectivo = this.routerActive.snapshot.paramMap.get('id');
@@ -271,6 +271,8 @@ export class VoladoEfectivoComponent implements OnInit {
   addData() {
     this.data.createdBy = this.user.id;
     this.data.createdDate = this.createDate;
+    this.data.alarmTime = this.voladoEfectivo.time;
+    this.data.elapsedAlarmTime = '';
     console.log('Obj a guardar =>', this.data);
     this.service
       .serviceGeneralPostWithUrl('CashRegisterShortage', this.data)
@@ -278,6 +280,7 @@ export class VoladoEfectivoComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('Resp Serv =>', data);
+          localStorage.removeItem('valueVolado');
           this.photoService.deleteAllPhoto(this.data);
           this.router.navigateByUrl('supervisor/control-vespertino');
           this.disabled = false;
@@ -302,6 +305,7 @@ export class VoladoEfectivoComponent implements OnInit {
           this.load.presentLoading('Actualizando..');
           console.log('Resp Serv =>', data);
           this.photoService.deleteAllPhoto(this.data);
+          localStorage.removeItem('valueVolado');
           this.router.navigateByUrl('supervisor/control-vespertino');
           this.disabled = false;
         } else {
@@ -314,6 +318,8 @@ class EfectivoModel {
   id: number;
   branchId: number;
   amount: number;
+  alarmTime: string;
+  elapsedAlarmTime: string;
   comment: string;
   createdBy: number;
   createdDate: string;
@@ -331,3 +337,4 @@ class PhotoEfectivoModel {
   updatedBy: number;
   updatedDate: Date;
 }
+
