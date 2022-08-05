@@ -91,9 +91,6 @@ export class SalesExpectationComponent implements OnInit {
       });
   }
   save(item) {
-    // StockChicken/AddRegularizate?codArticulo=173&codAlmacen=01&cantidad=20&dataBase=DB1
-
-    // StockChicken/AddRegularizate?codArticulo=${item.codarticulo}&codAlmacen=${item.codalmacen}&cantidad=${item.cantidad}&dataBase=${this.user.dataBase}
     this.service
       .serviceGeneralPostWithUrl(`StockChicken/AddRegularizate?codArticulo=${item.codarticulo}&codAlmacen=${item.codalmacen}&cantidad=${item.cantidad}&dataBase=${this.user.dataBase}`, ``)
       .subscribe((resp) => {
@@ -119,7 +116,7 @@ export class SalesExpectationComponent implements OnInit {
         console.log('validar', respValidar);
         if (resp.success) {
           // stock.diferencia
-          stock.diferencia =respValidar.message;
+          stock.diferencia = respValidar.message;
           this.openDialogValidarStock(stock);
           console.log('new valor permitida', stock);
         }
@@ -133,7 +130,7 @@ export class SalesExpectationComponent implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Diferencia de stock',
-      subHeader: `De: ${nodo.diferencia}`,
+      // subHeader: `De: ${nodo.diferencia}`,
       message: 'Hay una diferencia entre el sistema de Gestión de Restaurantes e ICG <br> ¿Estás seguro que quieres actualizar el sistema? Se actualizarán el Stock de tu sucursal y esta acción no puede ser deshecha.',
       mode: 'ios', //sirve para tomar el diseño de ios
       buttons: [
