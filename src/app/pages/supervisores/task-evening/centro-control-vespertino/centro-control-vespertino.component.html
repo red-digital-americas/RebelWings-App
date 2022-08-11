@@ -2,24 +2,24 @@
   <ion-header color="dark" class="ion-border ion-padding">
     <ion-grid>
       <ion-row size="12">
-        
+
         <ion-col size="4" class="ion-align-items-end">
-          <ion-row size="12"  class="align-center-text">
-           <ion-col size="4">
+          <ion-row size="12" class="align-center-text">
+            <ion-col size="4">
               <div>
-               <img style="border-radius: 5%" src="./assets/RW_LogoWEB.png" alt="" />
+                <img style="border-radius: 5%" src="./assets/RW_LogoWEB.png" alt="" />
               </div>
-           </ion-col>
-           <ion-col size="8">
-             <div>
-               <span class="ion-align-items-start color-text-white-c">SUPERVISOR</span>
-             </div>
+            </ion-col>
+            <ion-col size="8">
+              <div>
+                <span class="ion-align-items-start color-text-white-c">SUPERVISOR</span>
+              </div>
             </ion-col>
           </ion-row>
         </ion-col>
 
         <ion-col size="4"></ion-col>
-        
+
         <ion-col size="2" class="ion-align-items-end">
           <ion-row size="12" class="align-center-text">
             <ion-col size="4">
@@ -38,7 +38,7 @@
         </ion-col>
         <ion-col size="1" class="ion-align-items-end">
           <div class="align-end-text">
-            <ion-icon  style="color: white" name="notifications" class="ion-icon" (click)="openNotification()" >
+            <ion-icon style="color: white" name="notifications" class="ion-icon" (click)="openNotification()">
             </ion-icon>
             <ion-badge *ngIf="dataNotification" style="color: #ffce00" class="ion-badge">{{
               dataNotification.length }}</ion-badge>
@@ -88,7 +88,7 @@
           <!-- -----------asistencias ---------------->
           <ion-col size="6" *ngIf="data[0]">
             <ion-card>
-            <!-- <ion-card (click)="validacionAsistencia()"> -->
+              <!-- <ion-card (click)="validacionAsistencia()"> -->
               <ion-card-content>
                 <ion-row size="12">
                   <ion-col size="3" class="ion-align-self-center">
@@ -154,12 +154,10 @@
                       <ion-col size="12">
                         <span class="title-progress-bar">Nivel de progreso</span>
                         &nbsp;
-                        ///COMENTAR [color]="data[1].color"
-                          ///COMENTAR [value]="data[1].percentage"
+
                         <ion-progress-bar color="danger" value="0"></ion-progress-bar>
                         &nbsp;
                         <div class="margin-completado">
-                              ///COMENTAR {{data[1].percentage}} 
                           <span class="title-progress-bar"> 0% completado</span>
                         </div>
                       </ion-col>
@@ -175,7 +173,7 @@
           <ion-col *ngIf="data[1]" size="6">
             <!-- aqui se manda el id de sucursal ya que tiene una lista de registros  -->
             <ion-card>
-            <!-- <ion-card (click)="productoRiesgo(user.branchId)"> -->
+              <!-- <ion-card (click)="productoRiesgo(user.branchId)"> -->
               <ion-card-content>
                 <ion-row size="12">
                   <ion-col size="3" class="ion-align-self-center">
@@ -278,10 +276,10 @@
                       <ion-col size="12">
                         <div>
                           <span>
-                           PIDE O PROPORCIONA PRODUCTO HACIA OTRAS SUCURSALES.
+                            PIDE O PROPORCIONA PRODUCTO HACIA OTRAS SUCURSALES.
                           </span>
                         </div>
-                        
+
                       </ion-col>
                       <!-- 100%
                       *ngIf="data[3].isComplete === true"-->
@@ -389,7 +387,7 @@
                             REPORTA CON UNA FOTO TU RESGUARDO DE PROPINAS.
                           </span>
                         </div>
-                        
+
                       </ion-col>
                       <!-- 100%
                       *ngIf="data[3].isComplete === true"-->
@@ -576,7 +574,7 @@
                       <ion-col size="12">
                         <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                         &nbsp;
-                        <ion-progress-bar  [color]="colorTablAndAlarm" value="{{progressTablAndAlarm}}">
+                        <ion-progress-bar [color]="colorTablAndAlarm" value="{{progressTablAndAlarm}}">
                         </ion-progress-bar>
 
                         &nbsp;
@@ -615,7 +613,7 @@
                             REGISTRA CUANTAS PERONAS TENEMOS EN ESPERA DE 18:00 A 00:00 HORAS.
                           </span>
                         </div>
-                       
+
                       </ion-col>
 
                       <ion-col size="12">
