@@ -15,7 +15,7 @@
           <img src="./assets/icon/ilustracion_pollo_precocido.png" alt="Validaccion de assistencia" />
         </ion-col>
         <ion-col size="11" class="ion-align-self-center">
-          <h3 class="title">POLLO CON PRECOCCIÓN</h3>
+          <h3 class="title">PRECOCCIÓN</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -24,14 +24,23 @@
     <ion-grid>
       <ion-row size="12">
         <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
+          <h5 class="subtitle-negro">{{nameBranch}}</h5>
         </ion-col>
-        <ion-col size="8">
+        <ion-col size="7"></ion-col>
+        <ion-col size="1">
           <span class="date-grey">
-            {{ today | date: "dd MMM yyy" }}
+            {{ today | date: "dd/MM/yyy" }}
           </span>
         </ion-col>
       </ion-row>
+
+      <ion-row size="12">
+        <ion-col size="12">
+          <h5 class="description">REVISA QUE CUENTAS CON SUFICIENTE POLLO PRECOCIDO PARA EL TURNO</h5>
+          &nbsp;
+        </ion-col>
+      </ion-row>
+
     </ion-grid>
 
   </ion-header>
