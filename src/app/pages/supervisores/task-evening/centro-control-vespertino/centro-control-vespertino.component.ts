@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController, PopoverController } from '@ionic/angular';
@@ -6,6 +7,7 @@ import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.comp
 import { DialogNotificationComponent } from 'src/app/pages/nav/dialog-notification/dialog-notification.component';
 import { LogoutComponent } from 'src/app/pages/popover/logout/logout.component';
 import { AlertController } from '@ionic/angular';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -20,15 +22,19 @@ export class CentroControlVespertinoComponent implements OnInit {
   public dataNotification: any = [];
   // nombre de sucursal
   public branchId;
-  public nameBranch = '';
+  // public nameBranch = '';
   public dataBranch: any[] = [];
   // se juntaron tablet y alarma
   public tabletAlarmaActive = false;
   public completeTablAndAlarm = false;
   public progressTablAndAlarm = 0;
   public colorTablAndAlarm;
-  public today = new Date();
+  public today;
   public countAlarm = 0;
+  public countVoladoEfectivo = 0;
+  public valueVolado;
+  public time;
+
 
   constructor(
     public router: Router,
@@ -37,25 +43,37 @@ export class CentroControlVespertinoComponent implements OnInit {
     public modalController: ModalController,
     public popoverCtrl: PopoverController,
     public alertController: AlertController,
+    public datepipe: DatePipe
+
   ) { }
 
   ionViewWillEnter() {
+    console.log('viewwillenter');
+    this.ngOnInit();
+    // this.user = JSON.parse(localStorage.getItem('userData'));
+    // console.log('user', this.user);
+    // // obtener el nombre de sucursal
+    // this.branchId = this.user.branchId;
+    // // this.getBranch();
+
+    // this.getDataControl();
+    // this.getNotification();
+    // this.notificationAlarm();
+    // this.notificationVoladoEfectivo();
+
+  }
+  ngOnInit() {
+    this.today = new Date();
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log('user', this.user);
     // obtener el nombre de sucursal
     this.branchId = this.user.branchId;
-    this.getBranch();
-
     this.getDataControl();
     this.getNotification();
+    this.notificationVoladoEfectivo();
     this.notificationAlarm();
 
-  }
-  ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem('userData'));
-    console.log('user', this.user);
-    this.getDataControl();
-    this.getNotification();
+
   }
   getDataControl() {
     // this.load.presentLoading('Cargando..');
@@ -98,13 +116,14 @@ export class CentroControlVespertinoComponent implements OnInit {
     const timeAlarmaFin = '23:00:00';
     if (this.countAlarm === 0) {
       const time = `${this.today.getHours()}:${this.today.getMinutes()}:00`;
-      console.log('time', time);
+      // console.log('time', time);
       if (time >= timeAlarmaIni && time <= timeAlarmaFin) {
         this.countAlarm += 1;
         const alert = await this.alertController.create({
           cssClass: 'my-custom-class',
           header: 'Alerta',
           message: 'Recuerda activar la Alarma y subir la evidencia correspondiente',
+          mode: 'ios', //sirve para tomar el diseño de ios
           buttons: ['OK']
         });
         await alert.present();
@@ -114,150 +133,191 @@ export class CentroControlVespertinoComponent implements OnInit {
       }
     }
   }
-  // get  name sucursal
-  getBranch() {
-    let branchIdNumber = 0;
-    branchIdNumber = Number(this.branchId);
-    console.log('branchIdNumber', branchIdNumber);
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+  async notificationVoladoEfectivo() {
+    this.valueVolado = [];
+    console.log('date', this.today);
+    let timeTemp = '';
+    const hour = this.today.getHours();
+    const minute = this.today.getMinutes();
+    let hourString = hour.toString();
+    let minuteString = minute.toString();
+    const date = this.datepipe.transform(this.today, 'yyyy-MM-dd');
+    if (hourString.length < 2) {
+      hourString = `0${hourString}`;
+    }
+    if (minuteString.length < 2) {
+      minuteString = `0${minuteString}`;
+    }
+    timeTemp = `${hourString}:${minuteString}:00`;
+    this.time = `${date}T${timeTemp}`;
+    console.log('format date', this.time);
+    this.service.serviceGeneralGet(`CashRegisterShortage/GetCash?id_sucursal=${this.user.branch}&dataBase=${this.user.dataBase}`).subscribe(resp => {
       if (resp.success) {
-        this.dataBranch = resp.result;
-        console.log('get branch', this.dataBranch);
-        this.dataBranch.forEach(element => {
-          if (element.branchId === branchIdNumber) {
-            this.nameBranch = element.branchName;
-            this.nameBranch = this.nameBranch.toUpperCase();
-            console.log('nombre', this.nameBranch);
-          }
-        });
+        // si entra success el volado es mayor a 3000
+        this.valueVolado = resp;
+        this.valueVolado.message = Number(this.valueVolado.message);
+        this.valueVolado.time = this.time;
+        console.log('valor', this.valueVolado);
+        localStorage.setItem('valueVolado', JSON.stringify(this.valueVolado));
+        this.alertVolado();
+      }
+      else {
+
+        // prueba
+        // this.valueVolado = resp;
+        // this.valueVolado.message = 3000;
+        // this.valueVolado.time = this.time;
+        // console.log('valor', this.valueVolado);
+        // localStorage.setItem('valueVolado', JSON.stringify(this.valueVolado));
+        // this.alertVolado();
+        // //
+        // this.valueVolado = resp;
+        // this.valueVolado.time = this.time;
+        console.log('Aun no hay 3mil pesos', this.valueVolado);
+
       }
     });
   }
+  async alertVolado(){
+    if (this.valueVolado.success === true) {
+      const alert = await this.alertController.create({
+        cssClass: 'my-custom-class',
+        header: 'Realiza el volado de efectivo',
+        subHeader: `Por $ ${this.valueVolado.message} MXN`,
+        message: 'Se activara un cronómetro para identificar en cuánto tiempo se hizo el volado de efectivo.',
+        mode: 'ios', //sirve para tomar el diseño de ios
+        buttons: ['OK']
+      });
+      await alert.present();
+      const { role } = await alert.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
+    }
+  }
   //*****************notification*****************************
   async openNotification() {
-    // package = 0 es nuevo registos, si es != 0 es update
-    const modal = await this.modalController.create({
-      component: DialogNotificationComponent,
-      cssClass: 'my-custom-class',
-      swipeToClose: true,
-      componentProps: {
-        id: this.user.branchId, //se envia el id de sucursal
-      },
-    });
-    modal.onDidDismiss().then((data) => {
-      console.log(data);
-      this.ionViewWillEnter();
-    });
-    this.modalController.dismiss();
-    return await modal.present();
-  }
+  // package = 0 es nuevo registos, si es != 0 es update
+  const modal = await this.modalController.create({
+    component: DialogNotificationComponent,
+    cssClass: 'my-custom-class',
+    swipeToClose: true,
+    componentProps: {
+      id: this.user.branchId, //se envia el id de sucursal
+    },
+  });
+  modal.onDidDismiss().then((data) => {
+    console.log(data);
+    this.ionViewWillEnter();
+  });
+  this.modalController.dismiss();
+  return await modal.present();
+}
 
   async logout(e: any) {
-    const popover = await this.popoverCtrl.create({
-      component: LogoutComponent,
-      cssClass: 'my-custom-class',
-      event: e,
-      translucent: true,
-      mode: 'ios', //sirve para tomar el diseño de ios
-      backdropDismiss: true,
+  const popover = await this.popoverCtrl.create({
+    component: LogoutComponent,
+    cssClass: 'my-custom-class',
+    event: e,
+    translucent: true,
+    mode: 'ios', //sirve para tomar el diseño de ios
+    backdropDismiss: true,
+  });
+  return await popover.present();
+
+}
+
+
+validacionAsistencia() {
+  this.router.navigateByUrl('supervisor/validacion-assistencia/2');
+}
+terminarTurno() {
+  this.router.navigateByUrl('supervisor');
+}
+remisiones(id) {
+  if (id === null) {
+    id = 0;
+  }
+  this.router.navigateByUrl('supervisor/remisiones/' + id);
+}
+getNotification() {
+  this.service
+    .serviceGeneralGet('Transfer/Notifications?id=' + this.user.branchId)
+    .subscribe((resp) => {
+      if (resp.success) {
+        this.dataNotification = resp.result;
+        console.log('notificaciones', this.dataNotification);
+      }
     });
-    return await popover.present();
-
+}
+productoRiesgo(id) {
+  console.log('id producto en riesgo', id);
+  if (id === null) {
+    id = 0;
   }
-
-
-  validacionAsistencia() {
-    this.router.navigateByUrl('supervisor/validacion-assistencia/2');
+  this.router.navigateByUrl('supervisor/producto-riesgo/' + id);
+}
+albaranes(id) {
+  if (id === null) {
+    id = 0;
   }
-  terminarTurno() {
-    this.router.navigateByUrl('supervisor');
+  this.router.navigateByUrl('supervisor/albaranes/' + id);
+}
+transferencias(id) {
+  if (id === null) {
+    id = 0;
   }
-  remisiones(id) {
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/remisiones/' + id);
+  this.router.navigateByUrl('supervisor/transferencias/' + id);
+}
+voladoEfectivo(id) {
+  if (id === null) {
+    id = 0;
   }
-  getNotification() {
-    this.service
-      .serviceGeneralGet('Transfer/Notifications?id=' + this.user.branchId)
-      .subscribe((resp) => {
-        if (resp.success) {
-          this.dataNotification = resp.result;
-          console.log('notificaciones', this.dataNotification);
-        }
-      });
+  this.router.navigateByUrl('supervisor/volado-efectivo/' + id);
+}
+resguardoPropina(id) {
+  if (id === null) {
+    id = 0;
   }
-  productoRiesgo(id) {
-    console.log('id producto en riesgo', id);
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/producto-riesgo/' + id);
+  this.router.navigateByUrl('supervisor/resguardo-propina/' + id);
+}
+limpiezaSalonBanos(id) {
+  if (id === null) {
+    id = 0;
   }
-  albaranes(id) {
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/albaranes/' + id);
+  this.router.navigateByUrl('supervisor/limpieza-salon-banos/' + id);
+}
+resguardoTableta(id) {
+  if (id === null) {
+    id = 0;
   }
-  transferencias(id) {
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/transferencias/' + id);
+  this.router.navigateByUrl('supervisor/resguardo-tableta/' + id);
+}
+alarma(id) {
+  if (id === null) {
+    id = 0;
   }
-  voladoEfectivo(id) {
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/volado-efectivo/' + id);
+  this.router.navigateByUrl('supervisor/alarma/' + id);
+}
+tabletAndAlarma(idTablet, idAlarma) {
+  if (idTablet === null) {
+    idTablet = 0;
   }
-  resguardoPropina(id) {
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/resguardo-propina/' + id);
+  if (idAlarma === null) {
+    idAlarma = 0;
   }
-  limpiezaSalonBanos(id) {
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/limpieza-salon-banos/' + id);
+  console.log(`id tablet ${idTablet} id tablet ${idAlarma}`);
+  this.router.navigateByUrl(`supervisor/resguardo-tableta/${idTablet}/alarma/${idAlarma}`);
+}
+mesas(id: number) {
+  if (id === null) {
+    id = 0;
   }
-  resguardoTableta(id) {
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/resguardo-tableta/' + id);
+  this.router.navigateByUrl(`supervisor/mesa-espera/2/${id}`);
+}
+stockPollo(id: number) {
+  if (id === null) {
+    id = 0;
   }
-  alarma(id) {
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/alarma/' + id);
-  }
-  tabletAndAlarma(idTablet, idAlarma) {
-    if (idTablet === null) {
-      idTablet = 0;
-    }
-    if (idAlarma === null) {
-      idAlarma = 0;
-    }
-    console.log(`id tablet ${idTablet} id tablet ${idAlarma}`);
-    this.router.navigateByUrl(`supervisor/resguardo-tableta/${idTablet}/alarma/${idAlarma}`);
-  }
-  mesas(id: number) {
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl(`supervisor/mesa-espera/2/${id}`);
-  }
-  stockPollo(id: number) {
-    if (id === null) {
-      id = 0;
-    }
-    this.router.navigateByUrl('supervisor/expectativa-venta/' + id);
-  }
+  this.router.navigateByUrl('supervisor/expectativa-venta/' + id);
+}
 
 }

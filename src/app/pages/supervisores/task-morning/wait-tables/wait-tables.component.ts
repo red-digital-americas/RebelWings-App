@@ -73,49 +73,61 @@ export class WaitTablesComponent implements OnInit {
     // 2022-03-11T17:27:00
     console.log('date', this.today);
     let time = '';
+    const hour = this.today.getHours();
+    const minute = this.today.getMinutes();
+    let hourString = hour.toString();
+    let minuteString = minute.toString();
     const date = this.datepipe.transform(this.today, 'yyyy-MM-dd');
-    time =
-      '' +
-      this.today.getHours() +
-      ':' + '00' +
-      // this.today.getMinutes() +
-      ':' +
-      this.today.getSeconds();
-    console.log('format', time);
+
+    if (hourString.length < 2) {
+      hourString = `0${hourString}`;
+    }
+    if (minuteString.length < 2) {
+      minuteString = `0${minuteString}`;
+    }
+
+    console.log('hour', hourString);
+    console.log('minute', minuteString);
+    time = `${hourString}:${minuteString}:00`;
     console.log('date', date);
     this.createDate = `${date}T${time}`;
     console.log('createDate', this.createDate);
-    this.addData();
+    this.data.updatedBy = this.user.id;
+    this.data.updatedDate = this.createDate;
+    if (this.idTable === '0') {
+      console.log('add data');
+      this.addData();
+    }
+    else {
+      this.updateData();
+    }
 
     // this.data.time = datetime;
   }
 
   save() {
-    this.data.numberPeople = 0;
+    this.data.howManyTables = 0;
     this.data.waitlistTables = true;
     this.data.branch = this.user.branchId;
-    if (this.idTable === '0') {
-      console.log('add data');
-      this.formartDate();
-    }
-    else {
-      this.updateData();
-    }
+    this.formartDate();
+    // if (this.idTable === '0') {
+    //   console.log('add data');
+    //   this.formartDate();
+    // }
+    // else {
+    //   this.updateData();
+    // }
   }
   addData() {
-    console.log('turno', this.turno);
-
     this.data.createdBy = this.user.id;
     this.data.createdDate = this.createDate;
-    this.data.updatedBy = this.user.id;
-    this.data.updatedDate = this.today;
-    console.log('post data', this.data);
+    console.log('Obj a guardar =>', this.data);
     this.service
       .serviceGeneralPostWithUrl('WaitListTable', this.data)
       .subscribe((resp) => {
         if (resp.success) {
           this.load.presentLoading('Guardando..');
-          console.log('data', resp);
+          console.log('Resp Serv =>', resp);
           this.ngOnInit();
           if (this.turno === '1') {
             this.router.navigateByUrl('supervisor/control-matutino');
@@ -127,15 +139,13 @@ export class WaitTablesComponent implements OnInit {
       });
   }
   updateData() {
-    this.data.updatedBy = this.user.id;
-    this.data.updatedDate = this.today;
-    console.log('put data', this.data);
+    console.log('Obj a guardar =>', this.data);
     this.service
       .serviceGeneralPut('WaitListTable', this.data)
       .subscribe((resp) => {
         if (resp.success) {
           this.load.presentLoading('Guardando..');
-          console.log('data', resp);
+          console.log('Resp Serv =>', resp);
           this.ngOnInit();
           if (this.turno === '1') {
             this.router.navigateByUrl('supervisor/control-matutino');
@@ -158,5 +168,5 @@ class WaitTableModel {
   createdBy: number;
   createdDate: string;
   updatedBy: number;
-  updatedDate: Date;
+  updatedDate: string;
 }

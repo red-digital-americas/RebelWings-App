@@ -50,6 +50,17 @@
         </ion-col>
       </ion-row>
 
+      <ion-row size="12" *ngIf="voladoEfectivo">
+        <ion-col size="8">
+        </ion-col>
+        <ion-col size="4">
+          <span class="valueVolado">
+           Actualmente hay  <b>
+             {{ voladoEfectivo.message | currency}} MXN
+           </b>
+          </span>
+        </ion-col>
+      </ion-row>
       <ion-row size="12">
         <ion-col size="6">
           <ion-label floating>CANTIDAD</ion-label>
@@ -57,7 +68,6 @@
             <ion-input
               [(ngModel)]="data.amount"
               type="number"
-              min="0"
               (focus)="activeAmount = false"
               required
               placeholder="MXN"

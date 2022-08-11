@@ -42,7 +42,7 @@ export class CentroControlComponent implements OnInit {
     this.branchId = this.routerActive.snapshot.paramMap.get(`id`);
     this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
     this.getDataControl(this.task);
-    this.getBranch();
+    this.getBranch(this.user.stateId);
     this.getNotification();
   }
   ngOnInit() { }
@@ -125,17 +125,17 @@ export class CentroControlComponent implements OnInit {
     this.router.navigateByUrl('historial-ticket/' + this.branchId);
   }
   // get  name sucursal
-  getBranch() {
+  getBranch(id) {
     let branchIdNumber = 0;
     branchIdNumber = Number(this.branchId);
     console.log('branchIdNumber', branchIdNumber);
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+    this.service.serviceGeneralGet(`User/GetSucursalList?idState=${id}`).subscribe(resp => {
       if (resp.success) {
         this.dataBranch = resp.result;
         console.log('get branch', this.dataBranch);
         this.dataBranch.forEach(element => {
-          if (element.branchId === branchIdNumber) {
-            this.nameBranch = element.branchName;
+          if (element.idfront === branchIdNumber) {
+            this.nameBranch = element.titulo;
             this.nameBranch = this.nameBranch.toUpperCase();
             console.log('nombre', this.nameBranch);
           }

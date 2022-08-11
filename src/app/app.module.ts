@@ -25,9 +25,15 @@ import { HistoryTicketComponent } from './pages/shared/history-ticket/history-ti
 import { OpenTicketComponent } from './pages/shared/open-ticket/open-ticket.component';
 import { DialogViewTransferComponent } from './pages/supervisores/dialog/dialog-view-transfer/dialog-view-transfer.component';
 // eslint-disable-next-line max-len
+import { FlatpickrModule } from 'angularx-flatpickr';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 import { APP_ROUTING } from './app-routing.module';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormatePipePipe } from './pages/shared/formate-pipe.pipe';
+
 
 @NgModule({
   declarations: [
@@ -41,6 +47,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     HistoryTicketComponent,
     OpenTicketComponent,
     DialogViewTransferComponent,
+    FormatePipePipe,
   ],
   entryComponents: [],
   imports: [
@@ -54,7 +61,13 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     FilterPipeModule,
     IonicSelectableModule,
     APP_ROUTING,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    NgbModalModule,
+    FlatpickrModule.forRoot(),
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   providers: [
     LoaderComponent,

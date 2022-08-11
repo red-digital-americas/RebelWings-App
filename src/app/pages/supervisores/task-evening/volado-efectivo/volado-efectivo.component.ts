@@ -8,6 +8,8 @@ import {
   PhotoService,
 } from 'src/app/core/services/services/photo.service';
 import { ActionSheetController } from '@ionic/angular';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-volado-efectivo',
@@ -31,8 +33,8 @@ export class VoladoEfectivoComponent implements OnInit {
   public branchId;
   public nameBranch = '';
   public dataBranch: any[] = [];
-
-
+  public createDate = '';
+  public voladoEfectivo;
 
   constructor(
     public router: Router,
@@ -41,12 +43,15 @@ export class VoladoEfectivoComponent implements OnInit {
     public service: ServiceGeneralService,
     public load: LoaderComponent,
     public actionSheetController: ActionSheetController,
-    public photoService: PhotoService
+    public photoService: PhotoService,
+    public datepipe: DatePipe
+
   ) { }
 
   ionViewWillEnter() {
     console.log('data', this.data);
-
+    this.voladoEfectivo = JSON.parse(localStorage.getItem('valueVolado'));
+    console.log('nodo volado efectivo', this.voladoEfectivo);
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idEfectivo = this.routerActive.snapshot.paramMap.get('id');
@@ -81,10 +86,19 @@ export class VoladoEfectivoComponent implements OnInit {
   }
   // get  name sucursal
   getBranch() {
+    let db;
+    // id 1 cdmx DB2
+    if (this.user.stateId === 1) {
+      db = 'DB2';
+    }
+    // id 2 queretaro DB1
+    else if (this.user.stateId === 2) {
+      db = 'DB1';
+    }
     let branchIdNumber = 0;
     branchIdNumber = Number(this.branchId);
     console.log('branchIdNumber', branchIdNumber);
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+    this.service.serviceGeneralGet(`StockChicken/Admin/All-Branch?dataBase=${db}`).subscribe(resp => {
       if (resp.success) {
         this.dataBranch = resp.result;
         console.log('get branch', this.dataBranch);
@@ -212,15 +226,42 @@ export class VoladoEfectivoComponent implements OnInit {
       this.save();
     }
   }
+
   save() {
     this.disabled = true;
     this.fotosEfectivo = [];
     // esto se pone aqui por que aun no se estrae la data de un get
     this.data.branchId = this.user.branchId;
+    this.formartDate();
+    // if (this.idEfectivo === '0') {
+    //   this.addData();
+    // } else {
+    //   this.updateData();
+    // }
+  }
+  formartDate() {
+    // 2022-03-11T17:27:00
+    console.log('date', this.today);
+    let time = '';
+    const hour = this.today.getHours();
+    const minute = this.today.getMinutes();
+    let hourString = hour.toString();
+    let minuteString = minute.toString();
+    const date = this.datepipe.transform(this.today, 'yyyy-MM-dd');
+    if (hourString.length < 2) {
+      hourString = `0${hourString}`;
+    }
+    if (minuteString.length < 2) {
+      minuteString = `0${minuteString}`;
+    }
+    console.log('hour', hourString);
+    console.log('minute', minuteString);
+    time = `${hourString}:${minuteString}:00`;
+    console.log('date', date);
+    this.createDate = `${date}T${time}`;
+    console.log('createDate', this.createDate);
     this.data.updatedBy = this.user.id;
-    this.data.updatedDate = this.today;
-    console.log('Obj To send => ', this.data);
-
+    this.data.updatedDate = this.createDate;
     if (this.idEfectivo === '0') {
       this.addData();
     } else {
@@ -229,13 +270,17 @@ export class VoladoEfectivoComponent implements OnInit {
   }
   addData() {
     this.data.createdBy = this.user.id;
-    this.data.createdDate = this.today;
+    this.data.createdDate = this.createDate;
+    this.data.alarmTime = this.voladoEfectivo.time;
+    this.data.elapsedAlarmTime = '';
+    console.log('Obj a guardar =>', this.data);
     this.service
       .serviceGeneralPostWithUrl('CashRegisterShortage', this.data)
       .subscribe((data) => {
         if (data.success) {
           this.load.presentLoading('Guardando..');
-          console.log('data', data);
+          console.log('Resp Serv =>', data);
+          localStorage.removeItem('valueVolado');
           this.photoService.deleteAllPhoto(this.data);
           this.router.navigateByUrl('supervisor/control-vespertino');
           this.disabled = false;
@@ -252,13 +297,15 @@ export class VoladoEfectivoComponent implements OnInit {
         }
       });
     }
+    console.log('Obj a guardar =>', this.data);
     this.service
       .serviceGeneralPut('CashRegisterShortage', this.data)
       .subscribe((data) => {
         if (data.success) {
           this.load.presentLoading('Actualizando..');
-          console.log('data', data);
+          console.log('Resp Serv =>', data);
           this.photoService.deleteAllPhoto(this.data);
+          localStorage.removeItem('valueVolado');
           this.router.navigateByUrl('supervisor/control-vespertino');
           this.disabled = false;
         } else {
@@ -271,11 +318,13 @@ class EfectivoModel {
   id: number;
   branchId: number;
   amount: number;
+  alarmTime: string;
+  elapsedAlarmTime: string;
   comment: string;
   createdBy: number;
-  createdDate: Date;
+  createdDate: string;
   updatedBy: number;
-  updatedDate: Date;
+  updatedDate: string;
   photoCashRegisterShortages: PhotoEfectivoModel[] = [];
 }
 class PhotoEfectivoModel {
@@ -288,3 +337,4 @@ class PhotoEfectivoModel {
   updatedBy: number;
   updatedDate: Date;
 }
+

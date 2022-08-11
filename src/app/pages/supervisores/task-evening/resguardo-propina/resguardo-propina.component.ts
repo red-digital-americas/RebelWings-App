@@ -8,6 +8,8 @@ import {
   PhotoService,
 } from 'src/app/core/services/services/photo.service';
 import { ActionSheetController } from '@ionic/angular';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-resguardo-propina',
@@ -31,6 +33,8 @@ export class ResguardoPropinaComponent implements OnInit {
   public branchId;
   public nameBranch = '';
   public dataBranch: any[] = [];
+  public createDate = '';
+
 
   constructor(
     public router: Router,
@@ -39,8 +43,10 @@ export class ResguardoPropinaComponent implements OnInit {
     public service: ServiceGeneralService,
     public load: LoaderComponent,
     public actionSheetController: ActionSheetController,
-    public photoService: PhotoService
-  ) {}
+    public photoService: PhotoService,
+    public datepipe: DatePipe
+
+  ) { }
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.routerActive.snapshot.paramMap.get('id'));
@@ -57,7 +63,7 @@ export class ResguardoPropinaComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
   getData() {
     this.load.presentLoading('Cargando..');
     this.service
@@ -76,10 +82,19 @@ export class ResguardoPropinaComponent implements OnInit {
   }
   // get  name sucursal
   getBranch() {
+    let db;
+    // id 1 cdmx DB2
+    if (this.user.stateId === 1) {
+      db = 'DB2';
+    }
+    // id 2 queretaro DB1
+    else if (this.user.stateId === 2) {
+      db = 'DB1';
+    }
     let branchIdNumber = 0;
     branchIdNumber = Number(this.branchId);
     console.log('branchIdNumber', branchIdNumber);
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+    this.service.serviceGeneralGet(`StockChicken/Admin/All-Branch?dataBase=${db}`).subscribe(resp => {
       if (resp.success) {
         this.dataBranch = resp.result;
         console.log('get branch', this.dataBranch);
@@ -211,10 +226,31 @@ export class ResguardoPropinaComponent implements OnInit {
     this.fotosPropina = [];
     // esto se pone aqui por que aun no se estrae la data de un get
     this.data.branchId = this.user.branchId;
+    this.formartDate();
+  }
+  formartDate() {
+    // 2022-03-11T17:27:00
+    console.log('date', this.today);
+    let time = '';
+    const hour = this.today.getHours();
+    const minute = this.today.getMinutes();
+    let hourString = hour.toString();
+    let minuteString = minute.toString();
+    const date = this.datepipe.transform(this.today, 'yyyy-MM-dd');
+    if (hourString.length < 2) {
+      hourString = `0${hourString}`;
+    }
+    if (minuteString.length < 2) {
+      minuteString = `0${minuteString}`;
+    }
+    console.log('hour', hourString);
+    console.log('minute', minuteString);
+    time = `${hourString}:${minuteString}:00`;
+    console.log('date', date);
+    this.createDate = `${date}T${time}`;
+    console.log('createDate', this.createDate);
     this.data.updatedBy = this.user.id;
-    this.data.updatedDate = this.today;
-    console.log('Obj To send => ', this.data);
-
+    this.data.updatedDate = this.createDate;
     if (this.idPropina === '0') {
       this.addPropina();
     } else {
@@ -223,13 +259,14 @@ export class ResguardoPropinaComponent implements OnInit {
   }
   addPropina() {
     this.data.createdBy = this.user.id;
-    this.data.createdDate = this.today;
+    this.data.createdDate = this.createDate;
+    console.log('Obj a guardar =>', this.data);
     this.service
       .serviceGeneralPostWithUrl('Tip', this.data)
       .subscribe((data) => {
         if (data.success) {
           this.load.presentLoading('Guardando..');
-          console.log('data', data);
+          console.log('Resp Serv =>', data);
           this.photoService.deleteAllPhoto(this.data);
           this.router.navigateByUrl('supervisor/control-vespertino');
         }
@@ -238,15 +275,16 @@ export class ResguardoPropinaComponent implements OnInit {
   updatePropina() {
     if (this.data.photoTips.length !== 0) {
       this.data.photoTips.forEach((element) => {
-        if(element.id !== 0){
+        if (element.id !== 0) {
           element.photoPath = '';
         }
       });
     }
+    console.log('Obj a guardar =>', this.data);
     this.service.serviceGeneralPut('Tip', this.data).subscribe((data) => {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
-        console.log('data', data);
+        console.log('Resp Serv =>', data);
         this.photoService.deleteAllPhoto(this.data);
         this.router.navigateByUrl('supervisor/control-vespertino');
       }
@@ -259,9 +297,9 @@ class PropinaModel {
   amount: number;
   comment: string;
   createdBy: number;
-  createdDate: Date;
+  createdDate: string;
   updatedBy: number;
-  updatedDate: Date;
+  updatedDate: string;
   photoTips: PhotoPropinaModel[] = [];
 }
 class PhotoPropinaModel {

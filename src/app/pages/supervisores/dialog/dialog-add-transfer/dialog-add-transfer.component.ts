@@ -118,8 +118,17 @@ export class DialogAddTransferComponent implements OnInit {
   }
   // get  name sucursal
   getBranch() {
+    let db;
+    // id 1 cdmx DB2
+    if (this.user.stateId === 1) {
+      db = 'DB2';
+    }
+    // id 2 queretaro DB1
+    else if (this.user.stateId === 2) {
+      db = 'DB1';
+    }
     this.service
-      .serviceGeneralGet('StockChicken/Admin/All-Branch')
+      .serviceGeneralGet(`StockChicken/Admin/All-Branch?dataBase=${db}`)
       .subscribe((resp) => {
         if (resp.success) {
           this.dataBranch = resp.result;
@@ -319,25 +328,8 @@ export class DialogAddTransferComponent implements OnInit {
     }
     console.log('hour', hourString);
     console.log('minute', minuteString);
-    // hour = this.today.getHours();
-    // minute = this.today.getMinutes();
-
     time = `${hourString}:${minuteString}:00`;
     this.data.time = time;
-    // this.data.time = new Date(this.data.time);
-    // "15:55"
-    // if (this.data.time.length === 5) {
-    //   console.log('time', this.data.time);
-    //   let datetime = '';
-    //   datetime = `${this.data.time}:00`;
-    //   this.data.time = datetime;
-    // }
-    //   '' +
-    //   this.data.time.getHours() +
-    //   ':' +
-    //   this.data.time.getMinutes() +
-    //   ':' + 0 + '';
-    // this.data.time.getSeconds();
     console.log('timestamp', this.data.time);
   }
   //  HACER UNA TRANSFERENCIA/SOLICITAR UNA TRANSFERENCIA

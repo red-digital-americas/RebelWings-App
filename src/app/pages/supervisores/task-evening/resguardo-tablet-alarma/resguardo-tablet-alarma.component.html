@@ -20,7 +20,7 @@
     </ion-grid>
   </ion-header>
   <ion-content fullscreen="false" class="ion-padding">
-   <ion-grid>   
+   <ion-grid>
       <!-- titulo de empresa -->
       <ion-row size="12" *ngIf="user">
         <ion-col size="4">
@@ -41,19 +41,19 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-   
-  
+
+
     <!-- GRID DE TABLET -->
    <ion-grid>
       <ion-row size="12">
         <ion-col size="12">
           <span>RESGUARDO DE TABLETA</span>
           <br>
-          <ion-toggle [(ngModel)]="toggTable"></ion-toggle>
+          <span>Resguardo de Tableta</span>
         </ion-col>
       </ion-row>
     </ion-grid>
-    <ion-grid *ngIf="toggTable === true">
+    <ion-grid>
       <ion-row size="12">
         <ion-col size="6">
           <ion-label>FOTOGRAFIA</ion-label>
@@ -88,15 +88,7 @@
         </ion-col>
         <ion-col size="6"></ion-col>
       </ion-row>
-      <!-- footer boton -->
-      <ion-row size="12" class="">
-        <ion-col size="3" offset="8">
-          <ion-button [disabled]="(dataTablet.comment === undefined || dataTablet.comment === '') || disabled === true"
-            (click)="saveTablet()" shape="round" color="danger" expand="full">
-            GUARDAR
-          </ion-button>
-        </ion-col>
-      </ion-row>
+
     </ion-grid>
     <!-- GRID DE ALARMA -->
     <ion-grid>
@@ -104,11 +96,12 @@
         <ion-col size="12">
           <span>RESGUARDO DE ALARMA</span>
           <br>
-          <ion-toggle [(ngModel)]="toggAlarma"></ion-toggle>
+          <!-- <ion-toggle [(ngModel)]="toggAlarma"></ion-toggle>
+          <span>Resguardo de Alarma</span> -->
         </ion-col>
       </ion-row>
     </ion-grid>
-    <ion-grid *ngIf="toggAlarma === true">
+    <ion-grid>
       <ion-row size="12">
         <ion-col size="6">
           <ion-label>FOTOGRAFIA</ion-label>
@@ -135,7 +128,8 @@
                 (click)="showActionSheetAlarma(photo, position)">
               </ion-img>
               <!-- se mostrara esta imagen si esta guardada -->
-              <ion-img *ngIf="photo.id !== 0 " src="{{ url }}{{ photo.photo }}" (click)="deleteImgShowActionAlarma(photo.id)">
+              <ion-img *ngIf="photo.id !== 0 " src="{{ url }}{{ photo.photo }}"
+                (click)="deleteImgShowActionAlarma(photo.id)">
               </ion-img>
             </ion-col>
           </ion-row>
@@ -144,12 +138,21 @@
       </ion-row>
       <ion-row size="12" class="">
         <ion-col size="3" offset="8">
-          <ion-button [disabled]="(dataAlarma.comment === undefined || dataAlarma.comment === '') || disabled === true"
-            (click)="saveAlarma()" shape="round" color="danger" expand="full">
+          <ion-button [disabled]="(dataAlarma.comment === undefined || dataAlarma.comment === '') || disabled === true && (dataTablet.comment === undefined || dataTablet.comment === '') || disabled === true"
+            (click)="allSave()" shape="round" color="danger" expand="full">
             GUARDAR
           </ion-button>
         </ion-col>
       </ion-row>
+      <!-- footer boton -->
+      <!-- <ion-row size="12" class="">
+        <ion-col size="3" offset="8">
+          <ion-button [disabled]="(dataTablet.comment === undefined || dataTablet.comment === '') || disabled === true"
+            (click)="saveTablet()" shape="round" color="danger" expand="full">
+            GUARDAR
+          </ion-button>
+        </ion-col>
+      </ion-row> -->
 
     </ion-grid>
 

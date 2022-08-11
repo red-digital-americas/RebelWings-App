@@ -37,7 +37,7 @@ export class HistoryTicketComponent implements OnInit {
         if (resp.success) {
           this.data = resp.result;
           console.log('get data', this.data);
-          if(this.data.length === 0 ){
+          if (this.data.length === 0) {
             this.data.push({
               regional: 'No hay tickets en esta sucursal'
             });
@@ -49,15 +49,24 @@ export class HistoryTicketComponent implements OnInit {
     // window.history.back();
     this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/1`);
   }
-  openTicket(id: number){
+  openTicket(id: number) {
     this.router.navigateByUrl(`editar-ticket/${this.branchId}/${id}`);
   }
   // get  name sucursal
   getBranch() {
+    let db;
+    // id 1 cdmx DB2
+    if (this.user.stateId === 1) {
+      db = 'DB2';
+    }
+    // id 2 queretaro DB1
+    else if (this.user.stateId === 2) {
+      db = 'DB1';
+    }
     let branchIdNumber = 0;
     branchIdNumber = Number(this.branchId);
     console.log('branchIdNumber', branchIdNumber);
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+    this.service.serviceGeneralGet(`StockChicken/Admin/All-Branch?dataBase=${db}`).subscribe(resp => {
       if (resp.success) {
         this.dataBranch = resp.result;
         console.log('get branch', this.dataBranch);
@@ -73,7 +82,7 @@ export class HistoryTicketComponent implements OnInit {
   }
 
 }
-class TicketModel{
+class TicketModel {
   id: number;
   noTicketing: string;
   status: boolean;

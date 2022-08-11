@@ -1,0 +1,25 @@
+.align-text-end {
+  text-align: end;
+}
+
+.subtitle-negro {
+  color: black;
+  font-weight: bold;
+  font-size: large;
+}
+
+// tamaño de modal general message
+.my-custom-modal-css .modal-wrapper {
+  height: 20%;
+  top: 80%;
+  position: absolute;
+  display: block;
+}
+
+.modal-wrapper.sc-ion-modal-md {
+  -webkit-transform: translate3d(0, 40px, 0);
+  transform: translate3d(0, 40px px, 0);
+  opacity: 0.01;
+  width: 40%;
+  height: 50%;
+}

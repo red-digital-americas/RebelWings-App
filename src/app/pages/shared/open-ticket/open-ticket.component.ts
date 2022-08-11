@@ -45,10 +45,10 @@ export class OpenTicketComponent implements OnInit {
       .subscribe((resp) => {
         if (resp.success) {
           this.data = resp.result;
-            this.activeData = true;
+          this.activeData = true;
           console.log('get data', this.data);
         }
-        else{
+        else {
           this.activeData = true;
         }
       });
@@ -60,10 +60,19 @@ export class OpenTicketComponent implements OnInit {
 
   // get  name sucursal
   getBranch() {
+    let db;
+    // id 1 cdmx DB2
+    if (this.user.stateId === 1) {
+      db = 'DB2';
+    }
+    // id 2 queretaro DB1
+    else if (this.user.stateId === 2) {
+      db = 'DB1';
+    }
     let branchIdNumber = 0;
     branchIdNumber = Number(this.branchId);
     console.log('branchIdNumber', branchIdNumber);
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+    this.service.serviceGeneralGet(`StockChicken/Admin/All-Branch?dataBase=${db}`).subscribe(resp => {
       if (resp.success) {
         this.dataBranch = resp.result;
         console.log('get branch', this.dataBranch);
@@ -117,13 +126,13 @@ class LevantamientoTicketModel {
   createdDate: Date;
   updatedBy: number;
   updatedDate: Date;
-  categoryNavigation: CategoryNavigationModel [] = [];
-  createdByNavigation: CreatedByNavigationModel [] = [];
-  whereAreYouLocatedNavigation: WhereAreYouLocatedNavigationModel []= [];
-  commentTicketings: CommentTicketings[]= [];
-  photoTicketings: PhotoTicketingsModel []= [];
+  categoryNavigation: CategoryNavigationModel[] = [];
+  createdByNavigation: CreatedByNavigationModel[] = [];
+  whereAreYouLocatedNavigation: WhereAreYouLocatedNavigationModel[] = [];
+  commentTicketings: CommentTicketings[] = [];
+  photoTicketings: PhotoTicketingsModel[] = [];
 }
-class CategoryNavigationModel{
+class CategoryNavigationModel {
   id: number;
   category: string;
   createdBy: number;

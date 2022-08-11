@@ -56,18 +56,18 @@ export class LevantamientoTicketComponent implements OnInit {
       .serviceGeneralGet('Ticketing/' + this.branchId)
       .subscribe((resp) => {
         if (resp.success) {
-          if (resp.result?.length !== 0 && resp.result !== null) {
-            this.dataId = true; //si hay registro entonces se hara un put
-            this.activeData = true;
-            this.data = resp.result;
-            console.log('get data', this.data);
-          }
-          else {
-            console.log('completar tarea');
-            this.data.id = 0;
-            this.activeData = true;
-            this.dataId = false; //no hay registro entonces se hara un post
-          }
+          // if (resp.result?.length !== 0 && resp.result !== null) {
+          //   this.dataId = true; //si hay registro entonces se hara un put
+          //   this.activeData = true;
+          //   this.data = resp.result;
+          //   console.log('get data', this.data);
+          // }
+          // else {
+          console.log('completar tarea');
+          this.data.id = 0;
+          this.activeData = true;
+          this.dataId = false; //no hay registro entonces se hara un post
+          // }
         }
       });
   }
@@ -77,19 +77,19 @@ export class LevantamientoTicketComponent implements OnInit {
     branchIdNumber = Number(this.branchId);
     console.log('branchIdNumber', branchIdNumber);
     this.service.serviceGeneralGet(`Ticketing/Catalogue/BranchLocate`).subscribe(resp => {
-        if (resp.success) {
-          this.dataBranchLocate = resp.result;
-          console.log('get specific station', this.dataBranchLocate);
-        }
-      });
+      if (resp.success) {
+        this.dataBranchLocate = resp.result;
+        console.log('get specific station', this.dataBranchLocate);
+      }
+    });
   }
   getCategory() {
     this.service.serviceGeneralGet(`Ticketing/Catalogue/Category`).subscribe(resp => {
-        if (resp.success) {
-          this.dataCategory = resp.result;
-          console.log('get status', this.dataCategory);
-        }
-      });
+      if (resp.success) {
+        this.dataCategory = resp.result;
+        console.log('get status', this.dataCategory);
+      }
+    });
   }
 
   return() {
@@ -99,10 +99,19 @@ export class LevantamientoTicketComponent implements OnInit {
 
   // get  name sucursal
   getBranch() {
+    let db;
+    // id 1 cdmx DB2
+    if (this.user.stateId === 1) {
+      db = 'DB2';
+    }
+    // id 2 queretaro DB1
+    else if (this.user.stateId === 2) {
+      db = 'DB1';
+    }
     let branchIdNumber = 0;
     branchIdNumber = Number(this.branchId);
     console.log('branchIdNumber', branchIdNumber);
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+    this.service.serviceGeneralGet(`StockChicken/Admin/All-Branch?dataBase=${db}`).subscribe(resp => {
       if (resp.success) {
         this.dataBranch = resp.result;
         console.log('get branch', this.dataBranch);
@@ -206,9 +215,9 @@ export class LevantamientoTicketComponent implements OnInit {
     branchIdNumber = Number(this.branchId);
     this.disabled = true;
     this.fotosProducto = [];
-    this.data.status= true;
+    this.data.status = true;
     this.data.commentTicketings = [];
-    this.data.noTicket= '';
+    this.data.noTicket = '';
     this.data.dateOpen = this.today;
     // esto se pone aqui por que aun no se estrae la data de un get
     this.data.branchId = branchIdNumber;
