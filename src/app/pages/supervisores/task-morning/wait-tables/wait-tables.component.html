@@ -24,21 +24,34 @@
       <!-- titulo de empresa -->
       <ion-row size="12" *ngIf="user" >
         <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL {{user.branchName}}</h5>
+          <h5 class="subtitle-negro">{{user.branchName}}</h5>
         </ion-col>
-        <ion-col size="8">
+        <ion-col size="7"></ion-col>
+        <ion-col size="1">
           <span class="date-grey">
-            {{ today | date: "dd MMM yyy" }}
+            {{ today | date: "dd/MM/yyy" }}
           </span>
         </ion-col>
       </ion-row>
+
       <ion-row size="12">
-        <ion-col size="12" *ngIf="turno === '1'" >
+        <ion-col size="12" *ngIf="turno === '1'">
+          <h5 class="description">REVISA QUE EL SALON ESTE EN ORDEN Y MONTADO PARA INICIAR EL TURNO</h5>
+          &nbsp;
+        </ion-col>
+        <ion-col size="12" *ngIf="turno === '2'">
+          <h5 class="description">REVISA QUE EL SALON ESTE EN ORDEN Y MONTADO PARA INICIAR EL TURNO</h5>
+          &nbsp;
+        </ion-col>
+      </ion-row>
+      
+      <ion-row size="12">
+        <!-- <ion-col size="12" *ngIf="turno === '1'" >
           <span>Recuerda que esta tarea se deberá revisar de 10 a 5.</span>
         </ion-col>
         <ion-col size="12" *ngIf="turno === '2'" >
           <span>Recuerda que esta tarea se deberá revisar de 5 al cierre.</span>
-        </ion-col>
+        </ion-col> -->
         <!-- <ion-col size="6">
           <span>¿Hubo mesas en espera?</span>
           <br>
@@ -54,7 +67,7 @@
         </ion-col> -->
         <!-- *ngIf="data.waitlistTables === true" -->
         <ion-col size="6" >
-          <ion-label>¿Cuántas personas hubo en espera?</ion-label>
+          <ion-label>¿CUANTAS PERSONAS HAY EN ESPERA?</ion-label>
           <ion-card class="closed">
             <ion-input [(ngModel)]="data.howManyTables" type="number" min="0" placeholder="Numero de personas en espera"></ion-input>
           </ion-card>

@@ -7,6 +7,8 @@ ion-content {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  width: 22rem;
+  height: 12rem;
 
   .logo {
     text-align: center;
@@ -52,3 +54,8 @@ ion-content {
 .returnLogin {
   color: #d0122d;
 }
+
+.title{
+  font-weight: bold;
+ 
+ }

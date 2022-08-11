@@ -2,16 +2,24 @@
   <ion-header color="dark" class="ion-border ion-padding">
     <ion-grid>
       <ion-row size="12">
-        <ion-col size="2" class="ion-align-items-start">
-          <div>
-            <img style="width: 50%" src="./assets/RW_LogoWEB.png" alt="" />
-          </div>
+
+        <ion-col size="4" class="ion-align-items-end">
+          <ion-row size="12"  class="align-center-text">
+           <ion-col size="4">
+              <div>
+               <img style="border-radius: 5%" src="./assets/RW_LogoWEB.png" alt="" />
+              </div>
+           </ion-col>
+           <ion-col size="8">
+             <div>
+               <span class="ion-align-items-start color-text-white-c">CENTRO DE CONTROL</span>
+             </div>
+            </ion-col>
+          </ion-row>
         </ion-col>
-        <ion-col size="7" class="ion-align-items-start">
-          <div>
-            <span class="ion-align-items-start color-text-white">CENTRO DE CONTROL</span>
-          </div>
-        </ion-col>
+        
+        <ion-col size="5"></ion-col>
+
         <ion-col size="2" class="ion-align-items-end">
           <!-- <div class="align-end-text">
             <ion-icon (click)="openNotification()" size="large" style="color: white" name="notifications-outline">
@@ -48,7 +56,7 @@
         <ion-row size="12">
           <ion-col size="5" class="ion-align-items-start">
             <!-- *ngIf="nameBranch !== ''" -->
-            <h2 class="title-red">TAREAS DE {{nameBranch}}</h2>
+            <h2 class="title-red">{{nameBranch}}</h2>
           </ion-col>
           <ion-col size="1">
             <div class="align-end-text">
@@ -113,12 +121,12 @@
               <ion-row size="12" *ngSwitchCase="'1'">
                 <!-- progress bar -->
                 <ion-col size="12">
-                  <span class="title-progress-bar">Nivel de progreso</span>
+                  <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                   &nbsp;
                   <ion-progress-bar mode="ios" color="{{color}}" [value]="barProgressTask / 100"></ion-progress-bar>
                   &nbsp;
                   <div class="margin-completado">
-                    <span class="title-progress-bar">{{barProgressTask | number: '.1-2'}}% completado</span>
+                    <span class="title-progress-bar">{{barProgressTask | number: '.1-2'}}% COMPLETADO</span>
                     <!-- .1 * 100 -->
                   </div>
                 </ion-col>
@@ -135,19 +143,18 @@
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
-                                <h3 class="title-tareas">ÓRDENES</h3>
+                                <h3 class="title-tareas">TIEMPOS</h3>
                               </div>
                             </ion-col>
                             <ion-col size="12">
                               <div>
                                 <span>
-                                  Reporta desde esta sección productos que lleven
-                                  mucho sin utilizarse.
+                                  REGISTRA EL TIEMPO PROMEDIO QUE TIENES EN LA COCINA
                                 </span>
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[0].isComplete === true" color="success" value="100">
                               </ion-progress-bar>
@@ -188,13 +195,12 @@
                             <ion-col size="12">
                               <div>
                                 <span>
-                                  Reporta desde esta sección productos que lleven
-                                  mucho sin utilizarse.
+                                  REVISA EL ORDEN Y EL LAYOUT DE TUS REFRIGERADORES EN COCINA
                                 </span>
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[1].isComplete === true" color="success" value="100">
                               </ion-progress-bar>
@@ -240,7 +246,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[2].isComplete === true" color="success" value="100">
                               </ion-progress-bar>
@@ -286,7 +292,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[3].isComplete === true" color="success" value="100">
                               </ion-progress-bar>
@@ -332,7 +338,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[4].isComplete === true" color="success" value="100">
                               </ion-progress-bar>
@@ -358,7 +364,7 @@
               <!--*** S E C C I O N   S A L O N  ******-->
               <ion-row size="12" *ngSwitchCase="'2'">
                 <ion-col size="12">
-                  <span class="title-progress-bar">Nivel de progreso</span>
+                  <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                   &nbsp;
                   <ion-progress-bar mode="ios" color="{{color}}" [value]="barProgressTask / 100"></ion-progress-bar>
                   &nbsp;
@@ -391,7 +397,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[0].isComplete !== true" color="danger" value=".1">
                               </ion-progress-bar>
@@ -438,7 +444,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[1].isComplete === true" color="success" value="1">
                               </ion-progress-bar>
@@ -483,7 +489,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[2].isComplete === true" color="success" value="1">
                               </ion-progress-bar>
@@ -528,7 +534,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[3].isComplete === true" color="success" value="1">
                               </ion-progress-bar>
@@ -574,7 +580,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[4].isComplete === true" color="success" value="100">
                               </ion-progress-bar>
@@ -619,7 +625,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[5].isComplete === true" color="success" value="100">
                               </ion-progress-bar>
@@ -664,7 +670,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[6].isComplete === true" color="success" value="100">
                               </ion-progress-bar>
@@ -709,7 +715,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[7].isComplete === true" color="success" value="100">
                               </ion-progress-bar>
@@ -755,7 +761,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[8].isComplete === true" color="success" value="100">
                               </ion-progress-bar>
@@ -782,7 +788,7 @@
 
               <ion-row size="12" *ngSwitchCase="'3'">
                 <ion-col size="12">
-                  <span class="title-progress-bar">Nivel de progreso</span>
+                  <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                   &nbsp;
                   <ion-progress-bar mode="ios" color="{{color}}" [value]="barProgressTask / 100"></ion-progress-bar>
                   &nbsp;
@@ -815,7 +821,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[0].isComplete === true" color="success" value="100">
                               </ion-progress-bar>
@@ -860,7 +866,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[1].isComplete === true" color="success" value="100">
                               </ion-progress-bar>
@@ -886,7 +892,7 @@
               <!--*** S I S T E M A   Y  C A J A  ******-->
               <ion-row size="12" *ngSwitchCase="'4'">
                 <ion-col size="12">
-                  <span class="title-progress-bar">Nivel de progreso</span>
+                  <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                   &nbsp;
                   <ion-progress-bar mode="ios" color="{{color}}" [value]="barProgressTask / 100"></ion-progress-bar>
                   &nbsp;
@@ -918,7 +924,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[0].isComplete === true" color="success" value="100">
                               </ion-progress-bar>
@@ -963,7 +969,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[1].isComplete === true" color="success" value="100">
                               </ion-progress-bar>
@@ -1008,7 +1014,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[2].isComplete === true" color="success" value="100">
                               </ion-progress-bar>
@@ -1053,7 +1059,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[3].isComplete === true" color="success" value="100">
                               </ion-progress-bar>
@@ -1080,7 +1086,7 @@
               <!--*** M A N T E N I M I E N T O  ******-->
               <ion-row size="12" *ngSwitchCase="'5'">
                 <ion-col size="12">
-                  <span class="title-progress-bar">Nivel de progreso</span>
+                  <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                   &nbsp;
                   <ion-progress-bar mode="ios" color="{{color}}" [value]="barProgressTask / 100"></ion-progress-bar>
                   &nbsp;
@@ -1112,7 +1118,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[0].isComplete === true" color="success" value="100">
                               </ion-progress-bar>
@@ -1157,7 +1163,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[1].isComplete === true" color="success" value="100">
                               </ion-progress-bar>
@@ -1203,7 +1209,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[2].isComplete === true" color="success" value="100">
                               </ion-progress-bar>
@@ -1249,7 +1255,7 @@
                               </div>
                             </ion-col>
                             <ion-col size="12">
-                              <span class="title-progress-bar">Nivel de progreso</span>
+                              <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                               &nbsp;
                               <ion-progress-bar *ngIf="data[3].isComplete === true" color="success" value="100">
                               </ion-progress-bar>

@@ -14,7 +14,7 @@
           <img src="./assets/icon/ilustracion_gas.png" alt="Validaccion de assistencia" />
         </ion-col>
         <ion-col size="11" class="ion-align-self-center">
-          <h3 class="title">VALIDACIÓN DE GAS</h3>
+          <h3 class="title">GAS</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -24,26 +24,35 @@
       <!-- titulo de empresa -->
       <ion-row size="12">
         <ion-col size="4" *ngIf="user" >
-          <h5 class="subtitle-negro">SUCURSAL {{user.branchName}}</h5>
+          <h5 class="subtitle-negro">{{user.branchName}}</h5>
         </ion-col>
-        <ion-col size="8">
+        <ion-col size="7"></ion-col>
+        <ion-col size="1">
           <span class="date-grey">
-            {{ today | date: "dd MMM yyy" }}
+            {{ today | date: "dd/MM/yyy" }}
           </span>
         </ion-col>
       </ion-row>
+
+      <ion-row size="12">
+        <ion-col size="12">
+          <h5 class="description">REALIZA UN CHECK DE LA CANTIDAD DE GAS CON LA QUE CUENTAS PARA EL TURNO</h5>
+          &nbsp;
+        </ion-col>
+      </ion-row>
+
       <ion-row size="12">
         <ion-col size="6">
-          <ion-label floating>Cantidad en litros</ion-label>
+          <ion-label floating>CANTIDAD EN LITROS</ion-label>
           <ion-card class="closed">
-            <ion-input [(ngModel)]="data.amount" type="number" min="0" placeholder="lts"></ion-input>
+            <ion-input [(ngModel)]="data.amount" type="number" min="0" placeholder="Lts"></ion-input>
           </ion-card>
         </ion-col>
         <ion-col size="6"></ion-col>
       </ion-row>
       <ion-row size="12">
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery()">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -51,9 +60,9 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIO</ion-label>
           <ion-card>
-            <ion-textarea type="string" [(ngModel)]="data.comment" rows="6" cols="20"></ion-textarea>
+            <ion-textarea type="string" [(ngModel)]="data.comment" rows="6" cols="20" style="margin-top: 2px;"></ion-textarea>
           </ion-card>
         </ion-col>
       </ion-row>

@@ -4,8 +4,17 @@ ion-header {
 .color-text-white {
   color: white;
 }
+.color-text-white-c {
+  color: white;
+  font-size: 200%;
+}
 .title-red {
   color: #ad182d;
+  font-size: 250%;
+}
+.title-red2 {
+  color: #ad182d;
+  font-size: 200%;
 }
 .title-tareas {
   color: #1d1d1b;
@@ -43,4 +52,15 @@ ion-header {
 .avatar {
   border-radius: 50%;
 
+}
+
+ion-icon {
+  font-size: 64px;
+}
+
+ion-badge{
+  position: absolute; 
+  font-size: 18pt;
+  right: -15px;
+  top: 30px; 
 }

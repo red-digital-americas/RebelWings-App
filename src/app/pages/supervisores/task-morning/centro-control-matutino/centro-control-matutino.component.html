@@ -2,17 +2,24 @@
   <ion-header color="dark" class="ion-border ion-padding">
     <ion-grid>
       <ion-row size="12">
-        <ion-col size="2" class="align-center-text">
-          <div>
-            <img style="width: 50%" src="./assets/RW_LogoWEB.png" alt="" />
-          </div>
+
+        <ion-col size="4" class="ion-align-items-end">
+          <ion-row size="12"  class="align-center-text">
+           <ion-col size="4">
+              <div>
+               <img style="border-radius: 5%" src="./assets/RW_LogoWEB.png" alt="" />
+              </div>
+           </ion-col>
+           <ion-col size="8">
+             <div>
+               <span class="ion-align-items-start color-text-white-c">CENTRO DE CONTROL</span>
+             </div>
+            </ion-col>
+          </ion-row>
         </ion-col>
-        <ion-col size="2" class="align-center-text">
-          <div>
-            <span class="ion-align-items-start color-text-white">CENTRO DE CONTROL</span>
-          </div>
-        </ion-col>
-        <ion-col size="5"></ion-col>
+        
+        <ion-col size="4"></ion-col>
+
         <ion-col size="2" class="ion-align-items-end">
           <ion-row size="12"  class="align-center-text">
             <ion-col size="4">
@@ -28,6 +35,9 @@
 
           </ion-row>
         </ion-col>
+
+        <ion-col size="1"></ion-col>
+
         <ion-col size="1" class="align-center-text">
           <div class="align-end-text">
             <ion-icon (click)="logout($event)" size="large" color="light" name="menu-outline"></ion-icon>
@@ -51,7 +61,7 @@
 
         <ion-row size="12">
           <ion-col size="6" class="ion-align-items-start">
-            <h2 class="title-red">TAREAS TURNO MATUTINO</h2>
+            <h2 class="title-red">TURNO MATUTINO 7:00 HORAS A 17:00 HRS</h2>
           </ion-col>
           <ion-col size="3"></ion-col>
           <ion-col size="3" class="ion-align-items-end">
@@ -62,13 +72,14 @@
             </div>
           </ion-col>
           <ion-col size="12" class="ion-align-items-start">
-            <h2 class="title-red">Sucursal {{user.branchName}}</h2>
+            <h2 class="title-red2">{{user.branchName}}</h2>
           </ion-col>
         </ion-row>
         <ion-row size="12">
           <!-- -----------asistencias ---------------->
           <ion-col *ngIf="data[0]" size="6">
-            <ion-card (click)="validacionAsistencia()">
+            <!-- <ion-card (click)="validacionAsistencia()"> -->
+              <ion-card>
               <ion-card-content>
                 <ion-row size="12">
                   <ion-col size="3" class="ion-align-self-center">
@@ -86,13 +97,13 @@
                       <ion-col size="12">
                         <div>
                           <span>
-                            Revisa desde aquí la asistencia de todo el equipo.
+                            PROXIMAMENTE.
                           </span>
                         </div>
                         <br>
                       </ion-col>
                       <ion-col size="12">
-                        <span class="title-progress-bar">Nivel de progreso</span>
+                        <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                         &nbsp;
                         <ion-progress-bar [color]="data[0].color" [value]="data[0].percentage"></ion-progress-bar>
                         &nbsp;
@@ -120,27 +131,23 @@
                     <ion-row size="12">
                       <ion-col size="12">
                         <div>
-                          <h3 class="title-tareas">VALIDACIÓN DE GAS</h3>
+                          <h3 class="title-tareas">GAS</h3>
                         </div>
                       </ion-col>
                       <ion-col size="12">
                         <div>
                           <span>
-                            Desde la estación de gas de la sucursal, documenta
-                            la cantidad de gas con la que se cuenta para el día
-                            de hoy.
+                            REALIZA UN CHECK DE LA CANTIDAD DE GAS QUE CUENTAS PARA EL TURNO
                           </span>
                         </div>
                       </ion-col>
                       <ion-col size="12">
-                        <span class="title-progress-bar">Nivel de progreso</span>
-                        &nbsp;
-
-                        <ion-progress-bar *ngIf="data[1].isComplete === false" [color]="data[1].color" value="0">
-                        </ion-progress-bar>
-                        <ion-progress-bar *ngIf="data[1].isComplete === true" color="{{ data[1].color }}" value="1">
-                        </ion-progress-bar>
-                        &nbsp;
+                        <br>
+                        <span class="title-progress-bar">NIVEL DE PROGRESO</span>
+                        
+                        <ion-progress-bar *ngIf="data[1].isComplete === false" [color]="data[1].color" value="0"></ion-progress-bar>
+                        <ion-progress-bar *ngIf="data[1].isComplete === true" color="{{ data[1].color }}" value="1"></ion-progress-bar>
+                        <br>
                         <div class="margin-completado">
                           <span *ngIf="data[1].isComplete === false" class="title-progress-bar">0% completado</span>
                           <span *ngIf="data[1].isComplete === true" class="title-progress-bar">100% completado</span>
@@ -164,20 +171,19 @@
                     <ion-row size="12">
                       <ion-col size="12">
                         <div>
-                          <h3 class="title-tareas">SALÓN MONTADO</h3>
+                          <h3 class="title-tareas">SALÓN</h3>
                         </div>
                       </ion-col>
                       <ion-col size="12">
                         <div>
                           <span>
-                            Revisa que el salón esté en órden. Documéntalo con
-                            una foto y un comentario.
+                            REVISA QUE EL SALON ESTE EN ORDEN Y MONTADO PARA INICIAR EL TURNO
                           </span>
                         </div>
                         <br>
                       </ion-col>
                       <ion-col size="12">
-                        <span class="title-progress-bar">Nivel de progreso</span>
+                        <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                         &nbsp;
 
                         <ion-progress-bar *ngIf="data[2].isComplete === false" [color]="data[2].color" value="0">
@@ -196,9 +202,12 @@
               </ion-card-content>
             </ion-card>
           </ion-col>
+
+
           <!-- -----------STOCK DE POLLO------------ -->
-          <ion-col size="6" *ngIf="data[4]">
-            <!-- aqui se envia el id de sucursal -->
+          <!-- aqui se envia el id de sucursal -->
+          <!-- <ion-col size="6" *ngIf="data[4]">
+            
             <ion-card (click)="stockPollo(user.branch)">
               <ion-card-content>
                 <ion-row size="12">
@@ -221,7 +230,7 @@
                         </div>
                       </ion-col>
                       <ion-col size="12">
-                        <span class="title-progress-bar">Nivel de progreso</span>
+                        <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                         &nbsp;
                         <ion-progress-bar [color]="data[4].color" value=".{{ data[4].percentage }}"></ion-progress-bar>
                         &nbsp;
@@ -234,7 +243,9 @@
                 </ion-row>
               </ion-card-content>
             </ion-card>
-          </ion-col>
+          </ion-col> -->
+
+
           <!-- -----------MESAS EN ESPERA------------ -->
           <ion-col size="6" *ngIf="data[3]">
             <!-- aqui se envia el id de sucursal -->
@@ -254,19 +265,19 @@
                       <ion-col size="12">
                         <div>
                           <span>
-                            Indica desde aquí cuántas mesas hay en espera y
-                            cuánto tiempo hay entre ellas.
+                            REGISTRA CUANTAS PERSONAS TENEMOS EN ESPERA DE 13:00 A 17:00 HORAS
                           </span>
                         </div>
                       </ion-col>
                       <ion-col size="12">
-                        <span class="title-progress-bar">Nivel de progreso</span>
-                        &nbsp;
+                        <br>
+                        <span class="title-progress-bar">NIVEL DE PROGRESO</span>
+                        
                         <ion-progress-bar *ngIf="data[3].isComplete === false" color="{{ data[3].color }}" value="0.1">
                         </ion-progress-bar>
                         <ion-progress-bar *ngIf="data[3].isComplete === true" color="{{ data[3].color }}" value="1">
                         </ion-progress-bar>
-                        &nbsp;
+                        <br>
                         <div class="margin-completado">
                           <span *ngIf="data[3].isComplete === false" class="title-progress-bar">0% completado</span>
                           <span *ngIf="data[3].isComplete === true" class="title-progress-bar">100% completado</span>

@@ -4,8 +4,18 @@ ion-header {
 .color-text-white {
   color: white;
 }
+.color-text-white-c {
+  color: white;
+  font-size: 200%;
+}
+
 .title-red {
   color: #ad182d;
+  font-size: 250%;
+}
+.title-red2 {
+  color: #ad182d;
+  font-size: 200%;
 }
 .title-tareas {
   color: #1d1d1b;
@@ -42,4 +52,9 @@ ion-header {
 
 .custom-skeleton ion-skeleton-text:last-child {
   margin-bottom: 5px;
+}
+
+.align-center-text {
+  text-align: center;
+  align-items: center;
 }

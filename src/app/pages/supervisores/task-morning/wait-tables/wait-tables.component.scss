@@ -9,7 +9,7 @@ ion-header {
 .title {
   color: #ad182d;
   font-weight: bold;
-  font-size: large;
+  font-size: 400%;
   margin-left: 5px;
 }
 
@@ -17,11 +17,19 @@ ion-header {
   color: black;
   font-weight: bold;
   font-size: large;
+  font-size: 200%;
+}
+
+.description{
+  color: #ad182d;
+  font-size: 120%;
+  font-weight: bold;
 }
 
 .date-grey {
   font-weight: 500;
   color: grey;
+  font-size: 150%;
 }
 
 .return {

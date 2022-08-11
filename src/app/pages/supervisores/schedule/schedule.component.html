@@ -5,8 +5,8 @@
         <!-- titulo -->
         <ion-row>
           <ion-col class="logo">
-            <h2>SELECCIÓN DE TURNO</h2>
-            <span>Sucursal {{nameBranch}}</span>
+            <h2 class="title">SELECCIÓN DE TURNO</h2>
+            <h2 class="title">{{nameBranch}}</h2>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -15,13 +15,13 @@
           <ion-col size="12">
             <ion-list>
               <ion-list-header>
-                <ion-label> Selecciona el turno </ion-label>
+                <ion-label>SELECCIONA EL TURNO</ion-label>
               </ion-list-header>
               <ion-item>
-                <ion-label>Turno</ion-label>
+                <ion-label>TURNO</ion-label>
                 <ion-select [(ngModel)]="schedule" >
-                  <ion-select-option value="1">Matutino</ion-select-option>
-                  <ion-select-option value="2">Vespetino</ion-select-option>
+                  <ion-select-option value="1">MATUTINO</ion-select-option>
+                  <ion-select-option value="2">VESPERTINO</ion-select-option>
                 </ion-select>
               </ion-item>
             </ion-list>

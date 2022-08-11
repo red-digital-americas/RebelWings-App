@@ -18,7 +18,7 @@
           />
         </ion-col>
         <ion-col size="11" class="ion-align-self-center">
-          <h3 class="title">STOCK DE POLLO</h3>
+          <h3 class="title">INVENTARIOS DIARIOS</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -28,13 +28,20 @@
       <!-- titulo de empresa -->
       <ion-row size="12" *ngIf="dataStock" >
         <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL {{user.branchName}}</h5>
+          <h5 class="subtitle-negro">{{user.branchName}}</h5>
         </ion-col>
-        <ion-col size="8">
+        <ion-col size="7"></ion-col>
+        <ion-col size="1">
           <span class="date-grey">
-            {{ today | date: "dd MMM yyy" }}
+            {{ today | date: "dd/MM/yyy" }}
           </span>
         </ion-col>
+
+        <ion-col size="12">
+          <h5 class="description">REALIZA TUS INVENTARIOS DIARIOS AL FINALIZAR TU TURNO</h5>
+          &nbsp;
+        </ion-col>
+
         <ion-col size="12">
           <span class="money"> $ {{dataStock.salesExpectationTotal}} MXN / {{dataStock.amountTotal}} Kg de pollo </span>
         </ion-col>
