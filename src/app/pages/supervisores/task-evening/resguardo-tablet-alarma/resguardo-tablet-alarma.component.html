@@ -11,38 +11,56 @@
       </ion-row>
       <ion-row size="12">
         <ion-col size="1">
-          <img src="./assets/icon/ilustracion_resguardo_de_tableta.png" alt="Alarma" />
+          <img src="./assets/icon/ilustracion_alarma.png" alt="Alarma" />
         </ion-col>
         <ion-col size="11" class="ion-align-self-center">
-          <h3 class="title">RESGUARDO DE TABLETA Y ALARMA</h3>
-        </ion-col>
-      </ion-row>
-      <!-- titulo de empresa -->
-      <ion-row size="12" *ngIf="user">
-        <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL {{user.branchName}}</h5>
-        </ion-col>
-        <ion-col size="8">
-          <span class="date-grey">
-            {{ today | date: "dd MMM yyy" }}
-          </span>
+          <h3 class="title">ALARMA/TABLETAS</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-header>
   <ion-content fullscreen="false" class="ion-padding">
-    <!-- GRID DE TABLET -->
-    <ion-grid>
+   <ion-grid>   
+      <!-- titulo de empresa -->
+      <ion-row size="12" *ngIf="user">
+        <ion-col size="4">
+          <h5 class="subtitle-negro">{{user.branchName}}</h5>
+        </ion-col>
+        <ion-col size="7"></ion-col>
+        <ion-col size="1">
+          <span class="date-grey">
+            {{ today | date: "dd/MM/yyy" }}
+          </span>
+        </ion-col>
+      </ion-row>
+
       <ion-row size="12">
         <ion-col size="12">
+<<<<<<< HEAD
           <span>Resguardo de Tableta</span>
+=======
+          <h5 class="description">RESGUARDA TODAS LAS TABLETAS Y ASEGURATE DE PONER LA ALARMA AL SALIR DE LA SUCURSAL</h5>
+          &nbsp;
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+   
+  
+    <!-- GRID DE TABLET -->
+   <ion-grid>
+      <ion-row size="12">
+        <ion-col size="12">
+          <span>RESGUARDO DE TABLETA</span>
+          <br>
+          <ion-toggle [(ngModel)]="toggTable"></ion-toggle>
+>>>>>>> OPERA
         </ion-col>
       </ion-row>
     </ion-grid>
     <ion-grid>
       <ion-row size="12">
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGalleryTablet()">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -50,9 +68,9 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIO</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="dataTablet.comment" rows="6" cols="20"></ion-textarea>
+            <ion-textarea [(ngModel)]="dataTablet.comment" rows="6" cols="20" style="margin-top: 2px;"></ion-textarea>
           </ion-card>
         </ion-col>
       </ion-row>
@@ -80,14 +98,20 @@
     <ion-grid>
       <ion-row size="12">
         <ion-col size="12">
+<<<<<<< HEAD
           <span>Resguardo de Alarma</span>
+=======
+          <span>RESGUARDO DE ALARMA</span>
+          <br>
+          <ion-toggle [(ngModel)]="toggAlarma"></ion-toggle>
+>>>>>>> OPERA
         </ion-col>
       </ion-row>
     </ion-grid>
     <ion-grid>
       <ion-row size="12">
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGalleryAlarma()">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -95,9 +119,9 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIO</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="dataAlarma.comment" rows="6" cols="20"></ion-textarea>
+            <ion-textarea [(ngModel)]="dataAlarma.comment" rows="6" cols="20" style="margin-top: 2px;"></ion-textarea>
           </ion-card>
         </ion-col>
       </ion-row>

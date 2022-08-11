@@ -29,5 +29,8 @@ npm-debug.log*
 /platforms
 /plugins
 /www
+<<<<<<< HEAD
 node_modules
+=======
+>>>>>>> OPERA
 node_modules/__ngcc_entry_points__.json

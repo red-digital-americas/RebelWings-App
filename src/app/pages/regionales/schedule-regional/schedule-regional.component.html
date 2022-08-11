@@ -5,7 +5,7 @@
         <!-- titulo -->
         <ion-row>
           <ion-col class="logo">
-            <h2>SELECCIÓN DE SUCURSAL</h2>
+            <h2 class="title">SELECCIÓN DE SUCURSAL</h2>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -14,10 +14,10 @@
           <ion-col size="12">
             <ion-list>
               <ion-list-header>
-                <ion-label> Selecciona la sucursal </ion-label>
+                <ion-label class="title">SELECCIONA LA SUCURSAL</ion-label>
               </ion-list-header>
               <ion-item>
-                <ion-label>Sucursal</ion-label>
+                <ion-label>SUCURSAL</ion-label>
                 <ion-select [(ngModel)]="branchId">
                   <ion-select-option *ngFor="let item of catalogSucursal" [value]="item.idfront">{{item.titulo}}
                   </ion-select-option>
