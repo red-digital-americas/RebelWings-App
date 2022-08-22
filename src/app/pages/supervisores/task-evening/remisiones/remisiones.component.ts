@@ -37,6 +37,7 @@ interface EventGroupMeta {
 
 })
 export class RemisionesComponent implements OnInit {
+  public turno;
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
   modalData: {
     action: string;
@@ -124,6 +125,9 @@ export class RemisionesComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log('user', this.user);
     console.log('colores', this.colors);
+
+    this.turno = this.routerActive.snapshot.paramMap.get('turno');
+    console.log('turno select', this.turno);
 
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idSucursal = this.routerActive.snapshot.paramMap.get('id');
@@ -429,7 +433,12 @@ export class RemisionesComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl('supervisor/control-vespertino');
+    if (this.turno === '1') {
+      this.router.navigateByUrl('supervisor/control-matutino/tarea/2');
+    }
+    else {
+      this.router.navigateByUrl('supervisor/control-vespertino');
+    }
   }
 
   dayClicked(day: CalendarMonthViewDay, { date, events }: { date: Date; events: CalendarEvent[] }): void {

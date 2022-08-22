@@ -17,6 +17,7 @@ export class TransferenciasComponent implements OnInit {
   public idSucursal: string;
   public disabled = false;
   public activeData = false;
+  public turno;
   // nombre de sucursal
   public branchId;
   public nameBranch = '';
@@ -37,6 +38,9 @@ export class TransferenciasComponent implements OnInit {
     console.log('user', this.user);
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idSucursal = this.routerActive.snapshot.paramMap.get('id');
+    this.turno = this.routerActive.snapshot.paramMap.get('turno');
+    console.log('turno select', this.turno);
+
     this.getData();
   }
   ngOnInit() { }
@@ -57,8 +61,13 @@ export class TransferenciasComponent implements OnInit {
     console.log('sin data', this.data);
   }
   return() {
-    // window.history.back();
+   // window.history.back();
+   if (this.turno === '1') {
+    this.router.navigateByUrl('supervisor/control-matutino/tarea/2');
+  }
+  else {
     this.router.navigateByUrl('supervisor/control-vespertino');
+  }
   }
   async openNotification(ev: any, obj, idType, branch) {
     console.log('data', obj, 'type', idType);

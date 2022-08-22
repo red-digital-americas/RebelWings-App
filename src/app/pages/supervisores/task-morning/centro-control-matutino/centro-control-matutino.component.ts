@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
+import { DialogNotificationComponent } from 'src/app/pages/nav/dialog-notification/dialog-notification.component';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { LogoutComponent } from 'src/app/pages/popover/logout/logout.component';
 import { AlertController } from '@ionic/angular';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-centro-control-matutino',
@@ -14,18 +16,33 @@ import { AlertController } from '@ionic/angular';
 export class CentroControlMatutinoComponent implements OnInit {
   public matutino = 1;
   public user;
-  public data: any = [];
+  public data: any[] = [];
+  public dataNotification: any = [];
   // nombre de sucursal
   public today = new Date();
   public branchId;
   // public nameBranch = '';
   public dataBranch: any[] = [];
+  public valueVolado;
+  public time;
+
+  // variable menu seleccionable
+  public task;
+  public cant;
+
+
+  public barProgressTask: number;
+  public color: string;
   constructor(
-    public router: Router,
+    public router: Router,public routerActive: ActivatedRoute,
     public service: ServiceGeneralService,
     public load: LoaderComponent,
     public popoverCtrl: PopoverController,
     // public alertController: AlertController,
+    public modalController: ModalController,
+    public alertController: AlertController,
+    public datepipe: DatePipe
+
 
   ) { }
 
@@ -34,25 +51,55 @@ export class CentroControlMatutinoComponent implements OnInit {
     console.log('user', this.user);
     // obtener el nombre de sucursal
     this.branchId = this.user.branchId;
+    this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
     // this.getBranch();
-    this.getDataControl();
+    this.getDataControl(this.task);
     // this.notificationAlarm();
+    this.CantidadVolado();
+
+
   }
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log('user', this.user);
-    this.getDataControl();
+    this.getDataControl(this.task);
+    this.getNotification();
+    this.notificationVoladoEfectivo();
+
+  
   }
-  getDataControl() {
+  getDataControl(task) {
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet(`ControlCenter/${this.user.branchId}/${this.matutino}/Manager`)
+      .serviceGeneralGet(`ControlCenter/${this.user.branchId}/${this.matutino}/${task}/Manager`)
       .subscribe((resp) => {
         if (resp.success) {
-          console.log('control', resp.result);
-          this.data = resp.result;
+          this.data = resp.result.controlCenters;
+          this.barProgressTask = resp.result.progress;
+          if (this.barProgressTask === 0){
+            this.color = 'danger';
+          }
+          else if (this.barProgressTask === 100){
+            this.color = 'success';
+          }
+          else{
+            this.color = 'warning';
+          }
+          console.log('control matutino', resp.result);
         }
       });
+  }
+
+  CantidadVolado(){
+    if(Number(this.valueVolado.message) < 3000 || this.valueVolado.message === undefined){
+       this.cant = 0;
+       console.log('cantidad', this.cant);
+    }
+    else{
+       this.cant = 1;
+       console.log('cantidad', this.cant);
+    }
+
   }
 
   // async notificationAlarm(){
@@ -113,6 +160,101 @@ export class CentroControlMatutinoComponent implements OnInit {
 
   }
 
+  async notificationVoladoEfectivo() {
+    this.valueVolado = [];
+    console.log('date', this.today);
+    let timeTemp = '';
+    const hour = this.today.getHours();
+    const minute = this.today.getMinutes();
+    let hourString = hour.toString();
+    let minuteString = minute.toString();
+    const date = this.datepipe.transform(this.today, 'yyyy-MM-dd');
+    if (hourString.length < 2) {
+      hourString = `0${hourString}`;
+    }
+    if (minuteString.length < 2) {
+      minuteString = `0${minuteString}`;
+    }
+    timeTemp = `${hourString}:${minuteString}:00`;
+    this.time = `${date}T${timeTemp}`;
+    console.log('format date', this.time);
+    this.service.serviceGeneralGet(`CashRegisterShortage/GetCash?id_sucursal=${this.user.branch}&dataBase=${this.user.dataBase}`).subscribe(resp => {
+      if (resp.success) {
+        // si entra success el volado es mayor a 3000
+        this.valueVolado = resp;
+        this.valueVolado.message = Number(this.valueVolado.message);
+        this.valueVolado.time = this.time;
+        this.valueVolado.message = Number(this.valueVolado.message);
+        localStorage.setItem('valueVolado', JSON.stringify(this.valueVolado));
+        this.alertVolado();
+      }
+      else {
+
+        // prueba
+        // this.valueVolado = resp;
+        // this.valueVolado.message = 3000;
+        // this.valueVolado.time = this.time;
+        // console.log('valor', this.valueVolado);
+        // localStorage.setItem('valueVolado', JSON.stringify(this.valueVolado));
+        // this.alertVolado();
+        // //
+        // this.valueVolado = resp;
+        // this.valueVolado.time = this.time;
+        this.valueVolado = resp;
+        this.valueVolado.message = Number(this.valueVolado.message);
+        this.valueVolado.message = Number(this.valueVolado.message);
+        localStorage.setItem('valueVolado', JSON.stringify(this.valueVolado));
+        console.log('Aun no hay 3mil pesos', this.valueVolado);
+        
+      }
+    });
+  }
+  async alertVolado(){
+    if (this.valueVolado.success === true) {
+      const alert = await this.alertController.create({
+        cssClass: 'my-custom-class',
+        header: 'Realiza el volado de efectivo',
+        subHeader: `Por $ ${this.valueVolado.message} MXN`,
+        message: 'Se activara un cronómetro para identificar en cuánto tiempo se hizo el volado de efectivo.',
+        mode: 'ios', //sirve para tomar el diseño de ios
+        buttons: ['OK']
+      });
+      await alert.present();
+      const { role } = await alert.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
+    }
+  }
+
+  //*****************notification*****************************
+  async openNotification() {
+  // package = 0 es nuevo registos, si es != 0 es update
+  const modal = await this.modalController.create({
+    component: DialogNotificationComponent,
+    cssClass: 'my-custom-class',
+    swipeToClose: true,
+    componentProps: {
+      id: this.user.branchId, //se envia el id de sucursal
+    },
+  });
+  modal.onDidDismiss().then((data) => {
+    console.log(data);
+    this.ionViewWillEnter();
+  });
+  this.modalController.dismiss();
+  return await modal.present();
+  }
+
+  getNotification() {
+    this.service
+      .serviceGeneralGet('Transfer/Notifications?id=' + this.user.branchId)
+      .subscribe((resp) => {
+        if (resp.success) {
+          this.dataNotification = resp.result;
+          console.log('notificaciones', this.dataNotification);
+        }
+      });
+  }
+
   validacionAsistencia() {
     this.router.navigateByUrl('supervisor/validacion-assistencia/1');
   }
@@ -139,5 +281,30 @@ export class CentroControlMatutinoComponent implements OnInit {
       id = 0;
     }
     this.router.navigateByUrl(`supervisor/mesa-espera/1/${id}`);
+  }
+  remisiones(id) {
+    if (id === null) {
+      id = 0;
+    }
+    this.router.navigateByUrl('supervisor/remisiones/1/' + id);
+  }
+  productoRiesgo(id) {
+    console.log('id producto en riesgo', id);
+    if (id === null) {
+      id = 0;
+    }
+    this.router.navigateByUrl('supervisor/producto-riesgo/1/' + id);
+  }
+  transferencias(id) {
+  if (id === null) {
+    id = 0;
+  }
+  this.router.navigateByUrl('supervisor/transferencias/1/' + id);
+  }
+  voladoEfectivo(id) {
+  if (id === null) {
+    id = 0;
+  }
+  this.router.navigateByUrl('supervisor/volado-efectivo/1/' + id);
   }
 }

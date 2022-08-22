@@ -1,13 +1,17 @@
 <ion-app>
   <ion-header class="ion-no-border ion-padding">
     <ion-grid>
-      <ion-row>
-        <ion-col>
+      <ion-row size="12">
+        <ion-col size="1">
           <div>
-            <p (click)="return()" class="ion-align-items-start return">
-              < REGRESAR</p>
+            <!-- <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR</p> -->
+              <ion-button (click)="return()" shape="round" color="warning" expand="full" size="small">
+                REGRESAR
+              </ion-button>
           </div>
         </ion-col>
+        <ion-col size="11"></ion-col>
       </ion-row>
       <ion-row size="12">
         <ion-col size="1">
@@ -36,16 +40,42 @@
 
       <ion-row size="12">
         <ion-col size="12">
-          <h5 class="description">REALIZA UN CHECK DE LA CANTIDAD DE GAS CON LA QUE CUENTAS PARA EL TURNO</h5>
+          <h5 class="description">REALIZA UN CHECK DE LA CANTIDAD DE GAS CON LA QUE CUENTAS PARA INICIAR EL TURNO</h5>
           &nbsp;
         </ion-col>
       </ion-row>
-
+      <ion-row size="12">
+        <ion-col size="12">
+          <ion-label floating>SELECCIONA TU TIPO DE GAS</ion-label>
+          <BR>
+            <BR>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-radio-group ng-reflect-model="1" [(ngModel)]="radioValue" (ionChange)="showValue()">
+          <ion-row >
+            <ion-col >
+               <ion-item   style="margin-left: 0.5rem; width: 15rem; font-size: 20PX; height: 45px;">
+                   <ion-label >ESTACIONARIO </ion-label>
+                   <ion-radio aria-checked="true" mode="md" value="1" ></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col >
+                <ion-item style="width: 15rem; font-size: 20PX; height: 45px;">
+                    <ion-label >NATURAL </ion-label>
+                    <ion-radio mode="md"  value="2" ></ion-radio>
+               </ion-item>
+            </ion-col>
+        </ion-row>
+        </ion-radio-group>
+      </ion-row>
+<BR>
+<BR>
       <ion-row size="12">
         <ion-col size="6">
-          <ion-label floating>CANTIDAD EN LITROS</ion-label>
+          <ion-label floating>PORCENTAJE GAS</ion-label>
           <ion-card class="closed">
-            <ion-input [(ngModel)]="data.amount" type="number" min="0" placeholder="Lts"></ion-input>
+            <ion-input [(ngModel)]="data.amount" type="number" min="0" placeholder="%" [disabled]="this.radioValue === '2'"></ion-input>
           </ion-card>
         </ion-col>
         <ion-col size="6"></ion-col>
@@ -53,7 +83,7 @@
       <ion-row size="12">
         <ion-col size="6">
           <ion-label>FOTOGRAFIA</ion-label>
-          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery()">
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery()" [disabled]="this.radioValue === '2'">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
             </div>
@@ -62,7 +92,7 @@
         <ion-col size="6">
           <ion-label>COMENTARIO</ion-label>
           <ion-card>
-            <ion-textarea type="string" [(ngModel)]="data.comment" rows="6" cols="20" style="margin-top: 2px;"></ion-textarea>
+            <ion-textarea type="string" [(ngModel)]="data.comment" rows="6" cols="20" style="margin-top: 2px;" [disabled]="this.radioValue === '2'"></ion-textarea>
           </ion-card>
         </ion-col>
       </ion-row>
@@ -90,7 +120,7 @@
       <!-- footer boton -->
       <ion-row size="12" class="footer">
         <ion-col size="3" offset="8">
-          <ion-button  (click)="save()" shape="round" color="danger" expand="full">
+          <ion-button  (click)="save()" shape="round" color="danger" expand="full" [disabled]="(data.comment === undefined || data.comment === null || data.amount === undefined || data.amount === null)">
             GUARDAR
           </ion-button>
         </ion-col>

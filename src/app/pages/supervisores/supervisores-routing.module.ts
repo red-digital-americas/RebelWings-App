@@ -24,11 +24,11 @@ const routes: Routes = [
     component: ScheduleComponent,
   },
   {
-    path: 'control-matutino', // child route path
+    path: 'control-matutino/tarea/:idTarea', // child route path
     component: CentroControlMatutinoComponent, // child route component that the router renders
   },
   {
-    path: 'control-vespertino',
+    path: 'control-vespertino/tarea/:idTarea',
     component: CentroControlVespertinoComponent, // another child route component that the router renders
   },
   {
@@ -52,11 +52,11 @@ const routes: Routes = [
     component: WaitTablesComponent,
   },
   {
-    path: 'remisiones/:id',
+    path: 'remisiones/:turno/:id',
     component: RemisionesComponent,
   },
   {
-    path: 'producto-riesgo/:id',
+    path: 'producto-riesgo/:turno/:id',
     component: ProductoRiesgoComponent,
   },
   {
@@ -64,11 +64,11 @@ const routes: Routes = [
     component: AlbaranesComponent,
   },
   {
-    path: 'transferencias/:id',
+    path: 'transferencias/:turno/:id',
     component: TransferenciasComponent,
   },
   {
-    path: 'volado-efectivo/:id',
+    path: 'volado-efectivo/:turno/:id',
     component: VoladoEfectivoComponent,
   },
   {

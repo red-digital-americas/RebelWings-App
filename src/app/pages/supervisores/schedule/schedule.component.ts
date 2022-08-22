@@ -33,10 +33,10 @@ export class ScheduleComponent implements OnInit {
 
   selecSchedule() {
     if (this.schedule === '1') {
-      this.router.navigate(['/supervisor/control-matutino']);
+      this.router.navigate(['/supervisor/control-matutino/tarea/1']);
       // this.router.navigateByUrl('supervisor/control-matutino');
     } else if (this.schedule === '2') {
-      this.router.navigate(['/supervisor/control-vespertino']);
+      this.router.navigate(['/supervisor/control-vespertino/tarea/1']);
       // this.router.navigateByUrl('supervisor/control-vespertino');
     }
   }

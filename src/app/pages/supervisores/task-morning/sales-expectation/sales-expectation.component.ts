@@ -41,7 +41,9 @@ export class SalesExpectationComponent implements OnInit {
   }
   ngOnInit() { }
 
+  
   getData() {
+    debugger;
     this.load.presentLoading('Cargando..');
     this.service
       .serviceGeneralGet(`StockChicken/GetStock?id_sucursal=${this.user.branch}&dataBase=${this.user.dataBase}`)

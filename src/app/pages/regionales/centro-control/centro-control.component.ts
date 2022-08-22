@@ -35,6 +35,7 @@ export class CentroControlComponent implements OnInit {
   segmentChanged(ev: any) {
     console.log('Segment changed', ev);
   }
+
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log('user', this.user);
@@ -67,6 +68,7 @@ export class CentroControlComponent implements OnInit {
           console.log('control vespertino', resp.result);
         }
       });
+    
   }
   return() {
     console.log('return');

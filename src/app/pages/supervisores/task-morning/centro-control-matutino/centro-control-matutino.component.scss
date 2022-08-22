@@ -10,7 +10,10 @@ ion-header {
   color: white;
   font-size: 200%;
 }
-
+.color-text-white-n {
+  color: gold;
+  font-size: 200%;
+}
 .title-red {
   color: #ad182d;
   font-size: 250%;
@@ -39,7 +42,7 @@ ion-header {
   text-align: end;
 }
 .align-center-text {
-  text-align: center;
+  
   align-items: center;
 }
 
@@ -50,4 +53,18 @@ ion-header {
 .avatar {
   border-radius: 50%;
 
+}
+
+// estilos para el menu
+.btnMenu {
+  margin: 1rem;
+}
+
+.title-progress-bar {
+  color: #808289;
+}
+
+.margin-completado {
+  text-align: end;
+  margin-top: -14px;
 }

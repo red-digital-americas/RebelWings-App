@@ -1,14 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import {
-  UserPhoto,
-  PhotoService,
-} from 'src/app/core/services/services/photo.service';
+import {UserPhoto,PhotoService,} from 'src/app/core/services/services/photo.service';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
+import { AlertController } from '@ionic/angular';
+import { data } from 'jquery';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -25,7 +25,9 @@ export class GasValidationComponent implements OnInit {
   public disabled = false;
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
   public createDate = '';
+  public radioValue = '1'; 
 
+  
 
 
   public fotosGas;
@@ -43,6 +45,7 @@ export class GasValidationComponent implements OnInit {
     public photoService: PhotoService,
     public service: ServiceGeneralService,
     public load: LoaderComponent,
+    public alertController: AlertController,
     private camera: Camera,
     public datepipe: DatePipe
 
@@ -75,7 +78,7 @@ export class GasValidationComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl('supervisor/control-matutino');
+    this.router.navigateByUrl('supervisor/control-matutino/tarea/1');
   }
   async addPhotoToGallery() {
     const name = new Date().toISOString();
@@ -97,6 +100,15 @@ export class GasValidationComponent implements OnInit {
     console.log('fotos validacion gas', this.data);
   }
 
+  showValue(){
+    // console.log('',this.radioValue);
+    if(this.radioValue === '2'){
+      console.log('',this.radioValue);
+      this.data.amount = 100;
+      this.data.comment = "NO APLICA";
+      
+    }
+  }
 
   public async showActionSheet(photo, position: number) {
     console.log('photo', photo);
@@ -190,6 +202,9 @@ export class GasValidationComponent implements OnInit {
     }
   }
   save() {
+    if(this.data.amount < 40){
+      this.presentAlert();
+    }
     this.disabled = true;
     this.fotosGas = [];
     if (this.data.photoValidationGas.length !== 0) {
@@ -204,13 +219,14 @@ export class GasValidationComponent implements OnInit {
     this.fotosGas = this.photoService.photos;
     console.log('Obj To send => ', this.data);
     this.formartDate();
-
+ 
     // if (this.idGas === '0') {
     //   this.formartDate();
     // } else {
 
     //   this.updateData();
     // }
+    
   }
 
   addData() {
@@ -222,7 +238,7 @@ export class GasValidationComponent implements OnInit {
         this.load.presentLoading('Guardando..');
         console.log('Resp Serv =>', data);
         this.photoService.deleteAllPhoto(this.data);
-        this.router.navigateByUrl('supervisor/control-matutino');
+        this.router.navigateByUrl('supervisor/control-matutino/tarea/1');
       }
     });
   }
@@ -235,11 +251,26 @@ export class GasValidationComponent implements OnInit {
           this.load.presentLoading('Actualizando..');
           console.log('Resp Serv =>', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('supervisor/control-matutino');
+          this.router.navigateByUrl('supervisor/control-matutino/tarea/1');
         }
       });
   }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'PORCENTAJE DE GAS',
+      message: 'ESTAS DEBAJO DEL 40% <BR>SOLICITA TU RECARGA DE GAS!',
+      mode: 'ios',
+      buttons: ['OK'],
+    });
+  
+    await alert.present();
+  }
 }
+
+
 
 class GasDataModel {
   id: number;

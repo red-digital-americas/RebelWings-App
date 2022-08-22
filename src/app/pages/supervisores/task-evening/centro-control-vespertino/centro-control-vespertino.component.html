@@ -33,7 +33,6 @@
                 <span class="color-text-white ">{{user.name}} {{user.lastName}}</span>
               </div>
             </ion-col>
-
           </ion-row>
         </ion-col>
         <ion-col size="1" class="ion-align-items-end">
@@ -61,8 +60,8 @@
         <ion-row>
           <ion-col>
             <div>
-              <p (click)="return()" class="ion-align-items-start return">
-                < REGRESAR </p>
+              <!-- <p (click)="return()" class="ion-align-items-start return">
+                < REGRESAR </p> -->
             </div>
           </ion-col>
         </ion-row>
@@ -85,6 +84,41 @@
           </ion-col>
         </ion-row>
         <ion-row size="12">
+
+          <!-- ----------- M E N U  S E C C I O N A D O-------------->
+          <ion-col size="12">
+            <ion-segment mode="ios" scrollable [(ngModel)]="task">
+              <ion-row size="12">
+                <ion-col size="6">
+                  <ion-segment-button value="1" (click)="getDataControl(1)">
+                    <span class="btnMenu">TAREAS</span>
+                  </ion-segment-button>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-segment-button value="2" (click)="getDataControl(2)">
+                    <span class="btnMenu">OTROS</span>
+                  </ion-segment-button>
+                </ion-col>
+                
+              </ion-row>
+            </ion-segment>
+          </ion-col>
+
+      <div [ngSwitch]="task">
+        <ion-row size="12" *ngSwitchCase="'1'">
+           <!--***** S E C C I O N   T A R E A S ******-->
+           <!-- progress bar -->
+           <ion-col size="12">
+                    <span class="title-progress-bar">NIVEL DE PROGRESO</span>
+                    &nbsp;
+                    <ion-progress-bar mode="ios" color="{{color}}" [value]="barProgressTask / 100"></ion-progress-bar>
+                    &nbsp;
+              <div class="margin-completado">
+                      <span class="title-progress-bar">{{barProgressTask | number: '.1-2'}}% COMPLETADO</span>
+                      <!-- .1 * 100 -->
+              </div>
+           </ion-col>
+
           <!-- -----------asistencias ---------------->
           <ion-col size="6" *ngIf="data[0]">
             <ion-card>
@@ -216,6 +250,8 @@
               </ion-card-content>
             </ion-card>
           </ion-col>
+
+
           <!-- -----------ALBARANES------------ -->
           <!-- <ion-col size="6" *ngIf="data[10]">
             <ion-card (click)="albaranes(user.branchId)">
@@ -257,6 +293,8 @@
               </ion-card-content>
             </ion-card>
           </ion-col> -->
+
+
           <!-- -----------TRANSFERENCIAS------------ -->
           <ion-col size="6" *ngIf="data[9]">
             <!-- aqui se envia el id de sucursal -->
@@ -316,6 +354,8 @@
               </ion-card-content>
             </ion-card>
           </ion-col>
+
+
           <!-------------- VOLADO DE EFECTIVO ------------>
           <!-- *ngIf="data[3]" -->
           <ion-col size="6" *ngIf="data[8]">
@@ -325,7 +365,8 @@
               <ion-card-content>
                 <ion-row size="12">
                   <ion-col size="3" class="ion-align-self-center">
-                    <img src="./assets/icon/ilustracion_volado_de_efectivo.png" alt="" />
+                    <img *ngIf="data[5].isComplete === false" src="./assets/icon/ilustracion_volado_de_efectivo.png" alt="" />
+                    <img *ngIf="data[5].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                   </ion-col>
                   <ion-col size="9">
                     <ion-row size="12">
@@ -364,6 +405,8 @@
               </ion-card-content>
             </ion-card>
           </ion-col>
+
+
           <!--------------RESGUARDO DE PROPINA------------>
           <!-- *ngIf="data[3]" -->
           <ion-col size="6" *ngIf="data[4]">
@@ -412,6 +455,8 @@
               </ion-card-content>
             </ion-card>
           </ion-col>
+
+
           <!--------------LIMPIEZA DE SALÓN Y BAÑOS------------>
           <!-- *ngIf="data[3]" -->
           <ion-col size="6" *ngIf="data[5]">
@@ -598,7 +643,8 @@
               <ion-card-content>
                 <ion-row size="12">
                   <ion-col size="3" class="ion-align-self-center">
-                    <img src="./assets/icon/ilustracion_mesas_en_espera.png" alt="" />
+                    <img *ngIf="data[2].isComplete === false" src="./assets/icon/ilustracion_mesas_en_espera.png" alt="" />
+                    <img *ngIf="data[2].isComplete === true" src="./assets/icon/ilustracion_check.png" alt="" />
                   </ion-col>
                   <ion-col size="9">
                     <ion-row size="12">
@@ -635,6 +681,7 @@
               </ion-card-content>
             </ion-card>
           </ion-col>
+
           <!-- -----------STOCK DE POLLO------------ -->
           <ion-col size="6" *ngIf="data[3]">
             <!-- aqui se envia el id de sucursal -->
@@ -673,6 +720,9 @@
               </ion-card-content>
             </ion-card>
           </ion-col>
+        </ion-row>
+      </div>
+
         </ion-row>
       </ion-grid>
     </div>

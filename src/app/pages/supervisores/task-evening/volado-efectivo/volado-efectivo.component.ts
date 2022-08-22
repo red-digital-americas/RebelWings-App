@@ -26,6 +26,7 @@ export class VoladoEfectivoComponent implements OnInit {
   public disabled = false;
   public fotosEfectivo;
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
+  public turno;
   // ******variables de validacion ********
   public activeAmount = false;
   public activeComment = false;
@@ -55,6 +56,8 @@ export class VoladoEfectivoComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idEfectivo = this.routerActive.snapshot.paramMap.get('id');
+    this.turno = this.routerActive.snapshot.paramMap.get('turno');
+    console.log('turno select', this.turno);
     // get name de sucursal
     this.branchId = this.user.branchId;
     this.getBranch();
@@ -82,7 +85,12 @@ export class VoladoEfectivoComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl('supervisor/control-vespertino');
+    if (this.turno === '1') {
+      this.router.navigateByUrl('supervisor/control-matutino/tarea/1');
+    }
+    else {
+      this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
+    }
   }
   // get  name sucursal
   getBranch() {
@@ -282,7 +290,12 @@ export class VoladoEfectivoComponent implements OnInit {
           console.log('Resp Serv =>', data);
           localStorage.removeItem('valueVolado');
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('supervisor/control-vespertino');
+          if (this.turno === '1') {
+            this.router.navigateByUrl('supervisor/control-matutino/tarea/1');
+          }
+          else {
+            this.router.navigateByUrl('supervisor/control-vespertino');
+          }
           this.disabled = false;
         } else {
           this.disabled = false;
@@ -306,7 +319,12 @@ export class VoladoEfectivoComponent implements OnInit {
           console.log('Resp Serv =>', data);
           this.photoService.deleteAllPhoto(this.data);
           localStorage.removeItem('valueVolado');
-          this.router.navigateByUrl('supervisor/control-vespertino');
+          if (this.turno === '1') {
+            this.router.navigateByUrl('supervisor/control-matutino/tarea/1');
+          }
+          else {
+            this.router.navigateByUrl('supervisor/control-vespertino');
+          }
           this.disabled = false;
         } else {
           this.disabled = false;

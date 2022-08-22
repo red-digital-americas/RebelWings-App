@@ -61,7 +61,7 @@ export class LoungeMountedComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl('supervisor/control-matutino');
+    this.router.navigateByUrl('supervisor/control-matutino/tarea/1');
   }
   getData() {
     this.load.presentLoading('Cargando..');
@@ -219,7 +219,7 @@ export class LoungeMountedComponent implements OnInit {
           this.load.presentLoading('Guardando..');
           console.log('Resp Serv =>', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('supervisor/control-matutino');
+          this.router.navigateByUrl('supervisor/control-matutino/tarea/1');
         }
       });
   }
@@ -232,7 +232,7 @@ export class LoungeMountedComponent implements OnInit {
           this.load.presentLoading('Actualizando..');
           console.log('Resp Serv =>', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('supervisor/control-matutino');
+          this.router.navigateByUrl('supervisor/control-matutino/tarea/1');
           this.disabled = false;
         } else {
           this.disabled = false;

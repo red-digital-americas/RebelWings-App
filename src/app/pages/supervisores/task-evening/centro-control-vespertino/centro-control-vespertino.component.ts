@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
@@ -34,7 +34,11 @@ export class CentroControlVespertinoComponent implements OnInit {
   public countVoladoEfectivo = 0;
   public valueVolado;
   public time;
+  // variable menu seleccionable
+  public task;
 
+  public barProgressTask: number;
+  public color: string;
 
   constructor(
     public router: Router,
@@ -43,6 +47,7 @@ export class CentroControlVespertinoComponent implements OnInit {
     public modalController: ModalController,
     public popoverCtrl: PopoverController,
     public alertController: AlertController,
+    public routerActive: ActivatedRoute,
     public datepipe: DatePipe
 
   ) { }
@@ -50,16 +55,14 @@ export class CentroControlVespertinoComponent implements OnInit {
   ionViewWillEnter() {
     console.log('viewwillenter');
     this.ngOnInit();
-    // this.user = JSON.parse(localStorage.getItem('userData'));
-    // console.log('user', this.user);
-    // // obtener el nombre de sucursal
-    // this.branchId = this.user.branchId;
-    // // this.getBranch();
-
-    // this.getDataControl();
-    // this.getNotification();
+    this.user = JSON.parse(localStorage.getItem('userData'));
+    console.log('user', this.user);
+    // obtener el nombre de sucursal
+    this.branchId = this.user.branchId;
+    this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
+    // this.getBranch();
+    this.getDataControl(this.task);
     // this.notificationAlarm();
-    // this.notificationVoladoEfectivo();
 
   }
   ngOnInit() {
@@ -68,22 +71,31 @@ export class CentroControlVespertinoComponent implements OnInit {
     console.log('user', this.user);
     // obtener el nombre de sucursal
     this.branchId = this.user.branchId;
-    this.getDataControl();
+    this.getDataControl(this.task);
     this.getNotification();
     this.notificationVoladoEfectivo();
     this.notificationAlarm();
 
 
   }
-  getDataControl() {
+  getDataControl(task) {
     // this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet(`ControlCenter/${this.user.branchId}/${this.vespertino}/Manager`)
+      .serviceGeneralGet(`ControlCenter/${this.user.branchId}/${this.vespertino}/${task}/Manager`)
       .subscribe((resp) => {
         if (resp.success) {
-          console.log('control vespertino', resp.result);
-          this.data = resp.result;
-          this.activeTabletAndAlarma();
+          this.data = resp.result.controlCenters;
+          this.barProgressTask = resp.result.progress;
+          if (this.barProgressTask === 0){
+            this.color = 'danger';
+          }
+          else if (this.barProgressTask === 100){
+            this.color = 'success';
+          }
+          else{
+            this.color = 'warning';
+          }
+          console.log('control matutino', resp.result);
         }
       });
   }
@@ -236,7 +248,7 @@ remisiones(id) {
   if (id === null) {
     id = 0;
   }
-  this.router.navigateByUrl('supervisor/remisiones/' + id);
+  this.router.navigateByUrl('supervisor/remisiones/2/' + id);
 }
 getNotification() {
   this.service
@@ -253,7 +265,7 @@ productoRiesgo(id) {
   if (id === null) {
     id = 0;
   }
-  this.router.navigateByUrl('supervisor/producto-riesgo/' + id);
+  this.router.navigateByUrl('supervisor/producto-riesgo/2/' + id);
 }
 albaranes(id) {
   if (id === null) {
@@ -265,13 +277,13 @@ transferencias(id) {
   if (id === null) {
     id = 0;
   }
-  this.router.navigateByUrl('supervisor/transferencias/' + id);
+  this.router.navigateByUrl('supervisor/transferencias/2/' + id);
 }
 voladoEfectivo(id) {
   if (id === null) {
     id = 0;
   }
-  this.router.navigateByUrl('supervisor/volado-efectivo/' + id);
+  this.router.navigateByUrl('supervisor/volado-efectivo/2/' + id);
 }
 resguardoPropina(id) {
   if (id === null) {
