@@ -1,0 +1,46 @@
+ion-content {
+  --ion-background-color: #fafafa;
+}
+ion-header {
+  background-color: #fafafa;
+}
+ion-footer {
+  background-color: #fafafa;
+}
+.title {
+  color: #ad182d;
+  font-weight: bold;
+  font-size: 400%;
+  margin-left: 5px;
+}
+.subtitle-negro {
+  color: black;
+  font-weight: bold;
+  font-size: 200%;
+}
+.description{
+  color: #ad182d;
+  font-size: 120%;
+  font-weight: bold;
+}
+.date-grey {
+  font-weight: 500;
+  color: grey;
+  font-size: 150%;
+}
+.return {
+  color: #d0122d;
+}
+.footer {
+  position: absolute;
+  width: 100%;
+  bottom: 10px;
+  left: 0;
+}
+.center{
+  text-align: center;
+}
+.sizePhoto {
+  width: 5rem;
+  height: 5rem;
+}

@@ -7,6 +7,7 @@ import { ModalController, PopoverController } from '@ionic/angular';
 import { LogoutComponent } from 'src/app/pages/popover/logout/logout.component';
 import { AlertController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-centro-control-matutino',
@@ -29,7 +30,8 @@ export class CentroControlMatutinoComponent implements OnInit {
   // variable menu seleccionable
   public task;
   public cant;
-
+  public completada;
+  public contador = null;
 
   public barProgressTask: number;
   public color: string;
@@ -47,26 +49,31 @@ export class CentroControlMatutinoComponent implements OnInit {
   ) { }
 
   ionViewWillEnter() {
+
+    console.log('viewwillenter');
     this.user = JSON.parse(localStorage.getItem('userData'));
-    console.log('user', this.user);
+    //console.log('user', this.user);
     // obtener el nombre de sucursal
     this.branchId = this.user.branchId;
     this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
     // this.getBranch();
+    this.notificationVoladoEfectivo();
     this.getDataControl(this.task);
-    // this.notificationAlarm();
-    this.CantidadVolado();
+ 
+
 
 
   }
   ngOnInit() {
+
     this.user = JSON.parse(localStorage.getItem('userData'));
+    this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
     console.log('user', this.user);
-    this.getDataControl(this.task);
     this.getNotification();
     this.notificationVoladoEfectivo();
-
-  
+    this.getDataControl(this.task);
+    this.startTimer();
+   
   }
   getDataControl(task) {
     this.load.presentLoading('Cargando..');
@@ -86,21 +93,47 @@ export class CentroControlMatutinoComponent implements OnInit {
             this.color = 'warning';
           }
           console.log('control matutino', resp.result);
+
+          //SE ASIGNA EL VALOR DE LA TAREA DE VOLADO DE EFECTIVO
+          this.data.filter(data => data.name === "Volado de efectivo").map(data => {this.completada = data.isComplete;});
+          console.log('control volado', this.completada);
+
+         if(Number(this.valueVolado.message) < 3000){
+            this.cant = false;
+     
+            if(this.completada === false){
+            this.barProgressTask = this.barProgressTask + 16.66666666666667;
+            }
+
+         }
+         else{
+            this.cant = true;
+     
+            if(this.completada === true){
+              this.barProgressTask = this.barProgressTask - 16.66666666666667;
+              }
+
+         }
+
         }
+        console.log('cant', this.cant);
       });
   }
 
-  CantidadVolado(){
-    if(Number(this.valueVolado.message) < 3000 || this.valueVolado.message === undefined){
-       this.cant = 0;
-       console.log('cantidad', this.cant);
-    }
-    else{
-       this.cant = 1;
-       console.log('cantidad', this.cant);
-    }
-
+  //FUNCIONES DEL TIMER DE VOLADO DE EFECTIVO
+  startTimer() {
+    this.stopTimer();
+    this.contador = setInterval((n) => { 
+      this.notificationVoladoEfectivo();
+      console.log('muestra timer'); }, 20000);
   }
+  
+  stopTimer() {
+    
+      clearInterval(this.contador);
+    
+  }
+
 
   // async notificationAlarm(){
   //   const timeAlarmaIni = '13:00:00';
@@ -180,13 +213,17 @@ export class CentroControlMatutinoComponent implements OnInit {
     console.log('format date', this.time);
     this.service.serviceGeneralGet(`CashRegisterShortage/GetCash?id_sucursal=${this.user.branch}&dataBase=${this.user.dataBase}`).subscribe(resp => {
       if (resp.success) {
+        
         // si entra success el volado es mayor a 3000
         this.valueVolado = resp;
         this.valueVolado.message = Number(this.valueVolado.message);
         this.valueVolado.time = this.time;
         this.valueVolado.message = Number(this.valueVolado.message);
         localStorage.setItem('valueVolado', JSON.stringify(this.valueVolado));
-        this.alertVolado();
+        //SE DETINE EL TIMER DE ACTUALIZADO DE VOLADO
+        this.stopTimer();
+        //this.alertVolado();
+        
       }
       else {
 
@@ -202,10 +239,9 @@ export class CentroControlMatutinoComponent implements OnInit {
         // this.valueVolado.time = this.time;
         this.valueVolado = resp;
         this.valueVolado.message = Number(this.valueVolado.message);
-        this.valueVolado.message = Number(this.valueVolado.message);
         localStorage.setItem('valueVolado', JSON.stringify(this.valueVolado));
         console.log('Aun no hay 3mil pesos', this.valueVolado);
-        
+
       }
     });
   }
@@ -220,8 +256,10 @@ export class CentroControlMatutinoComponent implements OnInit {
         buttons: ['OK']
       });
       await alert.present();
-      const { role } = await alert.onDidDismiss();
+      const { role, } = await alert.onDidDismiss();
       console.log('onDidDismiss resolved with role', role);
+      //SE INICIA TIMER DE VOLADO DE EFECTIO
+      this.startTimer();
     }
   }
 
@@ -270,10 +308,17 @@ export class CentroControlMatutinoComponent implements OnInit {
     }
     this.router.navigateByUrl('supervisor/salon-montado/' + id);
   }
+  banosMatutino(id: number) {
+    if (id === null) {
+      id = 0;
+    }
+    this.router.navigateByUrl('supervisor/banos-matutino/' + id);
+  }
   stockPollo(id: number) {
     this.router.navigateByUrl('supervisor/expectativa-venta/' + id);
   }
   terminarTurno() {
+    this.stopTimer();
     this.router.navigateByUrl('supervisor');
   }
   mesas(id: number) {
@@ -307,4 +352,7 @@ export class CentroControlMatutinoComponent implements OnInit {
   }
   this.router.navigateByUrl('supervisor/volado-efectivo/1/' + id);
   }
+
+
 }
+

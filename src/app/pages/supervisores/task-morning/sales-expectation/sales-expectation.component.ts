@@ -43,7 +43,7 @@ export class SalesExpectationComponent implements OnInit {
 
   
   getData() {
-    debugger;
+
     this.load.presentLoading('Cargando..');
     this.service
       .serviceGeneralGet(`StockChicken/GetStock?id_sucursal=${this.user.branch}&dataBase=${this.user.dataBase}`)
@@ -60,7 +60,7 @@ export class SalesExpectationComponent implements OnInit {
   }
 
   return() {
-    window.history.back();
+    this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
   }
 
   async addPackage(idPack: number) {

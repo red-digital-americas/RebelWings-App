@@ -100,7 +100,7 @@
           <!-- fotos sin id -->
 
           <ion-row>
-            <ion-col size="3" *ngFor="let photo of data.photoValidationGas; index as position">
+            <ion-col size="3" *ngFor="let photo of data.photoWaitlistTable; index as position">
               <!-- se mostara esta imagen si no tiene id  -->
               <ion-img *ngIf="photo.id === 0 " src="{{ base64 }},{{ photo.photo }}" (click)="showActionSheet(photo, position)">
               </ion-img>

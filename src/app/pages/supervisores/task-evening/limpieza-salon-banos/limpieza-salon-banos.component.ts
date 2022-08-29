@@ -75,7 +75,7 @@ export class LimpiezaSalonBanosComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl('supervisor/control-vespertino');
+    this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
   }
   // get  name sucursal
   getBranch() {
@@ -261,7 +261,7 @@ export class LimpiezaSalonBanosComponent implements OnInit {
           this.load.presentLoading('Guardando..');
           console.log('Resp Serv =>', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('supervisor/control-vespertino');
+          this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
         }
       });
   }
@@ -281,7 +281,7 @@ export class LimpiezaSalonBanosComponent implements OnInit {
           this.load.presentLoading('Actualizando..');
           console.log('Resp Serv =>', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('supervisor/control-vespertino');
+          this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
         }
       });
   }

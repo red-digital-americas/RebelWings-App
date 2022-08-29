@@ -1,14 +1,20 @@
 <ion-app>
   <ion-header class="ion-no-border ion-padding">
     <ion-grid>
-      <ion-row>
-        <ion-col>
+
+      <ion-row size="12">
+        <ion-col size="1">
           <div>
-            <p (click)="return()" class="ion-align-items-start return">
-              < REGRESAR </p>
+            <!-- <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR</p> -->
+              <ion-button (click)="return()" shape="round" color="warning" expand="full" size="small">
+                REGRESAR
+              </ion-button>
           </div>
         </ion-col>
+        <ion-col size="11"></ion-col>
       </ion-row>
+      
       <ion-row size="12">
         <ion-col size="1">
           <img src="./assets/icon/ilustracion_stock_de_pollo.png" alt="Espectativa de venta" />
@@ -35,10 +41,10 @@
 
       <ion-row size="12">
         <ion-col size="2" class="ion-align-self-center">
-          <span>PRODUCTO</span>
+          <span>PRODUCTO:</span>
         </ion-col>
         <ion-col size="3" class="ion-align-self-center">
-          <span>Ingresa la cantidad de inventario (KG) de los siguientes productos al final del día.</span>
+          <span>INGRESA LA CANTIDAD FISICA INVENTARIADA:</span>
         </ion-col>
         <ion-col size="6" class="ion-align-self-center"></ion-col>
       </ion-row>

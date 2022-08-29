@@ -86,7 +86,7 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
       });
   }
   return() {
-    this.router.navigateByUrl('supervisor/control-vespertino');
+    this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
   }
 
 
@@ -360,7 +360,7 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
           console.log('Resp Serv =>', data);
           this.photoService.deleteAllPhoto(this.dataAlarma);
           this.disabled = false;
-          this.router.navigateByUrl('supervisor/control-vespertino');
+          this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
         }
       });
   }
@@ -379,7 +379,7 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
         console.log('Resp Serv =>', data);
         this.photoService.deleteAllPhoto(this.dataAlarma);
         this.disabled = false;
-        this.router.navigateByUrl('supervisor/control-vespertino');
+        this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
       }
     });
   }

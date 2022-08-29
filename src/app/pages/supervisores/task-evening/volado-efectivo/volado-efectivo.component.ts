@@ -36,6 +36,8 @@ export class VoladoEfectivoComponent implements OnInit {
   public dataBranch: any[] = [];
   public createDate = '';
   public voladoEfectivo;
+  public suficiente = false;
+ 
 
   constructor(
     public router: Router,
@@ -68,6 +70,7 @@ export class VoladoEfectivoComponent implements OnInit {
       console.log('Actualizar la tarea');
       this.getData();
     }
+    this.Habilitado();
   }
 
   ngOnInit() { }
@@ -235,6 +238,18 @@ export class VoladoEfectivoComponent implements OnInit {
     }
   }
 
+  Habilitado(){
+     if(Number(this.voladoEfectivo.message) < 3000){
+        
+        this.data.amount = this.voladoEfectivo.message;
+     }
+     else{
+        this.data.amount = this.voladoEfectivo.message;
+     }
+  }
+
+
+
   save() {
     this.disabled = true;
     this.fotosEfectivo = [];
@@ -291,10 +306,11 @@ export class VoladoEfectivoComponent implements OnInit {
           localStorage.removeItem('valueVolado');
           this.photoService.deleteAllPhoto(this.data);
           if (this.turno === '1') {
+   
             this.router.navigateByUrl('supervisor/control-matutino/tarea/1');
           }
           else {
-            this.router.navigateByUrl('supervisor/control-vespertino');
+            this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
           }
           this.disabled = false;
         } else {
@@ -323,7 +339,7 @@ export class VoladoEfectivoComponent implements OnInit {
             this.router.navigateByUrl('supervisor/control-matutino/tarea/1');
           }
           else {
-            this.router.navigateByUrl('supervisor/control-vespertino');
+            this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
           }
           this.disabled = false;
         } else {

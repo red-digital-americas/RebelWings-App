@@ -36,6 +36,11 @@ export class CentroControlVespertinoComponent implements OnInit {
   public time;
   // variable menu seleccionable
   public task;
+  public completada;
+  public Tableta;
+  public Alarma;
+  public cant;
+  public contador = null;
 
   public barProgressTask: number;
   public color: string;
@@ -54,28 +59,28 @@ export class CentroControlVespertinoComponent implements OnInit {
 
   ionViewWillEnter() {
     console.log('viewwillenter');
-    this.ngOnInit();
     this.user = JSON.parse(localStorage.getItem('userData'));
-    console.log('user', this.user);
+    //console.log('user', this.user);
     // obtener el nombre de sucursal
     this.branchId = this.user.branchId;
     this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
     // this.getBranch();
+    this.notificationVoladoEfectivo();
     this.getDataControl(this.task);
     // this.notificationAlarm();
+ 
+
 
   }
   ngOnInit() {
     this.today = new Date();
     this.user = JSON.parse(localStorage.getItem('userData'));
-    console.log('user', this.user);
-    // obtener el nombre de sucursal
-    this.branchId = this.user.branchId;
-    this.getDataControl(this.task);
+    this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
     this.getNotification();
     this.notificationVoladoEfectivo();
-    this.notificationAlarm();
-
+    this.getDataControl(this.task);
+    //this.notificationAlarm();
+    this.startTimer();
 
   }
   getDataControl(task) {
@@ -95,19 +100,48 @@ export class CentroControlVespertinoComponent implements OnInit {
           else{
             this.color = 'warning';
           }
-          console.log('control matutino', resp.result);
+          console.log('control vespertino', resp.result);
+
+          //SE ASIGNA EL VALOR DE LA TAREA DE VOLADO DE EFECTIVO
+          this.data.filter(data => data.name === "Volado de efectivo").map(data => {this.completada = data.isComplete;});
+          //SE ASIGNA EL VALOR DE LA TAREA RESGUARDO DE TABLETA
+          this.data.filter(data => data.name === "RESGUARDO DE TABLETA").map(data => {this.Tableta = data.isComplete;});
+          //SE ASIGNA EL VALOR DE LA TAREA DE VOLADO DE EFECTIVO
+          this.data.filter(data => data.name === "ALARMA").map(data => {this.Alarma = data.isComplete;});
+
+          console.log('control volado', this.completada);
+
+         if(Number(this.valueVolado.message) < 3000){
+            this.cant = false;
+     
+            if(this.completada === false){
+            this.barProgressTask = this.barProgressTask + 12.5;
+            }
+
+         }
+         else{
+            this.cant = true;
+     
+            if(this.completada === true){
+              this.barProgressTask = this.barProgressTask - 12.5;
+              }
+
+         }
         }
+        console.log('cant', this.cant);
+        this.activeTabletAndAlarma();
       });
   }
   activeTabletAndAlarma() {
+
     this.tabletAlarmaActive = true;
-    if (this.data[6].isComplete === false || this.data[7].isComplete === false) {
+    if (this.Tableta === false || this.Alarma  === false) {
       this.completeTablAndAlarm = false;
-      if (this.data[6].isComplete === false && this.data[7].isComplete === false) {
+      if (this.Tableta === false && this.Alarma  === false) {
         this.progressTablAndAlarm = 0;
         this.colorTablAndAlarm = 'danger';
       }
-      else if (this.data[6].isComplete === true || this.data[7].isComplete === true) {
+      else if (this.Tableta === true || this.Alarma  === true) {
         this.progressTablAndAlarm = .50;
         this.colorTablAndAlarm = 'warning';
       }
@@ -117,6 +151,7 @@ export class CentroControlVespertinoComponent implements OnInit {
       this.colorTablAndAlarm = 'success';
       this.progressTablAndAlarm = 100;
     }
+    
   }
   return() {
     console.log('return');
@@ -171,7 +206,8 @@ export class CentroControlVespertinoComponent implements OnInit {
         this.valueVolado.time = this.time;
         console.log('valor', this.valueVolado);
         localStorage.setItem('valueVolado', JSON.stringify(this.valueVolado));
-        this.alertVolado();
+        this.stopTimer();
+        //this.alertVolado();
       }
       else {
 
@@ -185,11 +221,29 @@ export class CentroControlVespertinoComponent implements OnInit {
         // //
         // this.valueVolado = resp;
         // this.valueVolado.time = this.time;
+        this.valueVolado = resp;
+        this.valueVolado.message = Number(this.valueVolado.message);
+        localStorage.setItem('valueVolado', JSON.stringify(this.valueVolado));
         console.log('Aun no hay 3mil pesos', this.valueVolado);
 
       }
     });
   }
+
+    //FUNCIONES DEL TIMER DE VOLADO DE EFECTIVO
+    startTimer() {
+      this.stopTimer();
+      this.contador = setInterval((n) => { 
+        this.notificationVoladoEfectivo();
+        console.log('muestra timer'); }, 20000);
+    }
+    
+    stopTimer() {
+      
+        clearInterval(this.contador);
+      
+    }
+
   async alertVolado(){
     if (this.valueVolado.success === true) {
       const alert = await this.alertController.create({
@@ -203,6 +257,7 @@ export class CentroControlVespertinoComponent implements OnInit {
       await alert.present();
       const { role } = await alert.onDidDismiss();
       console.log('onDidDismiss resolved with role', role);
+      this.startTimer();
     }
   }
   //*****************notification*****************************
@@ -242,6 +297,7 @@ validacionAsistencia() {
   this.router.navigateByUrl('supervisor/validacion-assistencia/2');
 }
 terminarTurno() {
+  this.stopTimer();
   this.router.navigateByUrl('supervisor');
 }
 remisiones(id) {

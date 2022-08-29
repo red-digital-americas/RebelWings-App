@@ -9,6 +9,7 @@ import { ProductoRiesgoComponent } from './task-evening/producto-riesgo/producto
 import { RemisionesComponent } from './task-evening/remisiones/remisiones.component';
 import { SalesExpectationComponent } from './task-morning/sales-expectation/sales-expectation.component';
 import { LoungeMountedComponent } from './task-morning/lounge-mounted/lounge-mounted.component';
+import { BanosMatutinoComponent } from './task-morning/Banos-Matutino/Banos-Matutino.component';
 import { GasValidationComponent } from './task-morning/gas-validation/gas-validation.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { NgModule } from '@angular/core';
@@ -42,6 +43,10 @@ const routes: Routes = [
   {
     path: 'salon-montado/:id',
     component: LoungeMountedComponent,
+  },
+  {
+    path: 'banos-matutino/:id',
+    component: BanosMatutinoComponent,
   },
   {
     path: 'expectativa-venta/:id',

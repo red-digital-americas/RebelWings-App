@@ -79,7 +79,7 @@ export class WaitTablesComponent implements OnInit {
       this.router.navigateByUrl('supervisor/control-matutino/tarea/1');
     }
     else {
-      this.router.navigateByUrl('supervisor/control-vespertino');
+      this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
     }
   }
 
@@ -145,7 +145,7 @@ export class WaitTablesComponent implements OnInit {
             icon: 'trash',
             handler: () => {
               this.service
-                .serviceGeneralDelete(`ValidationGas/${id}/Photo`)
+                .serviceGeneralDelete(`WaitListTable/${id}/Photo`)
                 .subscribe((data) => {
                   if (data.success) {
                     this.load.presentLoading('Eliminando..');
@@ -243,7 +243,7 @@ export class WaitTablesComponent implements OnInit {
             this.router.navigateByUrl('supervisor/control-matutino/tarea/1');
           }
           else {
-            this.router.navigateByUrl('supervisor/control-vespertino');
+            this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
           }
         }
       });
@@ -261,7 +261,7 @@ export class WaitTablesComponent implements OnInit {
 
           }
           else {
-            this.router.navigateByUrl('supervisor/control-vespertino');
+            this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
           }
         }
       });

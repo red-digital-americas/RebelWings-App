@@ -52,8 +52,8 @@ export class ResguardoPropinaComponent implements OnInit {
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idPropina = this.routerActive.snapshot.paramMap.get('id');
     // get nema de sucursal
-    this.branchId = this.user.branchId;
-    this.getBranch();
+    this.branchId = this.routerActive.snapshot.paramMap.get('id');
+    //this.getBranch();
     if (this.idPropina === '0') {
       console.log('Completar la tarea');
       this.activeData = true;
@@ -66,6 +66,7 @@ export class ResguardoPropinaComponent implements OnInit {
   ngOnInit() { }
   getData() {
     this.load.presentLoading('Cargando..');
+    debugger;
     this.service
       .serviceGeneralGet('Tip/' + this.idPropina)
       .subscribe((resp) => {
@@ -78,7 +79,7 @@ export class ResguardoPropinaComponent implements OnInit {
   }
   return() {
     // window.history.back();
-    this.router.navigateByUrl('supervisor/control-vespertino');
+    this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
   }
   // get  name sucursal
   getBranch() {
@@ -268,7 +269,7 @@ export class ResguardoPropinaComponent implements OnInit {
           this.load.presentLoading('Guardando..');
           console.log('Resp Serv =>', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('supervisor/control-vespertino');
+          this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
         }
       });
   }
@@ -286,7 +287,7 @@ export class ResguardoPropinaComponent implements OnInit {
         this.load.presentLoading('Actualizando..');
         console.log('Resp Serv =>', data);
         this.photoService.deleteAllPhoto(this.data);
-        this.router.navigateByUrl('supervisor/control-vespertino');
+        this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
       }
     });
   }

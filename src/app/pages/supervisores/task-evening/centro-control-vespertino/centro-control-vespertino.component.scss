@@ -8,6 +8,10 @@ ion-header {
   color: white;
   font-size: 200%;
 }
+.color-text-white-n {
+  color: gold;
+  font-size: 200%;
+}
 .title-red {
   color: #ad182d;
   font-size: 250%;
@@ -63,4 +67,9 @@ ion-badge{
   font-size: 18pt;
   right: -15px;
   top: 30px; 
+}
+
+// estilos para el menu
+.btnMenu {
+  margin: 1rem;
 }

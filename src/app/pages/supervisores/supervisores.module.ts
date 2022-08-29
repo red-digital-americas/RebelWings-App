@@ -17,6 +17,7 @@ import { CentroControlMatutinoComponent } from './task-morning/centro-control-ma
 import { AttendanceValidationComponent } from './task-morning/attendance-validation/attendance-validation.component';
 import { GasValidationComponent } from './task-morning/gas-validation/gas-validation.component';
 import { LoungeMountedComponent } from './task-morning/lounge-mounted/lounge-mounted.component';
+import { BanosMatutinoComponent } from './task-morning/Banos-Matutino/Banos-Matutino.component';
 import { SalesExpectationComponent } from './task-morning/sales-expectation/sales-expectation.component';
 import { DialoAddCommentAttendanceComponent } from './dialog/dialo-add-comment-attendance/dialo-add-comment-attendance.component';
 import { DialogAddPackageComponent } from './dialog/dialog-add-package/dialog-add-package.component';
@@ -48,6 +49,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     AttendanceValidationComponent,
     GasValidationComponent,
     LoungeMountedComponent,
+    BanosMatutinoComponent,
     SalesExpectationComponent,
     DialoAddCommentAttendanceComponent,
     DialogAddPackageComponent,
