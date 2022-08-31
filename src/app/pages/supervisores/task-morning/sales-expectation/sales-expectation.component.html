@@ -19,18 +19,21 @@
         <ion-col size="1">
           <img src="./assets/icon/ilustracion_stock_de_pollo.png" alt="Espectativa de venta" />
         </ion-col>
+        <br>
         <ion-col size="11" class="ion-align-self-center">
+          
           <h3 class="title">INVENTARIOS DIARIOS</h3>
         </ion-col>
       </ion-row>
       <ion-row size="12" *ngIf="user">
         <br>
         <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL {{user.branchName}}</h5>
+          <h5 class="subtitle-negro">{{user.branchName}}</h5>
         </ion-col>
-        <ion-col size="8">
+        <ion-col size="7"></ion-col>
+        <ion-col size="1">
           <span class="date-grey">
-            {{ today | date: "dd MMM yyy" }}
+            {{ today | date: "dd/MM/yyy" }}
           </span>
         </ion-col>
       </ion-row>
@@ -63,13 +66,13 @@
                 </ion-card>
               </ion-col>
               <ion-col size="2" class="ion-align-self-center">
-                <span> {{item.unidadessat}}</span>
+                <span> {{item.unidadmedida}}</span>
               </ion-col>
             </ion-row>
             <!-- <ion-label style="color: #ad182d; font-size: 12px" *ngIf="activeAmount">Campo requerido</ion-label> -->
           </ion-col>
           <ion-col size="2" class="ion-align-self-center">
-            <ion-button (click)="validarCantidad(item, i)" shape="round" color="warning" expand="full">
+            <ion-button (click)="validarCantidad(item, i)" shape="round" color="warning" expand="full" >
               Validar
             </ion-button>
           </ion-col>

@@ -22,6 +22,7 @@ export class SalesExpectationComponent implements OnInit {
   public idSucursal: string;
   public disabled = false;
   public data;
+  public contador: ContValidaModel[]=[];
   handlerRespMessage = '';
   handlerRespValor;
   constructor(
@@ -119,7 +120,7 @@ export class SalesExpectationComponent implements OnInit {
         if (resp.success) {
           // stock.diferencia
           stock.diferencia = respValidar.message;
-          this.openDialogValidarStock(stock);
+          this.openDialogValidarStock(stock,i);
           console.log('new valor permitida', stock);
         }
         else {
@@ -128,23 +129,24 @@ export class SalesExpectationComponent implements OnInit {
       });
     console.log('sin data');
   }
-  async openDialogValidarStock(nodo) {
+  async openDialogValidarStock(nodo,i) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Diferencia de stock',
+      header: 'DIFERENCIA DE STOCK',
       // subHeader: `De: ${nodo.diferencia}`,
-      message: 'Hay una diferencia entre el sistema de Gestión de Restaurantes e ICG <br> ¿Estás seguro que quieres actualizar el sistema? Se actualizarán el Stock de tu sucursal y esta acción no puede ser deshecha.',
+      message: 'HAY UNA DIFERENCIA ENTRE EL STOCK Y TU CONTEO VALIDA LO SIGUIENTE: <BR><br>1.- ASEGURA QUE TU CONTEO FUE CORRECTO <BR>2.-REVISA QUE TODAS TUS COMPRAS ESTEN INGRESADAS EN SISTEMAS <BR>3.-VALIDA QUE TUS MERMAS ESTEN GUARDADAS CORRECTAMENTE.',
       mode: 'ios', //sirve para tomar el diseño de ios
       buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          handler: () => { this.handlerRespMessage = 'Alert canceled'; }
-        },
+        // {
+        //   text: 'Cancelar',
+        //   role: 'cancel',
+        //   handler: () => { this.handlerRespMessage = 'Alert canceled'; }
+        // },
         {
           text: 'OK',
           role: 'confirm',
           handler: () => { this.handlerRespMessage = 'Alert confirmed'; }
+          
         }
       ]
     });
@@ -156,4 +158,7 @@ export class SalesExpectationComponent implements OnInit {
   trackData(index, data) {
     return data ? data.id : undefined;
   }
+}
+class ContValidaModel {
+  cont: number;
 }

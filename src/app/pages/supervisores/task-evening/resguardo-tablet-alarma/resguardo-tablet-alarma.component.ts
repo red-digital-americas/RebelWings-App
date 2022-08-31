@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
+import { AlertController } from '@ionic/angular';
 import {
   UserPhoto,
   PhotoService,
@@ -39,14 +40,16 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
     public load: LoaderComponent,
     public actionSheetController: ActionSheetController,
     public photoService: PhotoService,
+    public alertController: AlertController,
     public datepipe: DatePipe
   ) { }
 
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     this.idTablet = this.routerActive.snapshot.paramMap.get('idTablet');
-    this.idAlarma = this.routerActive.snapshot.paramMap.get('idAlarma');
-    console.log(`idTablet ${this.idTablet} idAlarma ${this.idAlarma}`);
+    //this.idAlarma = this.routerActive.snapshot.paramMap.get('idAlarma');
+    //console.log(`idTablet ${this.idTablet} idAlarma ${this.idAlarma}`);
+    console.log(`idTablet ${this.idTablet}`);
     // get name de sucursal
     if (this.idTablet === '0') {
       console.log('Completar la tarea');
@@ -54,12 +57,12 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
       console.log('Actualizar la tarea');
       this.getDataTablet();
     }
-    if (this.idAlarma === '0') {
-      console.log('Completar la tarea');
-    } else {
-      console.log('Actualizar la tarea');
-      this.getDataAlarma();
-    }
+    // if (this.idAlarma === '0') {
+    //   console.log('Completar la tarea');
+    // } else {
+    //   console.log('Actualizar la tarea');
+    //   this.getDataAlarma();
+    // }
   }
   ngOnInit() { }
 
@@ -74,17 +77,17 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
         }
       });
   }
-  getDataAlarma() {
-    this.load.presentLoading('Cargando..');
-    this.service
-      .serviceGeneralGet('Alarm/' + this.idAlarma)
-      .subscribe((resp) => {
-        if (resp.success) {
-          this.dataAlarma = resp.result;
-          console.log('get data', this.dataAlarma);
-        }
-      });
-  }
+  // getDataAlarma() {
+  //   this.load.presentLoading('Cargando..');
+  //   this.service
+  //     .serviceGeneralGet('Alarm/' + this.idAlarma)
+  //     .subscribe((resp) => {
+  //       if (resp.success) {
+  //         this.dataAlarma = resp.result;
+  //         console.log('get data', this.dataAlarma);
+  //       }
+  //     });
+  // }
   return() {
     this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
   }
@@ -109,26 +112,26 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
     });
     console.log('fotos chicken', this.dataTablet);
   }
-  async addPhotoToGalleryAlarma() {
-    const name = new Date().toISOString();
-    await this.photoService.addNewToGallery();
-    await this.photoService.loadSaved();
+  // async addPhotoToGalleryAlarma() {
+  //   const name = new Date().toISOString();
+  //   await this.photoService.addNewToGallery();
+  //   await this.photoService.loadSaved();
 
-    // agregaremos las fotos pero con id type de acuerdo al caso
-    // al agregar las fotos en storage, las pasamos por lista
-    console.log('obj fotos', this.photoService);
-    this.dataAlarma.photoAlarms.push({
-      id: 0,
-      alarmId: this.dataAlarma.id,
-      photo: this.photoService.photos[0].webviewPath,
-      photoPath: 'jpeg',
-      createdBy: this.user.id,
-      createdDate: this.today,
-      updatedBy: this.user.id,
-      updatedDate: this.today,
-    });
-    console.log('fotos ', this.dataAlarma);
-  }
+  //   // agregaremos las fotos pero con id type de acuerdo al caso
+  //   // al agregar las fotos en storage, las pasamos por lista
+  //   console.log('obj fotos', this.photoService);
+  //   this.dataAlarma.photoAlarms.push({
+  //     id: 0,
+  //     alarmId: this.dataAlarma.id,
+  //     photo: this.photoService.photos[0].webviewPath,
+  //     photoPath: 'jpeg',
+  //     createdBy: this.user.id,
+  //     createdDate: this.today,
+  //     updatedBy: this.user.id,
+  //     updatedDate: this.today,
+  //   });
+  //   console.log('fotos ', this.dataAlarma);
+  // }
 
 
   public async showActionSheetTablet(photo, position: number) {
@@ -160,35 +163,35 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
     });
     await actionSheet.present();
   }
-  public async showActionSheetAlarma(photo, position: number) {
-    console.log('photo', photo);
-    console.log('posicion', position);
+  // public async showActionSheetAlarma(photo, position: number) {
+  //   console.log('photo', photo);
+  //   console.log('posicion', position);
 
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Photos',
-      buttons: [
-        {
-          text: 'Delete',
-          role: 'destructive',
-          icon: 'trash',
-          handler: () => {
-            this.photoService.deletePicture(photo, position);
-            //
-            this.dataAlarma.photoAlarms.splice(position, 1);
-          },
-        },
-        {
-          text: 'Cancel',
-          icon: 'close',
-          role: 'cancel',
-          handler: () => {
-            // Nothing to do, action sheet is automatically closed
-          },
-        },
-      ],
-    });
-    await actionSheet.present();
-  }
+  //   const actionSheet = await this.actionSheetController.create({
+  //     header: 'Photos',
+  //     buttons: [
+  //       {
+  //         text: 'Delete',
+  //         role: 'destructive',
+  //         icon: 'trash',
+  //         handler: () => {
+  //           this.photoService.deletePicture(photo, position);
+  //           //
+  //           this.dataAlarma.photoAlarms.splice(position, 1);
+  //         },
+  //       },
+  //       {
+  //         text: 'Cancel',
+  //         icon: 'close',
+  //         role: 'cancel',
+  //         handler: () => {
+  //           // Nothing to do, action sheet is automatically closed
+  //         },
+  //       },
+  //     ],
+  //   });
+  //   await actionSheet.present();
+  // }
 
 
   //eliminar imagenes bd
@@ -224,38 +227,38 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
     });
     await actionSheet.present();
   }
-  public async deleteImgShowActionAlarma(id) {
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Photos',
-      buttons: [
-        {
-          text: 'Delete',
-          role: 'destructive',
-          icon: 'trash',
-          handler: () => {
-            this.service
-              .serviceGeneralDelete(`Alarm/${id}/Photo`)
-              .subscribe((data) => {
-                if (data.success) {
-                  this.load.presentLoading('Eliminando..');
-                  console.log('data', data);
-                  this.ionViewWillEnter();
-                }
-              });
-          },
-        },
-        {
-          text: 'Cancel',
-          icon: 'close',
-          role: 'cancel',
-          handler: () => {
-            // Nothing to do, action sheet is automatically closed
-          },
-        },
-      ],
-    });
-    await actionSheet.present();
-  }
+  // public async deleteImgShowActionAlarma(id) {
+  //   const actionSheet = await this.actionSheetController.create({
+  //     header: 'Photos',
+  //     buttons: [
+  //       {
+  //         text: 'Delete',
+  //         role: 'destructive',
+  //         icon: 'trash',
+  //         handler: () => {
+  //           this.service
+  //             .serviceGeneralDelete(`Alarm/${id}/Photo`)
+  //             .subscribe((data) => {
+  //               if (data.success) {
+  //                 this.load.presentLoading('Eliminando..');
+  //                 console.log('data', data);
+  //                 this.ionViewWillEnter();
+  //               }
+  //             });
+  //         },
+  //       },
+  //       {
+  //         text: 'Cancel',
+  //         icon: 'close',
+  //         role: 'cancel',
+  //         handler: () => {
+  //           // Nothing to do, action sheet is automatically closed
+  //         },
+  //       },
+  //     ],
+  //   });
+  //   await actionSheet.present();
+  // }
   formartDate() {
     // 2022-03-11T17:27:00
     console.log('date', this.today);
@@ -281,8 +284,25 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
   }
 
   allSave() {
-    this.formartDate();
+    
+    this.alertAlarma();
   }
+  async alertAlarma(){
+
+      const alert = await this.alertController.create({
+        cssClass: 'my-custom-class',
+        header: 'IMPORTANTE',
+        subHeader: 'ALARMA',
+        message: 'RECUERDA NO SALIR DE LA SUCURSAL <BR>SIN ANTES ACTIVAR LA ALARMA',
+        mode: 'ios',
+        buttons: ['OK'],
+      });
+      await alert.present();
+      const { role } = await alert.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
+      this.formartDate();
+  }
+
 
   saveTablet() {
     this.disabled = true;
@@ -297,19 +317,19 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
       this.updateTablet();
     }
   }
-  saveAlarma() {
-    this.disabled = true;
-    this.fotosAlarma = [];
-    // esto se pone aqui por que aun no se estrae la data de un get
-    this.dataAlarma.branchId = this.user.branchId;
-    this.dataAlarma.updatedBy = this.user.id;
-    this.dataAlarma.updatedDate = this.createDate;
-    if (this.idAlarma === '0') {
-      this.addDataAlarma();
-    } else {
-      this.updateDataAlarma();
-    }
-  }
+  // saveAlarma() {
+  //   this.disabled = true;
+  //   this.fotosAlarma = [];
+  //   // esto se pone aqui por que aun no se estrae la data de un get
+  //   this.dataAlarma.branchId = this.user.branchId;
+  //   this.dataAlarma.updatedBy = this.user.id;
+  //   this.dataAlarma.updatedDate = this.createDate;
+  //   if (this.idAlarma === '0') {
+  //     this.addDataAlarma();
+  //   } else {
+  //     this.updateDataAlarma();
+  //   }
+  // }
   addTablet() {
     this.dataTablet.createdBy = this.user.id;
     this.dataTablet.createdDate = this.createDate;
@@ -322,7 +342,7 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
           console.log('Resp Serv =>', data);
           this.photoService.deleteAllPhoto(this.dataTablet);
           // this.disabled = false;
-          this.saveAlarma();
+          //this.saveAlarma();
           // this.router.navigateByUrl('supervisor/control-vespertino');
         }
       });
@@ -343,46 +363,47 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
           console.log('data', data);
           // this.disabled = false;
           this.photoService.deleteAllPhoto(this.dataTablet);
-          // this.router.navigateByUrl('supervisor/control-vespertino');
-          this.saveAlarma();
-        }
-      });
-  }
-  addDataAlarma() {
-    this.dataAlarma.createdBy = this.user.id;
-    this.dataAlarma.createdDate = this.createDate;
-    console.log('Obj a guardar =>', this.dataAlarma);
-    this.service
-      .serviceGeneralPostWithUrl('Alarm', this.dataAlarma)
-      .subscribe((data) => {
-        if (data.success) {
-          this.load.presentLoading('Guardando..');
-          console.log('Resp Serv =>', data);
-          this.photoService.deleteAllPhoto(this.dataAlarma);
-          this.disabled = false;
           this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
+          //this.saveAlarma();
         }
       });
   }
-  updateDataAlarma() {
-    if (this.dataAlarma.photoAlarms.length !== 0) {
-      this.dataAlarma.photoAlarms.forEach((element) => {
-        if (element.id !== 0) {
-          element.photoPath = '';
-        }
-      });
-    }
-    console.log('Obj a guardar =>', this.dataAlarma);
-    this.service.serviceGeneralPut('Alarm', this.dataAlarma).subscribe((data) => {
-      if (data.success) {
-        this.load.presentLoading('Actualizando..');
-        console.log('Resp Serv =>', data);
-        this.photoService.deleteAllPhoto(this.dataAlarma);
-        this.disabled = false;
-        this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
-      }
-    });
-  }
+  // addDataAlarma() {
+  //   this.dataAlarma.createdBy = this.user.id;
+  //   this.dataAlarma.createdDate = this.createDate;
+  //   console.log('Obj a guardar =>', this.dataAlarma);
+  //   this.service
+  //     .serviceGeneralPostWithUrl('Alarm', this.dataAlarma)
+  //     .subscribe((data) => {
+  //       if (data.success) {
+  //         this.load.presentLoading('Guardando..');
+  //         console.log('Resp Serv =>', data);
+  //         this.photoService.deleteAllPhoto(this.dataAlarma);
+  //         this.disabled = false;
+  //         this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
+  //       }
+  //     });
+  // }
+  // updateDataAlarma() {
+  //   if (this.dataAlarma.photoAlarms.length !== 0) {
+  //     this.dataAlarma.photoAlarms.forEach((element) => {
+  //       if (element.id !== 0) {
+  //         element.photoPath = '';
+  //       }
+  //     });
+  //   }
+  //   console.log('Obj a guardar =>', this.dataAlarma);
+  //   this.service.serviceGeneralPut('Alarm', this.dataAlarma).subscribe((data) => {
+  //     if (data.success) {
+  //       this.load.presentLoading('Actualizando..');
+  //       console.log('Resp Serv =>', data);
+  //       this.photoService.deleteAllPhoto(this.dataAlarma);
+  //       this.disabled = false;
+  //       this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
+  //     }
+  //   });
+  // }
+
 }
 class TabletModel {
   id: number;

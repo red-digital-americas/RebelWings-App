@@ -76,7 +76,7 @@ export class CentroControlVespertinoComponent implements OnInit {
     this.today = new Date();
     this.user = JSON.parse(localStorage.getItem('userData'));
     this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
-    this.getNotification();
+    //this.getNotification();
     this.notificationVoladoEfectivo();
     this.getDataControl(this.task);
     //this.notificationAlarm();
@@ -106,8 +106,8 @@ export class CentroControlVespertinoComponent implements OnInit {
           this.data.filter(data => data.name === "Volado de efectivo").map(data => {this.completada = data.isComplete;});
           //SE ASIGNA EL VALOR DE LA TAREA RESGUARDO DE TABLETA
           this.data.filter(data => data.name === "RESGUARDO DE TABLETA").map(data => {this.Tableta = data.isComplete;});
-          //SE ASIGNA EL VALOR DE LA TAREA DE VOLADO DE EFECTIVO
-          this.data.filter(data => data.name === "ALARMA").map(data => {this.Alarma = data.isComplete;});
+          //SE ASIGNA EL VALOR DE LA TAREA ALARMA
+          //this.data.filter(data => data.name === "ALARMA").map(data => {this.Alarma = data.isComplete;});
 
           console.log('control volado', this.completada);
 
@@ -115,7 +115,7 @@ export class CentroControlVespertinoComponent implements OnInit {
             this.cant = false;
      
             if(this.completada === false){
-            this.barProgressTask = this.barProgressTask + 12.5;
+            this.barProgressTask = this.barProgressTask + 14.28571428571429;
             }
 
          }
@@ -123,7 +123,7 @@ export class CentroControlVespertinoComponent implements OnInit {
             this.cant = true;
      
             if(this.completada === true){
-              this.barProgressTask = this.barProgressTask - 12.5;
+              this.barProgressTask = this.barProgressTask - 14.28571428571429;
               }
 
          }
@@ -135,14 +135,14 @@ export class CentroControlVespertinoComponent implements OnInit {
   activeTabletAndAlarma() {
 
     this.tabletAlarmaActive = true;
-    if (this.Tableta === false || this.Alarma  === false) {
+    if (this.Tableta === false) {
       this.completeTablAndAlarm = false;
-      if (this.Tableta === false && this.Alarma  === false) {
+      if (this.Tableta === false ) {
         this.progressTablAndAlarm = 0;
         this.colorTablAndAlarm = 'danger';
       }
-      else if (this.Tableta === true || this.Alarma  === true) {
-        this.progressTablAndAlarm = .50;
+      else if (this.Tableta === true) {
+        this.progressTablAndAlarm = 1;
         this.colorTablAndAlarm = 'warning';
       }
     }

@@ -69,7 +69,7 @@ export class CentroControlMatutinoComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem('userData'));
     this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
     console.log('user', this.user);
-    this.getNotification();
+    //this.getNotification();
     this.notificationVoladoEfectivo();
     this.getDataControl(this.task);
     this.startTimer();

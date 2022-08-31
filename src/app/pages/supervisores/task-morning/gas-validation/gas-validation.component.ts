@@ -201,13 +201,16 @@ export class GasValidationComponent implements OnInit {
       this.updateData();
     }
   }
-  save() {
+  validaInfra(){
     if(this.radioValue === "2"){
       this.presentAlert1();
     }
     if(this.data.amount < 40){
       this.presentAlert();
     }
+  }
+  save() {
+    
     this.disabled = true;
     this.fotosGas = [];
     if (this.data.photoValidationGas.length !== 0) {
@@ -269,7 +272,11 @@ export class GasValidationComponent implements OnInit {
       buttons: ['OK'],
     });
   
+
     await alert.present();
+      const { role } = await alert.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
+      this.save();
   }
 
   async presentAlert1() {
@@ -283,6 +290,9 @@ export class GasValidationComponent implements OnInit {
     });
   
     await alert.present();
+      const { role } = await alert.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
+      this.save();
   }
 }
 

@@ -37,7 +37,8 @@
         </ion-col>
         <ion-col size="1" class="ion-align-items-end">
           <div class="align-end-text">
-            <ion-icon style="color: white" name="notifications" class="ion-icon" (click)="openNotification()">
+            <!-- <ion-icon style="color: white" name="notifications" class="ion-icon" (click)="openNotification()"></ion-icon> -->
+            <ion-icon style="color: white" name="notifications" class="ion-icon" >
             </ion-icon>
             <ion-badge *ngIf="dataNotification" style="color: #ffce00" class="ion-badge">{{
               dataNotification.length }}</ion-badge>
@@ -548,7 +549,7 @@
 
           <!------RESGUARDO DE TABLETA Y ALARMA-------->
           <ion-col size="6" *ngIf="tabletAlarmaActive === true">
-            <ion-card (click)="tabletAndAlarma(data[5].id, data[6].id)">
+            <ion-card (click)="tabletAndAlarma(data[5].id)">
               <ion-card-content>
                 <ion-row size="12">
                   <ion-col size="3" class="ion-align-self-center">
@@ -559,7 +560,7 @@
                     <ion-row size="12">
                       <ion-col size="12">
                         <div>
-                          <h3 class="title-tareas">ALARMA/TABLETAS</h3>
+                          <h3 class="title-tareas">ALARMA Y RESGUARDO DE TABLETAS</h3>
                         </div>
                       </ion-col>
                       <ion-col size="12">
