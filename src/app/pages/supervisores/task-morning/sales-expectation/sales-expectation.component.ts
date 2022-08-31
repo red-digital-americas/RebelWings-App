@@ -22,7 +22,7 @@ export class SalesExpectationComponent implements OnInit {
   public idSucursal: string;
   public disabled = false;
   public data;
-  public contador: ContValidaModel[]=[];
+  public contador: number[] = [];
   handlerRespMessage = '';
   handlerRespValor;
   constructor(
@@ -125,6 +125,7 @@ export class SalesExpectationComponent implements OnInit {
         }
         else {
           console.log('no hay diferencia', stock);
+          this.contador[i] = 3;
         }
       });
     console.log('sin data');
@@ -154,11 +155,16 @@ export class SalesExpectationComponent implements OnInit {
     const { role } = await alert.onDidDismiss();
     this.handlerRespValor = role;
     console.log('onDidDismiss resolved with role', this.handlerRespValor);
+    if(isNaN(this.contador[i])){
+      this.contador[i] = 1;
+
+    }
+    else{
+    this.contador[i] += 1;
+    }
+    console.log('contador: ', this.contador[i]);
   }
   trackData(index, data) {
     return data ? data.id : undefined;
   }
-}
-class ContValidaModel {
-  cont: number;
 }
