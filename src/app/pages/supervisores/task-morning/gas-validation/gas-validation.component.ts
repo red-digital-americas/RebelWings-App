@@ -265,7 +265,7 @@ export class GasValidationComponent implements OnInit {
       cssClass: 'my-custom-class',
       header: 'IMPORTANTE',
       subHeader: 'PAGOS',
-      message: 'VALIDAR QUE LOS PAGOS SE ENCUNETRAN <BR>AL CORRIENTE CON ADMINISTRACION!',
+      message: 'VALIDAR QUE LOS PAGOS SE ENCUENTREN <BR>AL CORRIENTE CON ADMINISTRACION!',
       mode: 'ios',
       buttons: ['OK'],
     });
