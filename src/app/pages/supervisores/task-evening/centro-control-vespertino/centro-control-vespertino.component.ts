@@ -139,6 +139,9 @@ export class CentroControlVespertinoComponent implements OnInit {
        else{
         if(this.valueVolado.message == undefined){
           this.cant = false;
+          if(this.completada === false){
+            this.barProgressTask = this.barProgressTask + 14.28571428571429;
+            }
          }
          else{
           this.cant = true;

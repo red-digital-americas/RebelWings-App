@@ -109,6 +109,9 @@ export class CentroControlMatutinoComponent implements OnInit {
          else{
           if(this.valueVolado.message == undefined){
             this.cant = false;
+            if(this.completada === false){
+              this.barProgressTask = this.barProgressTask + 16.66666666666667;
+              }
            }
            else{
             this.cant = true;
@@ -120,6 +123,7 @@ export class CentroControlMatutinoComponent implements OnInit {
          }
         }
         console.log('cant', this.cant);
+        debugger;
       });
   }
 
