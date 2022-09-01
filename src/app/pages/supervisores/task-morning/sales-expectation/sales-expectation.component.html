@@ -3,7 +3,7 @@
     <ion-grid>
 
       <ion-row size="12">
-        <ion-col size="1">
+        <ion-col size="3">
           <div>
             <!-- <p (click)="return()" class="ion-align-items-start return">
               < REGRESAR</p> -->
@@ -12,8 +12,9 @@
               </ion-button>
           </div>
         </ion-col>
-        <ion-col size="11"></ion-col>
+        <ion-col size="9"></ion-col>
       </ion-row>
+      <br>
       
       <ion-row size="12">
         <ion-col size="1">
@@ -31,8 +32,8 @@
           <br>
           <h5 class="subtitle-negro">{{user.branchName}}</h5>
         </ion-col>
-        <ion-col size="7"></ion-col>
-        <ion-col size="1">
+        <ion-col size="5"></ion-col>
+        <ion-col size="3">
           <span class="date-grey">
             {{ today | date: "dd/MM/yyy" }}
           </span>
@@ -86,7 +87,7 @@
           </ion-col>
 
           <ion-col size="2" class="ion-align-self-center">
-            <ion-button (click)="save(item)" shape="round" color="danger" expand="full" [disabled]="this.contador[i] != '3'">
+            <ion-button (click)="save(item)" shape="round" color="danger" expand="full" [disabled]="this.contador[i] != 2">
               Guardar
             </ion-button>
           </ion-col>

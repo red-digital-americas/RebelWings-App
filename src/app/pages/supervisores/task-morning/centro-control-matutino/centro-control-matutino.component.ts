@@ -296,6 +296,60 @@ export class CentroControlMatutinoComponent implements OnInit {
       });
   }
 
+  showTermina() {
+    this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'ADVERTENCIA',
+      subHeader: 'TERMINA TURNO',
+      message: 'ESTAS SEGURO DE TERMINAR EL TURNO',
+      mode: 'ios', 
+      buttons: [
+        {
+          text: 'CANCELAR',
+          handler: (data: any) => {
+            console.log('TERMINAR TURNO CANCELADO');
+          }
+        },
+        {
+          text: 'ACEPTAR',
+          handler: (data: any) => {
+            console.log('TERMINAR TURNO');
+            this.showValidaTermina();
+          }
+        }
+      ]
+    }).then(res => {
+      res.present();
+    });
+  }
+
+  showValidaTermina() {
+    this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'VALIDACION',
+      message: 'AL TERMINAR EL TURNO YA NO PODRAS INGRESAR NUEVAMENTE',
+      mode: 'ios', 
+      buttons: [
+        {
+          text: 'CANCELAR',
+          handler: (data: any) => {
+            console.log('TERMINAR TURNO CANCELADO');
+          }
+        },
+        {
+          text: 'ACEPTAR',
+          handler: (data: any) => {
+            console.log('TERMINAR');
+            this.terminarTurno();
+          }
+        }
+      ]
+    }).then(res => {
+      res.present();
+    });
+  }
+
   validacionAsistencia() {
     this.router.navigateByUrl('supervisor/validacion-assistencia/1');
   }

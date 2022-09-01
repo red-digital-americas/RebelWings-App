@@ -1,4 +1,4 @@
-<ion-app *ngIf="data.lengt !== 0">
+<ion-app>
   <ion-header color="dark" class="ion-border ion-padding">
     <ion-grid style="background-color: #1d1d1b;">
       <ion-row size="12">
@@ -66,7 +66,7 @@
           <ion-col size="3"></ion-col>
           <ion-col size="3" class="ion-align-items-end">
             <div class="align-end-text">
-              <ion-button (click)="terminarTurno()" shape="round" color="danger" expand="full">
+              <ion-button (click)="showTermina()" shape="round" color="danger" expand="full">
                 FINALIZAR
               </ion-button>
             </div>

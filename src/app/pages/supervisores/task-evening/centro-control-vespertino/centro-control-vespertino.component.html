@@ -3,7 +3,7 @@
     <ion-grid>
       <ion-row size="12">
 
-        <ion-col size="4" class="ion-align-items-end">
+        <!-- <ion-col size="4" class="ion-align-items-end">
           <ion-row size="12" class="align-center-text">
             <ion-col size="4">
               <div>
@@ -16,26 +16,19 @@
               </div>
             </ion-col>
           </ion-row>
-        </ion-col>
+        </ion-col> -->
 
-        <ion-col size="4"></ion-col>
-
-        <ion-col size="2" class="ion-align-items-end">
+        <ion-col size="9" class="ion-align-items-end">
           <ion-row size="12" class="align-center-text">
-            <ion-col size="4">
-              <!-- <ion-avatar slot="start"> -->
-              <img class="avatar" src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
-                alt="">
-              <!-- </ion-avatar> -->
-            </ion-col>
-            <ion-col size="8">
+            <ion-col size="12">
               <div>
                 <span class="color-text-white-n ">{{user.name}} {{user.lastName}}</span>
               </div>
             </ion-col>
           </ion-row>
         </ion-col>
-        <ion-col size="1" class="ion-align-items-end">
+
+        <ion-col size="2" class="ion-align-items-end">
           <div class="align-end-text">
             <!-- <ion-icon style="color: white" name="notifications" class="ion-icon" (click)="openNotification()"></ion-icon> -->
             <ion-icon style="color: white" name="notifications" class="ion-icon" >
@@ -75,8 +68,8 @@
           <ion-col size="3"></ion-col>
           <ion-col size="3" class="ion-align-items-end">
             <div class="align-end-text">
-              <ion-button (click)="terminarTurno()" shape="round" color="danger" expand="full">
-                TERMINAR TURNO
+              <ion-button (click)="showTermina()" shape="round" color="danger" expand="full">
+                FINALIZAR
               </ion-button>
             </div>
           </ion-col>
@@ -135,28 +128,19 @@
                       <ion-col size="12">
                         <div>
                           <h3 class="title-tareas">
-                            VALIDACIÓN DE ASISTENCIAS
+                            ASISTENCIAS
                           </h3>
                         </div>
-                      </ion-col>
-                      <ion-col size="12">
-                        <div>
-                          <span>
-                            PROXIMAMENTE
-                            
-                          </span>
-                        </div>
-                        <br>
                       </ion-col>
                       
                       <ion-col size="12">
                         <span class="title-progress-bar">NIVEL DE PROGRESO</span>
-                        &nbsp;
+                        <br>
                         <ion-progress-bar color="danger"  [value]="data[0].percentage"></ion-progress-bar>
-                        &nbsp;
+                        <br>
                         <div class="margin-completado">
                           <span class="title-progress-bar">
-                            {{ data[0].percentage }}% completado
+                            {{ data[0].percentage }}% COMPLETADO
                           </span>
                         </div>
                       </ion-col>
@@ -226,38 +210,25 @@
                   <ion-col size="9">
                     <ion-row size="12">
                       <ion-col size="12">
-                        <div>
-                          <h3 class="title-tareas">VOLADO DE EFECTIVO</h3>
-                        </div>
-                      </ion-col>
-                      <ion-col size="12">
-                        <div>
-                          <span>
-                            REGUARDA TU EFECTIVO CADA QUE ACUMULES $3,000.00 EN CAJA
-                            <span class="valueVolado">
-                              <b>
-                                <br>
-                                 EN ESTE MOMENTO TIENES: {{ valueVolado.message | currency}} MXN
-                              </b>
-                             </span>
-                          </span>
+                        <div class="valueVolado">
+                          <h3 class="title-tareas">VOLADO: {{ valueVolado.message | currency}} MXN</h3>
                         </div>
                       </ion-col>
                       <!-- 100%
                       *ngIf="data[3].isComplete === true"-->
                       <ion-col size="12">
                         <span class="title-progress-bar">NIVEL DE PROGRESO</span>
-                        &nbsp;
+                        <br>
                         <!-- [color]="data[3].color"
                           [value]="data[3].percentage" -->
-                          <ion-progress-bar *ngIf="this.cant === true" color="danger" value="0">
-                          </ion-progress-bar>
-                          <ion-progress-bar *ngIf="this.cant === false" color="success" value="1">
-                          </ion-progress-bar>
-                          &nbsp;
-                          <div class="margin-completado">
-                            <span *ngIf="this.cant === true" class="title-progress-bar">0% completado</span>
-                            <span *ngIf="this.cant === false" class="title-progress-bar">100% completado</span>
+                        <ion-progress-bar *ngIf="this.cant === true" color="danger" value="0">
+                        </ion-progress-bar>
+                        <ion-progress-bar *ngIf="this.cant === false" color="success" value="1">
+                        </ion-progress-bar>
+                        <br>
+                        <div class="margin-completado">
+                          <span *ngIf="this.cant === true" class="title-progress-bar">0% COMPLETADO</span>
+                          <span *ngIf="this.cant === false" class="title-progress-bar">100% COMPLETADO</span>
                         </div>
                       </ion-col>
                     </ion-row>
@@ -283,32 +254,32 @@
                     <ion-row size="12">
                       <ion-col size="12">
                         <div>
-                          <h3 class="title-tareas">RESGUARDO DE PROPINA</h3>
+                          <h3 class="title-tareas">PROPINA</h3>
                         </div>
                       </ion-col>
-                      <ion-col size="12">
+                      <!-- <ion-col size="12">
                         <div>
                           <span>
                             REPORTA CON UNA FOTO TU RESGUARDO DE PROPINAS AL FINALIZAR EL TURNO
                           </span>
                         </div>
                         <br>
-                      </ion-col>
+                      </ion-col> -->
                       <!-- 100%
                       *ngIf="data[3].isComplete === true"-->
                       <ion-col size="12">
                         <span class="title-progress-bar">NIVEL DE PROGRESO</span>
-                        &nbsp;
+                        <br>
                         <!-- [color]="data[3].color"
                           [value]="data[3].percentage" -->
                         <ion-progress-bar *ngIf="data[3].isComplete === false" color="danger" value="0">
                         </ion-progress-bar>
                         <ion-progress-bar *ngIf="data[3].isComplete === true" color="success" value="1">
                         </ion-progress-bar>
-                        &nbsp;
+                        <br>
                         <div class="margin-completado">
-                          <span *ngIf="data[3].isComplete === false" class="title-progress-bar">0% completado</span>
-                          <span *ngIf="data[3].isComplete === true" class="title-progress-bar">100% completado</span>
+                          <span *ngIf="data[3].isComplete === false" class="title-progress-bar">0% COMPLETADO</span>
+                          <span *ngIf="data[3].isComplete === true" class="title-progress-bar">100% COMPLETADO</span>
                         </div>
                       </ion-col>
                     </ion-row>
@@ -335,31 +306,31 @@
                       <ion-col size="12">
                         <div>
                           <h3 class="title-tareas">
-                            LIMPIEZA GENERAL
+                            LIMPIEZA
                           </h3>
                         </div>
                       </ion-col>
-                      <ion-col size="12">
+                      <!-- <ion-col size="12">
                         <div>
                           <span>
                             REVISA QUE EL SALON Y LOS BAÑOS ESTEN LIMPIOS Y EN ORDEN
                           </span>
                         </div>
                         <br>
-                      </ion-col>
+                      </ion-col> -->
                       <!-- 100%
                       *ngIf="data[3].isComplete === true"-->
                       <ion-col size="12">
                         <span class="title-progress-bar">NIVEL DE PROGRESO</span>
-                        &nbsp;
+                        <br>
                         <ion-progress-bar *ngIf="data[4].isComplete === false" color="danger" value="0">
                         </ion-progress-bar>
                         <ion-progress-bar *ngIf="data[4].isComplete === true" color="success" value="1">
                         </ion-progress-bar>
-                        &nbsp;
+                        <br>
                         <div class="margin-completado">
-                          <span *ngIf="data[4].isComplete === false" class="title-progress-bar">0% completado</span>
-                          <span *ngIf="data[4].isComplete === true" class="title-progress-bar">100% completado</span>
+                          <span *ngIf="data[4].isComplete === false" class="title-progress-bar">0% COMPLETADO</span>
+                          <span *ngIf="data[4].isComplete === true" class="title-progress-bar">100% COMPLETADO</span>
                         </div>
                       </ion-col>
                     </ion-row>
@@ -475,29 +446,29 @@
                     <ion-row size="12">
                       <ion-col size="12">
                         <div>
-                          <h3 class="title-tareas">MESAS EN ESPERA</h3>
+                          <h3 class="title-tareas">EN ESPERA</h3>
                         </div>
                       </ion-col>
-                      <ion-col size="12">
+                      <!-- <ion-col size="12">
                         <div>
                           <span>
                             REGISTRA CUANTAS PERONAS TENEMOS EN ESPERA DE 18:00 A 00:00 HORAS
                           </span>
                         </div>
                         <br>
-                      </ion-col>
+                      </ion-col> -->
 
                       <ion-col size="12">
                         <span class="title-progress-bar">NIVEL DE PROGRESO</span>
-                        &nbsp;
+                        <br>
                         <ion-progress-bar *ngIf="data[1].isComplete === false" color="danger" value="0">
                         </ion-progress-bar>
                         <ion-progress-bar *ngIf="data[1].isComplete === true" color="success"value="1">
                         </ion-progress-bar>
-                        &nbsp;
+                        <br>
                         <div class="margin-completado">
-                          <span *ngIf="data[1].isComplete === false" class="title-progress-bar">0% completado</span>
-                          <span *ngIf="data[1].isComplete === true" class="title-progress-bar">100% completado</span>
+                          <span *ngIf="data[1].isComplete === false" class="title-progress-bar">0% COMPLETADO</span>
+                          <span *ngIf="data[1].isComplete === true" class="title-progress-bar">100% COMPLETADO</span>
                         </div>
                       </ion-col>
                     </ion-row>
@@ -520,24 +491,24 @@
                     <ion-row size="12">
                       <ion-col size="12">
                         <div>
-                          <h3 class="title-tareas">INVENTARIOS DIARIOS</h3>
+                          <h3 class="title-tareas">INVENTARIOS</h3>
                         </div>
                       </ion-col>
-                      <ion-col size="12">
+                      <!-- <ion-col size="12">
                         <div>
                           <span>
                             REALIZA TUS INVENTARIOS DIARIOS AL FINALIZAR TU TURNO
                           </span>
                         </div>
                         <br>
-                      </ion-col>
+                      </ion-col> -->
                       <ion-col size="12">
                         <span class="title-progress-bar">NIVEL DE PROGRESO</span>
-                        &nbsp;
+                        <br>
                         <ion-progress-bar [color]="data[2].color" value=".{{ data[2].percentage }}"></ion-progress-bar>
-                        &nbsp;
+                        <br>
                         <div class="margin-completado">
-                          <span class="title-progress-bar">{{ data[2].percentage }}% completado</span>
+                          <span class="title-progress-bar">{{ data[2].percentage }}% COMPLETADO</span>
                         </div>
                       </ion-col>
                     </ion-row>
@@ -560,26 +531,26 @@
                     <ion-row size="12">
                       <ion-col size="12">
                         <div>
-                          <h3 class="title-tareas">ALARMA Y RESGUARDO DE TABLETAS</h3>
+                          <h3 class="title-tareas">ALARMA / TABLETAS</h3>
                         </div>
                       </ion-col>
-                      <ion-col size="12">
+                      <!-- <ion-col size="12">
                         <div>
                           <span>
                             RESGUARDA TODAS LAS TABLETAS Y ASEGURATE DE PONER LA ALARMA AL SALIR DE LA SUCURSAL
                           </span>
                         </div>
                         <br>
-                      </ion-col>
+                      </ion-col> -->
                       <ion-col size="12">
                         <span class="title-progress-bar">NIVEL DE PROGRESO</span>
-                        &nbsp;
+                        <br>
                         <ion-progress-bar [color]="colorTablAndAlarm" value="{{progressTablAndAlarm}}">
                         </ion-progress-bar>
 
-                        &nbsp;
+                        <br>
                         <div class="margin-completado">
-                          <span class="title-progress-bar">{{progressTablAndAlarm}}% completado</span>
+                          <span class="title-progress-bar">{{progressTablAndAlarm}}% COMPLETADO</span>
 
                         </div>
                       </ion-col>

@@ -274,6 +274,7 @@ class WaitTableModel {
   waitlistTables: true;
   howManyTables: number;
   numberPeople: number;
+  comment: string;
   createdBy: number;
   createdDate: string;
   updatedBy: number;

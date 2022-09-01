@@ -111,22 +111,44 @@ export class CentroControlVespertinoComponent implements OnInit {
 
           console.log('control volado', this.completada);
 
-         if(Number(this.valueVolado.message) < 3000){
-            this.cant = false;
+        //  if(Number(this.valueVolado.message) < 3000){
+        //     this.cant = false;
      
-            if(this.completada === false){
-            this.barProgressTask = this.barProgressTask + 14.28571428571429;
-            }
+        //     if(this.completada === false){
+        //     this.barProgressTask = this.barProgressTask + 14.28571428571429;
+        //     }
 
+        //  }
+        //  else{
+        //     this.cant = true;
+     
+        //     if(this.completada === true){
+        //       this.barProgressTask = this.barProgressTask - 14.28571428571429;
+        //       }
+
+        //  }
+
+        if(Number(this.valueVolado.message) < 3000){
+          this.cant = false;
+   
+          if(this.completada === false){
+          this.barProgressTask = this.barProgressTask + 14.28571428571429;
+          }
+
+       }
+       else{
+        if(this.valueVolado.message == undefined){
+          this.cant = false;
          }
          else{
-            this.cant = true;
-     
-            if(this.completada === true){
-              this.barProgressTask = this.barProgressTask - 14.28571428571429;
-              }
+          this.cant = true;
+   
+          if(this.completada === true){
+            this.barProgressTask = this.barProgressTask - 14.28571428571429;
+            }
+          }
+       }
 
-         }
         }
         console.log('cant', this.cant);
         this.activeTabletAndAlarma();
@@ -293,6 +315,61 @@ export class CentroControlVespertinoComponent implements OnInit {
 }
 
 
+showTermina() {
+  this.alertController.create({
+    cssClass: 'my-custom-class',
+    header: 'ADVERTENCIA',
+    subHeader: 'TERMINA TURNO',
+    message: 'ESTAS SEGURO DE TERMINAR EL TURNO',
+    mode: 'ios', 
+    buttons: [
+      {
+        text: 'CANCELAR',
+        handler: (data: any) => {
+          console.log('TERMINAR TURNO CANCELADO');
+        }
+      },
+      {
+        text: 'ACEPTAR',
+        handler: (data: any) => {
+          console.log('TERMINAR TURNO');
+          this.showValidaTermina();
+        }
+      }
+    ]
+  }).then(res => {
+    res.present();
+  });
+}
+
+showValidaTermina() {
+  this.alertController.create({
+    cssClass: 'my-custom-class',
+    header: 'IMPORTANTE',
+    subHeader: 'VALIDACION',
+    message: 'AL TERMINAR EL TURNO YA NO PODRAS INGRESAR NUEVAMENTE',
+    mode: 'ios', 
+    buttons: [
+      {
+        text: 'CANCELAR',
+        handler: (data: any) => {
+          console.log('TERMINAR TURNO CANCELADO');
+        }
+      },
+      {
+        text: 'ACEPTAR',
+        handler: (data: any) => {
+          console.log('TERMINAR');
+          this.terminarTurno();
+        }
+      }
+    ]
+  }).then(res => {
+    res.present();
+  });
+}
+
+
 validacionAsistencia() {
   this.router.navigateByUrl('supervisor/validacion-assistencia/2');
 }
@@ -365,15 +442,12 @@ alarma(id) {
   }
   this.router.navigateByUrl('supervisor/alarma/' + id);
 }
-tabletAndAlarma(idTablet, idAlarma) {
+tabletAndAlarma(idTablet) {
   if (idTablet === null) {
     idTablet = 0;
   }
-  if (idAlarma === null) {
-    idAlarma = 0;
-  }
-  console.log(`id tablet ${idTablet} id tablet ${idAlarma}`);
-  this.router.navigateByUrl(`supervisor/resguardo-tableta/${idTablet}/alarma/${idAlarma}`);
+  console.log(`id tablet ${idTablet}`);
+  this.router.navigateByUrl(`supervisor/resguardo-tableta/${idTablet}`);
 }
 mesas(id: number) {
   if (id === null) {
