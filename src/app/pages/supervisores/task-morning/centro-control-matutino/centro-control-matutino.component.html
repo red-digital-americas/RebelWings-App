@@ -3,7 +3,7 @@
     <ion-grid style="background-color: #1d1d1b;">
       <ion-row size="12">
 
-        <ion-col size="4" class="ion-align-items-end">
+        <!-- <ion-col size="4" class="ion-align-items-end">
           <ion-row size="12"  class="align-center-text">
            <ion-col size="12">
               <div >
@@ -11,8 +11,8 @@
               </div>
            </ion-col>
           </ion-row>
-        </ion-col>
-        <ion-col size="5" class="ion-align-items-end">
+        </ion-col> -->
+        <ion-col size="9" class="ion-align-items-end">
           <ion-row size="12"  class="align-center-text">
 
             <ion-col size="12">
@@ -135,11 +135,11 @@
                             
                           </span>
                         </div>
-                        <br>
+                        
                       </ion-col>
                       <ion-col size="12">
                         <span class="title-progress-bar">NIVEL DE PROGRESO</span>
-                        
+                        <br>
                         <ion-progress-bar color="danger" [value]="data[0].percentage"></ion-progress-bar>
                         <br>
                         <div class="margin-completado">
@@ -178,9 +178,9 @@
                         </div>
                       </ion-col>
                       <ion-col size="12">
-                        <br>
+                        
                         <span class="title-progress-bar">NIVEL DE PROGRESO</span>
-
+                        <br>
                         <ion-progress-bar *ngIf="data[1].isComplete === false" color="danger" value="0"></ion-progress-bar>
                         <ion-progress-bar *ngIf="data[1].isComplete === true" color="success" value="1"></ion-progress-bar>
                         <br>
@@ -221,7 +221,7 @@
                              
                             <span class="valueVolado">
                               <b>
-                                EFECTIVO: {{ valueVolado.message | currency}} MXN
+                              {{ valueVolado.message | currency}}MXN
                               </b>
                              </span>
                           </span>
