@@ -202,15 +202,9 @@ export class GasValidationComponent implements OnInit {
     }
   }
   validaInfra(){
-    if(this.radioValue === "2"){
-      this.presentAlert1();
-    }
-    if(this.data.amount < 40){
+
       this.presentAlert();
-    }
-    else{
-      this.save();
-    }
+
   }
   save() {
     
@@ -266,23 +260,7 @@ export class GasValidationComponent implements OnInit {
   }
 
   async presentAlert() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'IMPORTANTE',
-      subHeader: 'PORCENTAJE DE GAS',
-      message: 'ESTAS DEBAJO DEL 40% <BR>SOLICITA TU RECARGA DE GAS!',
-      mode: 'ios',
-      buttons: ['OK'],
-    });
-  
-
-    await alert.present();
-      const { role } = await alert.onDidDismiss();
-      console.log('onDidDismiss resolved with role', role);
-      this.save();
-  }
-
-  async presentAlert1() {
+    if(this.radioValue === "2"){
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'IMPORTANTE',
@@ -292,11 +270,36 @@ export class GasValidationComponent implements OnInit {
       buttons: ['OK'],
     });
   
+
     await alert.present();
       const { role } = await alert.onDidDismiss();
       console.log('onDidDismiss resolved with role', role);
       this.save();
+    }
+    else{
+      if(this.data.amount < 40 ){
+      const alert = await this.alertController.create({
+        cssClass: 'my-custom-class',
+        header: 'IMPORTANTE',
+        subHeader: 'PORCENTAJE DE GAS',
+        message: 'ESTAS DEBAJO DEL 40% <BR>SOLICITA TU RECARGA DE GAS!',
+        mode: 'ios',
+        buttons: ['OK'],
+      });
+    
+  
+      await alert.present();
+        const { role } = await alert.onDidDismiss();
+        console.log('onDidDismiss resolved with role', role);
+        this.save();
+      }
+      else{
+      this.save();
+      }
+    }
   }
+
+
 }
 
 

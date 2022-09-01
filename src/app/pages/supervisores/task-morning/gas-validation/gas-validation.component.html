@@ -2,7 +2,7 @@
   <ion-header class="ion-no-border ion-padding">
     <ion-grid>
       <ion-row size="12">
-        <ion-col size="1">
+        <ion-col size="3">
           <div>
             <!-- <p (click)="return()" class="ion-align-items-start return">
               < REGRESAR</p> -->
@@ -11,7 +11,7 @@
               </ion-button>
           </div>
         </ion-col>
-        <ion-col size="11"></ion-col>
+        <ion-col size="9"></ion-col>
       </ion-row>
       <ion-row size="12">
         <ion-col size="1">
@@ -30,8 +30,8 @@
         <ion-col size="4" *ngIf="user" >
           <h5 class="subtitle-negro">{{user.branchName}}</h5>
         </ion-col>
-        <ion-col size="7"></ion-col>
-        <ion-col size="1">
+        <ion-col size="5"></ion-col>
+        <ion-col size="3">
           <span class="date-grey">
             {{ today | date: "dd/MM/yyy" }}
           </span>
@@ -61,7 +61,7 @@
               </ion-item>
             </ion-col>
             <ion-col >
-                <ion-item style="width: 15rem; font-size: 20PX; height: 45px;">
+                <ion-item style="margin-left: 0.5rem; width: 15rem; font-size: 20PX; height: 45px;">
                     <ion-label >NATURAL </ion-label>
                     <ion-radio mode="md"  value="2" ></ion-radio>
                </ion-item>
@@ -69,7 +69,6 @@
         </ion-row>
         </ion-radio-group>
       </ion-row>
-<BR>
 <BR>
       <ion-row size="12">
         <ion-col size="6">
