@@ -97,7 +97,7 @@ export class CentroControlMatutinoComponent implements OnInit {
           //SE ASIGNA EL VALOR DE LA TAREA DE VOLADO DE EFECTIVO
           this.data.filter(data => data.name === "Volado de efectivo").map(data => {this.completada = data.isComplete;});
           console.log('control volado', this.completada);
-
+         
          if(Number(this.valueVolado.message) < 3000){
             this.cant = false;
      
@@ -107,14 +107,17 @@ export class CentroControlMatutinoComponent implements OnInit {
 
          }
          else{
+          if(this.valueVolado.message == undefined){
+            this.cant = false;
+           }
+           else{
             this.cant = true;
      
             if(this.completada === true){
               this.barProgressTask = this.barProgressTask - 16.66666666666667;
               }
-
+            }
          }
-
         }
         console.log('cant', this.cant);
       });

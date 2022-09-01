@@ -144,7 +144,7 @@
                         <br>
                         <div class="margin-completado">
                           <span class="title-progress-bar">
-                            {{ data[0].percentage }}% completado
+                            {{ data[0].percentage }}% COMPLETADO
                           </span>
                         </div>
                       </ion-col>
@@ -185,8 +185,8 @@
                         <ion-progress-bar *ngIf="data[1].isComplete === true" color="success" value="1"></ion-progress-bar>
                         <br>
                         <div class="margin-completado">
-                          <span *ngIf="data[1].isComplete === false" class="title-progress-bar">0% completado</span>
-                          <span *ngIf="data[1].isComplete === true" class="title-progress-bar">100% completado</span>
+                          <span *ngIf="data[1].isComplete === false" class="title-progress-bar">0% COMPLETADO</span>
+                          <span *ngIf="data[1].isComplete === true" class="title-progress-bar">100% COMPLETADO</span>
                         </div>
                       </ion-col>
                     </ion-row>
@@ -211,21 +211,12 @@
                   <ion-col size="9">
                     <ion-row size="12">
                       <ion-col size="12">
-                        <div>
-                          <h3 class="title-tareas">VOLADO</h3>
+                        <div class="valueVolado">
+                          <h3 class="title-tareas">VOLADO: {{ valueVolado.message | currency}}</h3>
                         </div>
                       </ion-col>
                       <ion-col size="12">
-                        <div>
-                          <span>
-                             
-                            <span class="valueVolado">
-                              <b>
-                              {{ valueVolado.message | currency}}MXN
-                              </b>
-                             </span>
-                          </span>
-                        </div>
+                       
                   
                       </ion-col>
                       <!-- 100%
@@ -241,8 +232,8 @@
                         </ion-progress-bar>
                         <br>
                         <div class="margin-completado">
-                          <span *ngIf="this.cant === true" class="title-progress-bar">0% completado</span>
-                          <span *ngIf="this.cant === false" class="title-progress-bar">100% completado</span>
+                          <span *ngIf="this.cant === true" class="title-progress-bar">0% COMPLETADO</span>
+                          <span *ngIf="this.cant === false" class="title-progress-bar">100% COMPLETADO</span>
                         </div>
                       </ion-col>
                     </ion-row>
@@ -286,8 +277,8 @@
                         </ion-progress-bar>
                         <br>
                         <div class="margin-completado">
-                          <span *ngIf="data[2].isComplete === false" class="title-progress-bar">0% completado</span>
-                          <span *ngIf="data[2].isComplete === true" class="title-progress-bar">100% completado</span>
+                          <span *ngIf="data[2].isComplete === false" class="title-progress-bar">0% COMPLETADO</span>
+                          <span *ngIf="data[2].isComplete === true" class="title-progress-bar">100% COMPLETADO</span>
                         </div>
                       </ion-col>
                     </ion-row>
@@ -331,8 +322,8 @@
                         </ion-progress-bar>
                         <br>
                         <div class="margin-completado">
-                          <span *ngIf="data[6].isComplete === false" class="title-progress-bar">0% completado</span>
-                          <span *ngIf="data[6].isComplete === true" class="title-progress-bar">100% completado</span>
+                          <span *ngIf="data[6].isComplete === false" class="title-progress-bar">0% COMPLETADO</span>
+                          <span *ngIf="data[6].isComplete === true" class="title-progress-bar">100% COMPLETADO</span>
                         </div>
                       </ion-col>
                     </ion-row>
@@ -418,8 +409,8 @@
                         </ion-progress-bar>
                         <br>
                         <div class="margin-completado">
-                          <span *ngIf="data[3].isComplete === false" class="title-progress-bar">0% completado</span>
-                          <span *ngIf="data[3].isComplete === true" class="title-progress-bar">100% completado</span>
+                          <span *ngIf="data[3].isComplete === false" class="title-progress-bar">0% COMPLETADO</span>
+                          <span *ngIf="data[3].isComplete === true" class="title-progress-bar">100% COMPLETADO</span>
                         </div>
                       </ion-col>
                     </ion-row>
