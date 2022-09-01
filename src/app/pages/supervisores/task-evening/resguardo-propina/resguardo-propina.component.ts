@@ -52,8 +52,8 @@ export class ResguardoPropinaComponent implements OnInit {
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idPropina = this.routerActive.snapshot.paramMap.get('id');
     // get nema de sucursal
-    this.branchId = this.routerActive.snapshot.paramMap.get('id');
-    //this.getBranch();
+    this.branchId = this.user.branchId;
+    this.getBranch();
     if (this.idPropina === '0') {
       console.log('Completar la tarea');
       this.activeData = true;

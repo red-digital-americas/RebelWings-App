@@ -320,7 +320,7 @@ showTermina() {
     cssClass: 'my-custom-class',
     header: 'ADVERTENCIA',
     subHeader: 'TERMINA TURNO',
-    message: 'ESTAS SEGURO DE TERMINAR EL TURNO',
+    message: '¿ESTAS SEGURO DE TERMINAR EL TURNO?',
     mode: 'ios', 
     buttons: [
       {
@@ -346,7 +346,7 @@ showValidaTermina() {
   this.alertController.create({
     cssClass: 'my-custom-class',
     header: 'IMPORTANTE',
-    subHeader: 'VALIDACION',
+    subHeader: 'TERMINAR TURNO',
     message: 'AL TERMINAR EL TURNO YA NO PODRAS INGRESAR NUEVAMENTE',
     mode: 'ios', 
     buttons: [
@@ -442,12 +442,15 @@ alarma(id) {
   }
   this.router.navigateByUrl('supervisor/alarma/' + id);
 }
-tabletAndAlarma(idTablet) {
+tabletAndAlarma(idTablet, idAlarma) {
   if (idTablet === null) {
     idTablet = 0;
   }
-  console.log(`id tablet ${idTablet}`);
-  this.router.navigateByUrl(`supervisor/resguardo-tableta/${idTablet}`);
+  if (idAlarma === null) {
+    idAlarma = 0;
+  }
+  console.log(`id tablet ${idTablet} id tablet ${idAlarma}`);
+  this.router.navigateByUrl(`supervisor/resguardo-tableta/${idTablet}/alarma/${idAlarma}`);
 }
 mesas(id: number) {
   if (id === null) {

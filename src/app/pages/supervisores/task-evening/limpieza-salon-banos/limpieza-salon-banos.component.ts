@@ -104,6 +104,7 @@ export class LimpiezaSalonBanosComponent implements OnInit {
         });
       }
     });
+
   }
   async addPhotoToGallery() {
     const name = new Date().toISOString();

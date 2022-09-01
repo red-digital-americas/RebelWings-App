@@ -193,52 +193,6 @@
             </ion-card>
           </ion-col> -->
 
-
-          
-          <!-------------- VOLADO DE EFECTIVO ------------>
-          <!-- *ngIf="data[3]" -->
-          <ion-col size="6" *ngIf="data[7]">
-            <!-- aqui se envia el id de sucursal -->
-            <!-- data[8].id -->
-            <ion-card (click)="voladoEfectivo(0)">
-              <ion-card-content>
-                <ion-row size="12">
-                  <ion-col size="3" class="ion-align-self-center">
-                    <img *ngIf="this.cant === true" src="./assets/icon/ilustracion_volado_de_efectivo.png" alt="" />
-                    <img *ngIf="this.cant === false" src="./assets/icon/ilustracion_check.png" alt=""/>
-                  </ion-col>
-                  <ion-col size="9">
-                    <ion-row size="12">
-                      <ion-col size="12">
-                        <div class="valueVolado">
-                          <h3 class="title-tareas">VOLADO: {{ valueVolado.message | currency}} MXN</h3>
-                        </div>
-                      </ion-col>
-                      <!-- 100%
-                      *ngIf="data[3].isComplete === true"-->
-                      <ion-col size="12">
-                        <span class="title-progress-bar">NIVEL DE PROGRESO</span>
-                        <br>
-                        <!-- [color]="data[3].color"
-                          [value]="data[3].percentage" -->
-                        <ion-progress-bar *ngIf="this.cant === true" color="danger" value="0">
-                        </ion-progress-bar>
-                        <ion-progress-bar *ngIf="this.cant === false" color="success" value="1">
-                        </ion-progress-bar>
-                        <br>
-                        <div class="margin-completado">
-                          <span *ngIf="this.cant === true" class="title-progress-bar">0% COMPLETADO</span>
-                          <span *ngIf="this.cant === false" class="title-progress-bar">100% COMPLETADO</span>
-                        </div>
-                      </ion-col>
-                    </ion-row>
-                  </ion-col>
-                </ion-row>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-
-
           <!--------------RESGUARDO DE PROPINA------------>
           <!-- *ngIf="data[3]" -->
           <ion-col size="6" *ngIf="data[3]">
@@ -520,7 +474,7 @@
 
           <!------RESGUARDO DE TABLETA Y ALARMA-------->
           <ion-col size="6" *ngIf="tabletAlarmaActive === true">
-            <ion-card (click)="tabletAndAlarma(data[5].id)">
+            <ion-card (click)="tabletAndAlarma(data[5].id, null)">
               <ion-card-content>
                 <ion-row size="12">
                   <ion-col size="3" class="ion-align-self-center">
@@ -531,7 +485,7 @@
                     <ion-row size="12">
                       <ion-col size="12">
                         <div>
-                          <h3 class="title-tareas">ALARMA / TABLETAS</h3>
+                          <h3 class="title-tareas">ALARMA Y TABLETAS</h3>
                         </div>
                       </ion-col>
                       <!-- <ion-col size="12">
@@ -560,6 +514,51 @@
               </ion-card-content>
             </ion-card>
           </ion-col>
+
+
+          <!-------------- VOLADO DE EFECTIVO ------------>
+          <!-- *ngIf="data[3]" -->
+          <ion-col size="6" *ngIf="data[7]">
+            <!-- aqui se envia el id de sucursal -->
+            <!-- data[8].id -->
+            <ion-card (click)="voladoEfectivo(0)">
+              <ion-card-content>
+                <ion-row size="12">
+                  <ion-col size="3" class="ion-align-self-center">
+                    <img *ngIf="this.cant === true" src="./assets/icon/ilustracion_volado_de_efectivo.png" alt="" />
+                    <img *ngIf="this.cant === false" src="./assets/icon/ilustracion_check.png" alt=""/>
+                  </ion-col>
+                  <ion-col size="9">
+                    <ion-row size="12">
+                      <ion-col size="12">
+                        <div class="valueVolado">
+                          <h3 class="title-tareas">VOLADO: {{ valueVolado.message | currency}} MXN</h3>
+                        </div>
+                      </ion-col>
+                      <!-- 100%
+                      *ngIf="data[3].isComplete === true"-->
+                      <ion-col size="12">
+                        <span class="title-progress-bar">NIVEL DE PROGRESO</span>
+                        <br>
+                        <!-- [color]="data[3].color"
+                          [value]="data[3].percentage" -->
+                        <ion-progress-bar *ngIf="this.cant === true" color="danger" value="0">
+                        </ion-progress-bar>
+                        <ion-progress-bar *ngIf="this.cant === false" color="success" value="1">
+                        </ion-progress-bar>
+                        <br>
+                        <div class="margin-completado">
+                          <span *ngIf="this.cant === true" class="title-progress-bar">0% COMPLETADO</span>
+                          <span *ngIf="this.cant === false" class="title-progress-bar">100% COMPLETADO</span>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
 
         </ion-row>
       
