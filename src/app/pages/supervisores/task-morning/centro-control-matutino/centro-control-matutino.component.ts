@@ -98,32 +98,9 @@ export class CentroControlMatutinoComponent implements OnInit {
           this.data.filter(data => data.name === "Volado de efectivo").map(data => {this.completada = data.isComplete;});
           console.log('control volado', this.completada);
          
-         if(Number(this.valueVolado.message) < 3000){
-            this.cant = false;
-     
-            if(this.completada === false){
-            this.barProgressTask = this.barProgressTask + 16.66666666666667;
-            }
-
-         }
-         else{
-          if(this.valueVolado.message == undefined){
-            this.cant = false;
-            if(this.completada === false){
-              this.barProgressTask = this.barProgressTask + 16.66666666666667;
-              }
-           }
-           else{
-            this.cant = true;
-     
-            if(this.completada === true){
-              this.barProgressTask = this.barProgressTask - 16.66666666666667;
-              }
-            }
-         }
+         
         }
-        console.log('cant', this.cant);
-        debugger;
+
       });
   }
 
@@ -250,6 +227,32 @@ export class CentroControlMatutinoComponent implements OnInit {
         console.log('Aun no hay 3mil pesos', this.valueVolado);
 
       }
+
+      if(this.valueVolado.message < 3000){
+        this.cant = false;
+ 
+        if(this.completada === false){
+        this.barProgressTask = this.barProgressTask + 16.66666666666667;
+        }
+
+     }
+     else{
+      if(this.valueVolado.message == undefined){
+        this.cant = false;
+        if(this.completada === false){
+          this.barProgressTask = this.barProgressTask + 16.66666666666667;
+          }
+       }
+       else{
+        this.cant = true;
+ 
+        if(this.completada === true){
+          this.barProgressTask = this.barProgressTask - 16.66666666666667;
+          }
+        }
+     }
+     console.log('cant', this.cant);
+     
     });
   }
   async alertVolado(){

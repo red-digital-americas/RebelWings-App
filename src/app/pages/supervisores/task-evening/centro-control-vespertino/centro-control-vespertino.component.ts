@@ -127,34 +127,12 @@ export class CentroControlVespertinoComponent implements OnInit {
         //       }
 
         //  }
+        
 
-        if(Number(this.valueVolado.message) < 3000){
-          this.cant = false;
-   
-          if(this.completada === false){
-          this.barProgressTask = this.barProgressTask + 14.28571428571429;
-          }
-
-       }
-       else{
-        if(this.valueVolado.message == undefined){
-          this.cant = false;
-          if(this.completada === false){
-            this.barProgressTask = this.barProgressTask + 14.28571428571429;
-            }
-         }
-         else{
-          this.cant = true;
-   
-          if(this.completada === true){
-            this.barProgressTask = this.barProgressTask - 14.28571428571429;
-            }
-          }
-       }
+        
 
         }
-        console.log('cant', this.cant);
-        this.activeTabletAndAlarma();
+        
       });
   }
   activeTabletAndAlarma() {
@@ -252,6 +230,32 @@ export class CentroControlVespertinoComponent implements OnInit {
         console.log('Aun no hay 3mil pesos', this.valueVolado);
 
       }
+
+      if(this.valueVolado.message < 3000){
+        this.cant = false;
+ 
+        if(this.completada === false){
+        this.barProgressTask = this.barProgressTask + 14.28571428571429;
+        }
+
+     }
+     else{
+      if(this.valueVolado.message == undefined){
+        this.cant = false;
+        if(this.completada === false){
+          this.barProgressTask = this.barProgressTask + 14.28571428571429;
+          }
+       }
+       else{
+        this.cant = true;
+ 
+        if(this.completada === true){
+          this.barProgressTask = this.barProgressTask - 14.28571428571429;
+          }
+        }
+     }
+     console.log('cant', this.cant);
+     this.activeTabletAndAlarma();
     });
   }
 
