@@ -478,8 +478,8 @@
               <ion-card-content>
                 <ion-row size="12">
                   <ion-col size="3" class="ion-align-self-center">
-                  <img *ngIf="progressTablAndAlarm !== 100" src="./assets/icon/ilustracion_resguardo_de_tableta.png" alt="" />
-                    <img *ngIf="progressTablAndAlarm === 100" src="./assets/icon/ilustracion_check.png" alt="" />
+                    <img *ngIf="data[5].isComplete === false" src="./assets/icon/ilustracion_resguardo_de_tableta.png" alt="" />
+                    <img *ngIf="data[5].isComplete === true" src="./assets/icon/ilustracion_check.png" alt="" />
                   </ion-col>
                   <ion-col size="9">
                     <ion-row size="12">
@@ -499,13 +499,14 @@
                       <ion-col size="12">
                         <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                         <br>
-                        <ion-progress-bar [color]="colorTablAndAlarm" value="{{progressTablAndAlarm}}">
+                        <ion-progress-bar *ngIf="data[5].isComplete === false" color="danger" value="0">
                         </ion-progress-bar>
-
+                        <ion-progress-bar *ngIf="data[5].isComplete === true" color="success" value="1">
+                        </ion-progress-bar>
                         <br>
                         <div class="margin-completado">
-                          <span class="title-progress-bar">{{progressTablAndAlarm}}% COMPLETADO</span>
-
+                          <span *ngIf="data[5].isComplete === false" class="title-progress-bar">0% COMPLETADO</span>
+                          <span *ngIf="data[5].isComplete === true" class="title-progress-bar">100% COMPLETADO</span>
                         </div>
                       </ion-col>
                     </ion-row>
