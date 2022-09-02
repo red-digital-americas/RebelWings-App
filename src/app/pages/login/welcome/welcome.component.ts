@@ -19,7 +19,6 @@ export class WelcomeComponent implements OnInit {
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log('user', this.user);
-
     // obtener el nombre de sucursal
     // supervisor
     if (this.user.roleId === 1) {

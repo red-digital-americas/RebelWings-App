@@ -44,7 +44,6 @@ export class SalesExpectationComponent implements OnInit {
 
   
   getData() {
-
     this.load.presentLoading('Cargando..');
     this.service
       .serviceGeneralGet(`StockChicken/GetStock?id_sucursal=${this.user.branch}&dataBase=${this.user.dataBase}`)
@@ -56,6 +55,7 @@ export class SalesExpectationComponent implements OnInit {
           });
           console.log(this.data);
         }
+        console.log('s ',resp.success);
       });
     console.log('sin data');
   }

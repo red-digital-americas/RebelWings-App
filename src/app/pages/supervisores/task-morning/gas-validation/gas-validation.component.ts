@@ -208,6 +208,9 @@ export class GasValidationComponent implements OnInit {
     if(this.data.amount < 40){
       this.presentAlert();
     }
+    else{
+      this.save();
+    }
   }
   save() {
     
