@@ -38,10 +38,9 @@
     <ion-grid>
       <!-- titulo de empresa -->
       <ion-row size="12" *ngIf="user" >
-        <ion-col size="4">
+        <ion-col size="9">
           <h5 class="subtitle-negro">{{user.branchName}}</h5>
         </ion-col>
-        <ion-col size="5"></ion-col>
         <ion-col size="3">
           <span class="date-grey">
             {{ today | date: "dd/MM/yyy" }}
