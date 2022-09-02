@@ -15,10 +15,15 @@ export class ScheduleComponent implements OnInit {
   // nombre de sucursal
   public branchId;
   // public nameBranch = '';
+  public tunoCorre = 0;
+  public today;
+
   public dataBranch: any[] = [];
   constructor(public platform: Platform, public router: Router, public service: ServiceGeneralService) { }
 
   ngOnInit() {
+    this.today = new Date();
+    this.validaTurno(); 
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log('user', this.user);
     // obtener el nombre de sucursal
@@ -39,6 +44,36 @@ export class ScheduleComponent implements OnInit {
       this.router.navigate(['/supervisor/control-vespertino/tarea/1']);
       // this.router.navigateByUrl('supervisor/control-vespertino');
     }
+  }
+
+  async validaTurno() {
+    const timeT1ini = '07:00:00';
+    const timeT1fin = '17:00:00';
+    const timeT2ini = '17:00:01';
+    const timeT2fin = '00:00:00';
+    const timeT2fin2 = '03:00:00';
+    if (this.tunoCorre === 0) {
+      const time = `${this.today.getHours()}:${this.today.getMinutes()}:00`;
+      // console.log('time', time);
+      if (time >= timeT1ini && time <= timeT1fin) {
+        this.tunoCorre = 1;
+
+      }
+      else{
+
+        if (time >= timeT2ini && time <= timeT2fin) {
+          this.tunoCorre = 2;
+  
+        }
+        if(time >= timeT2fin && time <= timeT2fin2) {
+          this.tunoCorre = 2;
+  
+        }
+
+      }
+    }
+    
+    console.log('Turno', this.tunoCorre);
   }
   // get  name sucursal
   // getBranch() {

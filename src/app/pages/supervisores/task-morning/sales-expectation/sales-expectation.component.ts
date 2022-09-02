@@ -7,6 +7,7 @@ import { DialogAddPackageComponent } from '../../dialog/dialog-add-package/dialo
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import { DialogUpdateStockPolloComponent } from '../../dialog/dialog-update-stock-pollo/dialog-update-stock-pollo.component';
 import { AlertController } from '@ionic/angular';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-sales-expectation',
@@ -93,7 +94,7 @@ export class SalesExpectationComponent implements OnInit {
         }
       });
   }
-  save(item) {
+  save(item,i) {
     this.service
       .serviceGeneralPostWithUrl(`StockChicken/AddRegularizate?codArticulo=${item.codarticulo}&codAlmacen=${item.codalmacen}&cantidad=${item.cantidad}&dataBase=${this.user.dataBase}`, ``)
       .subscribe((resp) => {
@@ -102,7 +103,7 @@ export class SalesExpectationComponent implements OnInit {
         if (resp.success) {
 
           this.load.presentLoading('Cantidad Permitida');
-          this.ngOnInit();
+          this.presentAlert(i);
           // this.data.status = 'post';
         }
       });
@@ -126,6 +127,7 @@ export class SalesExpectationComponent implements OnInit {
         else {
           console.log('no hay diferencia', stock);
           this.contador[i] = 3;
+          console.log('cont', this.contador[i]);
         }
       });
     console.log('sin data');
@@ -135,7 +137,7 @@ export class SalesExpectationComponent implements OnInit {
       cssClass: 'my-custom-class',
       header: 'DIFERENCIA DE STOCK',
       // subHeader: `De: ${nodo.diferencia}`,
-      message: 'HAY UNA DIFERENCIA ENTRE EL STOCK Y TU CONTEO VALIDA LO SIGUIENTE: <BR><br>1.- ASEGURA QUE TU CONTEO FUE CORRECTO <BR>2.-REVISA QUE TODAS TUS COMPRAS ESTEN INGRESADAS EN SISTEMAS <BR>3.-VALIDA QUE TUS MERMAS ESTEN GUARDADAS CORRECTAMENTE.',
+      message: 'HAY UNA DIFERENCIA EN EL STOCK Y TU CONTEO: <BR><br>1.- CUENTA NUEVAMENTE TU STOCK <BR>2.-REVISA QUE TODAS TUS COMPRAS ESTEN CARGADAS EN EL SISTEMAS <BR>3.-REVISA QUE TUS MERMAS ESTEN CARGADAS CORRECTAMENTE',
       mode: 'ios', //sirve para tomar el diseño de ios
       buttons: [
         // {
@@ -151,6 +153,7 @@ export class SalesExpectationComponent implements OnInit {
         }
       ]
     });
+
     await alert.present();
     const { role } = await alert.onDidDismiss();
     this.handlerRespValor = role;
@@ -167,4 +170,25 @@ export class SalesExpectationComponent implements OnInit {
   trackData(index, data) {
     return data ? data.id : undefined;
   }
+
+
+  async presentAlert(i) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'GUARDAR',
+      message: 'SE REALIZO EL AJUSTE DE INVENTARIO CON EXITO',
+      mode: 'ios',
+      buttons: ['OK'],
+    });
+  
+
+    await alert.present();
+      const { role } = await alert.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
+      this.contador[i] += 1;
+      this.ngOnInit();
+  }
+  
+
 }

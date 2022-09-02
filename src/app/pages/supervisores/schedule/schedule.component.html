@@ -31,8 +31,10 @@
               <ion-item>
                 <ion-label>TURNO</ion-label>
                 <ion-select [(ngModel)]="schedule" >
-                  <ion-select-option value="1">MATUTINO</ion-select-option>
-                  <ion-select-option value="2">VESPERTINO</ion-select-option>
+                  <!-- <ion-select-option value="1" *ngIf="this.tunoCorre === 1">MATUTINO</ion-select-option>
+                  <ion-select-option value="2" *ngIf="this.tunoCorre === 2">VESPERTINO</ion-select-option> -->
+                  <ion-select-option value="1" >MATUTINO</ion-select-option>
+                  <ion-select-option value="2" >VESPERTINO</ion-select-option>
                 </ion-select>
               </ion-item>
             </ion-list>

@@ -65,10 +65,10 @@ export class CentroControlVespertinoComponent implements OnInit {
     this.branchId = this.user.branchId;
     this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
     // this.getBranch();
-    this.notificationVoladoEfectivo();
+    //this.notificationVoladoEfectivo();
     this.getDataControl(this.task);
     // this.notificationAlarm();
- 
+    
 
 
   }
@@ -80,7 +80,7 @@ export class CentroControlVespertinoComponent implements OnInit {
     this.notificationVoladoEfectivo();
     this.getDataControl(this.task);
     //this.notificationAlarm();
-    this.startTimer();
+    this.startTimer(this.task);
 
   }
   getDataControl(task) {
@@ -260,9 +260,10 @@ export class CentroControlVespertinoComponent implements OnInit {
   }
 
     //FUNCIONES DEL TIMER DE VOLADO DE EFECTIVO
-    startTimer() {
+    startTimer(task) {
       this.stopTimer();
       this.contador = setInterval((n) => { 
+        this.getDataControl(task);
         this.notificationVoladoEfectivo();
         console.log('muestra timer'); }, 20000);
     }
@@ -286,7 +287,7 @@ export class CentroControlVespertinoComponent implements OnInit {
       await alert.present();
       const { role } = await alert.onDidDismiss();
       console.log('onDidDismiss resolved with role', role);
-      this.startTimer();
+      //this.startTimer();
     }
   }
   //*****************notification*****************************
@@ -327,7 +328,7 @@ showTermina() {
     cssClass: 'my-custom-class',
     header: 'ADVERTENCIA',
     subHeader: 'TERMINA TURNO',
-    message: '¿ESTAS SEGURO DE TERMINAR EL TURNO?',
+    message: '¿ESTAS SEGURO DE TERMINAR TURNO?',
     mode: 'ios', 
     buttons: [
       {
