@@ -50,11 +50,12 @@ export class ScheduleComponent implements OnInit {
     const timeT1ini = '07:00:00';
     const timeT1fin = '17:00:00';
     const timeT2ini = '17:00:01';
-    const timeT2fin = '00:00:00';
+    const timeT2fin = '24:00:00';
+    const timeT2fin1 = '00:00:00';
     const timeT2fin2 = '03:00:00';
     if (this.tunoCorre === 0) {
       const time = `${this.today.getHours()}:${this.today.getMinutes()}:00`;
-      // console.log('time', time);
+       console.log('time', time);
       if (time >= timeT1ini && time <= timeT1fin) {
         this.tunoCorre = 1;
 
@@ -65,14 +66,14 @@ export class ScheduleComponent implements OnInit {
           this.tunoCorre = 2;
   
         }
-        if(time >= timeT2fin && time <= timeT2fin2) {
+        if(time >= timeT2fin1 && time <= timeT2fin2) {
           this.tunoCorre = 2;
   
         }
 
       }
     }
-    
+
     console.log('Turno', this.tunoCorre);
   }
   // get  name sucursal

@@ -43,6 +43,7 @@ export class CentroControlVespertinoComponent implements OnInit {
   public contador = null;
 
   public barProgressTask: number;
+  public barProgressTask1: number;
   public color: string;
 
   constructor(
@@ -59,11 +60,11 @@ export class CentroControlVespertinoComponent implements OnInit {
 
   ionViewWillEnter() {
     console.log('viewwillenter');
-    this.user = JSON.parse(localStorage.getItem('userData'));
+    //this.user = JSON.parse(localStorage.getItem('userData'));
     //console.log('user', this.user);
     // obtener el nombre de sucursal
-    this.branchId = this.user.branchId;
-    this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
+    //this.branchId = this.user.branchId;
+    //this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
     // this.getBranch();
     //this.notificationVoladoEfectivo();
     this.getDataControl(this.task);
@@ -76,11 +77,12 @@ export class CentroControlVespertinoComponent implements OnInit {
     this.today = new Date();
     this.user = JSON.parse(localStorage.getItem('userData'));
     this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
+    this.branchId = this.user.branchId;
     //this.getNotification();
-    this.notificationVoladoEfectivo();
-    this.getDataControl(this.task);
+    //this.notificationVoladoEfectivo();
+    //this.getDataControl(this.task);
     //this.notificationAlarm();
-    this.startTimer(this.task);
+    this.startTimer();
 
   }
   getDataControl(task) {
@@ -91,6 +93,7 @@ export class CentroControlVespertinoComponent implements OnInit {
         if (resp.success) {
           this.data = resp.result.controlCenters;
           this.barProgressTask = resp.result.progress;
+          this.barProgressTask1 = resp.result.progress;
           if (this.barProgressTask === 0){
             this.color = 'danger';
           }
@@ -110,7 +113,7 @@ export class CentroControlVespertinoComponent implements OnInit {
           //this.data.filter(data => data.name === "ALARMA").map(data => {this.Alarma = data.isComplete;});
 
           console.log('control volado', this.completada);
-
+          this.notificationVoladoEfectivo();
         //  if(Number(this.valueVolado.message) < 3000){
         //     this.cant = false;
      
@@ -235,7 +238,8 @@ export class CentroControlVespertinoComponent implements OnInit {
         this.cant = false;
  
         if(this.completada === false){
-        this.barProgressTask = this.barProgressTask + 14.28571428571429;
+          this.barProgressTask =0;
+        this.barProgressTask = this.barProgressTask1 + 14.28571428571429;
         }
 
      }
@@ -243,14 +247,16 @@ export class CentroControlVespertinoComponent implements OnInit {
       if(this.valueVolado.message == undefined){
         this.cant = false;
         if(this.completada === false){
-          this.barProgressTask = this.barProgressTask + 14.28571428571429;
+          this.barProgressTask =0;
+          this.barProgressTask = this.barProgressTask1 + 14.28571428571429;
           }
        }
        else{
         this.cant = true;
  
         if(this.completada === true){
-          this.barProgressTask = this.barProgressTask - 14.28571428571429;
+          this.barProgressTask =0;
+          this.barProgressTask = this.barProgressTask1 - 14.28571428571429;
           }
         }
      }
@@ -260,10 +266,9 @@ export class CentroControlVespertinoComponent implements OnInit {
   }
 
     //FUNCIONES DEL TIMER DE VOLADO DE EFECTIVO
-    startTimer(task) {
+    startTimer() {
       this.stopTimer();
       this.contador = setInterval((n) => { 
-        this.getDataControl(task);
         this.notificationVoladoEfectivo();
         console.log('muestra timer'); }, 20000);
     }

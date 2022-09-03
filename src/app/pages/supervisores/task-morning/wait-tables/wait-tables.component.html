@@ -120,7 +120,7 @@
         <ion-row size="12" class="footer">
           <ion-col size="3" offset="8">
              <ion-button
-              [disabled]="(data.numberPeople === undefined || data.numberPeople === null)"
+              [disabled]="(data.numberPeople === undefined || data.numberPeople === null || data.comment === undefined || data.comment === null || this.data.photoWaitlistTable.length === 0)"
               (click)="save()" shape="round" color="danger" expand="full">
               GUARDAR
             </ion-button>

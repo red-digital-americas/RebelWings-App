@@ -56,6 +56,7 @@ export class WaitTablesComponent implements OnInit {
       console.log('Actualizar la tarea');
       this.getData();
     }
+    console.log('fotos count', this.data.photoWaitlistTable.length);
   }
 
   async ngOnInit() { }
@@ -101,6 +102,7 @@ export class WaitTablesComponent implements OnInit {
       updatedDate: this.today,
     });
     console.log('fotos mesas en espera', this.data);
+    console.log('fotos count', this.data.photoWaitlistTable.length);
   }
 
   

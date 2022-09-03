@@ -34,6 +34,7 @@ export class CentroControlMatutinoComponent implements OnInit {
   public contador = null;
 
   public barProgressTask: number;
+  public barProgressTask1: number;
   public color: string;
   constructor(
     public router: Router,public routerActive: ActivatedRoute,
@@ -51,14 +52,15 @@ export class CentroControlMatutinoComponent implements OnInit {
   ionViewWillEnter() {
 
     console.log('viewwillenter');
-    this.user = JSON.parse(localStorage.getItem('userData'));
+    //this.user = JSON.parse(localStorage.getItem('userData'));
     //console.log('user', this.user);
     // obtener el nombre de sucursal
-    this.branchId = this.user.branchId;
-    this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
+    //this.branchId = this.user.branchId;
+    //this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
     // this.getBranch();
     //this.notificationVoladoEfectivo();
     this.getDataControl(this.task);
+
  
 
 
@@ -68,11 +70,12 @@ export class CentroControlMatutinoComponent implements OnInit {
 
     this.user = JSON.parse(localStorage.getItem('userData'));
     this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
+    this.branchId = this.user.branchId;
     console.log('user', this.user);
     //this.getNotification();
-    this.notificationVoladoEfectivo();
-    this.getDataControl(this.task);
-    this.startTimer(this.task);
+    //this.notificationVoladoEfectivo();
+    //this.getDataControl(this.task);
+    this.startTimer();
    
   }
   getDataControl(task) {
@@ -83,6 +86,7 @@ export class CentroControlMatutinoComponent implements OnInit {
         if (resp.success) {
           this.data = resp.result.controlCenters;
           this.barProgressTask = resp.result.progress;
+          this.barProgressTask1 = resp.result.progress;
           if (this.barProgressTask === 0){
             this.color = 'danger';
           }
@@ -97,18 +101,18 @@ export class CentroControlMatutinoComponent implements OnInit {
           //SE ASIGNA EL VALOR DE LA TAREA DE VOLADO DE EFECTIVO
           this.data.filter(data => data.name === "Volado de efectivo").map(data => {this.completada = data.isComplete;});
           console.log('control volado', this.completada);
-         
+          this.notificationVoladoEfectivo();
          
         }
-
+        console.log('cant', this.cant);
+        
       });
   }
 
   //FUNCIONES DEL TIMER DE VOLADO DE EFECTIVO
-  startTimer(task) {
+  startTimer() {
     this.stopTimer();
     this.contador = setInterval((n) => { 
-      this.getDataControl(task);
       this.notificationVoladoEfectivo();
       console.log('muestra timer'); }, 20000);
   }
@@ -228,12 +232,13 @@ export class CentroControlMatutinoComponent implements OnInit {
         console.log('Aun no hay 3mil pesos', this.valueVolado);
 
       }
-
+      
       if(this.valueVolado.message < 3000){
         this.cant = false;
  
         if(this.completada === false){
-        this.barProgressTask = this.barProgressTask + 16.66666666666667;
+        this.barProgressTask =0;
+        this.barProgressTask = this.barProgressTask1 + 16.66666666666667;
         }
 
      }
@@ -241,19 +246,20 @@ export class CentroControlMatutinoComponent implements OnInit {
       if(this.valueVolado.message == undefined){
         this.cant = false;
         if(this.completada === false){
-          this.barProgressTask = this.barProgressTask + 16.66666666666667;
+          this.barProgressTask =0;
+          this.barProgressTask = this.barProgressTask1 + 16.66666666666667;
           }
        }
        else{
         this.cant = true;
  
         if(this.completada === true){
-          this.barProgressTask = this.barProgressTask - 16.66666666666667;
+          this.barProgressTask =0;
+          this.barProgressTask = this.barProgressTask1 - 16.66666666666667;
           }
         }
      }
-     console.log('cant', this.cant);
-     
+
     });
   }
   async alertVolado(){
@@ -270,7 +276,7 @@ export class CentroControlMatutinoComponent implements OnInit {
       const { role, } = await alert.onDidDismiss();
       console.log('onDidDismiss resolved with role', role);
       //SE INICIA TIMER DE VOLADO DE EFECTIO
-      //this.startTimer();
+      this.startTimer();
     }
   }
 
@@ -309,7 +315,7 @@ export class CentroControlMatutinoComponent implements OnInit {
       cssClass: 'my-custom-class',
       header: 'ADVERTENCIA',
       subHeader: 'TERMINA TURNO',
-      message: '¿ESTAS SEGURO DE TERMINAR TURNO?',
+      message: '¿ESTAS SEGURO DE TERMINAR EL TURNO?',
       mode: 'ios', 
       buttons: [
         {
