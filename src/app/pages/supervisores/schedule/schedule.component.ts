@@ -47,29 +47,30 @@ export class ScheduleComponent implements OnInit {
   }
 
   async validaTurno() {
-    const timeT1ini = '7:00:00';
+    const timeT1ini = '07:00:00';
     const timeT1fin = '17:00:00';
     const timeT2ini = '17:00:01';
     const timeT2fin = '23:59:59';
-    const timeT2fin1 = '0:00:00';
+    const timeT2ini1 = '0:00:00';
     const timeT2fin2 = '3:00:00';
-    if (this.tunoCorre === 0) {
-      const time = `${this.today.getHours()}:${this.today.getMinutes()}:00`;
+    const time = `${this.today.getHours()}:${this.today.getMinutes()}:00`;
+    if (this.tunoCorre == 0) {
+      
        console.log('time', time);
-      if (time >= timeT1ini && time <= timeT1fin) {
+      if (time > timeT1ini && time < timeT1fin) {
         this.tunoCorre = 1;
-
+     
       }
       
 
-        if (time >= timeT2ini && time <= timeT2fin) {
+      if (time > timeT2ini && time < timeT2fin) {
           this.tunoCorre = 2;
   
         }
-        // if(time >= timeT2fin1 && time <= timeT2fin2) {
-        //   this.tunoCorre = 2;
+        if(time >= timeT2ini1 && time <= timeT2fin2) {
+          this.tunoCorre = 2;
   
-        // }
+        }
 
       
     }
