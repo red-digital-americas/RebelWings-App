@@ -432,16 +432,20 @@ voladoEfectivo(id) {
   this.router.navigateByUrl('supervisor/volado-efectivo/2/' + id);
 }
 resguardoPropina(id) {
-  if (id === null) {
-    id = 0;
+  if(this.data[3].isComplete == false){
+    if (id === null) {
+      id = 0;
+    }
+    this.router.navigateByUrl('supervisor/resguardo-propina/' + id);
   }
-  this.router.navigateByUrl('supervisor/resguardo-propina/' + id);
 }
 limpiezaSalonBanos(id) {
-  if (id === null) {
-    id = 0;
+  if(this.data[4].isComplete == false){
+    if (id === null) {
+      id = 0;
+    }
+    this.router.navigateByUrl('supervisor/limpieza-salon-banos/' + id);
   }
-  this.router.navigateByUrl('supervisor/limpieza-salon-banos/' + id);
 }
 resguardoTableta(id) {
   if (id === null) {
@@ -456,20 +460,24 @@ alarma(id) {
   this.router.navigateByUrl('supervisor/alarma/' + id);
 }
 tabletAndAlarma(idTablet, idAlarma) {
-  if (idTablet === null) {
-    idTablet = 0;
+  if(this.data[5].isComplete == false){
+    if (idTablet === null) {
+      idTablet = 0;
+    }
+    if (idAlarma === null) {
+      idAlarma = 0;
+    }
+    console.log(`id tablet ${idTablet} id tablet ${idAlarma}`);
+    this.router.navigateByUrl(`supervisor/resguardo-tableta/${idTablet}/alarma/${idAlarma}`);
   }
-  if (idAlarma === null) {
-    idAlarma = 0;
-  }
-  console.log(`id tablet ${idTablet} id tablet ${idAlarma}`);
-  this.router.navigateByUrl(`supervisor/resguardo-tableta/${idTablet}/alarma/${idAlarma}`);
 }
 mesas(id: number) {
-  if (id === null) {
-    id = 0;
+  if(this.data[1].isComplete == false){
+    if (id === null) {
+      id = 0;
+    }
+    this.router.navigateByUrl(`supervisor/mesa-espera/2/${id}`);
   }
-  this.router.navigateByUrl(`supervisor/mesa-espera/2/${id}`);
 }
 stockPollo(id: number) {
   if (id === null) {

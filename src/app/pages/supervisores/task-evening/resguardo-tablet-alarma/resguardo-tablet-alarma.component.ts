@@ -31,6 +31,7 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
   public fotosTablet;
   public fotosAlarma;
   public createDate = '';
+  public visibleGuardar = true;
 
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
   constructor(public router: Router,
@@ -92,6 +93,21 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
     this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
   }
 
+  async alertCampos(){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'CAMPOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN LLENADOS',
+      mode: 'ios',
+      buttons: ['OK'],
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+
+  }
 
   async addPhotoToGalleryTablet() {
     const name = new Date().toISOString();
@@ -284,8 +300,15 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
   }
 
   allSave() {
+    if(this.dataTablet.comment == undefined || this.dataTablet.comment == "" || this.dataTablet.comment == null || this.dataTablet.photoTabletSageKeepings.length == 0){
+     this.alertCampos();
+    }
+    else{
+      this.visibleGuardar = false;
+      this.alertAlarma();
+    }
     
-    this.alertAlarma();
+    
   }
   async alertAlarma(){
 
@@ -343,7 +366,7 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
           this.photoService.deleteAllPhoto(this.dataTablet);
           // this.disabled = false;
           //this.saveAlarma();
-          // this.router.navigateByUrl('supervisor/control-vespertino');
+          this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
         }
       });
   }

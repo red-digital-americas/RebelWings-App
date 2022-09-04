@@ -474,7 +474,7 @@
 
           <!------RESGUARDO DE TABLETA Y ALARMA-------->
           <ion-col size="6" *ngIf="tabletAlarmaActive === true">
-            <ion-card *ngIf="data[5].isComplete === false" (click)="tabletAndAlarma(data[5].id, null)">
+            <ion-card (click)="tabletAndAlarma(data[5].id, null)">
               <ion-card-content>
                 <ion-row size="12">
                   <ion-col size="3" class="ion-align-self-center"> 

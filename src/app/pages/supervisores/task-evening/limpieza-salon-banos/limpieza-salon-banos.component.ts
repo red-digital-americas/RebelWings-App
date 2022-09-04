@@ -9,6 +9,7 @@ import {
 } from 'src/app/core/services/services/photo.service';
 import { ActionSheetController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
+import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -33,6 +34,7 @@ export class LimpiezaSalonBanosComponent implements OnInit {
   public nameBranch = '';
   public dataBranch: any[] = [];
   public createDate = '';
+  public visibleGuardar = true;
 
   constructor(
     public router: Router,
@@ -42,7 +44,8 @@ export class LimpiezaSalonBanosComponent implements OnInit {
     public load: LoaderComponent,
     public actionSheetController: ActionSheetController,
     public photoService: PhotoService,
-    public datepipe: DatePipe
+    public datepipe: DatePipe,
+    public alertController: AlertController
   ) { }
 
   ionViewWillEnter() {
@@ -189,22 +192,29 @@ export class LimpiezaSalonBanosComponent implements OnInit {
     });
     await actionSheet.present();
   }
+
+  async alertCampos(){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'CAMPOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN LLENADOS',
+      mode: 'ios',
+      buttons: ['OK'],
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+
+  }
+
   validateSave() {
-    if (
-      this.data.comment === '' ||
-      this.data.comment === undefined ||
-      this.data.comment === null
-    ) {
-      this.activeComment = true;
-    } else {
-      this.activeComment = false;
-    }
-    if (
-      this.data.comment === '' ||
-      this.data.comment === undefined
-    ) {
-      return;
-    } else {
+    if (this.data.comment == undefined || this.data.comment == null || this.data.comment == "" || this.data.photoLivingRoomBathroomCleanings.length == 0) {
+       this.alertCampos();
+    } 
+    else {
+       this.visibleGuardar = false;
       this.save();
     }
   }

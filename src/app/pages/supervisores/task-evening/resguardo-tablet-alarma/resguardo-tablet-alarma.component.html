@@ -101,7 +101,7 @@
 
       <ion-row size="12" class="">
         <ion-col size="3" offset="8">
-          <ion-button [disabled]="disabled === true && (dataTablet.comment === undefined || dataTablet.comment === '')"
+          <ion-button *ngIf="this.visibleGuardar === true"
             (click)="allSave()" shape="round" color="danger" expand="full">
             GUARDAR
           </ion-button>
