@@ -9,6 +9,7 @@ import {
 } from 'src/app/core/services/services/photo.service';
 import { ActionSheetController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
+import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -29,7 +30,7 @@ export class LoungeMountedComponent implements OnInit {
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
   public activeData = false;
   public createDate = '';
-
+  public visibleGuardar = true;
 
 
   constructor(
@@ -40,7 +41,8 @@ export class LoungeMountedComponent implements OnInit {
     public load: LoaderComponent,
     public actionSheetController: ActionSheetController,
     public photoService: PhotoService,
-    public datepipe: DatePipe
+    public datepipe: DatePipe,
+    public alertController: AlertController
 
   ) { }
   ionViewWillEnter() {
@@ -126,6 +128,22 @@ export class LoungeMountedComponent implements OnInit {
     await actionSheet.present();
   }
 
+  async alertCampos(){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'CAMPOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN LLENADOS',
+      mode: 'ios',
+      buttons: ['OK'],
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+
+}
+
   //eliminar imagenes bd
   public async deleteImgShowAction(id) {
     const actionSheet = await this.actionSheetController.create({
@@ -192,21 +210,28 @@ export class LoungeMountedComponent implements OnInit {
   }
 
   save() {
-    this.disabled = true;
-    this.fotosSalon = [];
-    if (this.data.photoToSetTables.length !== 0) {
-      this.data.photoToSetTables.forEach((photo) => {
-        if (photo.id !== 0) {
-          photo.photoPath = '';
-        }
-      });
+    if(this.data.comment === undefined || this.data.comment === null || this.data.photoToSetTables.length == 0 || this.data.comment === ""){
+      this.alertCampos();
     }
-    this.data.branch = this.user.branchId;
-    this.formartDate();
-    // if (this.branchId === '0') {
-    // } else {
-    //   this.updateSAlon();
-    // }
+    else{
+      
+      this.visibleGuardar = false;
+      this.disabled = true;
+      this.fotosSalon = [];
+      if (this.data.photoToSetTables.length !== 0) {
+        this.data.photoToSetTables.forEach((photo) => {
+          if (photo.id !== 0) {
+            photo.photoPath = '';
+          }
+        });
+      }
+      this.data.branch = this.user.branchId;
+      this.formartDate();
+      // if (this.branchId === '0') {
+      // } else {
+      //   this.updateSAlon();
+      // }
+    }
   }
   addSalon() {
     this.data.createdBy = this.user.id;

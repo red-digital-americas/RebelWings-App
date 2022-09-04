@@ -23,6 +23,7 @@ export class SalesExpectationComponent implements OnInit {
   public idSucursal: string;
   public disabled = false;
   public data;
+  public validado : boolean[] = [];
   public contador: number[] = [];
   handlerRespMessage = '';
   handlerRespValor;
@@ -40,9 +41,19 @@ export class SalesExpectationComponent implements OnInit {
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idSucursal = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
+    
   }
   ngOnInit() { }
+  
+  validaO(i){
+     if(this.contador[i] >= 3 ){
+          this.validado[i]= false;
+     }
+     else{
+      this.validado[i]= true;
+     }
 
+  }
   
   getData() {
     this.load.presentLoading('Cargando..');
@@ -128,6 +139,7 @@ export class SalesExpectationComponent implements OnInit {
           console.log('no hay diferencia', stock);
           this.contador[i] = 3;
           console.log('cont', this.contador[i]);
+          this.validaO(i);
         }
       });
     console.log('sin data');
@@ -166,6 +178,7 @@ export class SalesExpectationComponent implements OnInit {
     this.contador[i] += 1;
     }
     console.log('contador: ', this.contador[i]);
+    this.validaO(i);
   }
   trackData(index, data) {
     return data ? data.id : undefined;
@@ -187,6 +200,7 @@ export class SalesExpectationComponent implements OnInit {
       const { role } = await alert.onDidDismiss();
       console.log('onDidDismiss resolved with role', role);
       this.contador[i] += 1;
+      this.validaO(i);
       this.ngOnInit();
   }
   

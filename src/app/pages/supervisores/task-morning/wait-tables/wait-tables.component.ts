@@ -5,6 +5,7 @@ import { ServiceGeneralService } from 'src/app/core/services/service-general/ser
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-wait-tables',
@@ -22,6 +23,7 @@ export class WaitTablesComponent implements OnInit {
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
   public turno;
   public createDate = '';
+  public visibleGuardar = true;
 
   public fotosWaitlist;
   public options: CameraOptions = {
@@ -40,7 +42,8 @@ export class WaitTablesComponent implements OnInit {
     public service: ServiceGeneralService,
     public load: LoaderComponent,
     private camera: Camera,
-    public datepipe: DatePipe
+    public datepipe: DatePipe,
+    public alertController: AlertController
   ) { }
 
   ionViewWillEnter() {
@@ -105,7 +108,22 @@ export class WaitTablesComponent implements OnInit {
     console.log('fotos count', this.data.photoWaitlistTable.length);
   }
 
-  
+  async alertCampos(){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'CAMPOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN LLENADOS',
+      mode: 'ios',
+      buttons: ['OK'],
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+
+}
+
   public async showActionSheet(photo, position: number) {
     console.log('photo', photo);
     console.log('posicion', position);
@@ -208,29 +226,36 @@ export class WaitTablesComponent implements OnInit {
 
   save() {
 
-    this.disabled = true;
-    this.fotosWaitlist = [];
-    if (this.data.photoWaitlistTable.length !== 0) {
-      this.data.photoWaitlistTable.forEach((photo) => {
-        if (photo.id !== 0) {
-          photo.photoPath = '';
-        }
-      });
+    if(this.data.numberPeople == undefined || this.data.numberPeople == null || this.data.comment == undefined || this.data.comment == null || this.data.comment == "" || this.data.photoWaitlistTable.length == 0){
+     this.alertCampos();
     }
+    else{
+      this.visibleGuardar = false;
+      this.disabled = true;
+      this.fotosWaitlist = [];
+      if (this.data.photoWaitlistTable.length !== 0) {
+        this.data.photoWaitlistTable.forEach((photo) => {
+          if (photo.id !== 0) {
+            photo.photoPath = '';
+          }
+        });
+      }
+  
+      this.data.howManyTables = 0;
+      this.data.waitlistTables = true;
+      this.data.branch = this.user.branchId;
+      this.fotosWaitlist = this.photoService.photos;
+      console.log('Obj To send => ', this.data);
+      this.formartDate();
+      // if (this.idTable === '0') {
+      //   console.log('add data');
+      //   this.formartDate();
+      // }
+      // else {
+      //   this.updateData();
+      // }
 
-    this.data.howManyTables = 0;
-    this.data.waitlistTables = true;
-    this.data.branch = this.user.branchId;
-    this.fotosWaitlist = this.photoService.photos;
-    console.log('Obj To send => ', this.data);
-    this.formartDate();
-    // if (this.idTable === '0') {
-    //   console.log('add data');
-    //   this.formartDate();
-    // }
-    // else {
-    //   this.updateData();
-    // }
+    }
   }
   addData() {
     this.data.createdBy = this.user.id;//

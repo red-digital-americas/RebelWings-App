@@ -61,7 +61,7 @@
             <ion-row size="12">
               <ion-col size="7" class="ion-align-self-center">
                 <ion-card class="closed">
-                  <ion-input [(ngModel)]="item.cantidad" type="number" min="0" required placeholder="Cantidad" [disabled]="3 >= this.contador[i] || this.contador[i] > 3">
+                  <ion-input [(ngModel)]="item.cantidad" type="number" min="0" required placeholder="Cantidad" [disabled]="this.validado[i] === false">
                   </ion-input>
                 </ion-card>
               </ion-col>
@@ -72,7 +72,7 @@
             <!-- <ion-label style="color: #ad182d; font-size: 12px" *ngIf="activeAmount">Campo requerido</ion-label> -->
           </ion-col>
           <ion-col size="3" class="ion-align-self-center">
-            <ion-button (click)="validarCantidad(item, i)" shape="round" color="warning" expand="full" [disabled]="3 >= this.contador[i] || this.contador[i] > 3">
+            <ion-button (click)="validarCantidad(item, i)" shape="round" color="warning" expand="full" [disabled]="this.validado[i] === false">
               Validar
             </ion-button>
           </ion-col>
@@ -85,7 +85,7 @@
           </ion-col> -->
 
           <ion-col size="3" class="ion-align-self-center">
-            <ion-button (click)="save(item,i)" shape="round" color="danger" expand="full" [disabled]="this.contador[i] != 3 || this.contador[i] > 3 ">
+            <ion-button (click)="save(item,i)" shape="round" color="danger" expand="full" [disabled]="this.contador[i] !== 3 ">
               Guardar
             </ion-button>
           </ion-col>

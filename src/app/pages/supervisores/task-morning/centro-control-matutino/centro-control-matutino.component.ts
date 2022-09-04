@@ -315,7 +315,7 @@ export class CentroControlMatutinoComponent implements OnInit {
       cssClass: 'my-custom-class',
       header: 'ADVERTENCIA',
       subHeader: 'TERMINA TURNO',
-      message: '¿ESTAS SEGURO DE TERMINAR EL TURNO?',
+      message: '¿ESTAS SEGURO DE TERMINAR TURNO?',
       mode: 'ios', 
       buttons: [
         {
@@ -368,22 +368,28 @@ export class CentroControlMatutinoComponent implements OnInit {
     this.router.navigateByUrl('supervisor/validacion-assistencia/1');
   }
   validacionGas(id: number) {
-    if (id === null) {
-      id = 0;
+    if(this.data[1].isComplete == false){
+      if (id === null) {
+        id = 0;
+      }
+      this.router.navigateByUrl('supervisor/validacion-gas/' + id);
     }
-    this.router.navigateByUrl('supervisor/validacion-gas/' + id);
   }
   salonMontado(id: number) {
-    if (id === null) {
-      id = 0;
+    if(this.data[2].isComplete == false){
+      if (id === null) {
+        id = 0;
+      }
+      this.router.navigateByUrl('supervisor/salon-montado/' + id);
     }
-    this.router.navigateByUrl('supervisor/salon-montado/' + id);
   }
   banosMatutino(id: number) {
-    if (id === null) {
-      id = 0;
+    if(this.data[6].isComplete == false){
+      if (id === null) {
+        id = 0;
+      }
+      this.router.navigateByUrl('supervisor/banos-matutino/' + id);
     }
-    this.router.navigateByUrl('supervisor/banos-matutino/' + id);
   }
   stockPollo(id: number) {
     this.router.navigateByUrl('supervisor/expectativa-venta/' + id);
@@ -393,10 +399,12 @@ export class CentroControlMatutinoComponent implements OnInit {
     this.router.navigateByUrl('supervisor');
   }
   mesas(id: number) {
-    if (id === null) {
-      id = 0;
+    if(this.data[3].isComplete == false){
+      if (id === null) {
+        id = 0;
+      }
+      this.router.navigateByUrl(`supervisor/mesa-espera/1/${id}`);
     }
-    this.router.navigateByUrl(`supervisor/mesa-espera/1/${id}`);
   }
   remisiones(id) {
     if (id === null) {

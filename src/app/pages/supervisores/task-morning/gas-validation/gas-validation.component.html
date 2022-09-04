@@ -119,7 +119,7 @@
       <!-- footer boton -->
       <ion-row size="12" class="footer">
         <ion-col size="3" offset="8">
-          <ion-button  (click)="validaInfra()" shape="round" color="danger" expand="full" [disabled]="(data.comment === undefined || data.comment === null || data.amount === undefined || data.amount === null)">
+          <ion-button  (click)="validaInfra()" shape="round" color="danger" expand="full" *ngIf="this.visibleGuardar === true">
             GUARDAR
           </ion-button>
         </ion-col>
