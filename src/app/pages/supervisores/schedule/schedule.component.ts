@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController, Platform } from '@ionic/angular';
+import { MOMENT } from 'angular-calendar';
+import hoursToMinutes from 'date-fns/esm/fp/hoursToMinutes/index.js';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 
 @Component({
@@ -55,27 +57,29 @@ export class ScheduleComponent implements OnInit {
     const timeT2fin2 = '3:00:00';
     const time = `${this.today.getHours()}:${this.today.getMinutes()}:00`;
     if (this.tunoCorre == 0) {
-      
-       console.log('time', time);
-      if (time > timeT1ini && time < timeT1fin) {
+      console.log('Hora:', time.valueOf());
+      console.log('Hora:', timeT1ini.valueOf());
+       
+      if ( time.valueOf() > timeT1ini.valueOf() && time.valueOf() < timeT1fin.valueOf()) {
         this.tunoCorre = 1;
-     
+        console.log('Turno', this.tunoCorre);
       }
       
 
       if (time > timeT2ini && time < timeT2fin) {
           this.tunoCorre = 2;
-  
+          console.log('Turno', this.tunoCorre);
         }
-        if(time >= timeT2ini1 && time <= timeT2fin2) {
-          this.tunoCorre = 2;
-  
-        }
-
+        // if(time.valueOf() > timeT2ini1.valueOf() && time.valueOf() < timeT2fin2.valueOf()) {
+        //   this.tunoCorre = 2;
+        //   console.log('Turno', this.tunoCorre);
+        // }
+      
+      
       
     }
 
-    console.log('Turno', this.tunoCorre);
+    
   }
   // get  name sucursal
   // getBranch() {
