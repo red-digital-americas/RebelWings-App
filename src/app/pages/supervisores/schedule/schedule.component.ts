@@ -49,31 +49,31 @@ export class ScheduleComponent implements OnInit {
   }
 
   async validaTurno() {
-    const timeT1ini = '07:00:00';
-    const timeT1fin = '17:00:00';
-    const timeT2ini = '17:00:01';
-    const timeT2fin = '23:59:59';
-    const timeT2ini1 = '0:00:00';
-    const timeT2fin2 = '3:00:00';
-    const time = `${this.today.getHours()}:${this.today.getMinutes()}:00`;
+    // const timeT1ini = '07:00:00';
+    // const timeT1fin = '17:00:00';
+    // const timeT2ini = '17:00:01';
+    // const timeT2fin = '23:59:59';
+    // const timeT2ini1 = '0:00:00';
+    // const timeT2fin2 = '3:00:00';
+    var time = this.today.getHours();
     if (this.tunoCorre == 0) {
-      console.log('Hora:', time.valueOf());
-      console.log('Hora:', timeT1ini.valueOf());
+      console.log('Hora:', time);
+      
        
-      if ( time.valueOf() > timeT1ini.valueOf() && time.valueOf() < timeT1fin.valueOf()) {
+      if ( time > 6 && time < 17) {
         this.tunoCorre = 1;
         console.log('Turno', this.tunoCorre);
       }
       
 
-      if (time > timeT2ini && time < timeT2fin) {
+      if (time > 16 && time <= 23) {
           this.tunoCorre = 2;
           console.log('Turno', this.tunoCorre);
         }
-        // if(time.valueOf() > timeT2ini1.valueOf() && time.valueOf() < timeT2fin2.valueOf()) {
-        //   this.tunoCorre = 2;
-        //   console.log('Turno', this.tunoCorre);
-        // }
+        if(time >= 0 && time < 3) {
+          this.tunoCorre = 2;
+          console.log('Turno', this.tunoCorre);
+        }
       
       
       
