@@ -171,7 +171,7 @@ export class CentroControlMatutinoComponent implements OnInit {
       cssClass: 'my-custom-class',
       header: 'IMPORTANTE',
       subHeader: 'TURNO',
-      message: 'SE TERMINO EL HORARIO DE CAPTURA DE TAREAS DEL TURNO MATUTINO',
+      message: 'SE TERMINO EL HORARIO DE CAPTURA DE TAREAS DEL TURNO VESPERTINO. <BR>TU TURNO FINALIZARA',
       mode: 'ios',
       buttons: ['OK'],
     });

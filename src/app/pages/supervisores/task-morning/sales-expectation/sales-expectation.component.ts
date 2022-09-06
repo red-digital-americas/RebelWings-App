@@ -132,8 +132,10 @@ export class SalesExpectationComponent implements OnInit {
         if (resp.success) {
           // stock.diferencia
           stock.diferencia = respValidar.message;
+          
           this.openDialogValidarStock(stock,i);
           console.log('new valor permitida', stock);
+          
         }
         else {
           console.log('no hay diferencia', stock);
@@ -145,6 +147,17 @@ export class SalesExpectationComponent implements OnInit {
     console.log('sin data');
   }
   async openDialogValidarStock(nodo,i) {
+    if(isNaN(this.contador[i])){
+      this.contador[i] = 1;
+
+    }
+    else{
+    this.contador[i] += 1;
+    }
+    console.log('contador: ', this.contador[i]);
+    this.validaO(i);
+    
+    if(this.contador[i] < 3){
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'DIFERENCIA DE STOCK',
@@ -170,15 +183,8 @@ export class SalesExpectationComponent implements OnInit {
     const { role } = await alert.onDidDismiss();
     this.handlerRespValor = role;
     console.log('onDidDismiss resolved with role', this.handlerRespValor);
-    if(isNaN(this.contador[i])){
-      this.contador[i] = 1;
+  }
 
-    }
-    else{
-    this.contador[i] += 1;
-    }
-    console.log('contador: ', this.contador[i]);
-    this.validaO(i);
   }
   trackData(index, data) {
     return data ? data.id : undefined;
@@ -189,8 +195,8 @@ export class SalesExpectationComponent implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'IMPORTANTE',
-      subHeader: 'GUARDAR',
-      message: 'SE REALIZO EL AJUSTE DE INVENTARIO CON EXITO',
+      subHeader: 'INVENTARIO',
+      message: 'SE REALIZO EL AJUSTE DE INVENTARIO CON EXITO. <BR>RECUERDA REINICIAR TU SISTEMA FRONTREST PARA QUE RECIBA EL AJUSTE.',
       mode: 'ios',
       buttons: ['OK'],
     });

@@ -328,7 +328,7 @@ export class CentroControlVespertinoComponent implements OnInit {
         cssClass: 'my-custom-class',
         header: 'IMPORTANTE',
         subHeader: 'TURNO',
-        message: 'SE TERMINO EL HORARIO DE CAPTURA DE TAREAS DEL TURNO VESPERTINO',
+        message: 'SE TERMINO EL HORARIO DE CAPTURA DE TAREAS DEL TURNO VESPERTINO. <BR>TU TURNO FINALIZARA',
         mode: 'ios',
         buttons: ['OK'],
       });
