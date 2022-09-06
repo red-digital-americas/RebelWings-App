@@ -22,7 +22,8 @@
           <ion-row size="12" class="align-center-text">
             <ion-col size="12">
               <div>
-                <span class="color-text-white-n ">{{user.name}} {{user.lastName}}</span>
+                <span *ngIf="this.ValUsuario === 1" class="color-text-white-n ">{{user.name}} {{user.lastName}}</span>
+                <span *ngIf="this.ValUsuario === 2" class="color-text-white-n ">CAJERO</span>
               </div>
             </ion-col>
           </ion-row>
@@ -439,7 +440,8 @@
               <ion-card-content>
                 <ion-row size="12">
                   <ion-col size="3" class="ion-align-self-center">
-                    <img src="./assets/icon/ilustracion_stock_de_pollo.png" alt="" />
+                    <img *ngIf="this.Inventario.length !== 0" src="./assets/icon/ilustracion_stock_de_pollo.png" alt="" />
+                    <img *ngIf="this.Inventario.length === 0" src="./assets/icon/ilustracion_check.png" alt="" />
                   </ion-col>
                   <ion-col size="9">
                     <ion-row size="12">
@@ -459,10 +461,14 @@
                       <ion-col size="12">
                         <span class="title-progress-bar">NIVEL DE PROGRESO</span>
                         <br>
-                        <ion-progress-bar [color]="data[2].color" value=".{{ data[2].percentage }}"></ion-progress-bar>
+                        <ion-progress-bar *ngIf="this.Inventario.length !== 0" color="danger" value="0">
+                        </ion-progress-bar>
+                        <ion-progress-bar *ngIf="this.Inventario.length === 0" color="success"value="1">
+                        </ion-progress-bar>
                         <br>
                         <div class="margin-completado">
-                          <span class="title-progress-bar">{{ data[2].percentage }}% COMPLETADO</span>
+                          <span *ngIf="this.Inventario.length !== 0" class="title-progress-bar">0% COMPLETADO</span>
+                          <span *ngIf="this.Inventario.length === 0" class="title-progress-bar">100% COMPLETADO</span>
                         </div>
                       </ion-col>
                     </ion-row>

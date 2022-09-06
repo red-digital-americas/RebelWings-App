@@ -41,6 +41,10 @@ export class CentroControlVespertinoComponent implements OnInit {
   public Alarma;
   public cant;
   public contador = null;
+  public tunoCorre = 0;
+  public ValUsuario = 1;
+
+  public Inventario;
 
   public barProgressTask: number;
   public barProgressTask1: number;
@@ -69,6 +73,7 @@ export class CentroControlVespertinoComponent implements OnInit {
     //this.notificationVoladoEfectivo();
     this.getDataControl(this.task);
     // this.notificationAlarm();
+    this.getInventario();
     
 
 
@@ -138,6 +143,16 @@ export class CentroControlVespertinoComponent implements OnInit {
         
       });
   }
+
+  showUsuario(){
+    if(this.ValUsuario == 1){
+      this.ValUsuario = 2;
+    }
+    else{
+      this.ValUsuario = 1;
+    }
+  }
+
   activeTabletAndAlarma() {
 
     this.tabletAlarmaActive = true;
@@ -213,7 +228,7 @@ export class CentroControlVespertinoComponent implements OnInit {
         console.log('valor', this.valueVolado);
         localStorage.setItem('valueVolado', JSON.stringify(this.valueVolado));
         this.stopTimer();
-        //this.alertVolado();
+        this.alertVolado();
       }
       else {
 
@@ -277,6 +292,52 @@ export class CentroControlVespertinoComponent implements OnInit {
       
         clearInterval(this.contador);
       
+    }
+
+    turnoActual(){
+      this.tunoCorre =0;
+      this.today = new Date();
+      var time = this.today.getHours();
+      
+        console.log('Hora:', time);
+        
+         
+        if ( time > 6 && time < 17) {
+          this.tunoCorre = 1;
+          this.alertFinal();
+        }
+        
+  
+        if (time > 16 && time <= 23) {
+            this.tunoCorre = 2;
+            
+          }
+          if(time >= 0 && time < 3) {
+            this.tunoCorre = 2;
+            
+          }
+        if(this.tunoCorre == 0){
+          this.alertFinal();
+        }
+  
+    }
+  
+    async alertFinal(){
+      this.stopTimer();
+      const alert = await this.alertController.create({
+        cssClass: 'my-custom-class',
+        header: 'IMPORTANTE',
+        subHeader: 'TURNO',
+        message: 'SE TERMINO EL HORARIO DE CAPTURA DE TAREAS DEL TURNO VESPERTINO',
+        mode: 'ios',
+        buttons: ['OK'],
+      });
+      await alert.present();
+      const { role } = await alert.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
+      
+      this.terminarTurno();
+  
     }
 
   async alertVolado(){
@@ -346,7 +407,8 @@ showTermina() {
         text: 'ACEPTAR',
         handler: (data: any) => {
           console.log('TERMINAR TURNO');
-          this.showValidaTermina();
+          //this.showValidaTermina();
+          this.terminarTurno();
         }
       }
     ]
@@ -382,8 +444,26 @@ showValidaTermina() {
   });
 }
 
+getInventario() {
+  this.load.presentLoading('Cargando..');
+  this.service
+    .serviceGeneralGet(`StockChicken/GetStock?id_sucursal=${this.user.branch}&dataBase=${this.user.dataBase}`)
+    .subscribe((resp) => {
+      if (resp.success) {
+        this.Inventario = resp.result;
+        this.Inventario.forEach(element => {
+          element.cantidad = 0;
+        });
+        console.log("objetos inv: ",this.Inventario.length);
+      }
+      console.log('s ',resp.success);
+    });
+  console.log('sin data inventario');
+}
+
 
 validacionAsistencia() {
+  this.stopTimer();
   this.router.navigateByUrl('supervisor/validacion-assistencia/2');
 }
 terminarTurno() {
@@ -394,6 +474,7 @@ remisiones(id) {
   if (id === null) {
     id = 0;
   }
+  this.stopTimer();
   this.router.navigateByUrl('supervisor/remisiones/2/' + id);
 }
 getNotification() {
@@ -411,24 +492,28 @@ productoRiesgo(id) {
   if (id === null) {
     id = 0;
   }
+  this.stopTimer();
   this.router.navigateByUrl('supervisor/producto-riesgo/2/' + id);
 }
 albaranes(id) {
   if (id === null) {
     id = 0;
   }
+  this.stopTimer();
   this.router.navigateByUrl('supervisor/albaranes/' + id);
 }
 transferencias(id) {
   if (id === null) {
     id = 0;
   }
+  this.stopTimer();
   this.router.navigateByUrl('supervisor/transferencias/2/' + id);
 }
 voladoEfectivo(id) {
   if (id === null) {
     id = 0;
   }
+  this.stopTimer();
   this.router.navigateByUrl('supervisor/volado-efectivo/2/' + id);
 }
 resguardoPropina(id) {
@@ -436,6 +521,7 @@ resguardoPropina(id) {
     if (id === null) {
       id = 0;
     }
+    this.stopTimer();
     this.router.navigateByUrl('supervisor/resguardo-propina/' + id);
   }
 }
@@ -444,6 +530,7 @@ limpiezaSalonBanos(id) {
     if (id === null) {
       id = 0;
     }
+    this.stopTimer();
     this.router.navigateByUrl('supervisor/limpieza-salon-banos/' + id);
   }
 }
@@ -451,12 +538,14 @@ resguardoTableta(id) {
   if (id === null) {
     id = 0;
   }
+  this.stopTimer();
   this.router.navigateByUrl('supervisor/resguardo-tableta/' + id);
 }
 alarma(id) {
   if (id === null) {
     id = 0;
   }
+  this.stopTimer();
   this.router.navigateByUrl('supervisor/alarma/' + id);
 }
 tabletAndAlarma(idTablet, idAlarma) {
@@ -467,6 +556,7 @@ tabletAndAlarma(idTablet, idAlarma) {
     if (idAlarma === null) {
       idAlarma = 0;
     }
+    this.stopTimer();
     console.log(`id tablet ${idTablet} id tablet ${idAlarma}`);
     this.router.navigateByUrl(`supervisor/resguardo-tableta/${idTablet}/alarma/${idAlarma}`);
   }
@@ -476,14 +566,18 @@ mesas(id: number) {
     if (id === null) {
       id = 0;
     }
+    this.stopTimer();
     this.router.navigateByUrl(`supervisor/mesa-espera/2/${id}`);
   }
 }
 stockPollo(id: number) {
-  if (id === null) {
-    id = 0;
+  if(this.Inventario.length != 0){
+    if (id === null) {
+      id = 0;
+    }
+    this.stopTimer();
+    this.router.navigateByUrl('supervisor/expectativa-venta/' + id);
   }
-  this.router.navigateByUrl('supervisor/expectativa-venta/' + id);
 }
 
 }

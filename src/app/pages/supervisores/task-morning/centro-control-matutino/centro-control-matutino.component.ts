@@ -8,6 +8,7 @@ import { LogoutComponent } from 'src/app/pages/popover/logout/logout.component';
 import { AlertController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
 import { interval } from 'rxjs';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-centro-control-matutino',
@@ -32,6 +33,8 @@ export class CentroControlMatutinoComponent implements OnInit {
   public cant;
   public completada;
   public contador = null;
+  public tunoCorre = 0;
+  public ValUsuario = 1;
 
   public barProgressTask: number;
   public barProgressTask1: number;
@@ -60,6 +63,7 @@ export class CentroControlMatutinoComponent implements OnInit {
     // this.getBranch();
     //this.notificationVoladoEfectivo();
     this.getDataControl(this.task);
+    this.turnoActual();
 
  
 
@@ -113,6 +117,7 @@ export class CentroControlMatutinoComponent implements OnInit {
   startTimer() {
     this.stopTimer();
     this.contador = setInterval((n) => { 
+      this.turnoActual();
       this.notificationVoladoEfectivo();
       console.log('muestra timer'); }, 20000);
   }
@@ -121,6 +126,61 @@ export class CentroControlMatutinoComponent implements OnInit {
     
       clearInterval(this.contador);
     
+  }
+
+  turnoActual(){
+    this.tunoCorre = 0;
+    this.today = new Date();
+    var time = this.today.getHours();
+    
+      console.log('Hora:', time);
+      
+       
+      if ( time > 6 && time < 17) {
+        this.tunoCorre = 1;
+        
+      }
+      
+
+      if (time > 16 && time <= 23) {
+          this.tunoCorre = 2;
+          this.alertFinal();
+        }
+        if(time >= 0 && time < 3) {
+          this.tunoCorre = 2;
+          this.alertFinal();
+        }
+
+        if(this.tunoCorre == 0){
+          this.alertFinal();
+        }  
+
+  }
+  showUsuario(){
+    if(this.ValUsuario == 1){
+      this.ValUsuario = 2;
+    }
+    else{
+      this.ValUsuario = 1;
+    }
+  }
+
+  async alertFinal(){
+    this.stopTimer();
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'TURNO',
+      message: 'SE TERMINO EL HORARIO DE CAPTURA DE TAREAS DEL TURNO MATUTINO',
+      mode: 'ios',
+      buttons: ['OK'],
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+    
+    this.terminarTurno();
+
   }
 
 
@@ -211,7 +271,7 @@ export class CentroControlMatutinoComponent implements OnInit {
         localStorage.setItem('valueVolado', JSON.stringify(this.valueVolado));
         //SE DETINE EL TIMER DE ACTUALIZADO DE VOLADO
         this.stopTimer();
-        //this.alertVolado();
+        this.alertVolado();
         
       }
       else {
@@ -328,7 +388,8 @@ export class CentroControlMatutinoComponent implements OnInit {
           text: 'ACEPTAR',
           handler: (data: any) => {
             console.log('TERMINAR TURNO');
-            this.showValidaTermina();
+            //this.showValidaTermina();
+            this.terminarTurno();
           }
         }
       ]
@@ -372,6 +433,7 @@ export class CentroControlMatutinoComponent implements OnInit {
       if (id === null) {
         id = 0;
       }
+      this.stopTimer();
       this.router.navigateByUrl('supervisor/validacion-gas/' + id);
     }
   }
@@ -380,6 +442,7 @@ export class CentroControlMatutinoComponent implements OnInit {
       if (id === null) {
         id = 0;
       }
+      this.stopTimer();
       this.router.navigateByUrl('supervisor/salon-montado/' + id);
     }
   }
@@ -388,10 +451,12 @@ export class CentroControlMatutinoComponent implements OnInit {
       if (id === null) {
         id = 0;
       }
+      this.stopTimer();
       this.router.navigateByUrl('supervisor/banos-matutino/' + id);
     }
   }
   stockPollo(id: number) {
+    this.stopTimer();
     this.router.navigateByUrl('supervisor/expectativa-venta/' + id);
   }
   terminarTurno() {
@@ -403,6 +468,7 @@ export class CentroControlMatutinoComponent implements OnInit {
       if (id === null) {
         id = 0;
       }
+      this.stopTimer();
       this.router.navigateByUrl(`supervisor/mesa-espera/1/${id}`);
     }
   }
@@ -410,6 +476,7 @@ export class CentroControlMatutinoComponent implements OnInit {
     if (id === null) {
       id = 0;
     }
+    this.stopTimer();
     this.router.navigateByUrl('supervisor/remisiones/1/' + id);
   }
   productoRiesgo(id) {
@@ -417,18 +484,21 @@ export class CentroControlMatutinoComponent implements OnInit {
     if (id === null) {
       id = 0;
     }
+    this.stopTimer();
     this.router.navigateByUrl('supervisor/producto-riesgo/1/' + id);
   }
   transferencias(id) {
   if (id === null) {
     id = 0;
   }
+  this.stopTimer();
   this.router.navigateByUrl('supervisor/transferencias/1/' + id);
   }
   voladoEfectivo(id) {
   if (id === null) {
     id = 0;
   }
+  this.stopTimer();
   this.router.navigateByUrl('supervisor/volado-efectivo/1/' + id);
   }
 

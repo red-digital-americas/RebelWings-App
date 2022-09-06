@@ -215,7 +215,7 @@ export class GasValidationComponent implements OnInit {
       cssClass: 'my-custom-class',
       header: 'IMPORTANTE',
       subHeader: 'CAMPOS',
-      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN LLENADOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN CARGADOS CORRECTAMENTE',
       mode: 'ios',
       buttons: ['OK'],
     });
@@ -294,6 +294,7 @@ export class GasValidationComponent implements OnInit {
     await alert.present();
       const { role } = await alert.onDidDismiss();
       console.log('onDidDismiss resolved with role', role);
+      this.load.presentLoading('Guardando..');
       this.save();
     }
     else{
@@ -319,9 +320,12 @@ export class GasValidationComponent implements OnInit {
           await alert.present();
            const { role } = await alert.onDidDismiss();
            console.log('onDidDismiss resolved with role', role);
+           this.load.presentLoading('Guardando..');
            this.save();
           }
         else{
+          this.visibleGuardar = false;
+          this.load.presentLoading('Guardando..');
           this.save();
         }
 

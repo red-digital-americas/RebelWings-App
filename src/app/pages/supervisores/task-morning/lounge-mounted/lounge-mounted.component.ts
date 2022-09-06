@@ -134,7 +134,7 @@ export class LoungeMountedComponent implements OnInit {
       cssClass: 'my-custom-class',
       header: 'IMPORTANTE',
       subHeader: 'CAMPOS',
-      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN LLENADOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN CARGADOS CORRECTAMENTE',
       mode: 'ios',
       buttons: ['OK'],
     });
@@ -214,7 +214,7 @@ export class LoungeMountedComponent implements OnInit {
       this.alertCampos();
     }
     else{
-      
+      this.load.presentLoading('Guardando..');
       this.visibleGuardar = false;
       this.disabled = true;
       this.fotosSalon = [];
@@ -227,6 +227,7 @@ export class LoungeMountedComponent implements OnInit {
       }
       this.data.branch = this.user.branchId;
       this.formartDate();
+
       // if (this.branchId === '0') {
       // } else {
       //   this.updateSAlon();

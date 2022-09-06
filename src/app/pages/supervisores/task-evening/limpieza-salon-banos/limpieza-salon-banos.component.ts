@@ -199,7 +199,7 @@ export class LimpiezaSalonBanosComponent implements OnInit {
       cssClass: 'my-custom-class',
       header: 'IMPORTANTE',
       subHeader: 'CAMPOS',
-      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN LLENADOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN CARGADOS CORRECTAMENTE',
       mode: 'ios',
       buttons: ['OK'],
     });
@@ -207,7 +207,7 @@ export class LimpiezaSalonBanosComponent implements OnInit {
     const { role } = await alert.onDidDismiss();
     console.log('onDidDismiss resolved with role', role);
 
-  }
+}
 
   validateSave() {
     if (this.data.comment == undefined || this.data.comment == null || this.data.comment == "" || this.data.photoLivingRoomBathroomCleanings.length == 0) {
@@ -215,7 +215,8 @@ export class LimpiezaSalonBanosComponent implements OnInit {
     } 
     else {
        this.visibleGuardar = false;
-      this.save();
+       this.load.presentLoading('Guardando..');
+       this.save();
     }
   }
   save() {

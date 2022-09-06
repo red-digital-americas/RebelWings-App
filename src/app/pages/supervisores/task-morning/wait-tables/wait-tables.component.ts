@@ -114,7 +114,7 @@ export class WaitTablesComponent implements OnInit {
       cssClass: 'my-custom-class',
       header: 'IMPORTANTE',
       subHeader: 'CAMPOS',
-      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN LLENADOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN CARGADOS CORRECTAMENTE',
       mode: 'ios',
       buttons: ['OK'],
     });
@@ -231,6 +231,8 @@ export class WaitTablesComponent implements OnInit {
     }
     else{
       this.visibleGuardar = false;
+      this.load.presentLoading('Guardando..');
+
       this.disabled = true;
       this.fotosWaitlist = [];
       if (this.data.photoWaitlistTable.length !== 0) {
@@ -247,6 +249,7 @@ export class WaitTablesComponent implements OnInit {
       this.fotosWaitlist = this.photoService.photos;
       console.log('Obj To send => ', this.data);
       this.formartDate();
+
       // if (this.idTable === '0') {
       //   console.log('add data');
       //   this.formartDate();

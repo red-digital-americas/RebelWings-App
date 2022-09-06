@@ -201,7 +201,7 @@ export class ResguardoPropinaComponent implements OnInit {
       cssClass: 'my-custom-class',
       header: 'IMPORTANTE',
       subHeader: 'CAMPOS',
-      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN LLENADOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN CARGADOS CORRECTAMENTE',
       mode: 'ios',
       buttons: ['OK'],
     });
@@ -209,7 +209,7 @@ export class ResguardoPropinaComponent implements OnInit {
     const { role } = await alert.onDidDismiss();
     console.log('onDidDismiss resolved with role', role);
 
-  }
+}
 
   validateSave() {
     if(this.data.amount == 0 || this.data.amount == undefined || this.data.amount == null || this.data.comment == "" || this.data.comment == undefined || this.data.comment == null || this.data.photoTips.length == 0){
@@ -222,6 +222,7 @@ export class ResguardoPropinaComponent implements OnInit {
    
   }
   save() {
+    this.load.presentLoading('Guardando..');
     this.disabled = true;
     this.fotosPropina = [];
     // esto se pone aqui por que aun no se estrae la data de un get

@@ -135,7 +135,7 @@ export class BanosMatutinoComponent implements OnInit {
       cssClass: 'my-custom-class',
       header: 'IMPORTANTE',
       subHeader: 'CAMPOS',
-      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN LLENADOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN CARGADOS CORRECTAMENTE',
       mode: 'ios',
       buttons: ['OK'],
     });
@@ -211,10 +211,12 @@ export class BanosMatutinoComponent implements OnInit {
   }
 
   save() {
+    
     if(this.data.comment == undefined || this.data.comment == null || this.data.comment == "" || this.data.photoBanosMatutinos.length == 0){
        this.alertCampos();
     }
     else{
+      this.load.presentLoading('Guardando..');
       this.visibleGuardar = false;
       this.disabled = true;
       this.fotosBanos = [];

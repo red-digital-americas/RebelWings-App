@@ -17,7 +17,8 @@
 
             <ion-col size="12">
               <div>
-                <span class="color-text-white-n ">{{user.name}} {{user.lastName}}</span>
+                <span *ngIf="this.ValUsuario === 1" class="color-text-white-n ">{{user.name}} {{user.lastName}}</span>
+                <span *ngIf="this.ValUsuario === 2" class="color-text-white-n ">CAJERO</span>
               </div>
             </ion-col>
 
@@ -71,8 +72,17 @@
               </ion-button>
             </div>
           </ion-col>
-          <ion-col size="12" class="ion-align-items-start">
+        </ion-row>
+        <ion-row size="12">
+          <ion-col  size="10" class="ion-align-items-start">
             <h2 class="title-red2">{{user.branchName}}</h2>
+          </ion-col>
+          <ion-col size="2" class="ion-align-items-end">
+            <div class="align-end-text">
+              <ion-button (click)="showUsuario()" shape="round" color="dark" expand="full">
+                USUARIO
+              </ion-button>
+            </div>
           </ion-col>
         </ion-row>
         <ion-row size="12">

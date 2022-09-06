@@ -19,12 +19,16 @@ export class ScheduleComponent implements OnInit {
   // public nameBranch = '';
   public tunoCorre = 0;
   public today;
+  public contador = null;
 
   public dataBranch: any[] = [];
-  constructor(public platform: Platform, public router: Router, public service: ServiceGeneralService) { }
+  constructor(
+    public platform: Platform, 
+    public router: Router, 
+    public service: ServiceGeneralService) { }
 
   ngOnInit() {
-    this.today = new Date();
+
     this.validaTurno(); 
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log('user', this.user);
@@ -36,6 +40,7 @@ export class ScheduleComponent implements OnInit {
     } else if (this.platform.is('ios')) {
       this.showHeader = true;
     }
+    this.startTimer();
   }
 
   selecSchedule() {
@@ -48,6 +53,20 @@ export class ScheduleComponent implements OnInit {
     }
   }
 
+    //FUNCIONES DEL TIMER DE VOLADO DE EFECTIVO
+    startTimer() {
+      this.stopTimer();
+      this.contador = setInterval((n) => { 
+        this.validaTurno();
+        console.log('muestra timer'); }, 20000);
+    }
+    
+    stopTimer() {
+      
+        clearInterval(this.contador);
+      
+    }
+
   async validaTurno() {
     // const timeT1ini = '07:00:00';
     // const timeT1fin = '17:00:00';
@@ -55,7 +74,9 @@ export class ScheduleComponent implements OnInit {
     // const timeT2fin = '23:59:59';
     // const timeT2ini1 = '0:00:00';
     // const timeT2fin2 = '3:00:00';
+    this.today = new Date();
     var time = this.today.getHours();
+    this.tunoCorre = 0;
     if (this.tunoCorre == 0) {
       console.log('Hora:', time);
       
@@ -75,7 +96,13 @@ export class ScheduleComponent implements OnInit {
           console.log('Turno', this.tunoCorre);
         }
       
-      
+      if(this.tunoCorre == 0){
+       
+        this.stopTimer()
+        this.router.navigateByUrl('login');
+        localStorage.removeItem('userData');
+
+      }
       
     }
 

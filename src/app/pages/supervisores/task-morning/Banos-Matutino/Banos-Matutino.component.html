@@ -3,13 +3,13 @@
     <ion-grid>
       <ion-row size="12">
         <ion-col size="3">
-          <div>
+          
             <!-- <p (click)="return()" class="ion-align-items-start return">
               < REGRESAR</p> -->
-              <ion-button (click)="return()" shape="round" color="warning" expand="full" size="small">
+              <ion-button *ngIf="this.visibleGuardar === true" (click)="return()" shape="round" color="warning" expand="full" size="small">
                 REGRESAR
               </ion-button>
-          </div>
+          
         </ion-col>
         <ion-col size="9"></ion-col>
       </ion-row>

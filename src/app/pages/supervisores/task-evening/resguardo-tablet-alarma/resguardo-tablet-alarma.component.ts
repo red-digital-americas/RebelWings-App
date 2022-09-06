@@ -99,7 +99,7 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
       cssClass: 'my-custom-class',
       header: 'IMPORTANTE',
       subHeader: 'CAMPOS',
-      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN LLENADOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN CARGADOS CORRECTAMENTE',
       mode: 'ios',
       buttons: ['OK'],
     });
@@ -107,7 +107,7 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
     const { role } = await alert.onDidDismiss();
     console.log('onDidDismiss resolved with role', role);
 
-  }
+}
 
   async addPhotoToGalleryTablet() {
     const name = new Date().toISOString();
@@ -305,6 +305,7 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
     }
     else{
       this.visibleGuardar = false;
+      this.load.presentLoading('Guardando..');
       this.alertAlarma();
     }
     
