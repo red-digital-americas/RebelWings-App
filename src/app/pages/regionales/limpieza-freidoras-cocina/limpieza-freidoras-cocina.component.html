@@ -1,44 +1,61 @@
 <ion-app>
   <!-- ************************** data **************************** -->
   <ion-header *ngIf="activeData === true" class="ion-no-border ion-padding">
+
     <ion-grid>
-      <ion-row>
-        <ion-col>
+
+      <ion-row size="12">
+        <ion-col size="3">
           <div>
-            <p (click)="return()" class="ion-align-items-start return">
-              < REGRESAR </p> </div> </ion-col> </ion-row> <ion-row size="12">
-                <ion-col size="1">
-                  <img src="./assets/icon/ilustracion_limpieza_de_freidoras.png" alt="Refrigerador" />
-                </ion-col>
-                <ion-col size="11" class="ion-align-self-center">
-                  <h3 class="title">LIMPIEZA DE FREIDORAS</h3>
-                </ion-col>
+            <!-- <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR</p> *ngIf="this.visibleGuardar === true" -->
+              <ion-button  (click)="return()" shape="round" color="warning" expand="full" size="small" *ngIf="this.visibleGuardar === true">
+                REGRESAR
+              </ion-button>
+          </div>
+        </ion-col>
+        <ion-col size="9"></ion-col>
+      </ion-row>
+      <br>
+      
+      <ion-row size="12">
+        <ion-col size="1">
+          <img src="./assets/icon/ilustracion_limpieza_de_freidoras.png" alt="Refrigerador" />
+        </ion-col>
+        <ion-col size="11" class="ion-align-self-center">
+          <h3 class="title">FREIDORAS</h3>
+        </ion-col>
       </ion-row>
     </ion-grid>
     <br>
     <ion-grid>
-      <!-- titulo de empresa -->
-      <ion-row size="12">
-        <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
+      <ion-row size="12" *ngIf="user" >
+        <ion-col size="9">
+          <h5 class="subtitle-negro">{{nameBranch}}</h5>
         </ion-col>
-        <ion-col size="8">
+        <ion-col size="3">
           <span class="date-grey">
-            {{ today | date: "dd MMM yyy" }}
+            {{ today | date: "dd/MM/yyy" }}
           </span>
         </ion-col>
       </ion-row>
+
+      <ion-row size="12">
+        <ion-col size="12">
+          <h5 class="description">REVISA QUE LAS FREIDORAS ESTEN LIMPIAS</h5>
+        </ion-col>
+      </ion-row>
+
       <ion-row size="12">
         <ion-col size="9"></ion-col>
         <ion-col size="3" class="ion-align-items-end">
           <div class="align-end-text">
             <ion-button (click)="addProductRisk()" shape="round" color="warning" expand="full">
-              AGREGAR FREIDORA
+              AGREGAR
             </ion-button>
           </div>
         </ion-col>
       </ion-row>
-      <br />
     </ion-grid>
   </ion-header>
   <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
@@ -54,13 +71,13 @@
             </div>
           </ion-col>
           <ion-col size="12">
-            <span class="titleProduct">Freidora {{index + 1}}</span>
+            <span class="titleProduct">FREIDORA {{index + 1}}</span>
             <br>
           </ion-col>
         </ion-row>
         <ion-row size="12">
           <ion-col size="6">
-            <ion-label>Fotografía</ion-label>
+            <ion-label>FOTOGRAFIA</ion-label>
             <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(index)">
               <div style="margin-top: 2rem">
                 <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -68,9 +85,9 @@
             </ion-card>
           </ion-col>
           <ion-col size="6">
-            <ion-label>Comentario</ion-label>
+            <ion-label>COMENTARIO</ion-label>
             <ion-card>
-              <ion-textarea [(ngModel)]="item.comment" (focus)="activeComment = false" required rows="6" cols="20">
+              <ion-textarea [(ngModel)]="item.comment" (focus)="activeComment = false" required rows="6" cols="20" style="margin-top: 2px;">
               </ion-textarea>
             </ion-card>
             <ion-label style="color: #ad182d; font-size: 12px" *ngIf="activeComment">Campo requerido</ion-label>
@@ -100,7 +117,7 @@
       <!-- footer boton -->
       <ion-row size="12" class="footer">
         <ion-col size="3" offset="8">
-          <ion-button (click)="save()" shape="round" color="danger" expand="full">
+          <ion-button (click)="save()" shape="round" color="danger" expand="full" *ngIf="this.visibleGuardar === true">
             GUARDAR
           </ion-button>
         </ion-col>

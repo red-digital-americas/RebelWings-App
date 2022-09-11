@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
+import { AlertController } from '@ionic/angular';
 import {
   UserPhoto,
   PhotoService,
@@ -27,11 +28,15 @@ export class PolloPrecoccionCocinaComponent implements OnInit {
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
   public activeData = false;
   public toggleChicken;
+
+  public visibleGuardar = true;
+
   constructor(public router: Router,
     private camera: Camera,
     public routerActive: ActivatedRoute,
     public service: ServiceGeneralService,
     public load: LoaderComponent,
+    public alertController: AlertController,
     public actionSheetController: ActionSheetController,
     public photoService: PhotoService) { }
 
@@ -40,7 +45,7 @@ export class PolloPrecoccionCocinaComponent implements OnInit {
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.branchId = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
-    this.getBranch();
+    this.getBranch(this.user.stateId);
   }
   ngOnInit() { }
   // get data refrigerador
@@ -79,17 +84,17 @@ export class PolloPrecoccionCocinaComponent implements OnInit {
   }
 
   // get  name sucursal
-  getBranch() {
+  getBranch(id) {
     let branchIdNumber = 0;
     branchIdNumber = Number(this.branchId);
     console.log('branchIdNumber', branchIdNumber);
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+    this.service.serviceGeneralGet(`User/GetSucursalList?idState=${id}`).subscribe(resp => {
       if (resp.success) {
         this.dataBranch = resp.result;
         console.log('get branch', this.dataBranch);
         this.dataBranch.forEach(element => {
-          if (element.branchId === branchIdNumber) {
-            this.nameBranch = element.branchName;
+          if (element.idfront === branchIdNumber) {
+            this.nameBranch = element.titulo;
             this.nameBranch = this.nameBranch.toUpperCase();
             console.log('nombre', this.nameBranch);
           }
@@ -185,37 +190,37 @@ export class PolloPrecoccionCocinaComponent implements OnInit {
     await actionSheet.present();
   }
   save() {
-    this.disabled = true;
-    this.fotosProducto = [];
-    // esto se pone aqui por que aun no se estrae la data de un get
-    this.data.branchId = this.branchId;
-    this.data.updatedBy = this.user.id;
-    this.data.updatedDate = this.today;
-    // si no hay registro en el get sera un post
-    if (this.dataId === false) {
-      this.addData();
-    } else {
-      this.updateData();
+    if(this.data.amountPrecookedChickenOnTheTable === null || this.data.amountPrecookedChickenOnTheTable ===  undefined || this.data.commentPrecookedChickenOnTheTable === null || this.data.commentPrecookedChickenOnTheTable === "" || this.data.commentPrecookedChickenOnTheTable === undefined || this.data.photoPrecookedChickens.length === 0){
+      this.alertCampos();
+    }
+    else{
+      this.visibleGuardar = false;
+      this.load.presentLoading('Guardando..');
+      this.disabled = true;
+      this.fotosProducto = [];
+      // esto se pone aqui por que aun no se estrae la data de un get
+      this.data.branchId = this.branchId;
+      this.data.updatedBy = this.user.id;
+      this.data.updatedDate = this.today;
+      // si no hay registro en el get sera un post
+      if (this.dataId === false) {
+        this.addData();
+      } else {
+        this.updateData();
+      }
     }
   }
   addData() {
     this.data.createdBy = this.user.id;
     this.data.createdDate = this.today;
     // validar togles
-    if (this.toggleChicken === true) {
       this.data.precookedChickenOnTheTable = true;
       this.data.precookedChickenInGeneral = true;
       this.data.bonelesOrPrecookedPotatoes = true;
       // se manda cadena ya que el servicio marca error
-      this.data.commentPrecookedChickenOnTheTable = '';
       this.data.commentPrecookedChickenInGeneral = '';
-      this.data.commentBonelesOrPrecookedPotatoes = '';
-    }
-    else{
-      this.data.precookedChickenOnTheTable = false;
-      this.data.precookedChickenInGeneral = false;
-      this.data.bonelesOrPrecookedPotatoes = false;
-    }
+      this.data.commentBonelesOrPrecookedPotatoes = '';   
+
     console.log('Obj To send  post=> ', this.data);
     this.service
       .serviceGeneralPostWithUrl('PrecookedChicken', this.data)
@@ -230,20 +235,13 @@ export class PolloPrecoccionCocinaComponent implements OnInit {
   }
   updateData() {
     // validar togles
-    if (this.toggleChicken === true) {
       this.data.precookedChickenOnTheTable = true;
       this.data.precookedChickenInGeneral = true;
       this.data.bonelesOrPrecookedPotatoes = true;
       // se manda cadena ya que el servicio marca error
-      this.data.commentPrecookedChickenOnTheTable = '';
       this.data.commentPrecookedChickenInGeneral = '';
       this.data.commentBonelesOrPrecookedPotatoes = '';
-    }
-    else {
-      this.data.precookedChickenOnTheTable = false;
-      this.data.precookedChickenInGeneral = false;
-      this.data.bonelesOrPrecookedPotatoes = false;
-    }
+
     // al realizar el get el path viene null, al hacer el put marca error si no se manda una cadena de texto
 
     if (this.data.photoPrecookedChickens.length !== 0) {
@@ -267,6 +265,23 @@ export class PolloPrecoccionCocinaComponent implements OnInit {
         }
       });
   }
+
+  async alertCampos(){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'CAMPOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN CARGADOS CORRECTAMENTE',
+      mode: 'ios',
+      buttons: ['OK'],
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+
+  }
+
 }
 class PrecookedChickenModel {
   id: number;

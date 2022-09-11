@@ -2,36 +2,57 @@
   <!-- ************ data ************ -->
   <ion-header *ngIf="activeData === true" class="ion-no-border ion-padding">
     <ion-grid>
-      <ion-row>
-        <ion-col>
+
+      <ion-row size="12">
+        <ion-col size="3">
           <div>
-            <p (click)="return()" class="ion-align-items-start return">
-              < REGRESAR </p> </div> </ion-col> </ion-row> <ion-row size="12">
-                <ion-col size="1">
-                  <img src="./assets/icon/ilustracion_conteo_de_personas.png" alt="conteo de personas" />
-                </ion-col>
-                <ion-col size="11" class="ion-align-self-center">
-                  <h3 class="title">CONTEO DE PERSONAS</h3>
-                </ion-col>
+            <!-- <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR</p> -->
+              <ion-button *ngIf="this.visibleGuardar === true" (click)="return()" shape="round" color="warning" expand="full" size="small">
+                REGRESAR
+              </ion-button>
+          </div>
+        </ion-col>
+        <ion-col size="9"></ion-col>
       </ion-row>
+      <br>
+      
+      <ion-row size="12">
+        <ion-col size="1">
+          <img src="./assets/icon/ilustracion_conteo_de_personas.png" alt="" />
+        </ion-col>
+        <ion-col size="11" class="ion-align-self-center">
+          <h3 class="title">COMENSALES</h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <br>
+    <ion-grid>
+      <ion-row size="12" *ngIf="user" >
+        <ion-col size="9">
+          <h5 class="subtitle-negro">{{nameBranch}}</h5>
+        </ion-col>
+        <ion-col size="3">
+          <span class="date-grey">
+            {{ today | date: "dd/MM/yyy" }}
+          </span>
+        </ion-col>
+      </ion-row>
+
+      <ion-row size="12">
+        <ion-col size="12">
+          <h5 class="description">REVISA LA CANTIDAD DE MESAS OCUPADAS Y  LOS COMENSALES</h5>
+          &nbsp;
+        </ion-col>
+      </ion-row>
+
     </ion-grid>
   </ion-header>
   <ion-content fullscreen="false" *ngIf="activeData === true" class="ion-padding">
     <ion-grid>
-      <!-- titulo de empresa -->
-      <ion-row size="12">
-        <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
-        </ion-col>
-        <ion-col size="8">
-          <span class="date-grey">
-            {{ today | date: "dd MMM yyy" }}
-          </span>
-        </ion-col>
-      </ion-row>
       <ion-row size="12">
         <ion-col size="6">
-          <ion-label floating>¿Cuántas mesas están abiertas?</ion-label>
+          <ion-label floating>¿CUANTAS MESAS ESTAN ABIERTAS?</ion-label>
           <ion-card class="closed">
             <ion-input [(ngModel)]="data.tables" type="number" (focus)="activeMesas = false" required min="0"
               placeholder="4 Mesas"></ion-input>
@@ -39,7 +60,7 @@
           <ion-label style="color: #ad182d; font-size: 12px" *ngIf="activeMesas">Campo requerido</ion-label>
         </ion-col>
         <ion-col size="6">
-          <ion-label floating>¿Cuántos comensales hay?</ion-label>
+          <ion-label floating>¿CUANTOS COMENSALES HAY?</ion-label>
           <ion-card class="closed">
             <ion-input [(ngModel)]="data.dinners" type="number" (focus)="activeComensales = false" required min="0"
               placeholder="6 Comensales"></ion-input>
@@ -54,7 +75,7 @@
       <!-- footer boton -->
       <ion-row size="12" class="footer">
         <ion-col size="3" offset="8">
-          <ion-button (click)="validateSave()" shape="round" color="danger" expand="full">
+          <ion-button (click)="save()" shape="round" color="danger" expand="full" *ngIf="this.visibleGuardar === true">
             GUARDAR
           </ion-button>
         </ion-col>

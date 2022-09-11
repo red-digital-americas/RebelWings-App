@@ -4,6 +4,7 @@ import { ServiceGeneralService } from 'src/app/core/services/service-general/ser
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 // fotos
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { AlertController } from '@ionic/angular';
 import {
   UserPhoto,
   PhotoService,
@@ -30,6 +31,8 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
   public fotosCleanCubeta: any;
   public fotosCleanBooths: any;
 
+  public visibleGuardar = true;
+
 
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
   // ******variables de validacion ********
@@ -37,6 +40,7 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
 
   constructor(public router: Router,
     public routerActive: ActivatedRoute,
+    public alertController: AlertController,
     public service: ServiceGeneralService,
     public load: LoaderComponent, private camera: Camera, public actionSheetController: ActionSheetController,
     public photoService: PhotoService
@@ -46,7 +50,7 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.branchId = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
-    this.getBranch();
+    this.getBranch(this.user.stateId);
 
   }
 
@@ -76,17 +80,17 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
     this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
   }
   // get  name sucursal
-  getBranch() {
+  getBranch(id) {
     let branchIdNumber = 0;
     branchIdNumber = Number(this.branchId);
     console.log('branchIdNumber', branchIdNumber);
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+    this.service.serviceGeneralGet(`User/GetSucursalList?idState=${id}`).subscribe(resp => {
       if (resp.success) {
         this.dataBranch = resp.result;
         console.log('get branch', this.dataBranch);
         this.dataBranch.forEach(element => {
-          if (element.branchId === branchIdNumber) {
-            this.nameBranch = element.branchName;
+          if (element.idfront === branchIdNumber) {
+            this.nameBranch = element.titulo;
             this.nameBranch = this.nameBranch.toUpperCase();
             console.log('nombre', this.nameBranch);
           }
@@ -138,6 +142,7 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
   }
   // acciones para las fotos de limpieza de salon
   public async showActionSheet(photo, position: number) {
+    position= 0;
     console.log('photo', photo);
     console.log('posicion', position);
 
@@ -201,6 +206,13 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
   }
 
   save() {
+
+    if(this.data.tableN === '' || this.data.tableN === undefined || this.data.tableN === null || this.data.photoGeneralCleanings.length < 3){
+this.alertCampos();
+    }
+    else{
+      this.load.presentLoading('Guardando..');
+      this.visibleGuardar = false;
     this.disabled = true;
     this.fotosCleanBooths = [];
     // esto se pone aqui por que aun no se estrae la data de un get
@@ -214,6 +226,7 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
     } else {
       this.updateCleanGeneral();
     }
+   }
   }
   addCleanGeneral() {
     this.data.createdBy = this.user.id;
@@ -247,6 +260,23 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
       }
     });
   }
+
+  async alertCampos(){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'CAMPOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN CARGADOS CORRECTAMENTE',
+      mode: 'ios',
+      buttons: ['OK'],
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+
+  }
+
 }
 
 class CleanGeneralModel {
