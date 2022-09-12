@@ -2,36 +2,50 @@
   <!-- ************ data ************ -->
   <ion-header *ngIf="activeData === true" class="ion-no-border ion-padding">
     <ion-grid>
-      <ion-row>
-        <ion-col>
+
+      <ion-row size="12">
+        <ion-col size="3">
           <div>
-            <p (click)="return()" class="ion-align-items-start return">
-              < REGRESAR </p>
+            <!-- <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR</p> -->
+              <ion-button *ngIf="this.visibleGuardar === true" (click)="return()" shape="round" color="warning" expand="full" size="small">
+                REGRESAR
+              </ion-button>
           </div>
         </ion-col>
+        <ion-col size="9"></ion-col>
       </ion-row>
+      <br>
+      
       <ion-row size="12">
         <ion-col size="1">
-          <img src="./assets/icon/ilustracion_temperatura_de_bebidas.png" alt="encuesta" />
+          <img src="./assets/icon/ilustracion_temperatura_de_bebidas.png" alt="" />
         </ion-col>
         <ion-col size="11" class="ion-align-self-center">
-          <h3 class="title">TEMPERATURA DE BEBIDAS</h3>
+          <h3 class="title">TEMPERATURA</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
     <br>
     <ion-grid>
-      <!-- titulo de empresa -->
-      <ion-row size="12">
-        <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
+      <ion-row size="12" *ngIf="user" >
+        <ion-col size="9">
+          <h5 class="subtitle-negro">{{nameBranch}}</h5>
         </ion-col>
-        <ion-col size="8">
+        <ion-col size="3">
           <span class="date-grey">
-            {{ today | date: "dd MMM yyy" }}
+            {{ today | date: "dd/MM/yyy" }}
           </span>
         </ion-col>
       </ion-row>
+
+      <ion-row size="12">
+        <ion-col size="12">
+          <h5 class="description">REVISA LA TEMPERATURA DE LAS BEBIDAS</h5>
+          &nbsp;
+        </ion-col>
+      </ion-row>
+
     </ion-grid>
   </ion-header>
   <ion-content fullscreen="false" *ngIf="activeData === true" class="ion-padding">
@@ -40,15 +54,15 @@
       <!-- --------------chope clara---------------------- -->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">Chope clara</span>
+          <span class="titleProduct">CHOPE CLARA</span>
           <br>
         </ion-col>
-        <ion-col size="6"><span>¿Fría?</span>
+        <ion-col size="6"><span>¿FRIA?</span>
           <br>
           <ion-toggle [(ngModel)]="data.lightBeer"></ion-toggle>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(1)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -78,16 +92,16 @@
       <ion-row>
         <ion-col size="12">
           <span class="titleProduct">
-            Chope oscura
+            CHOPE OSCURA
           </span>
           <br>
         </ion-col>
-        <ion-col size="6"><span>¿Fría?</span>
+        <ion-col size="6"><span>¿FRIA?</span>
           <br>
           <ion-toggle [(ngModel)]="data.darkBeer"></ion-toggle>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(2)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -120,31 +134,31 @@
         </ion-col>
         <!-- 5 toggle de bebidas -->
         <ion-col size="6">
-          <ion-row size="12">
+          <ion-row size="12" class="ion-align-self-center">
             <ion-col size="4">
-              <span>¿Fría?</span>
+              <span >¿FRIA?</span><br>
               <ion-toggle [(ngModel)]="data.drinkOne"></ion-toggle>
             </ion-col>
             <ion-col size="4">
-              <span>¿Fría?</span>
+              <span >¿FRIA?</span><br>
               <ion-toggle [(ngModel)]="data.drinkTwo"></ion-toggle>
             </ion-col>
             <ion-col size="4">
-              <span>¿Fría?</span>
+              <span>¿FRIA?</span><br>
               <ion-toggle [(ngModel)]="data.drinkThree"></ion-toggle>
             </ion-col>
             <ion-col size="4">
-              <span>¿Fría?</span>
+              <span>¿FRIA?</span><br>
               <ion-toggle [(ngModel)]="data.drinkFour"></ion-toggle>
             </ion-col>
             <ion-col size="4">
-              <span>¿Fría?</span>
+              <span>¿FRIA?</span><br>
               <ion-toggle [(ngModel)]="data.drinkFive"></ion-toggle>
             </ion-col>
           </ion-row>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>AGREGA UNA FOTOGRAFIA DE LAS 5 BEBIDAS REVISADAS</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(3)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -178,7 +192,7 @@
       <!-- footer boton -->
       <ion-row size="12" class="footer">
         <ion-col size="3" offset="8">
-          <ion-button (click)="save()" shape="round" color="danger" expand="full">
+          <ion-button (click)="save()" shape="round" color="danger" expand="full" *ngIf="this.visibleGuardar === true">
             GUARDAR
           </ion-button>
         </ion-col>
