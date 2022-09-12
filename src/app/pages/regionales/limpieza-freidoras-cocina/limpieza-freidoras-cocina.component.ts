@@ -30,6 +30,7 @@ export class LimpiezaFreidorasCocinaComponent implements OnInit {
   public activeData = false;
 
   public visibleGuardar = true;
+  public validador = true;
 
   // ******variables de validacion ********
   public activeComment = false;
@@ -241,9 +242,19 @@ export class LimpiezaFreidorasCocinaComponent implements OnInit {
   //   }
   // }
   save() {
-    if(this.objProduct[0].comment === null || this.objProduct[0].comment === "" || this.objProduct[0].comment === undefined || this.objProduct[0].photoFryerCleanings.length === 0){
-      this.alertCampos();
-    }
+    this.objProduct.forEach(value => {
+      if(value.comment === null || value.comment === "" || value.comment === undefined || value.photoFryerCleanings.length === 0){
+         this.validador = false;
+      }
+      else{
+       this.validador = true;
+      }
+       console.log('value', value);
+     });
+ 
+     if(this.validador === false){
+     this.alertCampos();
+     }
     else{
       this.load.presentLoading('Guardando..');
       this.visibleGuardar = false;

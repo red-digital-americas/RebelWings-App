@@ -19,10 +19,10 @@
       
       <ion-row size="12">
         <ion-col size="1">
-          <img src="./assets/icon/ilustracion_ordenes.png" alt="Refrigerador" />
+          <img src="./assets/icon/ilustracion_mesas_en_espera.png" alt="Refrigerador" />
         </ion-col>
         <ion-col size="11" class="ion-align-self-center">
-          <h3 class="title">TIEMPOS</h3>
+          <h3 class="title">TIEMPOS EN COCINA</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -47,7 +47,8 @@
       </ion-row>
 
     </ion-grid>
-    <ion-grid>
+
+    <!-- <ion-grid>
       <ion-row size="12">
         <ion-col size="9"></ion-col>
         <ion-col size="3" class="ion-align-items-end">
@@ -58,7 +59,8 @@
           </div>
         </ion-col>
       </ion-row>
-    </ion-grid>
+    </ion-grid> -->
+    
   </ion-header>
   <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
 
@@ -74,6 +76,7 @@
             </div>
           </ion-col>
           <ion-col size="12">
+            <!-- <span class="titleProduct">TIEMPO {{index + 1}}</span> -->
             <span class="titleProduct">TIEMPO {{index + 1}}</span>
             <br>
           </ion-col>
@@ -82,7 +85,7 @@
           <ion-col size="6">
             <ion-label floating>TIEMPO PROMEDIO</ion-label>
             <ion-card class="closed">
-              <ion-input [(ngModel)]="item.averageTime" (focus)="activeTime = false" required placeholder="Minutos">
+              <ion-input [(ngModel)]="item.averageTime" (focus)="activeTime = false" required placeholder="Minutos" type="number">
               </ion-input>
             </ion-card>
             <ion-label style="color: #ad182d; font-size: 12px" *ngIf="activeTime">CAMPO REQUERIDO</ion-label>

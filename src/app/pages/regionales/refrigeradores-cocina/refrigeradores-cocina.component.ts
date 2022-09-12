@@ -34,6 +34,7 @@ export class RefrigeradoresCocinaComponent implements OnInit {
   public activeComment = false;
 
   public visibleGuardar = true;
+  public validador = true;
 
   constructor(public router: Router,
     private camera: Camera,
@@ -263,9 +264,20 @@ export class RefrigeradoresCocinaComponent implements OnInit {
     await actionSheet.present();
   }
   save() {
-    if(this.objProduct[0].comment === null || this.objProduct[0].comment === "" || this.objProduct[0].comment === undefined || this.objProduct[0].photoFridges.length === 0){
-      this.alertCampos();
-    }
+
+    this.objProduct.forEach(value => {
+      if(value.comment === null || value.comment === "" || value.comment === undefined || value.photoFridges.length === 0){
+         this.validador = false;
+      }
+      else{
+       this.validador = true;
+      }
+       console.log('value', value);
+     });
+ 
+     if(this.validador === false){
+     this.alertCampos();
+     }
     else{
       this.load.presentLoading('Guardando..');
       this.visibleGuardar = false;
