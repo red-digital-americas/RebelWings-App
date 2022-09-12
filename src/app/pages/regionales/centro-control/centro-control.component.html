@@ -3,23 +3,13 @@
     <ion-grid>
       <ion-row size="12">
 
-        <ion-col size="4" class="ion-align-items-end">
-          <ion-row size="12"  class="align-center-text">
-           <ion-col size="4">
-              <div>
-               <img style="border-radius: 5%" src="./assets/RW_LogoWEB.png" alt="" />
-              </div>
-           </ion-col>
-           <ion-col size="8">
-             <div>
+        <ion-col size="9" class="ion-align-items-end">
+          
               <span class="ion-align-items-start color-text-white-c">{{user.name}} {{user.lastName}}</span>
                <!-- <span class="ion-align-items-start color-text-white-c">CENTRO DE CONTROL</span> -->
-             </div>
-            </ion-col>
-          </ion-row>
+
         </ion-col>
         
-        <ion-col size="5"></ion-col>
 
         <ion-col size="2" class="ion-align-items-end">
           <!-- <div class="align-end-text">
@@ -28,6 +18,9 @@
             <ion-badge  *ngIf="dataNotification" style="color: #ffce00">
               {{ dataNotification.length }}</ion-badge>
           </div> -->
+          <div class="align-end-item" >
+            <ion-icon (click)="ticketList()" src="./assets/icon/ilustracion_ticket.svg"  ></ion-icon>
+          </div>
         </ion-col>
         <ion-col size="1" class="ion-align-items-end">
           <div class="align-end-text">
@@ -57,29 +50,31 @@
         
         <!-- iteracion de data -->
         <ion-row size="12">
-          <ion-col size="5" class="align-items-start">
+          <ion-col size="9" class="align-items-start">
             <!-- *ngIf="nameBranch !== ''" -->
             <span class="title-red">{{nameBranch}}</span>
-          </ion-col>
-          <ion-col size="1">
-            <div class="align-end-item" >
-              <ion-icon (click)="ticketList()" src="./assets/icon/ilustracion_ticket.svg"  ></ion-icon>
-            </div>
-          </ion-col>
-          <ion-col size="3">
-            <div class="align-end-text">
-              <ion-button (click)="levantamientoTicket()" shape="round" color="warning" expand="full">
-                <span>
-                  LEVANTAR TICKET
-                </span>
-              </ion-button>
-            </div>
           </ion-col>
           <ion-col size="3" class="ion-align-items-end">
             <div class="align-end-text">
               <ion-button (click)="terminarTurno()" shape="round" color="danger" expand="full">
                 <span>
-                  TERMINAR TURNO
+                  FINALIZAR
+                </span>
+              </ion-button>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row size="12">
+          <ion-col size="6" class="align-items-start">
+            <span class="title-red">REGIONAL</span>
+          </ion-col>
+          <ion-col size="3" class="ion-align-items-end">
+          </ion-col>
+          <ion-col size="3">
+            <div class="align-end-text">
+              <ion-button (click)="levantamientoTicket()" shape="round" color="warning" expand="full">
+                <span>
+                  TICKET
                 </span>
               </ion-button>
             </div>
