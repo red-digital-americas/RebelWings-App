@@ -1,39 +1,54 @@
 <ion-app>
   <!-- ******************* data *************************** -->
   <ion-header *ngIf="activeData === true" class="ion-no-border ion-padding">
+    
     <ion-grid>
-      <ion-row>
-        <ion-col>
+
+      <ion-row size="12">
+        <ion-col size="3">
           <div>
-            <p (click)="return()" class="ion-align-items-start return">
-              < REGRESAR</p>
+            <!-- <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR</p> -->
+              <ion-button *ngIf="this.visibleGuardar === true" (click)="return()" shape="round" color="warning" expand="full" size="small">
+                REGRESAR
+              </ion-button>
           </div>
         </ion-col>
+        <ion-col size="9"></ion-col>
       </ion-row>
+      <br>
+      
       <ion-row size="12">
         <ion-col size="1">
-          <img src="./assets/icon/ilustracion_ticket_y_mesa.png" alt="Ticket" />
+          <img src="./assets/icon/ilustracion_ticket_y_mesa.png" alt="" />
         </ion-col>
         <ion-col size="11" class="ion-align-self-center">
-          <h3 class="title">TICKET Y MESA</h3>
+          <h3 class="title">TICKET VS MESA</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
     <br>
-    <!-- titulo de empresa -->
     <ion-grid>
-      <ion-row size="12">
-        <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
+      <ion-row size="12" *ngIf="user" >
+        <ion-col size="9">
+          <h5 class="subtitle-negro">{{nameBranch}}</h5>
         </ion-col>
-        <ion-col size="8">
+        <ion-col size="3">
           <span class="date-grey">
-            {{ today | date: "dd MMM yyy" }}
+            {{ today | date: "dd/MM/yyy" }}
           </span>
         </ion-col>
       </ion-row>
-    </ion-grid>
 
+      <ion-row size="12">
+        <ion-col size="12">
+          <h5 class="description">REALIZA UNA COMPARATIVA DE PRODUCTOS EN UNA MESA ABIERTA VS EL TICKET EN SISTEMA</h5>
+          &nbsp;
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+    
   </ion-header>
   <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
 
@@ -42,10 +57,10 @@
       <!--chicken in table-->
       <ion-row>
         <ion-col size="12">
-          <span class="titleProduct">Alimentos en Mesa</span>
+          <span class="titleProduct">ALIMENTOS Y BEBIDAS EN MESA</span>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <!-- se manda id type 1 para table -->
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(1)">
             <div style="margin-top: 2rem">
@@ -54,9 +69,9 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIO</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="data.commentFoodOnTable" rows="6" cols="20">
+            <ion-textarea [(ngModel)]="data.commentFoodOnTable" rows="6" cols="20" style="margin-top: 2px;">
             </ion-textarea>
           </ion-card>
         </ion-col>
@@ -82,10 +97,10 @@
       <ion-row>
         <br>
         <ion-col size="12">
-          <span class="titleProduct">Ticket del Sistema</span>
+          <span class="titleProduct">TICKET DEL SISTEMA</span>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <!-- se manda id type 2 para general -->
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(2)">
             <div style="margin-top: 2rem">
@@ -94,9 +109,9 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIO</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="data.commentTicket" rows="6" cols="20">
+            <ion-textarea [(ngModel)]="data.commentTicket" rows="6" cols="20" style="margin-top: 2px;">
             </ion-textarea>
           </ion-card>
         </ion-col>
@@ -125,7 +140,7 @@
       <!-- footer boton -->
       <ion-row size="12" class="footer">
         <ion-col size="3" offset="8">
-          <ion-button (click)="save()" shape="round" color="danger" expand="full">
+          <ion-button (click)="save()" shape="round" color="danger" expand="full" *ngIf="this.visibleGuardar === true">
             GUARDAR
           </ion-button>
         </ion-col>
