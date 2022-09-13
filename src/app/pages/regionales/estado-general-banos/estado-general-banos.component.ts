@@ -128,7 +128,12 @@ export class EstadoGeneralBanosComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
+          if(this.data.doesAnyBathroomLeakMen === true || this.data.doesAnyBathroomLeakWomen === true || this.data.isThereAnyFaultsMen === true || this.data.isThereAnyFaultsWomen === true){
+           this.levantamientoTicket();
+          }
+          else{
           this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/3`);
+          }
         }
       });
   }
@@ -140,7 +145,12 @@ export class EstadoGeneralBanosComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/3`);
+          if(this.data.doesAnyBathroomLeakMen === true || this.data.doesAnyBathroomLeakWomen === true || this.data.isThereAnyFaultsMen === true || this.data.isThereAnyFaultsWomen === true){
+            this.levantamientoTicket();
+           }
+           else{
+           this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/3`);
+           }
         }
       });
   }
@@ -160,6 +170,8 @@ export class EstadoGeneralBanosComponent implements OnInit {
     console.log('onDidDismiss resolved with role', role);
 
   }
+
+  
 
 }
 class GeneralStateModel {

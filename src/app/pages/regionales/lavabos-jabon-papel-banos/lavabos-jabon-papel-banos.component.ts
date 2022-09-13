@@ -83,6 +83,11 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
     // window.history.back();
     this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/3`);
   }
+
+  levantamientoTicket() {
+    this.router.navigateByUrl('regional/levantamiento-ticket/' + this.branchId);
+  }
+
   // get  name sucursal
   getBranch(id) {
     let branchIdNumber = 0;

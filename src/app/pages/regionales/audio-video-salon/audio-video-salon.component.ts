@@ -127,7 +127,12 @@ export class AudioVideoSalonComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
+          if(this.data.speakersWorkProperly === false || this.data.terraceSpeakersWorkProperly === false || this.data.terraceTvWorksProperly === false || this.data.tvWorksProperly === false){
+            this.levantamientoTicket();
+          }
+          else{
           this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+          }
         }
       });
   }
@@ -139,7 +144,12 @@ export class AudioVideoSalonComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
+          if(this.data.speakersWorkProperly === false || this.data.terraceSpeakersWorkProperly === false || this.data.terraceTvWorksProperly === false || this.data.tvWorksProperly === false){
+            this.levantamientoTicket();
+          }
+          else{
           this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+          }
         }
       });
   }

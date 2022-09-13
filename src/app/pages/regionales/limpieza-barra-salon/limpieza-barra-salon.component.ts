@@ -191,17 +191,17 @@ export class LimpiezaBarraSalonComponent implements OnInit {
     else{
     this.load.presentLoading('Guardando..');
     this.visibleGuardar = false;
-    // this.data.branchId = this.branchId;
-    // this.data.updatedBy = this.user.id;
-    // this.data.updatedDate = this.today;
-    // this.disabled = true;
-    // this.fotosRefrigerador = [];
-    // // si no hay registro en el get sera un post
-    // if (this.dataId === false) {
-    //   this.addData();
-    // } else {
-    //   this.updateData();
-    // }
+    this.data.branchId = this.branchId;
+    this.data.updatedBy = this.user.id;
+    this.data.updatedDate = this.today;
+    this.disabled = true;
+    this.fotosRefrigerador = [];
+    // si no hay registro en el get sera un post
+    if (this.dataId === false) {
+      this.addData();
+    } else {
+      this.updateData();
+    }
   }
   }
   addData() {

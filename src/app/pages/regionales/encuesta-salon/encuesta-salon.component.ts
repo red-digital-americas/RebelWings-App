@@ -127,18 +127,8 @@ export class EncuestaSalonComponent implements OnInit {
       this.validateSave()
     }
     else{
-    this.load.presentLoading('Guardando..');
     this.visibleGuardar = false;
-    this.disabled = true;
-    // esto se pone aqui por que aun no se estrae la data de un get
-    this.data.branchId = this.branchId;
-    this.data.updatedBy = this.user.id;
-    this.data.updatedDate = this.today;
-    // if (this.branchId === '0') {
-      this.addPropina();
-    // } else {
-    //   this.updatePropina();
-    // }
+    this.alertEncuesta();
     }
     
   }
@@ -183,6 +173,32 @@ export class EncuestaSalonComponent implements OnInit {
     const { role } = await alert.onDidDismiss();
     console.log('onDidDismiss resolved with role', role);
 
+  }
+
+  async alertEncuesta(){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'ENCUESTA',
+      subHeader: 'COMENTARIOS',
+      message: '"GRACIAS POR TUS COMENTARIOS <BR>SOLICITA UN CUPON / PROMOCION<BR>  COMO AGRADECIMIENTO DE ESTA ENCUESTA"',
+      mode: 'ios',
+      buttons: ['OK'],
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+    this.load.presentLoading('Guardando..');
+    this.disabled = true;
+    // esto se pone aqui por que aun no se estrae la data de un get
+    this.data.branchId = this.branchId;
+    this.data.updatedBy = this.user.id;
+    this.data.updatedDate = this.today;
+    // if (this.branchId === '0') {
+      this.addPropina();
+    // } else {
+    //   this.updatePropina();
+    // }
   }
 }
 class EncuestaModel {

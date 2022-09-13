@@ -217,18 +217,18 @@ export class EstacionSalonComponent implements OnInit {
     else{
     this.visibleGuardar = false;
     this.load.presentLoading('Guardando..');
-    // this.disabled = true;
-    // this.fotosOrden = [];
-    // // esto se pone aqui por que aun no se estrae la data de un get
-    // this.data.branchId = this.branchId;
-    // this.data.updatedBy = this.user.id;
-    // this.data.updatedDate = this.today;
-    // // si no hay registro en el get sera un post
-    // if (this.dataId === false) {
-    //   this.addEstacion();
-    // } else {
-    //   this.updateEstacion();
-    // }
+    this.disabled = true;
+    this.fotosOrden = [];
+    // esto se pone aqui por que aun no se estrae la data de un get
+    this.data.branchId = this.branchId;
+    this.data.updatedBy = this.user.id;
+    this.data.updatedDate = this.today;
+    // si no hay registro en el get sera un post
+    if (this.dataId === false) {
+      this.addEstacion();
+    } else {
+      this.updateEstacion();
+    }
   }
   }
   addEstacion() {

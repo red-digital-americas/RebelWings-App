@@ -117,7 +117,12 @@ export class FocosSalonComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
+          if(this.data.brokenSpotlight === false){
+          this.levantamientoTicket();
+          }
+          else{
           this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+          }
         }
       });
   }
@@ -129,7 +134,12 @@ export class FocosSalonComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+          if(this.data.brokenSpotlight === false){
+            this.levantamientoTicket();
+            }
+            else{
+            this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+            }
         }
       });
   }

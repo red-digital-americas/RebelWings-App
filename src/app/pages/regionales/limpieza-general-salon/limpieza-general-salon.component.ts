@@ -207,12 +207,13 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
 
   save() {
 
-    if(this.data.tableN === '' || this.data.tableN === undefined || this.data.tableN === null || this.data.photoGeneralCleanings.length < 3){
-this.alertCampos();
+    if(this.data.photoGeneralCleanings.length < 3){
+     this.alertCampos();
     }
     else{
-      this.load.presentLoading('Guardando..');
-      this.visibleGuardar = false;
+    this.data.tableN = "1";
+    this.load.presentLoading('Guardando..');
+    this.visibleGuardar = false;
     this.disabled = true;
     this.fotosCleanBooths = [];
     // esto se pone aqui por que aun no se estrae la data de un get

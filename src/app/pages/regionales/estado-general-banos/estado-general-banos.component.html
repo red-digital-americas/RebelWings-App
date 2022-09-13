@@ -142,7 +142,13 @@
     <ion-grid>
       <!-- footer boton -->
       <ion-row size="12" class="footer">
-        <ion-col size="3" offset="8">
+        <ion-col size="6"></ion-col>
+        <ion-col size="3" >
+            <ion-button (click)="levantamientoTicket()" shape="round" color="warning" expand="full">
+                TICKET
+            </ion-button>
+        </ion-col>
+        <ion-col size="3" >
           <ion-button (click)="save()" shape="round" color="danger" expand="full" *ngIf="this.visibleGuardar === true">
             GUARDAR
           </ion-button>

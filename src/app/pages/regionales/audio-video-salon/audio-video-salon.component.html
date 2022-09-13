@@ -46,23 +46,7 @@
       </ion-row>
     </ion-grid>
     
-    <!-- titulo de empresa -->
-    <ion-grid>
-      <ion-row size="12">
-        <ion-col size="4"></ion-col>
-        <ion-col size="4"></ion-col>
-        <ion-col size="1"></ion-col>
-        <ion-col size="3">
-          <div class="align-end-text">
-            <ion-button (click)="levantamientoTicket()" shape="round" color="warning" expand="full">
-              <span>
-                TICKET
-              </span>
-            </ion-button>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+
   </ion-header>
   <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
 
@@ -79,7 +63,7 @@
             <ion-col size="12">
               <ion-toggle [(ngModel)]="data.tvWorksProperly"></ion-toggle>
             </ion-col>
-            <ion-col size="12" *ngIf="data.tvWorksProperly === false">
+            <ion-col size="12" >
               <ion-label>COMENTARIO</ion-label>
               <ion-card>
                 <ion-textarea [(ngModel)]="data.commentTvWorksProperly" rows="6" cols="20">
@@ -92,12 +76,12 @@
         <ion-col size="6">
           <ion-row size="12">
             <ion-col size="12">
-              <span class="titleProduct">¿FUNCIONA DE MANERA CORRECTA TODAS LAS BOSINAS EN PISO?</span>
+              <span class="titleProduct">¿FUNCIONA DE MANERA CORRECTA TODAS LAS BOCINAS EN PISO?</span>
             </ion-col>
             <ion-col size="12">
               <ion-toggle [(ngModel)]="data.speakersWorkProperly"></ion-toggle>
             </ion-col>
-            <ion-col size="12" *ngIf="data.speakersWorkProperly === false">
+            <ion-col size="12" >
               <ion-label>COMENTARIO</ion-label>
               <ion-card>
                 <ion-textarea [(ngModel)]="data.commentSpeakersWorkProperly" rows="6" cols="20">
@@ -115,7 +99,7 @@
             <ion-col size="12">
               <ion-toggle [(ngModel)]="data.terraceTvWorksProperly"></ion-toggle>
             </ion-col>
-            <ion-col size="12" *ngIf="data.terraceTvWorksProperly === false">
+            <ion-col size="12" >
               <ion-label>COMENTARIO</ion-label>
               <ion-card>
                 <ion-textarea [(ngModel)]="data.commentTerraceTvWorksProperly" rows="6" cols="20">
@@ -133,7 +117,7 @@
             <ion-col size="12">
               <ion-toggle [(ngModel)]="data.terraceSpeakersWorkProperly"></ion-toggle>
             </ion-col>
-            <ion-col size="12" *ngIf="data.terraceSpeakersWorkProperly === false">
+            <ion-col size="12" >
               <ion-label>COMENTARIO</ion-label>
               <ion-card>
                 <ion-textarea [(ngModel)]="data.commentTerraceSpeakersWorkProperly" rows="6" cols="20">
