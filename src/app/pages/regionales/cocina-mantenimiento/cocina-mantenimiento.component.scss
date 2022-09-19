@@ -13,19 +13,23 @@ ion-footer {
 .title {
   color: #ad182d;
   font-weight: bold;
-  font-size: large;
+  font-size: 400%;
   margin-left: 5px;
 }
-
 .subtitle-negro {
   color: black;
   font-weight: bold;
-  font-size: large;
+  font-size: 200%;
 }
-
+.description{
+  color: #ad182d;
+  font-size: 120%;
+  font-weight: bold;
+}
 .date-grey {
   font-weight: 500;
   color: grey;
+  font-size: 150%;
 }
 
 .return {
@@ -71,6 +75,7 @@ ion-toggle {
   // color de circulito
   --handle-background: #ad182d;
   --handle-background-checked: white;
+  zoom: 1.5;
 }
 
 ion-toggle[aria-checked="false"] {
@@ -88,7 +93,7 @@ ion-toggle[aria-checked="false"] {
     font-size: 10px;
     // line-height: 32px;
     left: 33px;
-    top: 8px;
+    top: 12px;
   }
 }
 
@@ -104,8 +109,9 @@ ion-toggle[aria-checked="true"] {
     position: absolute;
     content: "SI";
     font-size: 10px;
-    left: 0.6rem;
-    top: 0.5rem;
+    // line-height: 36px;
+    left: 17px;
+    top: 12px;
     color: #fff;
   }
 }

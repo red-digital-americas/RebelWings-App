@@ -2,7 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
+import { ActionSheetController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import {
+  UserPhoto,
+  PhotoService,
+} from 'src/app/core/services/services/photo.service';
 @Component({
   selector: 'app-conteo-personas-salon',
   templateUrl: './conteo-personas-salon.component.html',
@@ -23,12 +28,16 @@ export class ConteoPersonasSalonComponent implements OnInit {
   public activeComensales = false;
 
   public visibleGuardar = true;
-
+  public fotosPeople: any;
+  public base64 = 'data:image/jpeg;base64';
+ 
   constructor(public router: Router,
     public routerActive: ActivatedRoute,
     public service: ServiceGeneralService,
     public alertController: AlertController,
-    public load: LoaderComponent) { }
+    public actionSheetController: ActionSheetController,
+    public load: LoaderComponent,
+    public photoService: PhotoService) { }
 
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
@@ -48,7 +57,7 @@ export class ConteoPersonasSalonComponent implements OnInit {
             this.dataId = true; //si hay registro entonces se hara un put
             this.activeData = true;
             console.log('si hay registros del dia');
-            this.data = resp.result[0];
+            this.data = resp.result;
             console.log('get data', this.data);
           }
           else {
@@ -114,7 +123,8 @@ export class ConteoPersonasSalonComponent implements OnInit {
   //   }
   // }
   save() {
-    if(this.data.tables === 0 || this.data.tables === undefined ||  this.data.tables === null || this.data.dinners === 0 || this.data.dinners === undefined ||  this.data.dinners === null){
+    if(this.data.tables === 0 || this.data.tables === undefined ||  this.data.tables === null || this.data.dinners === 0 || this.data.dinners === undefined ||  this.data.dinners === null
+      || this.data.comment === "" || this.data.comment === null || this.data.comment === undefined || this.data.photoPeoplesCountings.length === 0){
       this.alertCampos();
     }
     else{
@@ -125,40 +135,57 @@ export class ConteoPersonasSalonComponent implements OnInit {
       this.data.branchId = this.branchId;
       this.data.updatedBy = this.user.id;
       this.data.updatedDate = this.today;
+      this.fotosPeople = [];
       // si no hay registro en el get sera un post
       if (this.dataId === false) {
-        this.addPropina();
+        this.addData();
       } else {
-        this.updatePropina();
+        this.updateData();
       }
     }
   }
-  addPropina() {
+
+  addData() {
     this.data.createdBy = this.user.id;
     this.data.createdDate = this.today;
     console.log('Obj To send post => ', this.data);
+    
     this.service
       .serviceGeneralPostWithUrl('PeopleCounting', this.data)
       .subscribe((data) => {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
+          this.photoService.deleteAllPhoto(this.data);
           this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
         }
       });
   }
-  updatePropina() {
-    this.data.updatedBy = this.user.id;
-    this.data.updatedDate = this.today;
-    console.log('Obj To send put => ', this.data);
-    this.service.serviceGeneralPut('PeopleCounting', this.data).subscribe((data) => {
-      if (data.success) {
-        this.load.presentLoading('Actualizando..');
-        console.log('data', data);
-        this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+
+
+
+
+updateData() {
+  // al realizar el get el path viene null, al hacer el put marca error si no se manda una cadena de texto
+  if (this.data.photoPeoplesCountings.length !== 0) {
+    this.data.photoPeoplesCountings.forEach((photo) => {
+      if (photo.id !== 0) {
+        photo.photoPath = '';
       }
     });
   }
+  console.log('Obj To send put=> ', this.data);
+  this.service
+    .serviceGeneralPut('PeopleCounting', this.data)
+    .subscribe((data) => {
+      if (data.success) {
+        this.load.presentLoading('Actualizando..');
+        console.log('data', data);
+        this.photoService.deleteAllPhoto(this.data);
+        this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+      }
+    });
+}
 
 
   async alertCampos(){
@@ -177,12 +204,111 @@ export class ConteoPersonasSalonComponent implements OnInit {
 
   }
 
+
+
+   // eliminar indice de orden
+   async addPhotoToGallery() {
+    const name = new Date().toISOString();
+    await this.photoService.addNewToGallery();
+    await this.photoService.loadSaved();
+    // al agregar las fotos en storage, las pasamos por lista
+    console.log('obj fotos', this.photoService);
+    this.data.photoPeoplesCountings.push({
+      id: 0,
+      peopleId: this.data.id,
+      photo: this.photoService.photos[0].webviewPath,
+      photoPath: 'jpeg',
+      createdBy: this.user.id,
+      createdDate: this.today,
+      updatedBy: this.user.id,
+      updatedDate: this.today,
+    });
+    // this.fotosRefrigerador = this.photoService.photos;
+    console.log('fotos ConteoP', this.data);
+  }
+  // eliminacion de images en storage
+  public async showActionSheet(photo, position: number) {
+    console.log('photo', photo);
+    console.log('posicion', position);
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Photos',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.photoService.deletePicture(photo, position);
+            //
+            this.data.photoPeoplesCountings.splice(position, 1);
+
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            // Nothing to do, action sheet is automatically closed
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
+  //eliminar imagenes bd
+  public async deleteImgShowAction(id) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Photos',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.service
+              .serviceGeneralDelete(`PeopleCounting/${id}/Photo`)
+              .subscribe((data) => {
+                if (data.success) {
+                  this.load.presentLoading('Eliminando..');
+                  console.log('data', data);
+                  this.ionViewWillEnter();
+                }
+              });
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            // Nothing to do, action sheet is automatically closed
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
+
+
 }
 class CountPersonModel {
   id: number;
   branchId: number;
   tables: number;
   dinners: number;
+  comment: string;
+  createdBy: number;
+  createdDate: Date;
+  updatedBy: number;
+  updatedDate: Date;
+  photoPeoplesCountings: PhotoPeopleCountingModel[] = [];
+}
+class PhotoPeopleCountingModel {
+  id: number;
+  peopleId: number;
+  photo: string;
+  photoPath: string;
   createdBy: number;
   createdDate: Date;
   updatedBy: number;

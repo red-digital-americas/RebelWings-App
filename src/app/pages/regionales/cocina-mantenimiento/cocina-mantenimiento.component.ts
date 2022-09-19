@@ -24,6 +24,9 @@ export class CocinaMantenimientoComponent implements OnInit {
   public dataId = false; //sirve para identificar si el get trae informacion y diferencia entre el post y put
   public disabled = false;
   public activeData = false;
+
+  public visibleGuardar = true;
+
   // ******fotos*********
   public base64 = 'data:image/jpeg;base64';
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
@@ -39,7 +42,7 @@ export class CocinaMantenimientoComponent implements OnInit {
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.branchId = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
-    this.getBranch();
+    this.getBranch(this.user.stateId);
 
   }
   ngOnInit() { }
@@ -83,17 +86,17 @@ export class CocinaMantenimientoComponent implements OnInit {
     this.router.navigateByUrl('regional/levantamiento-ticket/' + this.branchId);
   }
   // get  name sucursal
-  getBranch() {
+  getBranch(id) {
     let branchIdNumber = 0;
     branchIdNumber = Number(this.branchId);
     console.log('branchIdNumber', branchIdNumber);
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+    this.service.serviceGeneralGet(`User/GetSucursalList?idState=${id}`).subscribe(resp => {
       if (resp.success) {
         this.dataBranch = resp.result;
         console.log('get branch', this.dataBranch);
         this.dataBranch.forEach(element => {
-          if (element.branchId === branchIdNumber) {
-            this.nameBranch = element.branchName;
+          if (element.idfront === branchIdNumber) {
+            this.nameBranch = element.titulo;
             this.nameBranch = this.nameBranch.toUpperCase();
             console.log('nombre', this.nameBranch);
           }

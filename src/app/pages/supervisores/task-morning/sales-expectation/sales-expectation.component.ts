@@ -41,6 +41,7 @@ export class SalesExpectationComponent implements OnInit {
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idSucursal = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
+    console.log('user: ', this.user);
     
   }
   ngOnInit() { }

@@ -9,7 +9,6 @@ import {
   PhotoService,
 } from 'src/app/core/services/services/photo.service';
 import { ActionSheetController } from '@ionic/angular';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-limpieza-barra-salon',
@@ -208,6 +207,7 @@ export class LimpiezaBarraSalonComponent implements OnInit {
     this.data.createdBy = this.user.id;
     this.data.createdDate = this.today;
     console.log('Obj To send post => ', this.data);
+  
     this.service
       .serviceGeneralPostWithUrl('BarCleaning', this.data)
       .subscribe((data) => {

@@ -191,7 +191,7 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
     await actionSheet.present();
   }
   save() {
-    if(this.data.comment === "" || this.data.comment === null  || this.data.comment === undefined || this.data.photoWashBasinWithSoapPapers.length === 0){
+    if(this.data.commentSoapPaper === "" || this.data.commentSoapPaper === null  || this.data.commentSoapPaper === undefined || this.data.commentDryer === "" || this.data.commentDryer === null  || this.data.commentDryer === undefined || this.data.photoWashBasinWithSoapPapers.length < 2){
      this.alertCampos();
     }
     else{
@@ -268,7 +268,9 @@ class WashBasinModel {
   id: number;
   branchId: number;
   isThereSoapPaper: boolean;
-  comment: string;
+  isThereDryer: boolean;
+  commentSoapPaper: string;
+  commentDryer: string;
   createdBy: number;
   createdDate: Date;
   updatedBy: number;

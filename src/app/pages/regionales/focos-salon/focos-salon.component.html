@@ -64,16 +64,97 @@
             </ion-col>
           </ion-row>
         </ion-col>
-        <ion-col size="6" >
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="6">
+          <ion-label>FOTOGRAFIA</ion-label>
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(1)">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
           <ion-label>COMENTARIO</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="data.comment" rows="6" cols="20">
+            <ion-textarea [(ngModel)]="data.commenFoco" rows="6" cols="20" style="margin-top: 2px;">
             </ion-textarea>
           </ion-card>
         </ion-col>
       </ion-row>
-      <br><br>
+      
+
+      <ion-row size="12">
+        <ion-col size="6"></ion-col>
+
+        <ion-col size="6">
+          <ion-row>
+            <ion-col size="3" *ngFor="let photo of data.photoWashBasinWithSoapPapers; index as position">
+              <!-- imagene en storage -->
+              <ion-img *ngIf="photo.id === 0 && photo.type === 1" src="{{ base64 }},{{ photo.photo }}"
+                (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- imagenes en bd -->
+              <ion-img *ngIf="photo.id !== 0 && photo.type === 1" src="{{ url }}{{ photo.photo }}"
+                (click)="deleteImgShowAction(photo.id)"> </ion-img>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
     </ion-grid>
+
+    <!-------->
+    <div>
+      <ion-grid>
+        <ion-row size="12">
+          <ion-col size="6">
+            <span class="titleProduct">¿SON LOS FOCOS AUTORIZADOS?</span>
+            <br>
+            <ion-toggle [(ngModel)]="data.isThereOk"></ion-toggle>
+          </ion-col>
+          <ion-col size="6"></ion-col>
+        </ion-row>
+
+        <ion-row size="12">
+          <ion-col size="6">
+            <ion-label>FOTOGRAFIA</ion-label>
+            <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(2)">
+              <div style="margin-top: 2rem">
+                <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+              </div>
+            </ion-card>
+          </ion-col>
+          <ion-col size="6">
+            <ion-label>COMENTARIO</ion-label>
+            <ion-card>
+              <ion-textarea [(ngModel)]="data.commentAutorizados" rows="6" cols="20" style="margin-top: 2px;">
+              </ion-textarea>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+
+        <ion-row size="12">
+        <ion-col size="6"></ion-col>
+
+        <ion-col size="6">
+          <ion-row>
+            <ion-col size="3" *ngFor="let photo of data.photoWashBasinWithSoapPapers; index as position">
+              <!-- imagene en storage -->
+              <ion-img *ngIf="photo.id === 0 && photo.type === 2" src="{{ base64 }},{{ photo.photo }}"
+                (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- imagenes en bd -->
+              <ion-img *ngIf="photo.id !== 0 && photo.type === 2" src="{{ url }}{{ photo.photo }}"
+                (click)="deleteImgShowAction(photo.id)"> </ion-img>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      </ion-grid>
+    </div>
+
   </ion-content>
   <ion-footer *ngIf="activeData === true" no-border>
     <ion-grid>

@@ -88,7 +88,7 @@ export class FocosSalonComponent implements OnInit {
     this.router.navigateByUrl('regional/levantamiento-ticket/' + this.branchId);
   }
   save() {
-    if(this.data.comment === "" || this.data.comment === null || this.data.comment === undefined){
+    if(this.data.commentFoco === "" || this.data.commentFoco === null || this.data.commentFoco === undefined || this.data.commentAutorizados === "" || this.data.commentAutorizados === null || this.data.commentAutorizados === undefined){
      this.alertCampos();
     }
     else{
@@ -165,10 +165,22 @@ class PrecookedChickenModel {
   id: number;
   branchId: number;
   brokenSpotlight: boolean;
-  comment: string;
+  isThereOk: boolean;
+  commentFoco: string;
+  commentAutorizados: string;
+  createdBy: number;
+  createdDate: Date;
+  updatedBy: number;
+  updatedDate: Date;
+  photoFocos: PhotoSpotlightModel[] = [];
+}
+class PhotoSpotlightModel {
+  id: number;
+  spotlightId: number;
+  photo: string;
+  photoPath: string;
   createdBy: number;
   createdDate: Date;
   updatedBy: number;
   updatedDate: Date;
 }
-
