@@ -207,12 +207,11 @@ updateData() {
 
 
 
-  // agregar fotos de limpieza de salon
-  async addPhotoToGallery(idType: number) {
+   // eliminar indice de orden
+   async addPhotoToGallery() {
     const name = new Date().toISOString();
     await this.photoService.addNewToGallery();
     await this.photoService.loadSaved();
-    // agregaremos las fotos pero con id type de acuerdo al caso
     // al agregar las fotos en storage, las pasamos por lista
     console.log('obj fotos', this.photoService);
     this.data.photoPeoplesCountings.push({
@@ -220,13 +219,13 @@ updateData() {
       peopleId: this.data.id,
       photo: this.photoService.photos[0].webviewPath,
       photoPath: 'jpeg',
-      type: idType,
       createdBy: this.user.id,
       createdDate: this.today,
       updatedBy: this.user.id,
       updatedDate: this.today,
     });
-    console.log('fotos chicken', this.data);
+    // this.fotosRefrigerador = this.photoService.photos;
+    console.log('fotos ConteoP', this.data);
   }
   // eliminacion de images en storage
   public async showActionSheet(photo, position: number) {
@@ -311,7 +310,6 @@ class PhotoPeopleCountingModel {
   peopleId: number;
   photo: string;
   photoPath: string;
-  type: number;
   createdBy: number;
   createdDate: Date;
   updatedBy: number;
