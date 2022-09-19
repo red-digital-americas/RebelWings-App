@@ -107,11 +107,12 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
       }
     });
   }
-  // eliminar indice de orden
-  async addPhotoToGallery() {
+  // agregar fotos de limpieza de salon
+  async addPhotoToGallery(idType: number) {
     const name = new Date().toISOString();
     await this.photoService.addNewToGallery();
     await this.photoService.loadSaved();
+    // agregaremos las fotos pero con id type de acuerdo al caso
     // al agregar las fotos en storage, las pasamos por lista
     console.log('obj fotos', this.photoService);
     this.data.photoWashBasinWithSoapPapers.push({
@@ -119,13 +120,13 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
       washbasinWithSoapPaperId: this.data.id,
       photo: this.photoService.photos[0].webviewPath,
       photoPath: 'jpeg',
+      type: idType,
       createdBy: this.user.id,
       createdDate: this.today,
       updatedBy: this.user.id,
       updatedDate: this.today,
     });
-    // this.fotosRefrigerador = this.photoService.photos;
-    console.log('fotos refrigerador', this.data);
+    console.log('fotos chicken', this.data);
   }
   // eliminacion de images en storage
   public async showActionSheet(photo, position: number) {
@@ -282,6 +283,7 @@ class PhotoWashBasinModel {
   washbasinWithSoapPaperId: number;
   photo: string;
   photoPath: string;
+  type: number;
   createdBy: number;
   createdDate: Date;
   updatedBy: number;
