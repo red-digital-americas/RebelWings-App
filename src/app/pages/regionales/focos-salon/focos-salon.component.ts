@@ -3,7 +3,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import { AlertController } from '@ionic/angular';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import {
+  UserPhoto,
+  PhotoService,
+} from 'src/app/core/services/services/photo.service';
+import { ActionSheetController } from '@ionic/angular';
 @Component({
   selector: 'app-focos-salon',
   templateUrl: './focos-salon.component.html',
@@ -18,8 +23,10 @@ export class FocosSalonComponent implements OnInit {
   public branchId;
   public dataBranch: any[] = [];
   public nameBranch = '';
-   public disabled = false;
+  public disabled = false;
   public activeData = false;
+  public base64 = 'data:image/jpeg;base64';
+  public url = 'http://34.237.214.147/back/api_rebel_wings/';
 
   public visibleGuardar = true;
 
@@ -28,6 +35,8 @@ export class FocosSalonComponent implements OnInit {
     public alertController: AlertController,
     public service: ServiceGeneralService,
     public load: LoaderComponent,
+    private camera: Camera, public actionSheetController: ActionSheetController,
+    public photoService: PhotoService
   ) { }
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
@@ -160,6 +169,92 @@ export class FocosSalonComponent implements OnInit {
 
   }
 
+
+    // agregar fotos de limpieza de salon
+    async addPhotoToGallery(idType: number) {
+      const name = new Date().toISOString();
+      await this.photoService.addNewToGallery();
+      await this.photoService.loadSaved();
+      // agregaremos las fotos pero con id type de acuerdo al caso
+      // al agregar las fotos en storage, las pasamos por lista
+      console.log('obj fotos', this.photoService);
+      this.data.photoSpotlights.push({
+        id: 0,
+        spotlightId: this.data.id,
+        photo: this.photoService.photos[0].webviewPath,
+        photoPath: 'jpeg',
+        type: idType,
+        createdBy: this.user.id,
+        createdDate: this.today,
+        updatedBy: this.user.id,
+        updatedDate: this.today,
+      });
+      console.log('fotos chicken', this.data);
+    }
+    // acciones para las fotos de limpieza de salon
+    public async showActionSheet(photo, position: number) {
+      console.log('photo', photo);
+      console.log('posicion', position);
+  
+      const actionSheet = await this.actionSheetController.create({
+        header: 'Photos',
+        buttons: [
+          {
+            text: 'Delete',
+            role: 'destructive',
+            icon: 'trash',
+            handler: () => {
+              this.photoService.deletePicture(photo, position);
+              //
+              this.data.photoSpotlights.splice(position, 1);
+            },
+          },
+          {
+            text: 'Cancel',
+            icon: 'close',
+            role: 'cancel',
+            handler: () => {
+              // Nothing to do, action sheet is automatically closed
+            },
+          },
+        ],
+      });
+      await actionSheet.present();
+    }
+    //eliminar imagenes bd
+    public async deleteImgShowAction(id) {
+      const actionSheet = await this.actionSheetController.create({
+        header: 'Photos',
+        buttons: [
+          {
+            text: 'Delete',
+            role: 'destructive',
+            icon: 'trash',
+            handler: () => {
+              this.service
+                .serviceGeneralDelete(`Bathroom/${id}/Photo`)
+                .subscribe((data) => {
+                  if (data.success) {
+                    this.load.presentLoading('Eliminando..');
+                    console.log('data', data);
+                    this.ionViewWillEnter();
+                  }
+                });
+            },
+          },
+          {
+            text: 'Cancel',
+            icon: 'close',
+            role: 'cancel',
+            handler: () => {
+              // Nothing to do, action sheet is automatically closed
+            },
+          },
+        ],
+      });
+      await actionSheet.present();
+    }
+
 }
 class PrecookedChickenModel {
   id: number;
@@ -172,13 +267,14 @@ class PrecookedChickenModel {
   createdDate: Date;
   updatedBy: number;
   updatedDate: Date;
-  photoFocos: PhotoSpotlightModel[] = [];
+  photoSpotlights: PhotoSpotlightModel[] = [];
 }
 class PhotoSpotlightModel {
   id: number;
   spotlightId: number;
   photo: string;
   photoPath: string;
+  type: number;
   createdBy: number;
   createdDate: Date;
   updatedBy: number;
