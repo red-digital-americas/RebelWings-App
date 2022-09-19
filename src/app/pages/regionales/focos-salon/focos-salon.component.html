@@ -67,6 +67,13 @@
       </ion-row>
       <ion-row size="12">
         <ion-col size="6">
+          <ion-label>COMENTARIO</ion-label>
+          <ion-card>
+            <ion-textarea [(ngModel)]="data.commentFoco" rows="6" cols="20" style="margin-top: 2px;">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(1)">
             <div style="margin-top: 2rem">
@@ -74,13 +81,7 @@
             </div>
           </ion-card>
         </ion-col>
-        <ion-col size="6">
-          <ion-label>COMENTARIO</ion-label>
-          <ion-card>
-            <ion-textarea [(ngModel)]="data.commentFoco" rows="6" cols="20" style="margin-top: 2px;">
-            </ion-textarea>
-          </ion-card>
-        </ion-col>
+        
       </ion-row>
       
 
@@ -118,6 +119,13 @@
 
         <ion-row size="12">
           <ion-col size="6">
+            <ion-label>COMENTARIO</ion-label>
+            <ion-card>
+              <ion-textarea [(ngModel)]="data.commentAutorizados" rows="6" cols="20" style="margin-top: 2px;">
+              </ion-textarea>
+            </ion-card>
+          </ion-col>
+          <ion-col size="6">
             <ion-label>FOTOGRAFIA</ion-label>
             <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(2)">
               <div style="margin-top: 2rem">
@@ -125,13 +133,7 @@
               </div>
             </ion-card>
           </ion-col>
-          <ion-col size="6">
-            <ion-label>COMENTARIO</ion-label>
-            <ion-card>
-              <ion-textarea [(ngModel)]="data.commentAutorizados" rows="6" cols="20" style="margin-top: 2px;">
-              </ion-textarea>
-            </ion-card>
-          </ion-col>
+          
         </ion-row>
 
         <ion-row size="12">
