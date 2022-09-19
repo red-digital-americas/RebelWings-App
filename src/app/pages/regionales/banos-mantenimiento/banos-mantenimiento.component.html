@@ -1,15 +1,23 @@
 <ion-app>
   <!-- ************ data ************ -->
   <ion-header *ngIf="activeData === true" class="ion-no-border ion-padding">
+
     <ion-grid>
-      <ion-row>
-        <ion-col>
+
+      <ion-row size="12">
+        <ion-col size="3">
           <div>
-            <p (click)="return()" class="ion-align-items-start return">
-              < REGRESAR </p>
+            <!-- <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR</p> -->
+              <ion-button *ngIf="this.visibleGuardar === true" (click)="return()" shape="round" color="warning" expand="full" size="small">
+                REGRESAR
+              </ion-button>
           </div>
         </ion-col>
+        <ion-col size="9"></ion-col>
       </ion-row>
+      <br>
+      
       <ion-row size="12">
         <ion-col size="1">
           <img src="./assets/icon/ilustracion_ba_os.png" alt="encuesta" />
@@ -21,28 +29,25 @@
     </ion-grid>
     <br>
     <ion-grid>
-      <!-- titulo de empresa -->
-      <ion-row size="12">
-        <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
+      <ion-row size="12" *ngIf="user" >
+        <ion-col size="9">
+          <h5 class="subtitle-negro">{{nameBranch}}</h5>
         </ion-col>
-        <ion-col size="4">
+        <ion-col size="3">
           <span class="date-grey">
-            {{ today | date: "dd MMM yyy" }}
+            {{ today | date: "dd/MM/yyy" }}
           </span>
         </ion-col>
-        <ion-col size="1"></ion-col>
-        <ion-col size="3">
-          <div class="align-end-text">
-            <ion-button (click)="levantamientoTicket()" shape="round" color="warning" expand="full">
-              <span>
-                LEVANTAR TICKET
-              </span>
-            </ion-button>
-          </div>
+      </ion-row>
+
+      <ion-row size="12">
+        <ion-col size="12">
+          <h5 class="description">CHECK DE MANTENIMIENTO DEL AREA DE BAÑOS</h5>
         </ion-col>
       </ion-row>
+
     </ion-grid>
+
   </ion-header>
   <ion-content fullscreen="false" *ngIf="activeData === true" class="ion-padding">
 
@@ -50,17 +55,17 @@
       <!-----------------Mingitorios--------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">Mingitorios</span>
+          <span class="titleProduct">MIGITORIOS</span>
           <br>
-          <span>¿Se encuentra en buen estado?</span>
+          <span>¿FUNCIONAN CORRECTAMENTE Y SIN FUGAS?</span>
           <br>
           <ion-toggle [(ngModel)]="data.urinals"></ion-toggle>
         </ion-col>
       </ion-row>
       <!-------------fotos de Mingitorios----------------->
-      <ion-row *ngIf="data.urinals === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(1)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -68,14 +73,14 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIO</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="data.commentUrinals" rows="6" cols="20">
+            <ion-textarea [(ngModel)]="data.commentUrinals" rows="6" cols="20" style="margin-top: 2px;">
             </ion-textarea>
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="data.urinals === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
@@ -97,17 +102,17 @@
       <!---------------Lavamanos--------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">Lavamanos</span>
+          <span class="titleProduct">LAVAMANOS</span>
           <br>
-          <span>¿Tienen fugas? ¿Funcionan correctamente?</span>
+          <span>¿FUNCIONAN CORRECTAMENTE Y SIN FUGAS?</span>
           <br>
           <ion-toggle [(ngModel)]="data.handWashBasin"></ion-toggle>
         </ion-col>
       </ion-row>
       <!-------------fotos de Lavamanos----------------->
-      <ion-row *ngIf="data.handWashBasin === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(2)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -115,14 +120,14 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIO</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="data.commentHandWashBasin" rows="6" cols="20">
+            <ion-textarea [(ngModel)]="data.commentHandWashBasin" rows="6" cols="20" style="margin-top: 2px;">
             </ion-textarea>
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="data.handWashBasin === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
@@ -144,17 +149,17 @@
       <!---------------Luminarias--------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">Luminarias</span>
+          <span class="titleProduct">LUMINARIAS</span>
           <br>
-          <span>¿Completos y funcionando?</span>
+          <span>¿FOCOS Y LEDS FUNCIONAN CORRECTAMENTE?</span>
           <br>
           <ion-toggle [(ngModel)]="data.luminaires"></ion-toggle>
         </ion-col>
       </ion-row>
       <!-------------fotos de Luminarias----------------->
-      <ion-row *ngIf="data.luminaires === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(3)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -162,14 +167,14 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIO</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="data.commentLuminaires" rows="6" cols="20">
+            <ion-textarea [(ngModel)]="data.commentLuminaires" rows="6" cols="20" style="margin-top: 2px;">
             </ion-textarea>
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="data.luminaires === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
@@ -191,17 +196,17 @@
       <!---------------Puertas--------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">Puertas</span>
+          <span class="titleProduct">PUERTAS</span>
           <br>
-          <span>¿En buen estado y funcionando?</span>
+          <span>¿EN BUEN ESTADO Y FUNCIONANDO?</span>
           <br>
           <ion-toggle [(ngModel)]="data.doors"></ion-toggle>
         </ion-col>
       </ion-row>
       <!-------------fotos de Puertas----------------->
-      <ion-row *ngIf="data.doors === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(4)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -209,14 +214,14 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIO</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="data.commentDoors" rows="6" cols="20">
+            <ion-textarea [(ngModel)]="data.commentDoors" rows="6" cols="20" style="margin-top: 2px;">
             </ion-textarea>
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="data.doors === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
@@ -241,8 +246,14 @@
     <ion-grid>
       <!-- footer boton -->
       <ion-row size="12" class="footer">
-        <ion-col size="3" offset="8">
-          <ion-button  (click)="save()" shape="round" color="danger" expand="full">
+        <ion-col size="6"></ion-col>
+        <ion-col size="3" >
+            <ion-button (click)="levantamientoTicket()" shape="round" color="warning" expand="full">
+                TICKET
+            </ion-button>
+        </ion-col>
+        <ion-col size="3" >
+          <ion-button (click)="save()" shape="round" color="danger" expand="full" *ngIf="this.visibleGuardar === true">
             GUARDAR
           </ion-button>
         </ion-col>

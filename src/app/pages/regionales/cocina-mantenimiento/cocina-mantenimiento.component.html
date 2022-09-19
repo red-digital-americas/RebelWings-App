@@ -48,21 +48,6 @@
 
     </ion-grid>
     
-    <ion-grid>
-      <ion-row size="12">
-        <ion-col size="4">
-        </ion-col>
-        <ion-col size="4">
-        </ion-col>
-        <ion-col size="1"></ion-col>
-        <ion-col size="3">
-          <div class="align-end-text">
-            
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
 
   </ion-header>
   <ion-content fullscreen="false" *ngIf="activeData === true" class="ion-padding">
@@ -310,7 +295,7 @@
         <ion-col size="12">
           <span class="titleProduct">REFRIGERADORES</span>
           <br>
-          <span>¿TEMPERATURA, EN BUEN ESTADO?</span>
+          <span>¿REFRIGERADORES ESTAN EN BUEN ESTADO?</span>
           <br>
           <ion-toggle [(ngModel)]="data.refrigerator"></ion-toggle>
         </ion-col>
@@ -355,9 +340,9 @@
       <!-------------Temperatura interior---------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">TEMPERATURA INTERIOR</span>
+          <span class="titleProduct">REFRIGERADORES</span>
           <br>
-          <span>¿ES LA CORRECTA?</span>
+          <span>¿¿LA TEMPERATURA INTERIOR ES LA CORRECTA?</span>
           <br>
           <ion-toggle [(ngModel)]="data.interiorTemperature"></ion-toggle>
         </ion-col>
@@ -403,9 +388,9 @@
       <!---------------Puertas--------------------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">Puertas</span>
+          <span class="titleProduct">REFRIGERADORES</span>
           <br>
-          <span>¿ES LA CORRECTA?</span>
+          <span>¿LAS PUERTAS SELLAN CORRECTAMENTE?</span>
           <br>
           <ion-toggle [(ngModel)]="data.doors"></ion-toggle>
         </ion-col>
@@ -451,9 +436,9 @@
       <!-------Distancia correcta hacia la pared--------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">DISTANCIA CORRACTA HACIA LA PARED</span>
+          <span class="titleProduct">REFRIGERADORES</span>
           <br>
-          <span>¿ES LA CORRECTA?</span>
+          <span>¿TIENEN LA DISTANCIA CORRECTA HACIA LA PARED?</span>
           <br>
           <ion-toggle [(ngModel)]="data.correctDistance"></ion-toggle>
         </ion-col>

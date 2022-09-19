@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { AlertController } from '@ionic/angular';
 import {
   UserPhoto,
   PhotoService,
@@ -27,9 +28,12 @@ export class BanosMantenimientoComponent implements OnInit {
   public base64 = 'data:image/jpeg;base64';
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
 
+  public visibleGuardar = true;
+
   constructor(public router: Router,
     public routerActive: ActivatedRoute,
     public service: ServiceGeneralService,
+    public alertController: AlertController,
     public load: LoaderComponent,
     private camera: Camera, public actionSheetController: ActionSheetController,
     public photoService: PhotoService) { }
@@ -39,7 +43,7 @@ export class BanosMantenimientoComponent implements OnInit {
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.branchId = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
-    this.getBranch();
+    this.getBranch(this.user.stateId);
 
   }
   ngOnInit() { }
@@ -76,17 +80,17 @@ export class BanosMantenimientoComponent implements OnInit {
     this.router.navigateByUrl('regional/levantamiento-ticket/' + this.branchId);
   }
   // get  name sucursal
-  getBranch() {
+  getBranch(id) {
     let branchIdNumber = 0;
     branchIdNumber = Number(this.branchId);
     console.log('branchIdNumber', branchIdNumber);
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+    this.service.serviceGeneralGet(`User/GetSucursalList?idState=${id}`).subscribe(resp => {
       if (resp.success) {
         this.dataBranch = resp.result;
         console.log('get branch', this.dataBranch);
         this.dataBranch.forEach(element => {
-          if (element.branchId === branchIdNumber) {
-            this.nameBranch = element.branchName;
+          if (element.idfront === branchIdNumber) {
+            this.nameBranch = element.titulo;
             this.nameBranch = this.nameBranch.toUpperCase();
             console.log('nombre', this.nameBranch);
           }
@@ -181,6 +185,13 @@ export class BanosMantenimientoComponent implements OnInit {
   }
 
   save() {
+    if(this.data.commentDoors === undefined || this.data.commentHandWashBasin === undefined || this.data.commentLuminaires === undefined || this.data.commentUrinals === undefined
+      || this.data.commentDoors === "" || this.data.commentHandWashBasin === "" || this.data.commentLuminaires === "" || this.data.commentUrinals === "" || this.data.photoBathrooms.length < 4){
+      this.alertCampos();
+    }
+    else{
+    this.load.presentLoading('Guardando..');
+    this.visibleGuardar = false;
     this.disabled = true;
     // esto se pone aqui por que aun no se estrae la data de un get
     this.data.branchId = this.branchId;
@@ -194,6 +205,7 @@ export class BanosMantenimientoComponent implements OnInit {
       this.updateData();
     }
   }
+  }
   addData() {
     this.data.createdBy = this.user.id;
     this.data.createdDate = this.today;
@@ -206,7 +218,12 @@ export class BanosMantenimientoComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
+          if(this.data.urinals === false || this.data.handWashBasin === false || this.data.luminaires === false || this.data.doors === false){
+             this.levantamientoTicket();
+          }
+          else{
           this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
+          }
         }
       });
   }
@@ -218,10 +235,32 @@ export class BanosMantenimientoComponent implements OnInit {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
         console.log('data', data);
-        this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
+       if(this.data.urinals === false || this.data.handWashBasin === false || this.data.luminaires === false || this.data.doors === false){
+          this.levantamientoTicket();
+       }
+       else{
+       this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
+       }
       }
     });
   }
+
+  async alertCampos(){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'CAMPOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN CARGADOS CORRECTAMENTE',
+      mode: 'ios',
+      buttons: ['OK'],
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+
+  }
+
 }
 
 class BethroomModel {

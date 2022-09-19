@@ -129,7 +129,7 @@ export class ConteoPersonasSalonComponent implements OnInit {
       this.alertCampos();
     }
     else{
-      //this.load.presentLoading('Guardando..');
+      this.load.presentLoading('Guardando..');
       this.visibleGuardar = false;
       this.disabled = true;
       // esto se pone aqui por que aun no se estrae la data de un get

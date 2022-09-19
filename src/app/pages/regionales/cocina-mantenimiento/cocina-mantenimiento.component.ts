@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { AlertController } from '@ionic/angular';
 import {
   UserPhoto,
   PhotoService,
@@ -33,6 +34,7 @@ export class CocinaMantenimientoComponent implements OnInit {
 
   constructor(public router: Router,
     public routerActive: ActivatedRoute,
+    public alertController: AlertController,
     public service: ServiceGeneralService,
     public load: LoaderComponent, private camera: Camera, public actionSheetController: ActionSheetController,
     public photoService: PhotoService) { }
@@ -190,6 +192,16 @@ export class CocinaMantenimientoComponent implements OnInit {
   }
 
   save() {
+    if(this.data.commentCorrectDistance === "" || this.data.commentDoors === "" || this.data.commentElectricalConnections === "" || this.data.commentExtractor === ""
+      || this.data.commentFryer === "" || this.data.commentInteriorTemperature === "" || this.data.commentLuminaires === "" || this.data.commentMixer === "" ||
+      this.data.commentRefrigerator === "" || this.data.commentSink === "" || this.data.commentStrainer === "" || this.data.commentCorrectDistance === undefined || this.data.commentDoors === undefined || this.data.commentElectricalConnections === undefined || this.data.commentExtractor === undefined
+      || this.data.commentFryer === undefined || this.data.commentInteriorTemperature === undefined || this.data.commentLuminaires === undefined || this.data.commentMixer === undefined ||
+      this.data.commentRefrigerator === undefined || this.data.commentSink === undefined || this.data.commentStrainer === undefined || this.data.photoKitchens.length < 11){
+      this.alertCampos();
+    }
+    else{
+    this.visibleGuardar = false;
+    this.load.presentLoading('Guardando..');
     this.disabled = true;
     // esto se pone aqui por que aun no se estrae la data de un get
     this.data.branchId = this.branchId;
@@ -202,6 +214,7 @@ export class CocinaMantenimientoComponent implements OnInit {
     } else {
       this.updateData();
     }
+   }
   }
   addData() {
     this.data.createdBy = this.user.id;
@@ -215,7 +228,15 @@ export class CocinaMantenimientoComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
+          if(this.data.sink === false || this.data.mixer === false || this.data.strainer === false || this.data.fryer === false || this.data.extractor === false 
+            || this.data.refrigerator === false || this.data.interiorTemperature === false || this.data.doors === false || this.data.correctDistance === false 
+            || this.data.electricalConnections === false || this.data.luminaires === false ){
+            this.levantamientoTicket();
+           }
+           else{
+            this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
+           }
+          
         }
       });
   }
@@ -227,10 +248,35 @@ export class CocinaMantenimientoComponent implements OnInit {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
         console.log('data', data);
-        this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
+        if(this.data.sink === false || this.data.mixer === false || this.data.strainer === false || this.data.fryer === false || this.data.extractor === false 
+          || this.data.refrigerator === false || this.data.interiorTemperature === false || this.data.doors === false || this.data.correctDistance === false 
+          || this.data.electricalConnections === false || this.data.luminaires === false ){
+          this.levantamientoTicket();
+         }
+         else{
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
+         }
       }
     });
   }
+
+
+  async alertCampos(){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'CAMPOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN CARGADOS CORRECTAMENTE',
+      mode: 'ios',
+      buttons: ['OK'],
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+
+  }
+
 }
 
 class CookModel {

@@ -97,7 +97,7 @@ export class FocosSalonComponent implements OnInit {
     this.router.navigateByUrl('regional/levantamiento-ticket/' + this.branchId);
   }
   save() {
-    if(this.data.commentFoco === "" || this.data.commentFoco === null || this.data.commentFoco === undefined || this.data.commentAutorizados === "" || this.data.commentAutorizados === null || this.data.commentAutorizados === undefined){
+    if(this.data.commentFoco === "" || this.data.commentFoco === null || this.data.commentFoco === undefined || this.data.commentAutorizados === "" || this.data.commentAutorizados === null || this.data.commentAutorizados === undefined || this.data.photoSpotlights.length < 2){
      this.alertCampos();
     }
     else{
