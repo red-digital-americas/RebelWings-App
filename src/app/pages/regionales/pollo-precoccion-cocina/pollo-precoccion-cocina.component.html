@@ -57,13 +57,18 @@
     <ion-grid >
       <!--chicken in table-->
       <ion-row size="12">
+        <ion-col size="12">
+          <ion-label>INGRESA LA CANTIDAD DE KILOS PRECOCIDOS INDICADOS EN TU TABLA DE PRECOCCION DE POLLO</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row size="12">
         <!-- <ion-col size="6">
           <span>¿Hay pollo precocido en tabla?</span>
           <br>
           <ion-toggle [(ngModel)]="toggleChicken"></ion-toggle>
         </ion-col> -->
         <ion-col size="6">
-          <ion-label>INGRESA LA CANTIDAD DE KILOS PRECOCIDOS INDICADOS EN TU TABLA DE PRECOCCION DE POLLO</ion-label>
+          
           <ion-card class="closed">
             <ion-input [(ngModel)]="data.amountPrecookedChickenOnTheTable" type="number" min="0"
               placeholder="Kilogramos">

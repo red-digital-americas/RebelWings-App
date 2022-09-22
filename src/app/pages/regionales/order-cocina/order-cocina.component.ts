@@ -263,6 +263,7 @@ export class OrderCocinaComponent implements OnInit {
         this.alertCampos();
     }
     else{
+      this.load.presentLoading('Guardando..');
       this.visibleGuardar = false;
       this.disabled = true;
       this.fotosOrden = [];
