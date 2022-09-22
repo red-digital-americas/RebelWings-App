@@ -55,7 +55,7 @@
           <ion-label floating>¿CUANTAS MESAS REALES ESTAN ABIERTAS?</ion-label>
           <ion-card class="closed">
             <ion-input [(ngModel)]="data.tables" type="number" (focus)="activeMesas = false" required min="0"
-              placeholder="4 Mesas"></ion-input>
+              placeholder="MESAS"></ion-input>
           </ion-card>
           <ion-label style="color: #ad182d; font-size: 12px" *ngIf="activeMesas">Campo requerido</ion-label>
         </ion-col>
@@ -63,7 +63,7 @@
           <ion-label floating>¿CUANTOS COMENSALES REALES HAY EN SUCURSAL?</ion-label>
           <ion-card class="closed">
             <ion-input [(ngModel)]="data.dinners" type="number" (focus)="activeComensales = false" required min="0"
-              placeholder="6 Comensales"></ion-input>
+              placeholder="COMENSALES"></ion-input>
           </ion-card>
           <ion-label style="color: #ad182d; font-size: 12px" *ngIf="activeComensales">Campo requerido</ion-label>
         </ion-col>

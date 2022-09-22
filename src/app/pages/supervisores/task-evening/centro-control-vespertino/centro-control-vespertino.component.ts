@@ -81,6 +81,7 @@ export class CentroControlVespertinoComponent implements OnInit {
   ngOnInit() {
     this.today = new Date();
     this.user = JSON.parse(localStorage.getItem('userData'));
+    console.log('user', this.user);
     this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
     this.branchId = this.user.branchId;
     //this.getNotification();
@@ -94,7 +95,7 @@ export class CentroControlVespertinoComponent implements OnInit {
   getDataControl(task) {
     // this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet(`ControlCenter/${this.user.branchId}/${this.vespertino}/${task}/Manager`)
+      .serviceGeneralGet(`ControlCenter/${this.user.branchId}/${this.vespertino}/${task}/${this.user.id}/Manager`)
       .subscribe((resp) => {
         if (resp.success) {
           this.data = resp.result.controlCenters;

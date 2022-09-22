@@ -56,13 +56,13 @@
         <ion-col size="4">
           <span class="titleProduct">TARJAS</span>
           <br>
-          <span>¿SE ENCUENTRAN SUJETAS Y SIN FUGA?</span>
+          <span>¿SE ENCUENTRAN SUJETAS Y SIN FUGAS?</span>
           <br>
           <ion-toggle [(ngModel)]="data.sink"></ion-toggle>
         </ion-col>
       </ion-row>
       <!-------------fotos de tarjas----------------->
-      <ion-row *ngIf="data.sink === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(1)">
@@ -103,7 +103,7 @@
         <ion-col size="4">
           <span class="titleProduct">MEZCLADORAS</span>
           <br>
-          <span>¿FUNCIONANCORRACTAMENTE Y SIN FUGAS?</span>
+          <span>¿FUNCIONAN CORRACTAMENTE Y SIN FUGAS?</span>
           <br>
           <ion-toggle [(ngModel)]="data.mixer"></ion-toggle>
         </ion-col>
