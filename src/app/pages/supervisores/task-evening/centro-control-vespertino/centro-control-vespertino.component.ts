@@ -73,7 +73,7 @@ export class CentroControlVespertinoComponent implements OnInit {
     //this.notificationVoladoEfectivo();
     this.getDataControl(this.task);
     // this.notificationAlarm();
-    
+    this.getInventario();
     
 
 
@@ -89,7 +89,7 @@ export class CentroControlVespertinoComponent implements OnInit {
     //this.getDataControl(this.task);
     //this.notificationAlarm();
     this.startTimer();
-    this.getInventario();
+
 
   }
   getDataControl(task) {
