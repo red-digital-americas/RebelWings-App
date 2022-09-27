@@ -22,6 +22,7 @@ export class CentroControlComponent implements OnInit {
   public nameBranch = '';
   // variable menu seleccionable
   public task;
+  public ValMenu = 0;
 
   constructor(
     public router: Router, public routerActive: ActivatedRoute,
@@ -52,6 +53,7 @@ export class CentroControlComponent implements OnInit {
   
   // obtiene el estatus de cada tarea
   getDataControl(task) {
+    
     this.load.presentLoading('Cargando..');
     this.service
       .serviceGeneralGet(`ControlCenter/${this.branchId}/${task}/Regional`)
@@ -69,6 +71,8 @@ export class CentroControlComponent implements OnInit {
             this.color = 'warning';
           }
           console.log('control vespertino', resp.result);
+          this.ValMenu = task;
+          console.log('valmenu', this.ValMenu);
         }
       });
     

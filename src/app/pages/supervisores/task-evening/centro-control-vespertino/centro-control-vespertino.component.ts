@@ -151,7 +151,12 @@ export class CentroControlVespertinoComponent implements OnInit {
       this.ValUsuario = 2;
     }
     else{
+      if(this.ValUsuario == 2){
+        this.ValUsuario = 3;
+      }
+      else{
       this.ValUsuario = 1;
+      }
     }
   }
 

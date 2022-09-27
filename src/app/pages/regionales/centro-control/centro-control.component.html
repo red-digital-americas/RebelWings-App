@@ -66,7 +66,11 @@
         </ion-row>
         <ion-row size="12">
           <ion-col size="6" class="align-items-start">
-            <span class="title-red">REGIONAL</span>
+                <span *ngIf="this.ValMenu == 1" class="title-red">COCINA</span>
+                <span *ngIf="this.ValMenu == 2" class="title-red">SALON</span>
+                <span *ngIf="this.ValMenu == 3" class="title-red">BAÑO</span>
+                <span *ngIf="this.ValMenu == 4" class="title-red">SISTEMA Y CAJA</span>
+                <span *ngIf="this.ValMenu == 5" class="title-red">MATENIMIENTO</span>
           </ion-col>
           <ion-col size="3" class="ion-align-items-end">
           </ion-col>
@@ -87,28 +91,31 @@
               <ion-row size="12">
                 <ion-col size="2">
                   <ion-segment-button (click)="getDataControl(1)" value="1">
-                    <span class="btnMenu">COCINA</span>
+                    <span class="btnMenu">A</span>
                   </ion-segment-button>
                 </ion-col>
                 <ion-col size="2">
                   <ion-segment-button (click)="getDataControl(2)" value="2">
-                    <span class="btnMenu">SALÓN</span>
+                    <span class="btnMenu">B</span>
                   </ion-segment-button>
                 </ion-col>
                 <ion-col size="2">
                   <ion-segment-button (click)="getDataControl(3)" value="3">
-                    <span class="btnMenu">BAÑOS</span>
+                    <span class="btnMenu">C</span>
                   </ion-segment-button>
                 </ion-col>
-                <ion-col size="3">
+                <ion-col size="2">
                   <ion-segment-button (click)="getDataControl(4)" value="4">
-                    <span class="btnMenu">SISTEMA Y CAJA</span>
+                    <span class="btnMenu">D</span>
                   </ion-segment-button>
                 </ion-col>
-                <ion-col size="3">
+                <ion-col size="2">
                   <ion-segment-button (click)="getDataControl(5)" value="5">
-                    <span class="btnMenu">MANTENIMIENTO</span>
+                    <span class="btnMenu">E</span>
                   </ion-segment-button>
+                </ion-col>
+                <ion-col size="2">
+                  
                 </ion-col>
               </ion-row>
             </ion-segment>
@@ -130,15 +137,15 @@
                 </ion-col>
                 <!-- ------------O R D E N E S------------ -->
                 <!-- *ngIf="data[2]" -->
-                <ion-col *ngIf="data[0]" size="6">
+                <ion-col *ngIf="data[0]" size="12">
                   <ion-card (click)="ordenCocina()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[0].isComplete === false" src="./assets/icon/ilustracion_mesas_en_espera.png" alt="" />
                           <img *ngIf="data[0].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
@@ -177,15 +184,15 @@
                 </ion-col>
                 <!-- ------------R E F R I G E R A D O R E S------------ -->
                 <!-- *ngIf="data[2]" -->
-                <ion-col *ngIf="data[1]" size="6">
+                <ion-col *ngIf="data[1]" size="12">
                   <ion-card (click)="refrigeradorCocina()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[1].isComplete === false" src="./assets/icon/ilustracion_refrigeradores.png" alt="" />
                           <img *ngIf="data[1].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
@@ -223,15 +230,15 @@
                 </ion-col>
                 <!-- ------------P O L L O   C O N  P R E C O C C I O N------------ -->
                 <!-- *ngIf="data[2]" -->
-                <ion-col *ngIf="data[2]" size="6">
+                <ion-col *ngIf="data[2]" size="12">
                   <ion-card (click)="polloPrecoccionCocina()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[2].isComplete === false" src="./assets/icon/ilustracion_pollo_precocido.png" alt="" />
                           <img *ngIf="data[2].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
@@ -315,15 +322,15 @@
                 </ion-col> -->
                 <!-- ------------L I M P I E Z A  D E  F R E I D O R A S------------ -->
                 <!-- *ngIf="data[2]" -->
-                <ion-col *ngIf="data[4]" size="6">
+                <ion-col *ngIf="data[4]" size="12">
                   <ion-card (click)="limpiezaFreidorasCocina()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[4].isComplete === false" src="./assets/icon/ilustracion_limpieza_de_freidoras.png" alt="" />
                           <img *ngIf="data[4].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
