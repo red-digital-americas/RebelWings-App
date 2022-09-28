@@ -15,6 +15,8 @@ export class HistoryTicketComponent implements OnInit {
   public nameBranch = '';
   public today = new Date();
 
+  public visibleGuardar = true;
+
   constructor(public router: Router, public routerActive: ActivatedRoute,
     public service: ServiceGeneralService,
     public load: LoaderComponent) { }
@@ -39,7 +41,7 @@ export class HistoryTicketComponent implements OnInit {
           console.log('get data', this.data);
           if (this.data.length === 0) {
             this.data.push({
-              regional: 'No hay tickets en esta sucursal'
+              regional: 'NO HAY'
             });
           }
         }
