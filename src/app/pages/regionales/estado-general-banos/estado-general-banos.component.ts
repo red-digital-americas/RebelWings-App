@@ -57,10 +57,10 @@ export class EstadoGeneralBanosComponent implements OnInit {
             console.log('completar tarea');
             this.dataId = false; //no hay registro entonces se hara un post
             this.data.id = 0;
-            this.data.doesAnyBathroomLeakMen = false;
-            this.data.isThereAnyFaultsMen = false;
-            this.data.doesAnyBathroomLeakWomen = false;
-            this.data.isThereAnyFaultsWomen = false;
+            this.data.doesAnyBathroomLeakMen = true;
+            this.data.isThereAnyFaultsMen = true;
+            this.data.doesAnyBathroomLeakWomen = true;
+            this.data.isThereAnyFaultsWomen = true;
             this.data.commentDoesAnyBathroomLeakMen = '';
             this.data.commentAreThereAnyFaultsMen = '';
             this.data.commentDoesAnyBathroomLeakWomen = '';

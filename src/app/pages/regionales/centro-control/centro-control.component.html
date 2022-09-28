@@ -3,7 +3,7 @@
     <ion-grid>
       <ion-row size="12">
 
-        <ion-col size="10" class="ion-align-items-end">
+        <ion-col size="9" class="ion-align-items-end">
           
               <span class="ion-align-items-start color-text-white-c">{{user.name}} {{user.lastName}}</span>
                <!-- <span class="ion-align-items-start color-text-white-c">CENTRO DE CONTROL</span> -->
@@ -22,7 +22,7 @@
             <ion-icon (click)="ticketList()" src="./assets/icon/ilustracion_ticket.svg"  ></ion-icon>
           </div>
         </ion-col> -->
-        <ion-col size="1" class="ion-align-items-end">
+        <ion-col size="1.5" class="ion-align-items-end">
           <div class="align-end-text">
             <!-- <ion-button  id="logout"> -->
             <ion-icon (click)="ticketList()" size="large" style="color: gold" name="ticket-outline">
@@ -30,7 +30,7 @@
             <!-- </ion-button> -->
           </div>
         </ion-col>
-        <ion-col size="1" class="ion-align-items-end">
+        <ion-col size="1.5" class="ion-align-items-end">
           <div class="align-end-text">
             <!-- <ion-button  id="logout"> -->
             <ion-icon (click)="logout($event)" size="large" style="color: white" name="menu-outline">
@@ -206,7 +206,7 @@
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
-                                <h3 class="title-tareas">REFRIS</h3>
+                                <h3 class="title-tareas">REFRIGERADOR</h3>
                               </div>
                             </ion-col>
                             <ion-col size="12">
@@ -391,15 +391,15 @@
                 </ion-col>
                 <!-- ----------- C O N T E O  D E  P E R S O N A S------------ -->
                 <!-- *ngIf="data[2]" -->
-                <ion-col size="6" *ngIf="data[0]">
+                <ion-col size="12" *ngIf="data[0]">
                   <ion-card (click)="conteoPersonasSalon()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[0].isComplete === false" src="./assets/icon/ilustracion_conteo_de_personas.png" alt="" />
                           <img *ngIf="data[0].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
@@ -438,15 +438,15 @@
                 </ion-col>
                 <!-- ------------E N C U E S T A------------ -->
                 <!-- *ngIf="data[2]" -->
-                <ion-col *ngIf="data[1]" size="6">
+                <ion-col *ngIf="data[1]" size="12">
                   <ion-card (click)="encuestaSalon()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[1].isComplete === false" src="./assets/icon/ilustracion_encuesta.png" alt="" />
                           <img *ngIf="data[1].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
@@ -483,15 +483,15 @@
                   </ion-card>
                 </ion-col>
                 <!-- ------------L I M P I E Z A  G E N E R A L----------- -->
-                <ion-col *ngIf="data[2]" size="6">
+                <ion-col *ngIf="data[2]" size="12">
                   <ion-card (click)="limpiezaGeneralSalon()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[2].isComplete === false" src="./assets/icon/ilustracion_limpieza_salon.png" alt="" />
                           <img *ngIf="data[2].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
@@ -528,15 +528,15 @@
                   </ion-card>
                 </ion-col>
                 <!-- ------------E S T A C I O N ------------ -->
-                <ion-col *ngIf="data[3]" size="6">
+                <ion-col *ngIf="data[3]" size="12">
                   <ion-card (click)="estacionSalon()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[3].isComplete === false" src="./assets/icon/ilustracion_estaci_n.png" alt="" />
                           <img *ngIf="data[3].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
@@ -574,15 +574,15 @@
                 </ion-col>
                 <!-- ------------T E M P E R A T U R A  D E  B E B I D A------------ -->
                 <!-- *ngIf="data[2]" -->
-                <ion-col *ngIf="data[4]" size="6">
+                <ion-col *ngIf="data[4]" size="12">
                   <ion-card (click)="temperaturaBebidaSalon()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[4].isComplete === false" src="./assets/icon/botella.png" alt="" />
                           <img *ngIf="data[4].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
@@ -619,15 +619,15 @@
                   </ion-card>
                 </ion-col>
                 <!-- ------------ A U D I O  Y  V I D E O----------- -->
-                <ion-col *ngIf="data[5]" size="6">
+                <ion-col *ngIf="data[5]" size="12">
                   <ion-card (click)="audioVideoSalon()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[5].isComplete === false" src="./assets/icon/ilustracion_audio_y_video.png" alt="" />
                           <img *ngIf="data[5].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
@@ -664,15 +664,15 @@
                   </ion-card>
                 </ion-col>
                 <!-- ------------F O C O S----------- -->
-                <ion-col *ngIf="data[6]" size="6">
+                <ion-col *ngIf="data[6]" size="12">
                   <ion-card (click)="focosSalon()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[6].isComplete === false" src="./assets/icon/ilustracion_focos.png" alt="" />
                           <img *ngIf="data[6].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
@@ -709,15 +709,15 @@
                   </ion-card>
                 </ion-col>
                 <!-- ------------L I M P I E Z A  E N  B A R R A----------- -->
-                <ion-col *ngIf="data[7]" size="6">
+                <ion-col *ngIf="data[7]" size="12">
                   <ion-card (click)="limpiezaBarraSalon()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[7].isComplete === false" src="./assets/icon/ilustracion_limpieza_en_barra.png" alt="" />
                           <img *ngIf="data[7].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
@@ -755,19 +755,19 @@
                 </ion-col>
                 <!-- ------------R E F R I G E R A D O R E S----------- -->
                 <!-- *ngIf="data[2]" -->
-                <ion-col *ngIf="data[8]" size="6">
+                <ion-col *ngIf="data[8]" size="12">
                   <ion-card (click)="refrigeradoresSalon()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[8].isComplete === false" src="./assets/icon/ilustracion_refrigeradores.png" alt="" />
                           <img *ngIf="data[8].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
-                                <h3 class="title-tareas">REFRIS</h3>
+                                <h3 class="title-tareas">REFRIGERADOR</h3>
                               </div>
                             </ion-col>
                             <ion-col size="12">
@@ -814,16 +814,16 @@
                   </div>
                 </ion-col>
                 <!---------- E S T A D O  G E N E R A L--------->
-                <ion-col *ngIf="data[0]" size="6">
+                <ion-col *ngIf="data[0]" size="12">
                   <!--  -->
                   <ion-card (click)="estadoGeneral()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[0].isComplete === false" src="./assets/icon/ilustracion_ba_os.png" alt="" />
                           <img *ngIf="data[0].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
@@ -860,15 +860,15 @@
                   </ion-card>
                 </ion-col>
                 <!------L A V A B O S   C O N   J A B O N ------>
-                <ion-col *ngIf="data[1]" size="6">
+                <ion-col *ngIf="data[1]" size="12">
                   <ion-card (click)="lavabosBano()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[1].isComplete === false" src="./assets/icon/ilustracion_papel_higienico.png" alt="" />
                           <img *ngIf="data[1].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
@@ -918,15 +918,15 @@
                   </div>
                 </ion-col>
                 <!---------T I C K E T  Y  M E S A--------->
-                <ion-col size="6" *ngIf="data[0]">
+                <ion-col size="12" *ngIf="data[0]">
                   <ion-card (click)="ticketMesa()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[0].isComplete === false" src="./assets/icon/ilustracion_ticket_y_mesa.png" alt="" />
                           <img *ngIf="data[0].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
@@ -963,16 +963,16 @@
                   </ion-card>
                 </ion-col>
                 <!------E N T R A D A S  C A R G A D A S----->
-                <ion-col size="6" *ngIf="data[1]">
+                <ion-col size="12" *ngIf="data[1]">
                     <!-- <ion-card (click)="entradasCargadas()"> -->
                     <ion-card>
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[1].isComplete === false" src="./assets/icon/ilustracion_albaranes.png" alt="" />
                           <img *ngIf="data[1].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
@@ -1009,16 +1009,16 @@
                   </ion-card>
                 </ion-col>
                 <!---- R E V I S I O N  D E  P E D I D O---->
-                <ion-col *ngIf="data[2]" size="6">
+                <ion-col *ngIf="data[2]" size="12">
                   <!-- <ion-card (click)="revisionPedido()"> -->
                     <ion-card>
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[2].isComplete === false" src="./assets/icon/ilustracion_calendario.png" alt="" />
                           <img *ngIf="data[2].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
@@ -1055,15 +1055,15 @@
                   </ion-card>
                 </ion-col>
                 <!----R E V I S I O N  D E  M E S A S--->
-                <ion-col size="6" *ngIf="data[3]">
+                <ion-col size="12" *ngIf="data[3]">
                   <ion-card (click)="revisionMesas()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[3].isComplete === false" src="./assets/icon/ilustracion_salon_montado.png" alt="" />
                           <img *ngIf="data[3].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
@@ -1114,15 +1114,15 @@
                   </div>
                 </ion-col>
                 <!---------C O C I N A --------->
-                <ion-col size="6" *ngIf="data[0]">
+                <ion-col size="12" *ngIf="data[0]">
                   <ion-card (click)="cocinaMantenimiento()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[0].isComplete === false" src="./assets/icon/ilustracion_cocina.png" alt="" />
                           <img *ngIf="data[0].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
@@ -1159,15 +1159,15 @@
                   </ion-card>
                 </ion-col>
                 <!------ S A L O N----->
-                <ion-col *ngIf="data[1]" size="6">
+                <ion-col *ngIf="data[1]" size="12">
                   <ion-card (click)="salonMantenimiento()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[1].isComplete === false" src="./assets/icon/ilustracion_salon.png" alt="" />
                           <img *ngIf="data[1].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
@@ -1205,15 +1205,15 @@
                 </ion-col>
                 <!---- B A Ñ O S---->
                 <!-- *ngIf="data[2]" -->
-                <ion-col size="6" *ngIf="data[2]">
+                <ion-col size="12" *ngIf="data[2]">
                   <ion-card (click)="banosMantenimiento()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[2].isComplete === false" src="./assets/icon/ilustracion_ba_os.png" alt="" />
                           <img *ngIf="data[2].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>
@@ -1251,15 +1251,15 @@
                   </ion-card>
                 </ion-col>
                 <!---B A R R A S--->
-                <ion-col size="6" *ngIf="data[3]">
+                <ion-col size="12" *ngIf="data[3]">
                   <ion-card (click)="barraMantenimiento()">
                     <ion-card-content>
                       <ion-row size="12">
-                        <ion-col size="3" class="ion-align-self-center">
+                        <ion-col size="5" class="ion-align-self-center">
                           <img *ngIf="data[3].isComplete === false" src="./assets/icon/ilustracion_barra.png" alt="" />
                           <img *ngIf="data[3].isComplete === true" src="./assets/icon/ilustracion_check.png" alt=""/>
                         </ion-col>
-                        <ion-col size="9">
+                        <ion-col size="7">
                           <ion-row size="12">
                             <ion-col size="12">
                               <div>

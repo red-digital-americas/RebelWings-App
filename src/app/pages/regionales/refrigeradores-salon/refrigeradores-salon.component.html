@@ -14,29 +14,29 @@
               </ion-button>
           </div>
         </ion-col>
-        <ion-col size="9"></ion-col>
+        <ion-col size="5"></ion-col>
+        <ion-col size="4">
+          <span class="date-grey">
+            {{ today | date: "dd/MM/yyy" }}
+          </span>
+        </ion-col>
       </ion-row>
       <br>
       
       <ion-row size="12">
-        <ion-col size="1">
+        <ion-col size="3">
           <img src="./assets/icon/ilustracion_refrigeradores.png" alt="Refrigerador" />
         </ion-col>
-        <ion-col size="11" class="ion-align-self-center">
-          <h3 class="title">REFRIS</h3>
+        <ion-col size="9" class="ion-align-self-center">
+          <h3 class="title">REFRIGERADOR</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
     <br>
     <ion-grid>
       <ion-row size="12" *ngIf="user" >
-        <ion-col size="9">
+        <ion-col size="12">
           <h5 class="subtitle-negro">{{nameBranch}}</h5>
-        </ion-col>
-        <ion-col size="3">
-          <span class="date-grey">
-            {{ today | date: "dd/MM/yyy" }}
-          </span>
         </ion-col>
       </ion-row>
 
@@ -106,6 +106,7 @@
         </ion-row>
         <ion-row size="12">
           <ion-col size="6">
+            <br><br><br>
             <ion-label>FOTOGRAFIA</ion-label>
             <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(index)">
               <div style="margin-top: 2rem">
@@ -125,7 +126,7 @@
           <ion-col size="6">
             <!-- fotos sin id -->
             <ion-row>
-              <ion-col size="3" *ngFor="let photo of item.photoFridgeSalons; index as position">
+              <ion-col size="6" *ngFor="let photo of item.photoFridgeSalons; index as position">
                 <!-- se mostara esta imagen si no tiene id  -->
                 <ion-img *ngIf="photo.id === 0" src="{{ base64 }},{{ photo.photo }}"
                   (click)="showActionSheet(photo, position, index)">

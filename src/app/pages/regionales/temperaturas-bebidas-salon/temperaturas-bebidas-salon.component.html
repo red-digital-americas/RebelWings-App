@@ -13,15 +13,20 @@
               </ion-button>
           </div>
         </ion-col>
-        <ion-col size="9"></ion-col>
+        <ion-col size="5"></ion-col>
+        <ion-col size="4">
+          <span class="date-grey">
+            {{ today | date: "dd/MM/yyy" }}
+          </span>
+        </ion-col>
       </ion-row>
       <br>
       
       <ion-row size="12">
-        <ion-col size="1">
+        <ion-col size="3">
           <img src="./assets/icon/botella.png" alt="" />
         </ion-col>
-        <ion-col size="11" class="ion-align-self-center">
+        <ion-col size="9" class="ion-align-self-center">
           <h3 class="title">TEMPERATURA</h3>
         </ion-col>
       </ion-row>
@@ -29,13 +34,8 @@
     <br>
     <ion-grid>
       <ion-row size="12" *ngIf="user" >
-        <ion-col size="9">
+        <ion-col size="12">
           <h5 class="subtitle-negro">{{nameBranch}}</h5>
-        </ion-col>
-        <ion-col size="3">
-          <span class="date-grey">
-            {{ today | date: "dd/MM/yyy" }}
-          </span>
         </ion-col>
       </ion-row>
 
@@ -76,7 +76,7 @@
 
         <ion-col size="6">
           <ion-row>
-            <ion-col size="3" *ngFor="let photo of data.photoDrinksTemperatures; index as position">
+            <ion-col size="6" *ngFor="let photo of data.photoDrinksTemperatures; index as position">
               <!-- imagene en storage -->
               <ion-img *ngIf="photo.id === 0 && photo.type === 1" src="{{ base64 }},{{ photo.photo }}"
                 (click)="showActionSheet(photo, position)">
@@ -114,7 +114,7 @@
         <ion-col size="6"></ion-col>
         <ion-col size="6">
           <ion-row>
-            <ion-col size="3" *ngFor="let photo of data.photoDrinksTemperatures; index as position">
+            <ion-col size="6" *ngFor="let photo of data.photoDrinksTemperatures; index as position">
               <!-- imagene en storage -->
               <ion-img *ngIf="photo.id === 0 && photo.type === 2" src="{{ base64 }},{{ photo.photo }}"
                 (click)="showActionSheet(photo, position)">
@@ -136,23 +136,23 @@
         <!-- 5 toggle de bebidas -->
         <ion-col size="6">
           <ion-row size="12" class="ion-align-self-center">
-            <ion-col size="4">
+            <ion-col size="6">
               <span>BEBIDA 1</span><br>
               <ion-toggle [(ngModel)]="data.drinkOne"></ion-toggle>
             </ion-col>
-            <ion-col size="4">
+            <ion-col size="6">
               <span>BEBIDA 2</span><br>
               <ion-toggle [(ngModel)]="data.drinkTwo"></ion-toggle>
             </ion-col>
-            <ion-col size="4">
+            <ion-col size="6">
               <span>BEBIDA 3</span><br>
               <ion-toggle [(ngModel)]="data.drinkThree"></ion-toggle>
             </ion-col>
-            <ion-col size="4">
+            <ion-col size="6">
               <span>BEBIDA 4</span><br>
               <ion-toggle [(ngModel)]="data.drinkFour"></ion-toggle>
             </ion-col>
-            <ion-col size="4">
+            <ion-col size="6">
               <span>BEBIDA 5</span><br>
               <ion-toggle [(ngModel)]="data.drinkFive"></ion-toggle>
             </ion-col>
@@ -173,7 +173,7 @@
 
         <ion-col size="6">
           <ion-row>
-            <ion-col size="3" *ngFor="let photo of data.photoDrinksTemperatures; index as position">
+            <ion-col size="6" *ngFor="let photo of data.photoDrinksTemperatures; index as position">
               <!-- imagene en storage -->
               <ion-img *ngIf="photo.id === 0 && photo.type === 3" src="{{ base64 }},{{ photo.photo }}"
                 (click)="showActionSheet(photo, position)">

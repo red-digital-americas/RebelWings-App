@@ -24,6 +24,8 @@ export class LevantamientoTicketComponent implements OnInit {
   public dataBranchLocate: any[] = [];
   public dataCategory: any[] = [];
 
+  public visibleGuardar = true;
+
   public nameBranch = '';
   public base64 = 'data:image/jpeg;base64';
   public disabled = false;
