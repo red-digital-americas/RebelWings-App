@@ -9,6 +9,7 @@ import {
 } from 'src/app/core/services/services/photo.service';
 import { ActionSheetController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
+import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class ResguardoPropinaComponent implements OnInit {
   public nameBranch = '';
   public dataBranch: any[] = [];
   public createDate = '';
+  public visibleGuardar = true;
 
 
   constructor(
@@ -44,7 +46,8 @@ export class ResguardoPropinaComponent implements OnInit {
     public load: LoaderComponent,
     public actionSheetController: ActionSheetController,
     public photoService: PhotoService,
-    public datepipe: DatePipe
+    public datepipe: DatePipe,
+    public alertController: AlertController
 
   ) { }
   ionViewWillEnter() {
@@ -52,8 +55,8 @@ export class ResguardoPropinaComponent implements OnInit {
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idPropina = this.routerActive.snapshot.paramMap.get('id');
     // get nema de sucursal
-    this.branchId = this.routerActive.snapshot.paramMap.get('id');
-    //this.getBranch();
+    this.branchId = this.user.branchId;
+    this.getBranch();
     if (this.idPropina === '0') {
       console.log('Completar la tarea');
       this.activeData = true;
@@ -192,37 +195,34 @@ export class ResguardoPropinaComponent implements OnInit {
     await actionSheet.present();
   }
 
+  async alertCampos(){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'CAMPOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN CARGADOS CORRECTAMENTE',
+      mode: 'ios',
+      buttons: ['OK'],
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+
+}
+
   validateSave() {
-    if (
-      this.data.amount === 0 ||
-      this.data.amount === undefined ||
-      this.data.amount === null
-    ) {
-      this.activeAmount = true;
-    } else {
-      this.activeAmount = false;
+    if(this.data.amount == 0 || this.data.amount == undefined || this.data.amount == null || this.data.comment == "" || this.data.comment == undefined || this.data.comment == null || this.data.photoTips.length == 0){
+      this.alertCampos();
     }
-    if (
-      this.data.comment === '' ||
-      this.data.comment === undefined ||
-      this.data.comment === null
-    ) {
-      this.activeComment = true;
-    } else {
-      this.activeComment = false;
-    }
-    if (
-      this.data.amount === 0 ||
-      this.data.amount === undefined ||
-      this.data.comment === '' ||
-      this.data.comment === undefined
-    ) {
-      return;
-    } else {
+    else{
+      this.visibleGuardar = false;
       this.save();
     }
+   
   }
   save() {
+    this.load.presentLoading('Guardando..');
     this.disabled = true;
     this.fotosPropina = [];
     // esto se pone aqui por que aun no se estrae la data de un get

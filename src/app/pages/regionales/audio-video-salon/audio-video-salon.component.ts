@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
+import { AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-audio-video-salon',
   templateUrl: './audio-video-salon.component.html',
@@ -17,8 +18,12 @@ export class AudioVideoSalonComponent implements OnInit {
   public nameBranch = '';
   public disabled = false;
   public activeData = false;
+
+  public visibleGuardar = true;
+
   constructor(public router: Router,
     public routerActive: ActivatedRoute,
+    public alertController: AlertController,
     public service: ServiceGeneralService,
     public load: LoaderComponent,
   ) { }
@@ -27,7 +32,7 @@ export class AudioVideoSalonComponent implements OnInit {
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.branchId = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
-    this.getBranch();
+    this.getBranch(this.user.stateId);
 
   }
   ngOnInit() { }
@@ -67,17 +72,17 @@ export class AudioVideoSalonComponent implements OnInit {
     this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
   }
   // get  name sucursal
-  getBranch() {
+  getBranch(id) {
     let branchIdNumber = 0;
     branchIdNumber = Number(this.branchId);
     console.log('branchIdNumber', branchIdNumber);
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+    this.service.serviceGeneralGet(`User/GetSucursalList?idState=${id}`).subscribe(resp => {
       if (resp.success) {
         this.dataBranch = resp.result;
         console.log('get branch', this.dataBranch);
         this.dataBranch.forEach(element => {
-          if (element.branchId === branchIdNumber) {
-            this.nameBranch = element.branchName;
+          if (element.idfront === branchIdNumber) {
+            this.nameBranch = element.titulo;
             this.nameBranch = this.nameBranch.toUpperCase();
             console.log('nombre', this.nameBranch);
           }
@@ -86,6 +91,14 @@ export class AudioVideoSalonComponent implements OnInit {
     });
   }
   save() {
+    if(this.data.commentSpeakersWorkProperly === "" || this.data.commentTerraceSpeakersWorkProperly === "" || this.data.commentTerraceTvWorksProperly === "" || this.data.commentTvWorksProperly === ""
+    || this.data.commentSpeakersWorkProperly === null || this.data.commentTerraceSpeakersWorkProperly === null || this.data.commentTerraceTvWorksProperly === null || this.data.commentTvWorksProperly === null
+    || this.data.commentSpeakersWorkProperly === undefined || this.data.commentTerraceSpeakersWorkProperly === undefined || this.data.commentTerraceTvWorksProperly === undefined || this.data.commentTvWorksProperly === undefined){
+     this.alertCampos();
+    }
+    else{
+    this.load.presentLoading('Guardando..');
+    this.visibleGuardar = false;
     this.disabled = true;
     // esto se pone aqui por que aun no se estrae la data de un get
     this.data.branchId = this.branchId;
@@ -97,10 +110,13 @@ export class AudioVideoSalonComponent implements OnInit {
     } else {
       this.updateVideo();
     }
+   }
   }
+
   levantamientoTicket() {
     this.router.navigateByUrl('regional/levantamiento-ticket/' + this.branchId);
   }
+
   addVideo() {
     this.data.createdBy = this.user.id;
     this.data.createdDate = this.today;
@@ -111,7 +127,12 @@ export class AudioVideoSalonComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
+          if(this.data.speakersWorkProperly === false || this.data.terraceSpeakersWorkProperly === false || this.data.terraceTvWorksProperly === false || this.data.tvWorksProperly === false){
+            this.levantamientoTicket();
+          }
+          else{
           this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+          }
         }
       });
   }
@@ -123,10 +144,32 @@ export class AudioVideoSalonComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
+          if(this.data.speakersWorkProperly === false || this.data.terraceSpeakersWorkProperly === false || this.data.terraceTvWorksProperly === false || this.data.tvWorksProperly === false){
+            this.levantamientoTicket();
+          }
+          else{
           this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+          }
         }
       });
   }
+
+  async alertCampos(){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'CAMPOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN CARGADOS CORRECTAMENTE',
+      mode: 'ios',
+      buttons: ['OK'],
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+
+  }
+
 }
 class PrecookedChickenModel {
   id: number;

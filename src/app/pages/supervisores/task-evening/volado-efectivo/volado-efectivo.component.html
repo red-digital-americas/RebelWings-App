@@ -4,7 +4,7 @@
     <ion-grid>
 
       <ion-row size="12">
-        <ion-col size="1">
+        <ion-col size="3">
           <div>
             <!-- <p (click)="return()" class="ion-align-items-start return">
               < REGRESAR</p> -->
@@ -13,8 +13,9 @@
               </ion-button>
           </div>
         </ion-col>
-        <ion-col size="11"></ion-col>
+        <ion-col size="9"></ion-col>
       </ion-row>
+      <br>
       
       <ion-row size="12">
         <ion-col size="1">
@@ -24,7 +25,7 @@
           />
         </ion-col>
         <ion-col size="11" class="ion-align-self-center">
-          <h3 class="title">VOLADO DE EFECTIVO</h3>
+          <h3 class="title">VOLADO</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -37,11 +38,10 @@
     <ion-grid>
       <!-- titulo de empresa -->
       <ion-row size="12" *ngIf="user" >
-        <ion-col size="4">
+        <ion-col size="9">
           <h5 class="subtitle-negro">{{user.branchName}}</h5>
         </ion-col>
-        <ion-col size="7"></ion-col>
-        <ion-col size="1">
+        <ion-col size="3">
           <span class="date-grey">
             {{ today | date: "dd/MM/yyy" }}
           </span>
@@ -59,7 +59,7 @@
         <ion-col size="4">
           <span class="valueVolado">
            Actualmente hay  <b>
-             {{ voladoEfectivo.message | currency}} MXN
+             {{ voladoEfectivo.message | currency}}
            </b>
            
           </span>

@@ -5,13 +5,14 @@ ion-header {
   color: white;
 }
 .color-text-white-c {
-  color: white;
+  color: gold;
   font-size: 200%;
 }
 
 .title-red {
   color: #ad182d;
   font-size: 250%;
+  
 }
 .title-red2 {
   color: #ad182d;
@@ -32,6 +33,16 @@ ion-header {
 
 .align-end-text {
   text-align: end;
+}
+.align-items-start{
+  align-items: start;
+  vertical-align: bottom;
+}
+.align-end-item{
+  text-align: end;
+  margin-bottom: 0px;
+  font-size: 50px;
+  justify-items: center;
 }
 .return {
   color: #d0122d;

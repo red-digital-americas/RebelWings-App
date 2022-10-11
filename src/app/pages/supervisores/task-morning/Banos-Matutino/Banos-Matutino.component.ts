@@ -9,6 +9,7 @@ import {
 } from 'src/app/core/services/services/photo.service';
 import { ActionSheetController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
+import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class BanosMatutinoComponent implements OnInit {
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
   public activeData = false;
   public createDate = '';
+  public visibleGuardar = true;
 
 
 
@@ -40,6 +42,7 @@ export class BanosMatutinoComponent implements OnInit {
     public load: LoaderComponent,
     public actionSheetController: ActionSheetController,
     public photoService: PhotoService,
+    public alertController: AlertController,
     public datepipe: DatePipe
 
   ) { }
@@ -126,6 +129,22 @@ export class BanosMatutinoComponent implements OnInit {
     await actionSheet.present();
   }
 
+  async alertCampos(){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'CAMPOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN CARGADOS CORRECTAMENTE',
+      mode: 'ios',
+      buttons: ['OK'],
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+
+}
+
   //eliminar imagenes bd
   public async deleteImgShowAction(id) {
     const actionSheet = await this.actionSheetController.create({
@@ -192,21 +211,29 @@ export class BanosMatutinoComponent implements OnInit {
   }
 
   save() {
-    this.disabled = true;
-    this.fotosBanos = [];
-    if (this.data.photoBanosMatutinos.length !== 0) {
-      this.data.photoBanosMatutinos.forEach((photo) => {
-        if (photo.id !== 0) {
-          photo.photoPath = '';
-        }
-      });
+    
+    if(this.data.comment == undefined || this.data.comment == null || this.data.comment == "" || this.data.photoBanosMatutinos.length == 0){
+       this.alertCampos();
     }
-    this.data.branch = this.user.branchId;
-    this.formartDate();
-    // if (this.branchId === '0') {
-    // } else {
-    //   this.updateSAlon();
-    // }
+    else{
+      this.load.presentLoading('Guardando..');
+      this.visibleGuardar = false;
+      this.disabled = true;
+      this.fotosBanos = [];
+      if (this.data.photoBanosMatutinos.length !== 0) {
+        this.data.photoBanosMatutinos.forEach((photo) => {
+          if (photo.id !== 0) {
+            photo.photoPath = '';
+          }
+        });
+      }
+      this.data.branch = this.user.branchId;
+      this.formartDate();
+      // if (this.branchId === '0') {
+      // } else {
+      //   this.updateSAlon();
+      // }
+    }
   }
   addBanos() {
     this.data.createdBy = this.user.id;

@@ -12,7 +12,7 @@ import { LogoutComponent } from '../../popover/logout/logout.component';
   styleUrls: ['./centro-control.component.scss'],
 })
 export class CentroControlComponent implements OnInit {
-  public user: any;
+  public user;
   public data: any[] = [];
   public barProgressTask: number;
   public color: string;
@@ -22,6 +22,7 @@ export class CentroControlComponent implements OnInit {
   public nameBranch = '';
   // variable menu seleccionable
   public task;
+  public ValMenu = 0;
 
   constructor(
     public router: Router, public routerActive: ActivatedRoute,
@@ -38,7 +39,7 @@ export class CentroControlComponent implements OnInit {
 
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
-    console.log('user', this.user);
+    console.log('user', this.user.name);
     console.log(this.routerActive.snapshot.paramMap.get(`id`));
     this.branchId = this.routerActive.snapshot.paramMap.get(`id`);
     this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
@@ -46,10 +47,14 @@ export class CentroControlComponent implements OnInit {
     this.getBranch(this.user.stateId);
     this.getNotification();
   }
-  ngOnInit() { }
+  ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('userData'));
+   }
+  
   // obtiene el estatus de cada tarea
   getDataControl(task) {
-    // this.load.presentLoading('Cargando..');
+    
+    this.load.presentLoading('Cargando..');
     this.service
       .serviceGeneralGet(`ControlCenter/${this.branchId}/${task}/Regional`)
       .subscribe((resp) => {
@@ -66,6 +71,8 @@ export class CentroControlComponent implements OnInit {
             this.color = 'warning';
           }
           console.log('control vespertino', resp.result);
+          this.ValMenu = task;
+          console.log('valmenu', this.ValMenu);
         }
       });
     
@@ -147,124 +154,172 @@ export class CentroControlComponent implements OnInit {
   }
   //----------------------tareas de cocina---------------------
   ordenCocina() {
+    if(this.data[0].isComplete == false){
     // if (id === null) {
     //   id = 0;
     // }
     this.router.navigateByUrl('regional/ordenes/' + this.branchId);
+    }
   }
   refrigeradorCocina() {
+    if(this.data[1].isComplete == false){
     // if (id === null) {
     //   id = 0;
     // }
     this.router.navigateByUrl('regional/refrigeradores-cocina/' + this.branchId);
+    }
   }
   polloPrecoccionCocina() {
+    if(this.data[2].isComplete == false){
     // if (id === null) {
     //   id = 0;
     // }
     this.router.navigateByUrl('regional/pollo-precoccion/' + this.branchId);
+    }
   }
   productosCompletosCocina() {
+    if(this.data[3].isComplete == false){
     // if (id === null) {
     //   id = 0;
     // }
     this.router.navigateByUrl('regional/productos-completos-orden/' + this.branchId);
+    }
   }
   limpiezaFreidorasCocina() {
+    if(this.data[4].isComplete == false){
     // if (id === null) {
     //   id = 0;
     // }
     this.router.navigateByUrl('regional/limpieza-freidoras/' + this.branchId);
+    }
   }
   //----------------------tareas de salon---------------------
   conteoPersonasSalon() {
+    if(this.data[0].isComplete == false){
     // if (id === null) {
     //   id = 0;
     // }
     this.router.navigateByUrl('regional/conteo-personas/' + this.branchId);
+    }
   }
   encuestaSalon() {
+    if(this.data[1].isComplete == false){
     // if (id === null) {
     //   id = 0;
     // }
     this.router.navigateByUrl('regional/encuesta/' + this.branchId);
+    }
   }
   limpiezaGeneralSalon() {
+    if(this.data[2].isComplete == false){
     // if (id === null) {
     //   id = 0;
     // }
     this.router.navigateByUrl('regional/limpieza-general/' + this.branchId);
+    }
   }
   estacionSalon() {
+    if(this.data[3].isComplete == false){
     // if (id === null) {
     //   id = 0;
     // }
     this.router.navigateByUrl('regional/estacion/' + this.branchId);
+    }
   }
   temperaturaBebidaSalon() {
+    if(this.data[4].isComplete == false){
     // if (id === null) {
     //   id = 0;
     // }
     this.router.navigateByUrl('regional/temperatura-bebidas/' + this.branchId);
+    }
   }
   audioVideoSalon() {
+    if(this.data[5].isComplete == false){
     // if (id === null) {
     //   id = 0;
     // }
     this.router.navigateByUrl('regional/audio-video/' + this.branchId);
+    }
   }
   focosSalon() {
+    if(this.data[6].isComplete == false){
     // if (id === null) {
     //   id = 0;
     // }
     this.router.navigateByUrl('regional/focos/' + this.branchId);
+    }
   }
   limpiezaBarraSalon() {
+    if(this.data[7].isComplete == false){
     // if (id === null) {
     //   id = 0;
     // }
     this.router.navigateByUrl('regional/limpieza-barra/' + this.branchId);
+    }
   }
   refrigeradoresSalon() {
+    if(this.data[8].isComplete == false){
     // if (id === null) {
     //   id = 0;
     // }
     this.router.navigateByUrl('regional/refrigeradores-salon/' + this.branchId);
+    }
   }
 
   //---------------------- baño---------------------
 
   lavabosBano() {
+    if(this.data[1].isComplete == false){
     this.router.navigateByUrl('regional/lavabos-jabon-papel/' + this.branchId);
+    }
   }
   estadoGeneral() {
+    if(this.data[0].isComplete == false){
     this.router.navigateByUrl('regional/estado-general/' + this.branchId);
+    }
   }
   //---------------------- sistema y caja---------------------
   ticketMesa() {
+    if(this.data[0].isComplete == false){
     this.router.navigateByUrl('regional/ticket-mesa/' + this.branchId);
+    }
   }
   entradasCargadas() {
+    if(this.data[1].isComplete == false){
     this.router.navigateByUrl('regional/entradas-cargadas/' + this.branchId);
+    }
   }
   revisionPedido() {
+    if(this.data[2].isComplete == false){
     this.router.navigateByUrl('regional/revision-pedido/' + this.branchId);
+    }
   }
   revisionMesas() {
+    if(this.data[3].isComplete == false){
     this.router.navigateByUrl('regional/revision-mesas/' + this.branchId);
+    }
   }
   //---------------------- MANTENIMIENTO---------------------
   cocinaMantenimiento() {
+    if(this.data[0].isComplete == false){
     this.router.navigateByUrl('regional/cocina-mantenimiento/' + this.branchId);
+    }
   }
   salonMantenimiento() {
+    if(this.data[1].isComplete == false){
     this.router.navigateByUrl('regional/salon-mantenimiento/' + this.branchId);
+    }
   }
   banosMantenimiento() {
+    if(this.data[2].isComplete == false){
     this.router.navigateByUrl('regional/baño-mantenimiento/' + this.branchId);
+    }
   }
   barraMantenimiento() {
+    if(this.data[3].isComplete == false){
     this.router.navigateByUrl('regional/barra-mantenimiento/' + this.branchId);
+    }
   }
   async cerrarSesion() {
     console.log('cerrar sesion');

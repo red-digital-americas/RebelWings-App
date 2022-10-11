@@ -3,11 +3,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
+import { AlertController } from '@ionic/angular';
 import {
   UserPhoto,
   PhotoService,
 } from 'src/app/core/services/services/photo.service';
 import { ActionSheetController } from '@ionic/angular';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { flush } from '@angular/core/testing';
 
 @Component({
   selector: 'app-lavabos-jabon-papel-banos',
@@ -29,10 +32,14 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
   public activeData = false;
   public toggleChicken = true;
+
+  public visibleGuardar = true;
+
   constructor(public router: Router,
     private camera: Camera,
     public routerActive: ActivatedRoute,
     public service: ServiceGeneralService,
+    public alertController: AlertController,
     public load: LoaderComponent,
     public actionSheetController: ActionSheetController,
     public photoService: PhotoService) { }
@@ -43,7 +50,7 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
     console.log('user', this.user);
     this.branchId = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
-    this.getBranch();
+    this.getBranch(this.user.stateId);
   }
   ngOnInit() {}
 
@@ -76,18 +83,23 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
     // window.history.back();
     this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/3`);
   }
+
+  levantamientoTicket() {
+    this.router.navigateByUrl('regional/levantamiento-ticket/' + this.branchId);
+  }
+
   // get  name sucursal
-  getBranch() {
+  getBranch(id) {
     let branchIdNumber = 0;
     branchIdNumber = Number(this.branchId);
     console.log('branchIdNumber', branchIdNumber);
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+    this.service.serviceGeneralGet(`User/GetSucursalList?idState=${id}`).subscribe(resp => {
       if (resp.success) {
         this.dataBranch = resp.result;
         console.log('get branch', this.dataBranch);
         this.dataBranch.forEach(element => {
-          if (element.branchId === branchIdNumber) {
-            this.nameBranch = element.branchName;
+          if (element.idfront === branchIdNumber) {
+            this.nameBranch = element.titulo;
             this.nameBranch = this.nameBranch.toUpperCase();
             console.log('nombre', this.nameBranch);
           }
@@ -95,11 +107,12 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
       }
     });
   }
-  // eliminar indice de orden
-  async addPhotoToGallery() {
+  // agregar fotos de limpieza de salon
+  async addPhotoToGallery(idType: number) {
     const name = new Date().toISOString();
     await this.photoService.addNewToGallery();
     await this.photoService.loadSaved();
+    // agregaremos las fotos pero con id type de acuerdo al caso
     // al agregar las fotos en storage, las pasamos por lista
     console.log('obj fotos', this.photoService);
     this.data.photoWashBasinWithSoapPapers.push({
@@ -107,13 +120,13 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
       washbasinWithSoapPaperId: this.data.id,
       photo: this.photoService.photos[0].webviewPath,
       photoPath: 'jpeg',
+      type: idType,
       createdBy: this.user.id,
       createdDate: this.today,
       updatedBy: this.user.id,
       updatedDate: this.today,
     });
-    // this.fotosRefrigerador = this.photoService.photos;
-    console.log('fotos refrigerador', this.data);
+    console.log('fotos chicken', this.data);
   }
   // eliminacion de images en storage
   public async showActionSheet(photo, position: number) {
@@ -179,6 +192,12 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
     await actionSheet.present();
   }
   save() {
+    if(this.data.commentSoapPaper === "" || this.data.commentSoapPaper === null  || this.data.commentSoapPaper === undefined || this.data.commentDryer === "" || this.data.commentDryer === null  || this.data.commentDryer === undefined || this.data.photoWashBasinWithSoapPapers.length < 2){
+     this.alertCampos();
+    }
+    else{
+    this.load.presentLoading('Guardando..');
+    this.visibleGuardar = false;
     this.data.branchId = this.branchId;
     this.data.updatedBy = this.user.id;
     this.data.updatedDate = this.today;
@@ -190,6 +209,7 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
     } else {
       this.updateData();
     }
+  }
   }
   addData() {
     this.data.createdBy = this.user.id;
@@ -227,12 +247,31 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
         }
       });
   }
+
+  async alertCampos(){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'CAMPOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN CARGADOS CORRECTAMENTE',
+      mode: 'ios',
+      buttons: ['OK'],
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+
+  }
+
 }
 class WashBasinModel {
   id: number;
   branchId: number;
   isThereSoapPaper: boolean;
-  comment: string;
+  isThereDryer: boolean;
+  commentSoapPaper: string;
+  commentDryer: string;
   createdBy: number;
   createdDate: Date;
   updatedBy: number;
@@ -244,6 +283,7 @@ class PhotoWashBasinModel {
   washbasinWithSoapPaperId: number;
   photo: string;
   photoPath: string;
+  type: number;
   createdBy: number;
   createdDate: Date;
   updatedBy: number;

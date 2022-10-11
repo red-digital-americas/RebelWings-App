@@ -2,30 +2,37 @@
   <!-- data -->
   <ion-header *ngIf="data?.length !== 0" class="ion-no-border ion-padding">
     <ion-grid>
-      <ion-row>
-        <ion-col>
+
+      <ion-row size="12">
+        <ion-col size="3">
           <div>
-            <p (click)="return()" class="ion-align-items-start return">
-              < REGRESAR </p>
+            <!-- <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR</p> -->
+              <ion-button *ngIf="this.visibleGuardar === true" (click)="return()" shape="round" color="warning" expand="full" size="small">
+                REGRESAR
+              </ion-button>
           </div>
         </ion-col>
+        <ion-col size="5"></ion-col>
+        <ion-col size="4">
+          <span class="date-grey">
+            {{ today | date: "dd/MM/yyy" }}
+          </span>
+        </ion-col>
       </ion-row>
+
+
       <ion-row size="12">
-        <ion-col size="1">
+        <ion-col size="3">
           <img src="./assets/icon/ilustracion_ticket.png" alt="Validaccion de assistencia" />
         </ion-col>
-        <ion-col size="11" class="ion-align-self-center">
+        <ion-col size="9" class="ion-align-self-center">
           <h3 class="title">HISTORIAL DE TICKETS</h3>
         </ion-col>
       </ion-row>
       <ion-row size="12">
-        <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
-        </ion-col>
-        <ion-col size="8">
-          <span class="date-grey">
-            {{ today | date: "dd MMM yyy" }}
-          </span>
+        <ion-col size="12">
+          <h5 class="subtitle-negro">{{nameBranch}}</h5>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -33,11 +40,11 @@
   <ion-content *ngIf="data?.length !== 0" fullscreen="false" class="ion-padding">
     <ion-list>
       <ion-list-header class="center" color="warning" lines="inset">
-        <ion-label>Número de Ticket</ion-label>
-        <ion-label>Regional</ion-label>
-        <ion-label>Estatus</ion-label>
-        <ion-label>Abierto</ion-label>
-        <ion-label>Cerrado</ion-label>
+        <ion-label>ID</ion-label>
+        <ion-label>SOLICITANTE</ion-label>
+        <ion-label>ESTATUS</ion-label>
+        <ion-label>FECHA</ion-label>
+        <ion-label>CERADO</ion-label>
       </ion-list-header>
       <ion-item class="center" *ngFor="let item of data" (click)="openTicket(item.id)">
         <ion-label (click)="openTicket(item.id)" color="danger">

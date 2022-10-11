@@ -3,7 +3,7 @@
     <ion-grid>
 
       <ion-row size="12">
-        <ion-col size="1">
+        <ion-col size="3">
           <div>
             <!-- <p (click)="return()" class="ion-align-items-start return">
               < REGRESAR</p> -->
@@ -12,8 +12,9 @@
               </ion-button>
           </div>
         </ion-col>
-        <ion-col size="11"></ion-col>
+        <ion-col size="9"></ion-col>
       </ion-row>
+      <br>
       
       <ion-row size="12">
         <ion-col size="1">
@@ -22,17 +23,15 @@
         
         <ion-col size="11" class="ion-align-self-center">
           
-          <h3 class="title">INVENTARIOS DIARIOS</h3>
+          <h3 class="title">INVENTARIOS</h3>
         </ion-col>
       </ion-row>
-      <ion-row size="12" *ngIf="user">
-        
-        <ion-col size="4">
-          <br>
+      <!-- titulo de empresa -->
+      <ion-row size="12" *ngIf="user" >
+        <ion-col size="9">
           <h5 class="subtitle-negro">{{user.branchName}}</h5>
         </ion-col>
-        <ion-col size="7"></ion-col>
-        <ion-col size="1">
+        <ion-col size="3">
           <span class="date-grey">
             {{ today | date: "dd/MM/yyy" }}
           </span>
@@ -44,49 +43,49 @@
     <ion-grid>
 
       <ion-row size="12">
-        <ion-col size="2" class="ion-align-self-center">
+        <ion-col size="3" class="ion-align-self-center">
           <span>PRODUCTO:</span>
         </ion-col>
         <ion-col size="3" class="ion-align-self-center">
-          <span>INGRESA LA CANTIDAD FISICA INVENTARIADA:</span>
+          <span>UDS:</span>
         </ion-col>
         <ion-col size="6" class="ion-align-self-center"></ion-col>
       </ion-row>
       <br>
       <div *ngIf="data !== []">
         <ion-row size="12" class="my-3" *ngFor="let item of data;  let i=index;">
-          <ion-col size="2" class="ion-align-self-center">
+          <ion-col size="3" class="ion-align-self-center">
             <ion-label floating>{{item.descripcion}}</ion-label>
           </ion-col>
-          <ion-col size="4">
+          <ion-col size="3">
             <ion-row size="12">
-              <ion-col size="10" class="ion-align-self-center">
+              <ion-col size="9" class="ion-align-self-center">
                 <ion-card class="closed">
-                  <ion-input [(ngModel)]="item.cantidad" type="number" min="0" required placeholder="Cantidad">
+                  <ion-input [(ngModel)]="item.cantidad" type="number" min="0" required placeholder="UDS" [disabled]="this.validado[i] === false">
                   </ion-input>
                 </ion-card>
               </ion-col>
-              <ion-col size="2" class="ion-align-self-center">
+              <ion-col size="3" class="ion-align-self-center">
                 <span> {{item.unidadmedida}}</span>
               </ion-col>
             </ion-row>
             <!-- <ion-label style="color: #ad182d; font-size: 12px" *ngIf="activeAmount">Campo requerido</ion-label> -->
           </ion-col>
-          <ion-col size="2" class="ion-align-self-center">
-            <ion-button (click)="validarCantidad(item, i)" shape="round" color="warning" expand="full" >
+          <ion-col size="3" class="ion-align-self-center">
+            <ion-button (click)="validarCantidad(item, i)" shape="round" color="warning" expand="full" [disabled]="this.validado[i] === false">
               Validar
             </ion-button>
           </ion-col>
-          <ion-col size="2" class="ion-align-self-center">
+          <!-- <ion-col size="2" class="ion-align-self-center">
             <span *ngIf="data.status === 'update'">Hay una diferencia de {{item.diferencia}} {{item.unidadessat}} entre
               el sistema de Gestión de
               Restaurantes e
               ICG</span>
             <span *ngIf="data.status! === 'post'">Cantidad Permitida</span>
-          </ion-col>
+          </ion-col> -->
 
-          <ion-col size="2" class="ion-align-self-center">
-            <ion-button (click)="save(item)" shape="round" color="danger" expand="full" [disabled]="this.contador[i] != '3'">
+          <ion-col size="3" class="ion-align-self-center">
+            <ion-button (click)="save(item,i)" shape="round" color="danger" expand="full" [disabled]="this.contador[i] !== 3 ">
               Guardar
             </ion-button>
           </ion-col>

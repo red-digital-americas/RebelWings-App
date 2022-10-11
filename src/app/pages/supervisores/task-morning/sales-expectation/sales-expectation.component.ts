@@ -7,6 +7,7 @@ import { DialogAddPackageComponent } from '../../dialog/dialog-add-package/dialo
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import { DialogUpdateStockPolloComponent } from '../../dialog/dialog-update-stock-pollo/dialog-update-stock-pollo.component';
 import { AlertController } from '@ionic/angular';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-sales-expectation',
@@ -22,6 +23,7 @@ export class SalesExpectationComponent implements OnInit {
   public idSucursal: string;
   public disabled = false;
   public data;
+  public validado : boolean[] = [];
   public contador: number[] = [];
   handlerRespMessage = '';
   handlerRespValor;
@@ -39,12 +41,22 @@ export class SalesExpectationComponent implements OnInit {
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idSucursal = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
+    console.log('user: ', this.user);
+    
   }
   ngOnInit() { }
+  
+  validaO(i){
+     if(this.contador[i] >= 3 ){
+          this.validado[i]= false;
+     }
+     else{
+      this.validado[i]= true;
+     }
 
+  }
   
   getData() {
-
     this.load.presentLoading('Cargando..');
     this.service
       .serviceGeneralGet(`StockChicken/GetStock?id_sucursal=${this.user.branch}&dataBase=${this.user.dataBase}`)
@@ -56,6 +68,7 @@ export class SalesExpectationComponent implements OnInit {
           });
           console.log(this.data);
         }
+        console.log('s ',resp.success);
       });
     console.log('sin data');
   }
@@ -93,7 +106,7 @@ export class SalesExpectationComponent implements OnInit {
         }
       });
   }
-  save(item) {
+  save(item,i) {
     this.service
       .serviceGeneralPostWithUrl(`StockChicken/AddRegularizate?codArticulo=${item.codarticulo}&codAlmacen=${item.codalmacen}&cantidad=${item.cantidad}&dataBase=${this.user.dataBase}`, ``)
       .subscribe((resp) => {
@@ -102,7 +115,7 @@ export class SalesExpectationComponent implements OnInit {
         if (resp.success) {
 
           this.load.presentLoading('Cantidad Permitida');
-          this.ngOnInit();
+          this.presentAlert(i);
           // this.data.status = 'post';
         }
       });
@@ -120,22 +133,37 @@ export class SalesExpectationComponent implements OnInit {
         if (resp.success) {
           // stock.diferencia
           stock.diferencia = respValidar.message;
+          
           this.openDialogValidarStock(stock,i);
           console.log('new valor permitida', stock);
+          
         }
         else {
           console.log('no hay diferencia', stock);
           this.contador[i] = 3;
+          console.log('cont', this.contador[i]);
+          this.validaO(i);
         }
       });
     console.log('sin data');
   }
   async openDialogValidarStock(nodo,i) {
+    if(isNaN(this.contador[i])){
+      this.contador[i] = 1;
+
+    }
+    else{
+    this.contador[i] += 1;
+    }
+    console.log('contador: ', this.contador[i]);
+    this.validaO(i);
+    
+    if(this.contador[i] < 3){
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'DIFERENCIA DE STOCK',
       // subHeader: `De: ${nodo.diferencia}`,
-      message: 'HAY UNA DIFERENCIA ENTRE EL STOCK Y TU CONTEO VALIDA LO SIGUIENTE: <BR><br>1.- ASEGURA QUE TU CONTEO FUE CORRECTO <BR>2.-REVISA QUE TODAS TUS COMPRAS ESTEN INGRESADAS EN SISTEMAS <BR>3.-VALIDA QUE TUS MERMAS ESTEN GUARDADAS CORRECTAMENTE.',
+      message: 'HAY UNA DIFERENCIA EN EL STOCK Y TU CONTEO: <BR><br>1.- CUENTA NUEVAMENTE TU STOCK <BR>2.-REVISA QUE TODAS TUS COMPRAS ESTEN CARGADAS EN EL SISTEMAS <BR>3.-REVISA QUE TUS MERMAS ESTEN CARGADAS CORRECTAMENTE',
       mode: 'ios', //sirve para tomar el diseño de ios
       buttons: [
         // {
@@ -151,20 +179,37 @@ export class SalesExpectationComponent implements OnInit {
         }
       ]
     });
+
     await alert.present();
     const { role } = await alert.onDidDismiss();
     this.handlerRespValor = role;
     console.log('onDidDismiss resolved with role', this.handlerRespValor);
-    if(isNaN(this.contador[i])){
-      this.contador[i] = 1;
+  }
 
-    }
-    else{
-    this.contador[i] += 1;
-    }
-    console.log('contador: ', this.contador[i]);
   }
   trackData(index, data) {
     return data ? data.id : undefined;
   }
+
+
+  async presentAlert(i) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'INVENTARIO',
+      message: 'SE REALIZO EL AJUSTE DE INVENTARIO CON EXITO. <BR>RECUERDA REINICIAR TU SISTEMA FRONTREST PARA QUE RECIBA EL AJUSTE.',
+      mode: 'ios',
+      buttons: ['OK'],
+    });
+  
+
+    await alert.present();
+      const { role } = await alert.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
+      this.contador[i] += 1;
+      this.validaO(i);
+      this.ngOnInit();
+  }
+  
+
 }

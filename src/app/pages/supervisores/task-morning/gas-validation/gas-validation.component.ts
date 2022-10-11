@@ -26,6 +26,7 @@ export class GasValidationComponent implements OnInit {
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
   public createDate = '';
   public radioValue = '1'; 
+  public visibleGuardar = true;
 
   
 
@@ -202,13 +203,28 @@ export class GasValidationComponent implements OnInit {
     }
   }
   validaInfra(){
-    if(this.radioValue === "2"){
-      this.presentAlert1();
-    }
-    if(this.data.amount < 40){
+
       this.presentAlert();
-    }
+
+
   }
+
+  async alertCampos(){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'CAMPOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN CARGADOS CORRECTAMENTE',
+      mode: 'ios',
+      buttons: ['OK'],
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+
+}
+
   save() {
     
     this.disabled = true;
@@ -263,37 +279,61 @@ export class GasValidationComponent implements OnInit {
   }
 
   async presentAlert() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'IMPORTANTE',
-      subHeader: 'PORCENTAJE DE GAS',
-      message: 'ESTAS DEBAJO DEL 40% <BR>SOLICITA TU RECARGA DE GAS!',
-      mode: 'ios',
-      buttons: ['OK'],
-    });
-  
-
-    await alert.present();
-      const { role } = await alert.onDidDismiss();
-      console.log('onDidDismiss resolved with role', role);
-      this.save();
-  }
-
-  async presentAlert1() {
+    if(this.radioValue === "2"){
+      this.visibleGuardar = false;
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'IMPORTANTE',
       subHeader: 'PAGOS',
-      message: 'VALIDAR QUE LOS PAGOS SE ENCUNETRAN <BR>AL CORRIENTE CON ADMINISTRACION!',
+      message: 'VALIDAR QUE LOS PAGOS SE ENCUENTREN <BR>AL CORRIENTE CON ADMINISTRACION!',
       mode: 'ios',
       buttons: ['OK'],
     });
   
+
     await alert.present();
       const { role } = await alert.onDidDismiss();
       console.log('onDidDismiss resolved with role', role);
+      this.load.presentLoading('Guardando..');
       this.save();
+    }
+    else{
+      if(this.data.comment == undefined || this.data.comment == null || this.data.comment == "" || this.data.amount == undefined || this.data.amount == null || this.data.photoValidationGas.length == 0){
+
+         this.alertCampos();
+
+      }
+      else{
+       
+        if(this.data.amount < 40 ){
+          this.visibleGuardar = false;
+          const alert = await this.alertController.create({
+            cssClass: 'my-custom-class',
+            header: 'IMPORTANTE',
+            subHeader: 'PORCENTAJE DE GAS',
+            message: 'ESTAS DEBAJO DEL 40% <BR>SOLICITA TU RECARGA DE GAS!',
+            mode: 'ios',
+            buttons: ['OK'],
+          });
+       
+     
+          await alert.present();
+           const { role } = await alert.onDidDismiss();
+           console.log('onDidDismiss resolved with role', role);
+           this.load.presentLoading('Guardando..');
+           this.save();
+          }
+        else{
+          this.visibleGuardar = false;
+          this.load.presentLoading('Guardando..');
+          this.save();
+        }
+
+      }
+    }
   }
+
+
 }
 
 

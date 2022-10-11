@@ -4,17 +4,18 @@
     <ion-grid>
 
       <ion-row size="12">
-        <ion-col size="1">
+        <ion-col size="3">
           <div>
             <!-- <p (click)="return()" class="ion-align-items-start return">
               < REGRESAR</p> -->
-              <ion-button (click)="return()" shape="round" color="warning" expand="full" size="small">
+              <ion-button *ngIf="this.visibleGuardar === true" (click)="return()" shape="round" color="warning" expand="full" size="small">
                 REGRESAR
               </ion-button>
           </div>
         </ion-col>
-        <ion-col size="11"></ion-col>
+        <ion-col size="9"></ion-col>
       </ion-row>
+      <br>
 
       <ion-row size="12">
         <ion-col size="1">
@@ -24,7 +25,7 @@
           />
         </ion-col>
         <ion-col size="11" class="ion-align-self-center">
-          <h3 class="title">RESGUARDO DE PROPINA</h3>
+          <h3 class="title">PROPINA</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -32,12 +33,11 @@
   <ion-content fullscreen="false" *ngIf="activeData === true" class="ion-padding">
     <ion-grid>
       <!-- titulo de empresa -->
-      <ion-row size="12">
-        <ion-col size="4">
-          <h5 class="subtitle-negro">{{nameBranch}}</h5>
+      <ion-row size="12" *ngIf="user" >
+        <ion-col size="9">
+          <h5 class="subtitle-negro">{{user.branchName}}</h5>
         </ion-col>
-        <ion-col size="7"></ion-col>
-        <ion-col size="1">
+        <ion-col size="3">
           <span class="date-grey">
             {{ today | date: "dd/MM/yyy" }}
           </span>
@@ -141,6 +141,7 @@
             shape="round"
             color="danger"
             expand="full"
+            *ngIf="this.visibleGuardar === true"
           >
             GUARDAR
           </ion-button>

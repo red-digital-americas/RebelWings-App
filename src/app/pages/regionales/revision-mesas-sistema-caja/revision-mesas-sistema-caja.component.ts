@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
+import { AlertController } from '@ionic/angular';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 @Component({
   selector: 'app-revision-mesas-sistema-caja',
@@ -18,8 +19,12 @@ export class RevisionMesasSistemaCajaComponent implements OnInit {
   public nameBranch = '';
   public disabled = false;
   public activeData = false;
+
+  public visibleGuardar = true;
+
   constructor(public router: Router,
     public routerActive: ActivatedRoute,
+    public alertController: AlertController,
     public service: ServiceGeneralService,
     public load: LoaderComponent,
   ) { }
@@ -29,7 +34,7 @@ export class RevisionMesasSistemaCajaComponent implements OnInit {
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.branchId = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
-    this.getBranch();
+    this.getBranch(this.user.stateId);
 
   }
   ngOnInit() { }
@@ -69,17 +74,17 @@ export class RevisionMesasSistemaCajaComponent implements OnInit {
     this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/4`);
   }
   // get  name sucursal
-  getBranch() {
+  getBranch(id) {
     let branchIdNumber = 0;
     branchIdNumber = Number(this.branchId);
     console.log('branchIdNumber', branchIdNumber);
-    this.service.serviceGeneralGet('StockChicken/Admin/All-Branch').subscribe(resp => {
+    this.service.serviceGeneralGet(`User/GetSucursalList?idState=${id}`).subscribe(resp => {
       if (resp.success) {
         this.dataBranch = resp.result;
         console.log('get branch', this.dataBranch);
         this.dataBranch.forEach(element => {
-          if (element.branchId === branchIdNumber) {
-            this.nameBranch = element.branchName;
+          if (element.idfront === branchIdNumber) {
+            this.nameBranch = element.titulo;
             this.nameBranch = this.nameBranch.toUpperCase();
             console.log('nombre', this.nameBranch);
           }
@@ -88,6 +93,16 @@ export class RevisionMesasSistemaCajaComponent implements OnInit {
     });
   }
   save() {
+    if(this.data.numTable === 0 || this.data.numTable === null || this.data.numTable === undefined
+      || this.data.commentProductFour === "" || this.data.commentProductOne === "" || this.data.commentProductThree === "" || this.data.commentProductTwo === ""
+      || this.data.commentProductFour === null || this.data.commentProductOne === null || this.data.commentProductThree === null || this.data.commentProductTwo === null
+      || this.data.commentProductFour === undefined || this.data.commentProductOne === undefined || this.data.commentProductThree === undefined || this.data.commentProductTwo === undefined){
+     this.alertCampos();
+
+    }
+    else{
+    this.load.presentLoading('Guardando..');
+    this.visibleGuardar = false;
     this.disabled = true;
     // esto se pone aqui por que aun no se estrae la data de un get
     this.data.branchId = this.branchId;
@@ -99,6 +114,7 @@ export class RevisionMesasSistemaCajaComponent implements OnInit {
     } else {
       this.updateData();
     }
+  }
   }
   addData() {
     this.data.createdBy = this.user.id;
@@ -126,6 +142,23 @@ export class RevisionMesasSistemaCajaComponent implements OnInit {
         }
       });
   }
+
+  async alertCampos(){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'CAMPOS',
+      message: 'VALIDA QUE TODOS LOS CAMPOS ESTEN CARGADOS CORRECTAMENTE',
+      mode: 'ios',
+      buttons: ['OK'],
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+
+  }
+
 }
 class GeneralStateModel {
   id: number;

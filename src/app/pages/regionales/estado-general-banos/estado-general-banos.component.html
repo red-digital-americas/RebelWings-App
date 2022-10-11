@@ -1,46 +1,51 @@
 <ion-app>
   <ion-header *ngIf="activeData === true" class="ion-no-border ion-padding">
+    
     <ion-grid>
-      <ion-row>
-        <ion-col>
+
+      <ion-row size="12">
+        <ion-col size="3">
           <div>
-            <p (click)="return()" class="ion-align-items-start return">
-              < REGRESAR</p>
+            <!-- <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR</p> -->
+              <ion-button *ngIf="this.visibleGuardar === true" (click)="return()" shape="round" color="warning" expand="full" size="small">
+                REGRESAR
+              </ion-button>
           </div>
         </ion-col>
-      </ion-row>
-      <ion-row size="12">
-        <ion-col size="1">
-          <img src="./assets/icon/ilustracion_ba_os.png" alt="Validaccion de assistencia" />
+        <ion-col size="5"></ion-col>
+        <ion-col size="4">
+          <span class="date-grey">
+            {{ today | date: "dd/MM/yyy" }}
+          </span>
         </ion-col>
-        <ion-col size="11" class="ion-align-self-center">
-          <h3 class="title">ESTADO GENERAL</h3>
+      </ion-row>
+      <br>
+      
+      <ion-row size="12">
+        <ion-col size="3">
+          <img src="./assets/icon/ilustracion_ba_os.png"  alt="" />
+        </ion-col>
+        <ion-col size="9" class="ion-align-self-center">
+          <h3 class="title">BAÑOS</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
     <br>
-    <!-- titulo de empresa -->
     <ion-grid>
-      <ion-row size="12">
-        <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
-        </ion-col>
-        <ion-col size="4">
-          <span class="date-grey">
-            {{ today | date: "dd MMM yyy" }}
-          </span>
-        </ion-col>
-        <ion-col size="1"></ion-col>
-        <ion-col size="3">
-          <div class="align-end-text">
-            <ion-button (click)="levantamientoTicket()" shape="round" color="warning" expand="full">
-              <span>
-                LEVANTAR TICKET
-              </span>
-            </ion-button>
-          </div>
+      <ion-row size="12" *ngIf="user" >
+        <ion-col size="12">
+          <h5 class="subtitle-negro">{{nameBranch}}</h5>
         </ion-col>
       </ion-row>
+
+      <ion-row size="12">
+        <ion-col size="12">
+          <h5 class="description">REVISA QUE LOS BAÑOS ESTEN EN OPTIMAS CONDICIONES</h5>
+          &nbsp;
+        </ion-col>
+      </ion-row>
+
     </ion-grid>
   </ion-header>
   <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
@@ -50,19 +55,19 @@
       <!--chicken in table-->
       <ion-row>
         <ion-col size="12">
-          <span>Baños de mujeres</span>
+          <span>BAÑOS DE MUJERES</span>
         </ion-col>
         <!----------------- tv -------------------------->
         <ion-col size="6">
           <ion-row size="12">
             <ion-col size="12">
-              <span class="titleProduct">¿Algún baño tiene gotera?</span>
+              <span class="titleProduct">¿ALGUN BAÑO TIENE GOTERA?</span>
             </ion-col>
             <ion-col size="12">
-              <ion-toggle [(ngModel)]="data.doesAnyBathroomLeakWomen"></ion-toggle>
+              <ion-toggle [(ngModel)]="data.doesAnyBathroomLeakWomen" ></ion-toggle>
             </ion-col>
-            <ion-col size="12" *ngIf="data.doesAnyBathroomLeakWomen === false">
-              <ion-label>Comentario</ion-label>
+            <ion-col size="12" >
+              <ion-label>COMENTARIO</ion-label>
               <ion-card>
                 <ion-textarea [(ngModel)]="data.commentDoesAnyBathroomLeakWomen" rows="6" cols="20">
                 </ion-textarea>
@@ -74,13 +79,13 @@
         <ion-col size="6">
           <ion-row size="12">
             <ion-col size="12">
-              <span class="titleProduct">¿Hay alguna falla en las chapas?</span>
+              <span class="titleProduct">¿HAY FALLA EN LAS CHAPAS?</span>
             </ion-col>
             <ion-col size="12">
               <ion-toggle [(ngModel)]="data.isThereAnyFaultsWomen"></ion-toggle>
             </ion-col>
-            <ion-col size="12" *ngIf="data.isThereAnyFaultsWomen === false">
-              <ion-label>Comentario</ion-label>
+            <ion-col size="12" >
+              <ion-label>COMENTARIO</ion-label>
               <ion-card>
                 <ion-textarea [(ngModel)]="data.commentAreThereAnyFaultsWomen" rows="6" cols="20">
                 </ion-textarea>
@@ -92,18 +97,18 @@
       <!----------------- hombres -------------------------->
       <ion-row>
         <ion-col size="12">
-          <span>Baños de hombres</span>
+          <span>BAÑOS DE HOMBRES</span>
         </ion-col>
         <ion-col size="6">
           <ion-row size="12">
             <ion-col size="12">
-              <span class="titleProduct">¿Algún baño tiene gotera?</span>
+              <span class="titleProduct">¿ALGUN BAÑO TIENE GOTERA?</span>
             </ion-col>
             <ion-col size="12">
               <ion-toggle [(ngModel)]="data.doesAnyBathroomLeakMen"></ion-toggle>
             </ion-col>
-            <ion-col size="12" *ngIf="data.doesAnyBathroomLeakMen === false">
-              <ion-label>Comentario</ion-label>
+            <ion-col size="12">
+              <ion-label>COMENTARIO</ion-label>
               <ion-card>
                 <ion-textarea [(ngModel)]="data.commentDoesAnyBathroomLeakMen" rows="6" cols="20">
                 </ion-textarea>
@@ -115,13 +120,13 @@
         <ion-col size="6">
           <ion-row size="12">
             <ion-col size="12">
-              <span class="titleProduct">¿Hay alguna falla en las chapas?</span>
+              <span class="titleProduct">¿HAY FALLA EN LAS CHAPAS?</span>
             </ion-col>
             <ion-col size="12">
               <ion-toggle [(ngModel)]="data.isThereAnyFaultsMen"></ion-toggle>
             </ion-col>
-            <ion-col size="12" *ngIf="data.isThereAnyFaultsMen === false">
-              <ion-label>Comentario</ion-label>
+            <ion-col size="12" >
+              <ion-label>COMENTARIO</ion-label>
               <ion-card>
                 <ion-textarea [(ngModel)]="data.commentAreThereAnyFaultsMen" rows="6" cols="20">
                 </ion-textarea>
@@ -137,8 +142,14 @@
     <ion-grid>
       <!-- footer boton -->
       <ion-row size="12" class="footer">
-        <ion-col size="3" offset="8">
-          <ion-button (click)="save()" shape="round" color="danger" expand="full">
+        <ion-col size="6"></ion-col>
+        <ion-col size="3" >
+            <ion-button (click)="levantamientoTicket()" shape="round" color="warning" expand="full">
+                TICKET
+            </ion-button>
+        </ion-col>
+        <ion-col size="3" >
+          <ion-button (click)="save()" shape="round" color="danger" expand="full" *ngIf="this.visibleGuardar === true">
             GUARDAR
           </ion-button>
         </ion-col>

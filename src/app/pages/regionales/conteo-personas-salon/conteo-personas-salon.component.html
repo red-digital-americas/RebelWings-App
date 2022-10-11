@@ -2,51 +2,108 @@
   <!-- ************ data ************ -->
   <ion-header *ngIf="activeData === true" class="ion-no-border ion-padding">
     <ion-grid>
-      <ion-row>
-        <ion-col>
+
+      <ion-row size="12">
+        <ion-col size="3">
           <div>
-            <p (click)="return()" class="ion-align-items-start return">
-              < REGRESAR </p> </div> </ion-col> </ion-row> <ion-row size="12">
-                <ion-col size="1">
-                  <img src="./assets/icon/ilustracion_conteo_de_personas.png" alt="conteo de personas" />
-                </ion-col>
-                <ion-col size="11" class="ion-align-self-center">
-                  <h3 class="title">CONTEO DE PERSONAS</h3>
-                </ion-col>
+            <!-- <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR</p> -->
+              <ion-button *ngIf="this.visibleGuardar === true" (click)="return()" shape="round" color="warning" expand="full" size="small">
+                REGRESAR
+              </ion-button>
+          </div>
+        </ion-col>
+        <ion-col size="5"></ion-col>
+        <ion-col size="4">
+          <span class="date-grey">
+            {{ today | date: "dd/MM/yyy" }}
+          </span>
+        </ion-col>
       </ion-row>
+      <br>
+      
+      <ion-row size="12">
+        <ion-col size="3">
+          <img src="./assets/icon/ilustracion_conteo_de_personas.png" alt="" />
+        </ion-col>
+        <ion-col size="9" class="ion-align-self-center">
+          <h3 class="title">COMENSALES</h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <br>
+    <ion-grid>
+      <ion-row size="12" *ngIf="user" >
+        <ion-col size="12">
+          <h5 class="subtitle-negro">{{nameBranch}}</h5>
+        </ion-col>
+
+      </ion-row>
+
+      <ion-row size="12">
+        <ion-col size="12">
+          <h5 class="description">REVISA LA CANTIDAD DE MESAS OCUPADAS Y  LOS COMENSALES</h5>
+          &nbsp;
+        </ion-col>
+      </ion-row>
+
     </ion-grid>
   </ion-header>
   <ion-content fullscreen="false" *ngIf="activeData === true" class="ion-padding">
     <ion-grid>
-      <!-- titulo de empresa -->
-      <ion-row size="12">
-        <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
-        </ion-col>
-        <ion-col size="8">
-          <span class="date-grey">
-            {{ today | date: "dd MMM yyy" }}
-          </span>
-        </ion-col>
-      </ion-row>
       <ion-row size="12">
         <ion-col size="6">
-          <ion-label floating>¿Cuántas mesas están abiertas?</ion-label>
+          <ion-label floating>¿CUANTAS MESAS REALES ESTAN ABIERTAS?</ion-label>
           <ion-card class="closed">
             <ion-input [(ngModel)]="data.tables" type="number" (focus)="activeMesas = false" required min="0"
-              placeholder="4 Mesas"></ion-input>
+              placeholder="MESAS"></ion-input>
           </ion-card>
           <ion-label style="color: #ad182d; font-size: 12px" *ngIf="activeMesas">Campo requerido</ion-label>
         </ion-col>
         <ion-col size="6">
-          <ion-label floating>¿Cuántos comensales hay?</ion-label>
+          <ion-label floating>¿CUANTOS COMENSALES REALES HAY EN SUCURSAL?</ion-label>
           <ion-card class="closed">
             <ion-input [(ngModel)]="data.dinners" type="number" (focus)="activeComensales = false" required min="0"
-              placeholder="6 Comensales"></ion-input>
+              placeholder="COMENSALES"></ion-input>
           </ion-card>
           <ion-label style="color: #ad182d; font-size: 12px" *ngIf="activeComensales">Campo requerido</ion-label>
         </ion-col>
       </ion-row>
+
+      <ion-row size="12">
+        <ion-col size="6">
+          <ion-label>FOTOGRAFIA</ion-label>
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery()">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>COMENTARIO</ion-label>
+          <ion-card>
+            <ion-textarea [(ngModel)]="data.comment" rows="6" cols="20" style="margin-top: 2px;">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="6">
+          <!-- fotos sin id -->
+          <ion-row>
+            <ion-col size="6" *ngFor="let photo of data.photoPeoplesCountings; index as position">
+              <!-- se mostara esta imagen si no tiene id  -->
+              <ion-img *ngIf="photo.id === 0" src="{{ base64 }},{{ photo.photo }}" (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- se mostrara esta imagen si esta guardada -->
+              <ion-img *ngIf="photo.id !== 0" src="{{ url }}{{ photo.photo }}" (click)="deleteImgShowAction(photo.id)"></ion-img>
+
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6"></ion-col>
+      </ion-row>
+
     </ion-grid>
   </ion-content>
   <ion-footer *ngIf="activeData === true" no-border>
@@ -54,7 +111,7 @@
       <!-- footer boton -->
       <ion-row size="12" class="footer">
         <ion-col size="3" offset="8">
-          <ion-button (click)="validateSave()" shape="round" color="danger" expand="full">
+          <ion-button (click)="save()" shape="round" color="danger" expand="full" *ngIf="this.visibleGuardar === true">
             GUARDAR
           </ion-button>
         </ion-col>

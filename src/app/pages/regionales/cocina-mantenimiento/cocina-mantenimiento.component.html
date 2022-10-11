@@ -1,48 +1,54 @@
 <ion-app>
   <!-- ************ data ************ -->
   <ion-header *ngIf="activeData === true" class="ion-no-border ion-padding">
+    
     <ion-grid>
-      <ion-row>
-        <ion-col>
+
+      <ion-row size="12">
+        <ion-col size="3">
           <div>
-            <p (click)="return()" class="ion-align-items-start return">
-              < REGRESAR </p>
+            <!-- <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR</p> -->
+              <ion-button *ngIf="this.visibleGuardar === true" (click)="return()" shape="round" color="warning" expand="full" size="small">
+                REGRESAR
+              </ion-button>
           </div>
         </ion-col>
+        <ion-col size="5"></ion-col>
+        <ion-col size="4">
+          <span class="date-grey">
+            {{ today | date: "dd/MM/yyy" }}
+          </span>
+        </ion-col>
       </ion-row>
+      <br>
+      
       <ion-row size="12">
-        <ion-col size="1">
+        <ion-col size="3">
           <img src="./assets/icon/ilustracion_cocina.png" alt="encuesta" />
         </ion-col>
-        <ion-col size="11" class="ion-align-self-center">
+        <ion-col size="9" class="ion-align-self-center">
           <h3 class="title">COCINA</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
     <br>
     <ion-grid>
-      <!-- titulo de empresa -->
-      <ion-row size="12">
-        <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
-        </ion-col>
-        <ion-col size="4">
-          <span class="date-grey">
-            {{ today | date: "dd MMM yyy" }}
-          </span>
-        </ion-col>
-        <ion-col size="1"></ion-col>
-        <ion-col size="3">
-          <div class="align-end-text">
-            <ion-button (click)="levantamientoTicket()" shape="round" color="warning" expand="full">
-              <span>
-                LEVANTAR TICKET
-              </span>
-            </ion-button>
-          </div>
+      <ion-row size="12" *ngIf="user" >
+        <ion-col size="12">
+          <h5 class="subtitle-negro">{{nameBranch}}</h5>
         </ion-col>
       </ion-row>
+
+      <ion-row size="12">
+        <ion-col size="12">
+          <h5 class="description">CHECK DE MANTENIMIENTO DEL AREA DE COCINA</h5>
+        </ion-col>
+      </ion-row>
+
     </ion-grid>
+    
+
   </ion-header>
   <ion-content fullscreen="false" *ngIf="activeData === true" class="ion-padding">
 
@@ -50,17 +56,17 @@
       <!-------------------tarja--------------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">Tarjas</span>
+          <span class="titleProduct">TARJAS</span>
           <br>
-          <span>¿Sujetas y sin fugas?</span>
+          <span>¿SUJETAS Y SIN FUGAS?</span>
           <br>
           <ion-toggle [(ngModel)]="data.sink"></ion-toggle>
         </ion-col>
       </ion-row>
       <!-------------fotos de tarjas----------------->
-      <ion-row *ngIf="data.sink === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(1)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -68,18 +74,18 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIO</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="data.commentSink" rows="6" cols="20">
+            <ion-textarea [(ngModel)]="data.commentSink" rows="6" cols="20" style="margin-top: 2px;">
             </ion-textarea>
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="data.sink === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
-            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+            <ion-col size="6" *ngFor="let photo of data.photoKitchens; index as position">
               <!-- se mostara esta imagen si no tiene id  -->
               <ion-img *ngIf="photo.id === 0 && photo.type === 1" src="{{ base64 }},{{ photo.photo }}"
                 (click)="showActionSheet(photo, position)">
@@ -96,17 +102,17 @@
       <!---------------------mezcladora---------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">Mezcladoras</span>
+          <span class="titleProduct">MEZCLADORA</span>
           <br>
-          <span>¿Funcionando?</span>
+          <span>¿FUNCIONANDO?</span>
           <br>
           <ion-toggle [(ngModel)]="data.mixer"></ion-toggle>
         </ion-col>
       </ion-row>
       <!-------------fotos de tarjas----------------->
-      <ion-row *ngIf="data.mixer === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(2)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -114,18 +120,18 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIO</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="data.commentMixer" rows="6" cols="20">
+            <ion-textarea [(ngModel)]="data.commentMixer" rows="6" cols="20" style="margin-top: 2px;">
             </ion-textarea>
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="data.mixer === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
-            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+            <ion-col size="6" *ngFor="let photo of data.photoKitchens; index as position">
               <!-- se mostara esta imagen si no tiene id  -->
               <ion-img *ngIf="photo.id === 0 && photo.type === 2" src="{{ base64 }},{{ photo.photo }}"
                 (click)="showActionSheet(photo, position)">
@@ -143,17 +149,17 @@
       <!----------------coladora------------------->
       <ion-row>
         <ion-col size="12">
-          <span class="titleProduct">Coladeras</span>
+          <span class="titleProduct">COLADERAS</span>
           <br>
-          <span>¿Fijas con trampas de olor y tornillería?</span>
+          <span>¿FIJAS CON TRAMPA DE OLOR Y TORNILLERIA?</span>
           <br>
           <ion-toggle [(ngModel)]="data.strainer"></ion-toggle>
         </ion-col>
       </ion-row>
       <!-------------fotos de Coladeras----------------->
-      <ion-row *ngIf="data.strainer === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(3)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -161,18 +167,18 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIO</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="data.commentStrainer" rows="6" cols="20">
+            <ion-textarea [(ngModel)]="data.commentStrainer" rows="6" cols="20" style="margin-top: 2px;">
             </ion-textarea>
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="data.strainer === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
-            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+            <ion-col size="6" *ngFor="let photo of data.photoKitchens; index as position">
               <!-- se mostara esta imagen si no tiene id  -->
               <ion-img *ngIf="photo.id === 0 && photo.type === 3" src="{{ base64 }},{{ photo.photo }}"
                 (click)="showActionSheet(photo, position)">
@@ -191,17 +197,17 @@
       <!----------------Freidoras--------------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">Freidoras</span>
+          <span class="titleProduct">FREIDORAS</span>
           <br>
-          <span>¿Temperatura exacta?</span>
+          <span>¿TEMPERATURA CORRECTA?</span>
           <br>
           <ion-toggle [(ngModel)]="data.fryer"></ion-toggle>
         </ion-col>
       </ion-row>
       <!-------------fotos de Freidoras----------------->
-      <ion-row *ngIf="data.fryer === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(4)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -209,18 +215,18 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIOS</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="data.commentFryer" rows="6" cols="20">
+            <ion-textarea [(ngModel)]="data.commentFryer" rows="6" cols="20" style="margin-top: 2px;">
             </ion-textarea>
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="data.fryer === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
-            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+            <ion-col size="6" *ngFor="let photo of data.photoKitchens; index as position">
               <!-- se mostara esta imagen si no tiene id  -->
               <ion-img *ngIf="photo.id === 0 && photo.type === 4" src="{{ base64 }},{{ photo.photo }}"
                 (click)="showActionSheet(photo, position)">
@@ -239,17 +245,17 @@
       <!-----------------Extracción--------------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">Extracción</span>
+          <span class="titleProduct">EXTRACCION</span>
           <br>
-          <span>¿En buen estado?</span>
+          <span>¿EN BUEN ESTADO?</span>
           <br>
           <ion-toggle [(ngModel)]="data.extractor"></ion-toggle>
         </ion-col>
       </ion-row>
       <!-------------fotos de Extracción----------------->
-      <ion-row *ngIf="data.extractor === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(5)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -257,18 +263,18 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIO</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="data.commentExtractor" rows="6" cols="20">
+            <ion-textarea [(ngModel)]="data.commentExtractor" rows="6" cols="20" style="margin-top: 2px;">
             </ion-textarea>
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="data.extractor === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
-            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+            <ion-col size="6" *ngFor="let photo of data.photoKitchens; index as position">
               <!-- se mostara esta imagen si no tiene id  -->
               <ion-img *ngIf="photo.id === 0 && photo.type === 5" src="{{ base64 }},{{ photo.photo }}"
                 (click)="showActionSheet(photo, position)">
@@ -287,17 +293,17 @@
       <!----------------Refrigeradores------------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">Refrigeradores</span>
+          <span class="titleProduct">REFRIGERADORES</span>
           <br>
-          <span>¿Temperatura, buen estado?</span>
+          <span>¿EN BUEN ESTADO?</span>
           <br>
           <ion-toggle [(ngModel)]="data.refrigerator"></ion-toggle>
         </ion-col>
       </ion-row>
       <!-------------fotos de Refrigeradores----------------->
-      <ion-row *ngIf="data.refrigerator === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(9)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -305,18 +311,18 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIOS</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="data.commentRefrigerator" rows="6" cols="20">
+            <ion-textarea [(ngModel)]="data.commentRefrigerator" rows="6" cols="20" style="margin-top: 2px;">
             </ion-textarea>
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="data.refrigerator === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
-            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+            <ion-col size="6" *ngFor="let photo of data.photoKitchens; index as position">
               <!-- se mostara esta imagen si no tiene id  -->
               <ion-img *ngIf="photo.id === 0 && photo.type === 9" src="{{ base64 }},{{ photo.photo }}"
                 (click)="showActionSheet(photo, position)">
@@ -334,17 +340,17 @@
       <!-------------Temperatura interior---------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">Temperatura interior</span>
+          <span class="titleProduct">REFRIGERADORES</span>
           <br>
-          <span>¿Es la correcta?</span>
+          <span>¿TEMPERATURA CORRECTA?</span>
           <br>
           <ion-toggle [(ngModel)]="data.interiorTemperature"></ion-toggle>
         </ion-col>
       </ion-row>
       <!-------------fotos de Temperatura----------------->
-      <ion-row *ngIf="data.interiorTemperature === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(6)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -352,18 +358,18 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIO</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="data.commentInteriorTemperature" rows="6" cols="20">
+            <ion-textarea [(ngModel)]="data.commentInteriorTemperature" rows="6" cols="20" style="margin-top: 2px;">
             </ion-textarea>
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="data.interiorTemperature === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
-            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+            <ion-col size="6" *ngFor="let photo of data.photoKitchens; index as position">
               <!-- se mostara esta imagen si no tiene id  -->
               <ion-img *ngIf="photo.id === 0 && photo.type === 6" src="{{ base64 }},{{ photo.photo }}"
                 (click)="showActionSheet(photo, position)">
@@ -382,17 +388,17 @@
       <!---------------Puertas--------------------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">Puertas</span>
+          <span class="titleProduct">REFRIGERADORES</span>
           <br>
-          <span>¿Es la correcta?</span>
+          <span>¿LAS PUERTAS SELLAN CORRECTAMENTE?</span>
           <br>
           <ion-toggle [(ngModel)]="data.doors"></ion-toggle>
         </ion-col>
       </ion-row>
       <!-------------fotos de Puertas----------------->
-      <ion-row *ngIf="data.doors === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(7)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -400,18 +406,18 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIO</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="data.commentDoors" rows="6" cols="20">
+            <ion-textarea [(ngModel)]="data.commentDoors" rows="6" cols="20" style="margin-top: 2px;">
             </ion-textarea>
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="data.doors === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
-            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+            <ion-col size="6" *ngFor="let photo of data.photoKitchens; index as position">
               <!-- se mostara esta imagen si no tiene id  -->
               <ion-img *ngIf="photo.id === 0 && photo.type === 7" src="{{ base64 }},{{ photo.photo }}"
                 (click)="showActionSheet(photo, position)">
@@ -430,17 +436,17 @@
       <!-------Distancia correcta hacia la pared--------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">Distancia correcta hacia la pared</span>
+          <span class="titleProduct">REFRIGERADORES</span>
           <br>
-          <span>¿Es la correcta?</span>
+          <span>¿TIENEN LA DISTANCIA CORRECTA HACIA LA PARED?</span>
           <br>
           <ion-toggle [(ngModel)]="data.correctDistance"></ion-toggle>
         </ion-col>
       </ion-row>
       <!-------------fotos de Distancia----------------->
-      <ion-row *ngIf="data.correctDistance === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(8)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -448,18 +454,18 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIO</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="data.commentCorrectDistance" rows="6" cols="20">
+            <ion-textarea [(ngModel)]="data.commentCorrectDistance" rows="6" cols="20" style="margin-top: 2px;">
             </ion-textarea>
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="data.correctDistance === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
-            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+            <ion-col size="6" *ngFor="let photo of data.photoKitchens; index as position">
               <!-- se mostara esta imagen si no tiene id  -->
               <ion-img *ngIf="photo.id === 0 && photo.type === 8" src="{{ base64 }},{{ photo.photo }}"
                 (click)="showActionSheet(photo, position)">
@@ -477,17 +483,17 @@
       <!-----------Conexiones eléctricas-------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">Conexiones eléctricas</span>
+          <span class="titleProduct">CONEXIONES ELECTRICAS</span>
           <br>
-          <span>En buen estado</span>
+          <span>¿EN BUEN ESTADO?</span>
           <br>
           <ion-toggle [(ngModel)]="data.electricalConnections"></ion-toggle>
         </ion-col>
       </ion-row>
       <!-------------fotos de Conexiones----------------->
-      <ion-row *ngIf="data.electricalConnections === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(10)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -495,18 +501,18 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIO</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="data.commentElectricalConnections" rows="6" cols="20">
+            <ion-textarea [(ngModel)]="data.commentElectricalConnections" rows="6" cols="20" style="margin-top: 2px;">
             </ion-textarea>
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="data.electricalConnections === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
-            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+            <ion-col size="6" *ngFor="let photo of data.photoKitchens; index as position">
               <!-- se mostara esta imagen si no tiene id  -->
               <ion-img *ngIf="photo.id === 0 && photo.type === 10" src="{{ base64 }},{{ photo.photo }}"
                 (click)="showActionSheet(photo, position)">
@@ -524,17 +530,17 @@
       <!-------------Luminarias--------------------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">Luminarias</span>
+          <span class="titleProduct">LUMINARIAS</span>
           <br>
-          <span>Completas y funionando</span>
+          <span>COMPLETAS Y FUNCIONANDO</span>
           <br>
           <ion-toggle [(ngModel)]="data.luminaires"></ion-toggle>
         </ion-col>
       </ion-row>
       <!-------------fotos de Luminarias----------------->
-      <ion-row *ngIf="data.luminaires === false" size="12">
+      <ion-row size="12">
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(11)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -542,18 +548,18 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIO</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="data.commentLuminaires" rows="6" cols="20">
+            <ion-textarea [(ngModel)]="data.commentLuminaires" rows="6" cols="20" style="margin-top: 2px;">
             </ion-textarea>
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="data.luminaires === false" size="12">
+      <ion-row  size="12">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
-            <ion-col size="3" *ngFor="let photo of data.photoKitchens; index as position">
+            <ion-col size="6" *ngFor="let photo of data.photoKitchens; index as position">
               <!-- se mostara esta imagen si no tiene id  -->
               <ion-img *ngIf="photo.id === 0 && photo.type === 11" src="{{ base64 }},{{ photo.photo }}"
                 (click)="showActionSheet(photo, position)">
@@ -574,8 +580,14 @@
     <ion-grid>
       <!-- footer boton -->
       <ion-row size="12" class="footer">
-        <ion-col size="3" offset="8">
-          <ion-button (click)="save()" shape="round" color="danger" expand="full">
+        <ion-col size="6"></ion-col>
+        <ion-col size="3" >
+            <ion-button (click)="levantamientoTicket()" shape="round" color="warning" expand="full">
+                TICKET
+            </ion-button>
+        </ion-col>
+        <ion-col size="3" >
+          <ion-button (click)="save()" shape="round" color="danger" expand="full" *ngIf="this.visibleGuardar === true">
             GUARDAR
           </ion-button>
         </ion-col>

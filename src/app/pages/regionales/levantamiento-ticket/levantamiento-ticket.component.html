@@ -2,34 +2,41 @@
   <!-- ******************* data *************************** -->
   <ion-header *ngIf="activeData === true" class="ion-no-border ion-padding">
     <ion-grid>
-      <ion-row>
-        <ion-col>
+
+      <ion-row size="12">
+        <ion-col size="3">
           <div>
-            <p (click)="return()" class="ion-align-items-start return">
-              < REGRESAR</p>
+            <!-- <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR</p> -->
+              <ion-button *ngIf="this.visibleGuardar === true" (click)="return()" shape="round" color="warning" expand="full" size="small">
+                REGRESAR
+              </ion-button>
           </div>
         </ion-col>
+        <ion-col size="5"></ion-col>
+        <ion-col size="4">
+          <span class="date-grey">
+            {{ today | date: "dd/MM/yyy" }}
+          </span>
+        </ion-col>
       </ion-row>
+
       <ion-row size="12">
-        <ion-col size="1">
+        <ion-col size="3">
           <img src="./assets/icon/ilustracion_ticket.png" alt="Ticket" />
         </ion-col>
-        <ion-col size="11" class="ion-align-self-center">
+        <ion-col size="9" class="ion-align-self-center">
           <h3 class="title">LEVANTAMIENTO DE TICKET</h3>
         </ion-col>
       </ion-row>
+
     </ion-grid>
     <br>
     <!-- titulo de empresa -->
     <ion-grid>
       <ion-row size="12">
-        <ion-col size="4">
-          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
-        </ion-col>
-        <ion-col size="8">
-          <span class="date-grey">
-            {{ today | date: "dd MMM yyy" }}
-          </span>
+        <ion-col size="12">
+          <h5 class="subtitle-negro">{{nameBranch}}</h5>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -39,10 +46,10 @@
     <ion-grid>
       <ion-row>
         <ion-col size="6">
-          <ion-label floating>¿En qué parte de la sucursal te encuentras?</ion-label>
+          <ion-label floating>¿EN QUE PARTE DE LA SUCURSAL TE ENCUENTRAS?</ion-label>
           <ion-card class="closed">
             <ion-item>
-              <ion-label>Lugar</ion-label>
+              <ion-label >LUGAR</ion-label>
               <ion-select [(ngModel)]="data.whereAreYouLocated">
                 <ion-select-option *ngFor="let item of dataBranchLocate" [value]="item.id">
                   {{ item.locate }}
@@ -53,10 +60,11 @@
         </ion-col>
 
         <ion-col size="6">
-          <ion-label floating>Seleccina la categoria</ion-label>
+          <br>
+          <ion-label floating>SELECCION LA CATEGORIA</ion-label>
           <ion-card class="closed">
             <ion-item>
-              <ion-label>Categoria</ion-label>
+              <ion-label>CATEGORIA</ion-label>
               <ion-select [(ngModel)]="data.category">
                 <ion-select-option *ngFor="let item of dataCategory" [value]="item.id">
                   {{ item.category }}
@@ -66,14 +74,27 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label floating>Sección</ion-label>
+          <!-- <ion-label floating>SECCION</ion-label>
           <ion-card class="closed">
-            <ion-input [(ngModel)]="data.specificLocation" type="text" placeholder="Sección"></ion-input>
-          </ion-card>
+            <ion-input [(ngModel)]="data.specificLocation" type="text" placeholder="Sección" ></ion-input>
+          </ion-card> -->
+        
+          <ion-label floating>PRIORIDAD</ion-label>
+        <ion-card class="closed">
+          <ion-item>
+            <ion-label>PRIORIDAD</ion-label>
+          <ion-select [(ngModel)]="data.specificLocation">
+            <ion-select-option value="ALTA">ALTA</ion-select-option>
+            <ion-select-option value="MEDIA">MEDIA</ion-select-option>
+            <ion-select-option value="BAJA">BAJA</ion-select-option>
+          </ion-select>
+         </ion-item>
+        </ion-card>
         </ion-col>
         <ion-col size="6"></ion-col>
         <ion-col size="6">
-          <ion-label>Fotografía</ion-label>
+          <br>
+          <ion-label>FOTOGRAFIA</ion-label>
           <!-- se manda id type 2 para general -->
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(2)">
             <div style="margin-top: 2rem">
@@ -82,9 +103,9 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>DESCRIBE DETALLADAMENTE TU SOLICITUD</ion-label>
           <ion-card>
-            <ion-textarea [(ngModel)]="data.describeProblem" rows="6" cols="20">
+            <ion-textarea [(ngModel)]="data.describeProblem" rows="6" cols="20" style="margin-top: 2px;">
             </ion-textarea>
           </ion-card>
         </ion-col>

@@ -2,11 +2,22 @@
   <ion-content fullscreen="false" class="ion-padding">
     <div class="justify">
       <ion-grid>
+        <ion-row class="ion-align-items-center">
+          <ion-col class="logo">
+            <div>
+              <img
+                class="rebel-img"
+                src="./assets/RW_LogoWEB.png"
+                alt="Rebel wings"
+              />
+            </div>
+          </ion-col>
+        </ion-row>
         <!-- titulo -->
         <ion-row>
           <ion-col class="logo">
             <h2 class="title">SELECCIÓN DE TURNO</h2>
-            <span>Sucursal {{user.branchName}}</span>
+            <span><h2 class="title">{{user.branchName}}</h2></span>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -20,8 +31,10 @@
               <ion-item>
                 <ion-label>TURNO</ion-label>
                 <ion-select [(ngModel)]="schedule" >
-                  <ion-select-option value="1">MATUTINO</ion-select-option>
-                  <ion-select-option value="2">VESPERTINO</ion-select-option>
+                  <ion-select-option value="1" *ngIf="this.tunoCorre === 1">MATUTINO</ion-select-option>
+                  <ion-select-option value="2" *ngIf="this.tunoCorre === 2">VESPERTINO</ion-select-option>
+                  <!-- <ion-select-option value="1" >MATUTINO</ion-select-option>
+                  <ion-select-option value="2" >VESPERTINO</ion-select-option> -->
                 </ion-select>
               </ion-item>
             </ion-list>

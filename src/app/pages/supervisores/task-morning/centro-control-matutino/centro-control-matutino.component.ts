@@ -8,6 +8,7 @@ import { LogoutComponent } from 'src/app/pages/popover/logout/logout.component';
 import { AlertController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
 import { interval } from 'rxjs';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-centro-control-matutino',
@@ -32,8 +33,11 @@ export class CentroControlMatutinoComponent implements OnInit {
   public cant;
   public completada;
   public contador = null;
+  public tunoCorre = 0;
+  public ValUsuario = 1;
 
   public barProgressTask: number;
+  public barProgressTask1: number;
   public color: string;
   constructor(
     public router: Router,public routerActive: ActivatedRoute,
@@ -51,14 +55,16 @@ export class CentroControlMatutinoComponent implements OnInit {
   ionViewWillEnter() {
 
     console.log('viewwillenter');
-    this.user = JSON.parse(localStorage.getItem('userData'));
+    //this.user = JSON.parse(localStorage.getItem('userData'));
     //console.log('user', this.user);
     // obtener el nombre de sucursal
-    this.branchId = this.user.branchId;
-    this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
+    //this.branchId = this.user.branchId;
+    //this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
     // this.getBranch();
-    this.notificationVoladoEfectivo();
+    //this.notificationVoladoEfectivo();
     this.getDataControl(this.task);
+    this.turnoActual();
+
  
 
 
@@ -68,21 +74,23 @@ export class CentroControlMatutinoComponent implements OnInit {
 
     this.user = JSON.parse(localStorage.getItem('userData'));
     this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
+    this.branchId = this.user.branchId;
     console.log('user', this.user);
     //this.getNotification();
-    this.notificationVoladoEfectivo();
-    this.getDataControl(this.task);
+    //this.notificationVoladoEfectivo();
+    //this.getDataControl(this.task);
     this.startTimer();
    
   }
   getDataControl(task) {
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet(`ControlCenter/${this.user.branchId}/${this.matutino}/${task}/Manager`)
+      .serviceGeneralGet(`ControlCenter/${this.user.branchId}/${this.matutino}/${task}/${this.user.id}/Manager`)
       .subscribe((resp) => {
         if (resp.success) {
           this.data = resp.result.controlCenters;
           this.barProgressTask = resp.result.progress;
+          this.barProgressTask1 = resp.result.progress;
           if (this.barProgressTask === 0){
             this.color = 'danger';
           }
@@ -97,26 +105,11 @@ export class CentroControlMatutinoComponent implements OnInit {
           //SE ASIGNA EL VALOR DE LA TAREA DE VOLADO DE EFECTIVO
           this.data.filter(data => data.name === "Volado de efectivo").map(data => {this.completada = data.isComplete;});
           console.log('control volado', this.completada);
-
-         if(Number(this.valueVolado.message) < 3000){
-            this.cant = false;
-     
-            if(this.completada === false){
-            this.barProgressTask = this.barProgressTask + 16.66666666666667;
-            }
-
-         }
-         else{
-            this.cant = true;
-     
-            if(this.completada === true){
-              this.barProgressTask = this.barProgressTask - 16.66666666666667;
-              }
-
-         }
-
+          this.notificationVoladoEfectivo();
+         
         }
         console.log('cant', this.cant);
+        
       });
   }
 
@@ -124,6 +117,7 @@ export class CentroControlMatutinoComponent implements OnInit {
   startTimer() {
     this.stopTimer();
     this.contador = setInterval((n) => { 
+      this.turnoActual();
       this.notificationVoladoEfectivo();
       console.log('muestra timer'); }, 20000);
   }
@@ -132,6 +126,66 @@ export class CentroControlMatutinoComponent implements OnInit {
     
       clearInterval(this.contador);
     
+  }
+
+  turnoActual(){
+    this.tunoCorre = 0;
+    this.today = new Date();
+    var time = this.today.getHours();
+    
+      console.log('Hora:', time);
+      
+       
+      if ( time > 6 && time < 17) {
+        this.tunoCorre = 1;
+        
+      }
+      
+
+      if (time > 16 && time <= 23) {
+          this.tunoCorre = 2;
+          this.alertFinal();
+        }
+        if(time >= 0 && time < 3) {
+          this.tunoCorre = 2;
+          this.alertFinal();
+        }
+
+        if(this.tunoCorre == 0){
+          this.alertFinal();
+        }  
+
+  }
+  showUsuario(){
+    if(this.ValUsuario == 1){
+      this.ValUsuario = 2;
+    }
+    else{
+      if(this.ValUsuario == 2){
+        this.ValUsuario = 3;
+      }
+      else{
+      this.ValUsuario = 1;
+      }
+    }
+  }
+
+  async alertFinal(){
+    this.stopTimer();
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'TURNO',
+      message: 'SE TERMINO EL HORARIO DE CAPTURA DE TAREAS DEL TURNO VESPERTINO. <BR>TU TURNO FINALIZARA',
+      mode: 'ios',
+      buttons: ['OK'],
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+    
+    this.terminarTurno();
+
   }
 
 
@@ -222,7 +276,7 @@ export class CentroControlMatutinoComponent implements OnInit {
         localStorage.setItem('valueVolado', JSON.stringify(this.valueVolado));
         //SE DETINE EL TIMER DE ACTUALIZADO DE VOLADO
         this.stopTimer();
-        //this.alertVolado();
+        this.alertVolado();
         
       }
       else {
@@ -243,6 +297,34 @@ export class CentroControlMatutinoComponent implements OnInit {
         console.log('Aun no hay 3mil pesos', this.valueVolado);
 
       }
+      
+      if(this.valueVolado.message < 3000){
+        this.cant = false;
+ 
+        if(this.completada === false){
+        this.barProgressTask =0;
+        this.barProgressTask = this.barProgressTask1 + 16.66666666666667;
+        }
+
+     }
+     else{
+      if(this.valueVolado.message == undefined){
+        this.cant = false;
+        if(this.completada === false){
+          this.barProgressTask =0;
+          this.barProgressTask = this.barProgressTask1 + 16.66666666666667;
+          }
+       }
+       else{
+        this.cant = true;
+ 
+        if(this.completada === true){
+          this.barProgressTask =0;
+          this.barProgressTask = this.barProgressTask1 - 16.66666666666667;
+          }
+        }
+     }
+
     });
   }
   async alertVolado(){
@@ -293,28 +375,93 @@ export class CentroControlMatutinoComponent implements OnInit {
       });
   }
 
+  showTermina() {
+    this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'ADVERTENCIA',
+      subHeader: 'TERMINA TURNO',
+      message: '¿ESTAS SEGURO DE TERMINAR TURNO?',
+      mode: 'ios', 
+      buttons: [
+        {
+          text: 'CANCELAR',
+          handler: (data: any) => {
+            console.log('TERMINAR TURNO CANCELADO');
+          }
+        },
+        {
+          text: 'ACEPTAR',
+          handler: (data: any) => {
+            console.log('TERMINAR TURNO');
+            //this.showValidaTermina();
+            this.terminarTurno();
+          }
+        }
+      ]
+    }).then(res => {
+      res.present();
+    });
+  }
+  
+  showValidaTermina() {
+    this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'IMPORTANTE',
+      subHeader: 'TERMINAR TURNO',
+      message: 'AL TERMINAR EL TURNO YA NO PODRAS INGRESAR NUEVAMENTE',
+      mode: 'ios', 
+      buttons: [
+        {
+          text: 'CANCELAR',
+          handler: (data: any) => {
+            console.log('TERMINAR TURNO CANCELADO');
+          }
+        },
+        {
+          text: 'ACEPTAR',
+          handler: (data: any) => {
+            console.log('TERMINAR');
+            this.terminarTurno();
+          }
+        }
+      ]
+    }).then(res => {
+      res.present();
+    });
+  }
+  
   validacionAsistencia() {
     this.router.navigateByUrl('supervisor/validacion-assistencia/1');
   }
   validacionGas(id: number) {
-    if (id === null) {
-      id = 0;
+    if(this.data[1].isComplete == false){
+      if (id === null) {
+        id = 0;
+      }
+      this.stopTimer();
+      this.router.navigateByUrl('supervisor/validacion-gas/' + id);
     }
-    this.router.navigateByUrl('supervisor/validacion-gas/' + id);
   }
   salonMontado(id: number) {
-    if (id === null) {
-      id = 0;
+    if(this.data[2].isComplete == false){
+      if (id === null) {
+        id = 0;
+      }
+      this.stopTimer();
+      this.router.navigateByUrl('supervisor/salon-montado/' + id);
     }
-    this.router.navigateByUrl('supervisor/salon-montado/' + id);
   }
   banosMatutino(id: number) {
-    if (id === null) {
-      id = 0;
+    if(this.data[6].isComplete == false){
+      if (id === null) {
+        id = 0;
+      }
+      this.stopTimer();
+      this.router.navigateByUrl('supervisor/banos-matutino/' + id);
     }
-    this.router.navigateByUrl('supervisor/banos-matutino/' + id);
   }
   stockPollo(id: number) {
+    this.stopTimer();
     this.router.navigateByUrl('supervisor/expectativa-venta/' + id);
   }
   terminarTurno() {
@@ -322,15 +469,19 @@ export class CentroControlMatutinoComponent implements OnInit {
     this.router.navigateByUrl('supervisor');
   }
   mesas(id: number) {
-    if (id === null) {
-      id = 0;
+    if(this.data[3].isComplete == false){
+      if (id === null) {
+        id = 0;
+      }
+      this.stopTimer();
+      this.router.navigateByUrl(`supervisor/mesa-espera/1/${id}`);
     }
-    this.router.navigateByUrl(`supervisor/mesa-espera/1/${id}`);
   }
   remisiones(id) {
     if (id === null) {
       id = 0;
     }
+    this.stopTimer();
     this.router.navigateByUrl('supervisor/remisiones/1/' + id);
   }
   productoRiesgo(id) {
@@ -338,18 +489,21 @@ export class CentroControlMatutinoComponent implements OnInit {
     if (id === null) {
       id = 0;
     }
+    this.stopTimer();
     this.router.navigateByUrl('supervisor/producto-riesgo/1/' + id);
   }
   transferencias(id) {
   if (id === null) {
     id = 0;
   }
+  this.stopTimer();
   this.router.navigateByUrl('supervisor/transferencias/1/' + id);
   }
   voladoEfectivo(id) {
   if (id === null) {
     id = 0;
   }
+  this.stopTimer();
   this.router.navigateByUrl('supervisor/volado-efectivo/1/' + id);
   }
 

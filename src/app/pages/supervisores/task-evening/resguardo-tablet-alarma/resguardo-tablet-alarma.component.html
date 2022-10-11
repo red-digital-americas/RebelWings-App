@@ -3,24 +3,25 @@
     <ion-grid>
 
       <ion-row size="12">
-        <ion-col size="1">
+        <ion-col size="3">
           <div>
             <!-- <p (click)="return()" class="ion-align-items-start return">
               < REGRESAR</p> -->
-              <ion-button (click)="return()" shape="round" color="warning" expand="full" size="small">
+              <ion-button *ngIf="this.visibleGuardar === true" (click)="return()" shape="round" color="warning" expand="full" size="small">
                 REGRESAR
               </ion-button>
           </div>
         </ion-col>
-        <ion-col size="11"></ion-col>
+        <ion-col size="9"></ion-col>
       </ion-row>
+      <br>
       
       <ion-row size="12">
         <ion-col size="1">
-          <img src="./assets/icon/ilustracion_alarma.png" alt="Alarma" />
+          <img src="./assets/icon/ilustracion_resguardo_de_tableta.png" alt="Alarma" />
         </ion-col>
         <ion-col size="11" class="ion-align-self-center">
-          <h3 class="title">ALARMA Y RESGUARDO DE TABLETAS</h3>
+          <h3 class="title">TABLETAS</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -28,12 +29,11 @@
   <ion-content fullscreen="false" class="ion-padding">
    <ion-grid>
       <!-- titulo de empresa -->
-      <ion-row size="12" *ngIf="user">
-        <ion-col size="4">
+      <ion-row size="12" *ngIf="user" >
+        <ion-col size="9">
           <h5 class="subtitle-negro">{{user.branchName}}</h5>
         </ion-col>
-        <ion-col size="7"></ion-col>
-        <ion-col size="1">
+        <ion-col size="3">
           <span class="date-grey">
             {{ today | date: "dd/MM/yyy" }}
           </span>
@@ -101,7 +101,7 @@
 
       <ion-row size="12" class="">
         <ion-col size="3" offset="8">
-          <ion-button [disabled]="disabled === true && (dataTablet.comment === undefined || dataTablet.comment === '')"
+          <ion-button *ngIf="this.visibleGuardar === true"
             (click)="allSave()" shape="round" color="danger" expand="full">
             GUARDAR
           </ion-button>
