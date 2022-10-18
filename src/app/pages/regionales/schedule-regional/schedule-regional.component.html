@@ -2,6 +2,17 @@
   <ion-content fullscreen="false" class="ion-padding">
     <div class="justify">
       <ion-grid>
+        <ion-row class="ion-align-items-center">
+          <ion-col class="logo">
+            <div>
+              <img
+                class="rebel-img"
+                src="./assets/RW_LogoWEB.png"
+                alt="Rebel wings"
+              />
+            </div>
+          </ion-col>
+        </ion-row>
         <!-- titulo -->
         <ion-row>
           <ion-col class="logo">
@@ -13,9 +24,6 @@
         <ion-row class="login">
           <ion-col size="12">
             <ion-list>
-              <ion-list-header>
-                <ion-label class="title">SELECCIONA LA SUCURSAL</ion-label>
-              </ion-list-header>
               <ion-item>
                 <ion-label>SUCURSAL</ion-label>
                 <ion-select [(ngModel)]="branchId">

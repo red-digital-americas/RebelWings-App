@@ -227,6 +227,7 @@ export class OrderCocinaComponent implements OnInit {
     await actionSheet.present();
   }
   validateSave() {
+    
     // if (
     //   this.objProduct.time === '' ||
     //   this.objProduct.time === undefined ||
@@ -263,6 +264,8 @@ export class OrderCocinaComponent implements OnInit {
         this.alertCampos();
     }
     else{
+      debugger;
+      console.log('data', this.objProduct);
       this.load.presentLoading('Guardando..');
       this.visibleGuardar = false;
       this.disabled = true;

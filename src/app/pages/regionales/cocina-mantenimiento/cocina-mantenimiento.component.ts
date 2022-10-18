@@ -45,6 +45,7 @@ export class CocinaMantenimientoComponent implements OnInit {
     this.branchId = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
     this.getBranch(this.user.stateId);
+    
 
   }
   ngOnInit() { }

@@ -23,30 +23,21 @@
       <br>
       
       <ion-row size="12">
-        <ion-col size="3">
+        <ion-col size="2.5">
           <img src="./assets/icon/ilustracion_mesas_en_espera.png" alt="Refrigerador" />
         </ion-col>
-        <ion-col size="9" class="ion-align-self-center">
+        <ion-col size="9.5" class="ion-align-self-center">
           <h3 class="title">TIEMPOS</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
-    <br>
+
     <ion-grid>
       <ion-row size="12" *ngIf="user" >
         <ion-col size="12">
           <h5 class="subtitle-negro">{{nameBranch}}</h5>
-        </ion-col>
-        
+        </ion-col>       
       </ion-row>
-
-      <ion-row size="12">
-        <ion-col size="12">
-          <h5 class="description">REGISTRA EL TIEMPO PROMEDIO QUE TIENES EN LA COCINA</h5>
-          &nbsp;
-        </ion-col>
-      </ion-row>
-
     </ion-grid>
 
     <!-- <ion-grid>
@@ -68,6 +59,12 @@
     <!-- agregar varios registros -->
     <div>
       <ion-grid *ngFor="let item of objProduct; index as index">
+        <ion-row size="12">
+          <ion-col size="12">
+            <h5 class="description">REGISTRA EL TIEMPO PROMEDIO QUE TIENES EN LA COCINA</h5>
+            &nbsp;
+          </ion-col>
+        </ion-row>
         <ion-row size="12">
           <ion-col size="9"></ion-col>
           <ion-col *ngIf="dataId === false" size="3" class="ion-align-items-end">

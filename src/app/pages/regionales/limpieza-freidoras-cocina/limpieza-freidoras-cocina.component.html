@@ -31,8 +31,7 @@
           <h3 class="title">FREIDORAS</h3>
         </ion-col>
       </ion-row>
-    </ion-grid>
-    <br>
+    </ion-grid>   
     <ion-grid>
       <ion-row size="12" *ngIf="user" >
         <ion-col size="12">
@@ -40,29 +39,30 @@
         </ion-col>
 
       </ion-row>
-
-      <ion-row size="12">
-        <ion-col size="12">
-          <h5 class="description">REVISA QUE LAS FREIDORAS ESTEN LIMPIAS</h5>
-        </ion-col>
-      </ion-row>
-
-      <ion-row size="12">
-        <ion-col size="9"></ion-col>
-        <ion-col size="3" class="ion-align-items-end">
-          <div class="align-end-text">
-            <ion-button (click)="addProductRisk()" shape="round" color="warning" expand="full">
-              AGREGAR
-            </ion-button>
-          </div>
-        </ion-col>
-      </ion-row>
     </ion-grid>
   </ion-header>
   <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
     <!-- agregar varios registros -->
     <div>
       <ion-grid *ngFor="let item of objProduct; index as index">
+
+        <ion-row size="12">
+          <ion-col size="12">
+            <h5 class="description">REVISA QUE LAS FREIDORAS ESTEN LIMPIAS</h5>
+          </ion-col>
+        </ion-row>
+  
+        <ion-row size="12">
+          <ion-col size="9"></ion-col>
+          <ion-col size="3" class="ion-align-items-end">
+            <div class="align-end-text">
+              <ion-button (click)="addProductRisk()" shape="round" color="warning" expand="full">
+                AGREGAR
+              </ion-button>
+            </div>
+          </ion-col>
+        </ion-row>
+
         <ion-row size="12">
           <ion-col size="9"></ion-col>
           <ion-col *ngIf="dataId === false" size="3" class="ion-align-items-end">

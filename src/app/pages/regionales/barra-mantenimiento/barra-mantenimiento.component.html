@@ -24,21 +24,25 @@
       <br>
       
       <ion-row size="12">
-        <ion-col size="3">
+        <ion-col size="2.5">
           <img src="./assets/icon/ilustracion_barra.png" alt="encuesta" />
         </ion-col>
-        <ion-col size="9" class="ion-align-self-center">
+        <ion-col size="9.5" class="ion-align-self-center">
           <h3 class="title">BARRA</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
-    <br>
     <ion-grid>
       <ion-row size="12" *ngIf="user" >
         <ion-col size="12">
           <h5 class="subtitle-negro">{{nameBranch}}</h5>
         </ion-col>
       </ion-row>
+    </ion-grid>
+  </ion-header>
+  <ion-content fullscreen="false" *ngIf="activeData === true" class="ion-padding">
+
+    <ion-grid>
 
       <ion-row size="12">
         <ion-col size="12">
@@ -46,11 +50,6 @@
         </ion-col>
       </ion-row>
 
-    </ion-grid>
-  </ion-header>
-  <ion-content fullscreen="false" *ngIf="activeData === true" class="ion-padding">
-
-    <ion-grid>
       <!---------------tarja--------------->
       <ion-row size="12">
         <ion-col size="12">

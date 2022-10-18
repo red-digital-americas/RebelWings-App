@@ -24,10 +24,10 @@
       <br>
       
       <ion-row size="12">
-        <ion-col size="3">
+        <ion-col size="2.5">
           <img src="./assets/icon/ilustracion_papel_higienico.png" alt="Refrigerador" />
         </ion-col>
-        <ion-col size="9" class="ion-align-self-center">
+        <ion-col size="9.5" class="ion-align-self-center">
           <h3 class="title">LAVABOS</h3>
         </ion-col>
       </ion-row>
@@ -39,22 +39,21 @@
           <h5 class="subtitle-negro">{{nameBranch}}</h5>
         </ion-col>
       </ion-row>
-
-      <ion-row size="12">
-        <ion-col size="12">
-          <h5 class="description">REVISAR QUE LAS JABONERAS Y PAPELERAS TENGAN LO NECESARIO PARA EL TURNO</h5>
-          &nbsp;
-        </ion-col>
-      </ion-row>
-
     </ion-grid>
   </ion-header>
   <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
     <!-- agregar varios registros -->
     <div>
       <ion-grid>
+
         <ion-row size="12">
-          <ion-col size="6">
+          <ion-col size="12">
+            <h5 class="description">REVISAR QUE LAS JABONERAS Y PAPELERAS TENGAN LO NECESARIO PARA EL TURNO</h5>
+          </ion-col>
+        </ion-row>
+
+        <ion-row size="12">
+          <ion-col size="12">
             <span>¿LOS DISPENSADORES TIENEN JABÓN?</span>
             <br>
             <ion-toggle [(ngModel)]="data.isThereSoapPaper"></ion-toggle>
@@ -103,7 +102,7 @@
     <div>
       <ion-grid>
         <ion-row size="12">
-          <ion-col size="6">
+          <ion-col size="12">
             <span>¿EL SECADOR / DISPENSADOR DE PAPEL FUNCIONA CORRECTAMENTE?</span>
             <br>
             <ion-toggle [(ngModel)]="data.isThereDryer"></ion-toggle>

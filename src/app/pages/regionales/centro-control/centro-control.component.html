@@ -58,15 +58,6 @@
         
         <!-- iteracion de data -->
         <ion-row size="12">
-          <ion-col size="6" class="ion-align-items-end">
-            <div class="align-end-text">
-              <ion-button (click)="terminarTurno()" shape="round" color="danger" expand="full">
-                <span>
-                  FINALIZAR
-                </span>
-              </ion-button>
-            </div>
-          </ion-col>
           <ion-col size="6">
             <div class="align-end-text">
               <ion-button (click)="levantamientoTicket()" shape="round" color="warning" expand="full">
@@ -76,7 +67,17 @@
               </ion-button>
             </div>
           </ion-col>
+          <ion-col size="6" class="ion-align-items-end">
+            <div class="align-end-text">
+              <ion-button (click)="terminarTurno()" shape="round" color="danger" expand="full">
+                <span>
+                  FINALIZAR
+                </span>
+              </ion-button>
+            </div>
+          </ion-col>
         </ion-row>
+        <br>
         <ion-row size="12">
           <ion-col size="12" class="align-items-start">
             <!-- *ngIf="nameBranch !== ''" -->
