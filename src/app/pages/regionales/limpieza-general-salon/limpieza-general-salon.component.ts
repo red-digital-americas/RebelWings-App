@@ -30,7 +30,10 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
   public fotosCleanRoom: any;
   public fotosCleanCubeta: any;
   public fotosCleanBooths: any;
-
+  public radioValue = '1'; 
+  public pick1 = 0;
+  public pick2 = 0;
+  public pick3 = 0;
   public visibleGuardar = true;
 
 
@@ -74,6 +77,8 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
           }
         }
       });
+      
+      
   }
   return() {
     // window.history.back();
@@ -93,10 +98,18 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
             this.nameBranch = element.titulo;
             this.nameBranch = this.nameBranch.toUpperCase();
             console.log('nombre', this.nameBranch);
+            //console.log('get data pick', this.data.photoGeneralCleanings.filter(pick => pick.type === 1).length);
+            this.conteoFotos();
           }
         });
       }
     });
+  }
+  conteoFotos(){
+    this.pick1 = this.data.photoGeneralCleanings.filter(pick => pick.type === 1).length;
+    this.pick2 = this.data.photoGeneralCleanings.filter(pick => pick.type === 2).length;
+    this.pick3 = this.data.photoGeneralCleanings.filter(pick => pick.type === 3).length;
+
   }
 
   validateSave() {
@@ -117,6 +130,7 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
     } else {
       this.save();
     }
+    
   }
   // agregar fotos de limpieza de salon
   async addPhotoToGallery(idType: number) {
@@ -139,6 +153,8 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
       filepath: ''
     });
     console.log('fotos chicken', this.data);
+    this.conteoFotos();
+    console.log('get data pick', this.data.photoGeneralCleanings.filter(pick => pick.type === 1).length);
   }
   // acciones para las fotos de limpieza de salon
   public async showActionSheet(photo, position: number) {
@@ -207,10 +223,10 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
 
   save() {
 
-    if(this.data.photoGeneralCleanings.length < 3){
-     this.alertCampos();
-    }
-    else{
+    // if(this.data.photoGeneralCleanings.length < 3){
+    //  this.alertCampos();
+    // }
+    // else{
     this.data.tableN = "1";
     this.load.presentLoading('Guardando..');
     this.visibleGuardar = false;
@@ -227,7 +243,7 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
     } else {
       this.updateCleanGeneral();
     }
-   }
+  //  }
   }
   addCleanGeneral() {
     this.data.createdBy = this.user.id;
@@ -239,7 +255,8 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+          //this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+          this.router.navigateByUrl('regional/limpieza-general/' + this.branchId);
         }
       });
   }
@@ -257,7 +274,8 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
         console.log('data', data);
-        this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+        //this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+        this.router.navigateByUrl('regional/limpieza-general/' + this.branchId);
       }
     });
   }

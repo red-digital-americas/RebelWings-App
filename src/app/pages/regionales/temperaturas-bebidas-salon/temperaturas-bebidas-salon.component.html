@@ -60,7 +60,25 @@
           <br>
           <ion-toggle [(ngModel)]="data.lightBeer"></ion-toggle>
         </ion-col>
-        <ion-col size="6">
+
+
+        <ion-col size="6" *ngIf="this.data.photoDrinksTemperatures.length === 3">
+          <ion-label>FOTOGRAFIA</ion-label>
+          <ion-card
+            style="height: 9rem"
+            class="center"
+         
+          >
+            <div style="margin-top: 2rem">
+              <ion-icon
+                class="sizePhoto"
+                src="./assets/icon/icon_foto.svg"
+              ></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="6" *ngIf="this.data.photoDrinksTemperatures.length !== 3">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(1)">
             <div style="margin-top: 2rem">
@@ -99,7 +117,25 @@
           <br>
           <ion-toggle [(ngModel)]="data.darkBeer"></ion-toggle>
         </ion-col>
-        <ion-col size="6">
+
+
+        <ion-col size="6" *ngIf="this.data.photoDrinksTemperatures.length === 3">
+          <ion-label>FOTOGRAFIA</ion-label>
+          <ion-card
+            style="height: 9rem"
+            class="center"
+         
+          >
+            <div style="margin-top: 2rem">
+              <ion-icon
+                class="sizePhoto"
+                src="./assets/icon/icon_foto.svg"
+              ></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="6" *ngIf="this.data.photoDrinksTemperatures.length !== 3">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(2)">
             <div style="margin-top: 2rem">
@@ -157,7 +193,25 @@
             </ion-col>
           </ion-row>
         </ion-col>
-        <ion-col size="6">
+
+
+        <ion-col size="6" *ngIf="this.data.photoDrinksTemperatures.length === 3">
+          <ion-label>AGREGA UNA FOTOGRAFIA DE LAS 5 BEBIDAS REVISADAS</ion-label>
+          <ion-card
+            style="height: 9rem"
+            class="center"
+         
+          >
+            <div style="margin-top: 2rem">
+              <ion-icon
+                class="sizePhoto"
+                src="./assets/icon/icon_foto.svg"
+              ></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="6" *ngIf="this.data.photoDrinksTemperatures.length !== 3">
           <ion-label>AGREGA UNA FOTOGRAFIA DE LAS 5 BEBIDAS REVISADAS</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(3)">
             <div style="margin-top: 2rem">

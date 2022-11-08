@@ -213,6 +213,7 @@ export class RefrigeradoresCocinaComponent implements OnInit {
               if (index === i) {
                 const element = this.objProduct[i];
                 element.photoFridges.splice(position, 1);
+                
               }
             }
           },
@@ -228,6 +229,7 @@ export class RefrigeradoresCocinaComponent implements OnInit {
       ],
     });
     await actionSheet.present();
+    
   }
 
   //eliminar imagenes bd
@@ -268,6 +270,7 @@ export class RefrigeradoresCocinaComponent implements OnInit {
     this.objProduct.forEach(value => {
       if(value.comment === null || value.comment === "" || value.comment === undefined || value.photoFridges.length === 0){
          this.validador = false;
+         
       }
       else{
        this.validador = true;

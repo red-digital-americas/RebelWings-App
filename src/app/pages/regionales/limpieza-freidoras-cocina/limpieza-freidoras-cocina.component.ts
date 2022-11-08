@@ -245,6 +245,7 @@ export class LimpiezaFreidorasCocinaComponent implements OnInit {
     this.objProduct.forEach(value => {
       if(value.comment === null || value.comment === "" || value.comment === undefined || value.photoFryerCleanings.length === 0){
          this.validador = false;
+         
       }
       else{
        this.validador = true;

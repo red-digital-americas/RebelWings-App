@@ -98,6 +98,7 @@ export class BanosMatutinoComponent implements OnInit {
       updatedDate: this.today,
     });
     console.log('fotos Baños', this.data);
+    console.log('NUM FOTOS', this.data.photoBanosMatutinos.length);
   }
   public async showActionSheet(photo, position: number) {
     console.log('photo', photo);

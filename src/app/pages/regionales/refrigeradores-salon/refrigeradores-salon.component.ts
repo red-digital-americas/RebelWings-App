@@ -235,6 +235,7 @@ export class RefrigeradoresSalonComponent implements OnInit {
     this.objProduct.forEach(value => {
      if(value.comment === null || value.comment === "" || value.comment === undefined || value.photoFridgeSalons.length === 0){
         this.validador = false;
+        
      }
      else{
       this.validador = true;

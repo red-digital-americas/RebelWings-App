@@ -58,7 +58,25 @@
         <ion-col size="12">
           <span class="titleProduct">ALIMENTOS Y BEBIDAS EN MESA</span>
         </ion-col>
-        <ion-col size="6">
+
+
+        <ion-col size="6" *ngIf="this.data.photoTicketTables.length === 3">
+          <ion-label>FOTOGRAFIA</ion-label>
+          <ion-card
+            style="height: 9rem"
+            class="center"
+         
+          >
+            <div style="margin-top: 2rem">
+              <ion-icon
+                class="sizePhoto"
+                src="./assets/icon/icon_foto.svg"
+              ></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="6" *ngIf="this.data.photoTicketTables.length !== 3">
           <ion-label>FOTOGRAFIA</ion-label>
           <!-- se manda id type 1 para table -->
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(1)">
@@ -98,7 +116,25 @@
         <ion-col size="12">
           <span class="titleProduct">TICKET DEL SISTEMA</span>
         </ion-col>
-        <ion-col size="6">
+
+
+        <ion-col size="6" *ngIf="this.data.photoTicketTables.length === 3">
+          <ion-label>FOTOGRAFIA</ion-label>
+          <ion-card
+            style="height: 9rem"
+            class="center"
+         
+          >
+            <div style="margin-top: 2rem">
+              <ion-icon
+                class="sizePhoto"
+                src="./assets/icon/icon_foto.svg"
+              ></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="6" *ngIf="this.data.photoTicketTables.length !== 3">
           <ion-label>FOTOGRAFIA</ion-label>
           <!-- se manda id type 2 para general -->
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(2)">

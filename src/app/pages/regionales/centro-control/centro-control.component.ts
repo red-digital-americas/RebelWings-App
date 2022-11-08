@@ -211,12 +211,12 @@ export class CentroControlComponent implements OnInit {
     }
   }
   limpiezaGeneralSalon() {
-    if(this.data[2].isComplete == false){
+    //if(this.data[2].isComplete == false){
     // if (id === null) {
     //   id = 0;
     // }
     this.router.navigateByUrl('regional/limpieza-general/' + this.branchId);
-    }
+    //}
   }
   estacionSalon() {
     if(this.data[3].isComplete == false){

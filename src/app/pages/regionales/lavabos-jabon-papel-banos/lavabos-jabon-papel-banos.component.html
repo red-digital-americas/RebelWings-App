@@ -69,7 +69,25 @@
               </ion-textarea>
             </ion-card>
           </ion-col>
-          <ion-col size="6">
+
+
+          <ion-col size="6" *ngIf="this.data.photoWashBasinWithSoapPapers.length === 3">
+          <ion-label>FOTOGRAFIA</ion-label>
+          <ion-card
+            style="height: 9rem"
+            class="center"
+         
+          >
+            <div style="margin-top: 2rem">
+              <ion-icon
+                class="sizePhoto"
+                src="./assets/icon/icon_foto.svg"
+              ></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="6" *ngIf="this.data.photoWashBasinWithSoapPapers.length !== 3">
             <ion-label>FOTOGRAFIA</ion-label>
             <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(1)">
               <div style="margin-top: 2rem">
@@ -119,7 +137,25 @@
               </ion-textarea>
             </ion-card>
           </ion-col>
-          <ion-col size="6">
+
+
+          <ion-col size="6" *ngIf="this.data.photoWashBasinWithSoapPapers.length === 3">
+          <ion-label>FOTOGRAFIA</ion-label>
+          <ion-card
+            style="height: 9rem"
+            class="center"
+         
+          >
+            <div style="margin-top: 2rem">
+              <ion-icon
+                class="sizePhoto"
+                src="./assets/icon/icon_foto.svg"
+              ></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="6" *ngIf="this.data.photoWashBasinWithSoapPapers.length !== 3">
             <ion-label>FOTOGRAFIA</ion-label>
             <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(2)">
               <div style="margin-top: 2rem">
