@@ -69,18 +69,22 @@
       <ion-row size="12">
         <ion-col size="12">
           <!-- <span>LIMPIEZA EN SALON</span> -->
-          <ion-item>
+          <ion-item *ngIf="this.pick1 === 3" color="success">
+            <ion-label >LIMPIEZA EN SALON</ion-label>
+            <ion-radio aria-checked="true" slot="end" value="1"></ion-radio>
+          </ion-item>
+          <ion-item *ngIf="this.pick1 !== 3" color="danger">
             <ion-label>LIMPIEZA EN SALON</ion-label>
             <ion-radio aria-checked="true" slot="end" value="1"></ion-radio>
           </ion-item>
         </ion-col>
-        <ion-col size="6"><span>¿SE ENCUENTRA LIMPIO?</span>
+        <ion-col size="6" *ngIf="this.radioValue === '1'"><span>¿SE ENCUENTRA LIMPIO?</span>
           <br>
           <ion-toggle [(ngModel)]="data.cleanlinessInSalon"></ion-toggle>
         </ion-col>
 
 
-        <ion-col size="6" *ngIf="this.pick1 === 3">
+        <ion-col size="6" *ngIf="this.pick1 === 3 && this.radioValue === '1'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card
             style="height: 9rem"
@@ -106,7 +110,7 @@
         </ion-col>
       </ion-row>
       <!-- ---------fotos limpieza de salon--------------------- -->
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="this.radioValue === '1'">
         <ion-col size="6"></ion-col>
 
         <ion-col size="6">
@@ -127,18 +131,23 @@
       <ion-row>
         <!-- <ion-col size="12">LIMPIEZA EN CUBETAS</ion-col> -->
         <ion-col size="12">
-          <ion-item>
+          <ion-item *ngIf="this.pick2 === 3" color="success">
+            <ion-label>LIMPIEZA EN CUBETAS</ion-label>
+            <ion-radio slot="end" value="2"></ion-radio>
+          </ion-item>
+
+          <ion-item *ngIf="this.pick2 !== 3" color="danger">
             <ion-label>LIMPIEZA EN CUBETAS</ion-label>
             <ion-radio slot="end" value="2"></ion-radio>
           </ion-item>
         </ion-col>
-        <ion-col size="6"><span>¿SE ENCUENTRAN LIMPIAS?</span>
+        <ion-col size="6" *ngIf="this.radioValue === '2'"><span>¿SE ENCUENTRAN LIMPIAS?</span>
           <br>
           <ion-toggle [(ngModel)]="data.cleaningInBuckets"></ion-toggle>
         </ion-col>
 
 
-        <ion-col size="6" *ngIf="this.pick2 === 3">
+        <ion-col size="6" *ngIf="this.pick2 === 3 && this.radioValue === '2'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card
             style="height: 9rem"
@@ -164,7 +173,7 @@
         </ion-col>
       </ion-row>
       <!-- -------------fotos limpieza cubetas------ ----------- -->
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="this.radioValue === '2'">
         <ion-col size="6"></ion-col>
         <ion-col size="6">
           <ion-row>
@@ -184,18 +193,23 @@
       <ion-row>
         <!-- <ion-col size="12">LIMPIEZA EN BOOTHS</ion-col> -->
         <ion-col size="12">
-          <ion-item>
+          <ion-item *ngIf="this.pick3 === 3" color="success">
+            <ion-label>LIMPIEZA EN BOOTHS</ion-label>
+            <ion-radio slot="end" value="3"></ion-radio>
+          </ion-item>
+
+          <ion-item *ngIf="this.pick3 !== 3" color="danger">
             <ion-label>LIMPIEZA EN BOOTHS</ion-label>
             <ion-radio slot="end" value="3"></ion-radio>
           </ion-item>
         </ion-col>
-        <ion-col size="6"><span>¿SE ENCUENTRAN LIMPIOS?</span>
+        <ion-col size="6" *ngIf="this.radioValue === '3'"><span>¿SE ENCUENTRAN LIMPIOS?</span>
           <br>
           <ion-toggle [(ngModel)]="data.cleaningBooths"></ion-toggle>
         </ion-col>
 
 
-        <ion-col size="6" *ngIf="this.pick3 === 3">
+        <ion-col size="6" *ngIf="this.pick3 === 3 && this.radioValue === '3'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card
             style="height: 9rem"
@@ -221,7 +235,7 @@
         </ion-col>
       </ion-row>
       <!-- -------------fotos limpieza booths------ ----------- -->
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="this.radioValue === '3'">
         <ion-col size="6"></ion-col>
 
         <ion-col size="6">
