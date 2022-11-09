@@ -54,7 +54,7 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
     this.branchId = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
     this.getBranch(this.user.stateId);
-
+    this.photoService.limpiaStorage();
   }
 
   ngOnInit() { }
@@ -112,6 +112,8 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
 
   }
 
+  
+
   validateSave() {
     if (
       this.data.tableN === '' ||
@@ -134,6 +136,7 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
   }
   // agregar fotos de limpieza de salon
   async addPhotoToGallery(idType: number) {
+    this.photoService.limpiaStorage();
     const name = new Date().toISOString();
     await this.photoService.addNewToGallery();
     await this.photoService.loadSaved();

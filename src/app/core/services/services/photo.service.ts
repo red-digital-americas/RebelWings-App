@@ -42,12 +42,18 @@ export class PhotoService {
     }
   }
 
+  public async limpiaStorage(){
+
+    await Storage.clear();
+
+  }
+
   public async addNewToGallery() {
     // Toma una foto
     const capturedPhoto = await Camera.getPhoto({
       resultType: CameraResultType.Uri, // file-based data; provides best performance
       source: CameraSource.Camera, // tomar automáticamente una nueva foto con la cámara
-      quality: 100, // highest quality (0 to 100)
+      quality: 40, // highest quality (0 to 100)
     });
 
     const savedImageFile = await this.savePicture(capturedPhoto);
