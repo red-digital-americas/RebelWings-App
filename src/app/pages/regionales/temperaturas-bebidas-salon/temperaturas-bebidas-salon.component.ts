@@ -30,6 +30,7 @@ export class TemperaturasBebidasSalonComponent implements OnInit {
   public pick1 = 0;
   public pick2 = 0;
   public pick3 = 0;
+  public Ractivo = false;
 
   public visibleGuardar = true;
 
@@ -89,7 +90,7 @@ export class TemperaturasBebidasSalonComponent implements OnInit {
     this.pick1 = this.data.photoDrinksTemperatures.filter(pick => pick.type === 1).length;
     this.pick2 = this.data.photoDrinksTemperatures.filter(pick => pick.type === 2).length;
     this.pick3 = this.data.photoDrinksTemperatures.filter(pick => pick.type === 3).length;
-
+    
   }
 
   return() {
@@ -119,6 +120,8 @@ export class TemperaturasBebidasSalonComponent implements OnInit {
 
   // agregar fotos de limpieza de salon
   async addPhotoToGallery(idType: number) {
+    this.Ractivo = true;
+    this.photoService.limpiaStorage();
     const name = new Date().toISOString();
     await this.photoService.addNewToGallery();
     await this.photoService.loadSaved();
@@ -205,11 +208,11 @@ export class TemperaturasBebidasSalonComponent implements OnInit {
   }
 
   save() {
-    if(this.data.photoDrinksTemperatures.length < 3){
-     this.alertCampos();
-    }
-    else{
-    this.load.presentLoading('Guardando..');
+    // if(this.data.photoDrinksTemperatures.length < 3){
+    //  this.alertCampos();
+    // }
+    // else{
+    //this.load.presentLoading('Guardando..');
     this.visibleGuardar = false;
     this.disabled = true;
     this.fotosCleanBooths = [];
@@ -224,7 +227,7 @@ export class TemperaturasBebidasSalonComponent implements OnInit {
     } else {
       this.updateDrinkTemperature();
     }
-  }
+  // }
   }
   addDrinkTemperature() {
     this.data.createdBy = this.user.id;
@@ -238,9 +241,14 @@ export class TemperaturasBebidasSalonComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+          // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+          // this.router.navigateByUrl('regional/temperatura-bebidas/' + this.branchId);
+          window.location.reload();
+          this.Ractivo = false;
+          this.visibleGuardar = true;
         }
       });
+      
   }
   updateDrinkTemperature() {
 
@@ -258,7 +266,11 @@ export class TemperaturasBebidasSalonComponent implements OnInit {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
         console.log('data', data);
-        this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+        // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+        // this.router.navigateByUrl('regional/temperatura-bebidas/' + this.branchId);
+        window.location.reload();
+        this.Ractivo = false;
+        this.visibleGuardar = true;
       }
     });
   }

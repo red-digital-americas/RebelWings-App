@@ -227,12 +227,12 @@ export class CentroControlComponent implements OnInit {
     }
   }
   temperaturaBebidaSalon() {
-    if(this.data[4].isComplete == false){
+    // if(this.data[4].isComplete == false){
     // if (id === null) {
     //   id = 0;
     // }
     this.router.navigateByUrl('regional/temperatura-bebidas/' + this.branchId);
-    }
+    // }
   }
   audioVideoSalon() {
     if(this.data[5].isComplete == false){
@@ -243,12 +243,12 @@ export class CentroControlComponent implements OnInit {
     }
   }
   focosSalon() {
-    if(this.data[6].isComplete == false){
+    // if(this.data[6].isComplete == false){
     // if (id === null) {
     //   id = 0;
     // }
     this.router.navigateByUrl('regional/focos/' + this.branchId);
-    }
+    // }
   }
   limpiezaBarraSalon() {
     if(this.data[7].isComplete == false){

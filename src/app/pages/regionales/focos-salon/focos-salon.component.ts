@@ -28,7 +28,12 @@ export class FocosSalonComponent implements OnInit {
   public base64 = 'data:image/jpeg;base64';
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
 
+  public radioValue = '1'; 
+  public pick1 = 0;
+  public pick2 = 0;
+  public pick3 = 0;
   public visibleGuardar = true;
+  public Ractivo = false;
 
   constructor(public router: Router,
     public routerActive: ActivatedRoute,
@@ -54,22 +59,39 @@ export class FocosSalonComponent implements OnInit {
       .serviceGeneralGet('Spotlight/' + this.branchId)
       .subscribe((resp) => {
         if (resp.success) {
+          // comprobar si tiene registros por dia
           if (resp.result?.length !== 0 && resp.result !== null) {
             this.dataId = true; //si hay registro entonces se hara un put
+            console.log('si hay registros del dia', resp);
             this.activeData = true;
-            this.data = resp.result[0];
+            this.data = resp.result;
             console.log('get data', this.data);
           }
           else {
-            this.activeData = true;
-            console.log('completar tarea');
+            console.log('Completar la tarea');
             this.dataId = false; //no hay registro entonces se hara un post
+            this.activeData = true;
             this.data.id = 0;
-            this.data.brokenSpotlight = false;
           }
         }
       });
   }
+
+  conteoFotos(){
+    this.pick1 = this.data.photoSpotlights.filter(pick => pick.type === 1).length;
+    this.pick2 = this.data.photoSpotlights.filter(pick => pick.type === 2).length;
+    if(this.data.commentAutorizados === "" || this.data.commentAutorizados === undefined ){
+      if(this.data.commentAutorizados !== "."){
+      this.data.commentAutorizados = ".";
+      }
+    }
+    if(this.data.commentFoco === "" || this.data.commentFoco === undefined ){
+      if(this.data.commentFoco !== "."){
+        this.data.commentFoco = ".";
+        }
+    }
+  }
+
   return() {
     // window.history.back();
     this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
@@ -88,6 +110,7 @@ export class FocosSalonComponent implements OnInit {
             this.nameBranch = element.titulo;
             this.nameBranch = this.nameBranch.toUpperCase();
             console.log('nombre', this.nameBranch);
+            this.conteoFotos();
           }
         });
       }
@@ -97,10 +120,10 @@ export class FocosSalonComponent implements OnInit {
     this.router.navigateByUrl('regional/levantamiento-ticket/' + this.branchId);
   }
   save() {
-    if(this.data.commentFoco === "" || this.data.commentFoco === null || this.data.commentFoco === undefined || this.data.commentAutorizados === "" || this.data.commentAutorizados === null || this.data.commentAutorizados === undefined || this.data.photoSpotlights.length < 2){
-     this.alertCampos();
-    }
-    else{
+    // if(this.data.commentFoco === "" || this.data.commentFoco === null || this.data.commentFoco === undefined || this.data.commentAutorizados === "" || this.data.commentAutorizados === null || this.data.commentAutorizados === undefined || this.data.photoSpotlights.length < 2){
+    //  this.alertCampos();
+    // }
+    // else{
     this.load.presentLoading('Guardando..');
     this.visibleGuardar = false;
     this.disabled = true;
@@ -114,7 +137,7 @@ export class FocosSalonComponent implements OnInit {
     } else {
       this.updateSpotlight();
     }
-  }
+  // }
   }
   addSpotlight() {
     this.data.createdBy = this.user.id;
@@ -126,12 +149,15 @@ export class FocosSalonComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
-          if(this.data.brokenSpotlight === false){
+          window.location.reload();
+          this.Ractivo = false;
+          this.visibleGuardar = true;
+          // if(this.data.brokenSpotlight === false){
           this.levantamientoTicket();
-          }
-          else{
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
-          }
+          // }
+          // else{
+          // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+          // }
         }
       });
   }
@@ -143,12 +169,15 @@ export class FocosSalonComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
-          if(this.data.brokenSpotlight === false){
+          window.location.reload();
+          this.Ractivo = false;
+          this.visibleGuardar = true;
+          // if(this.data.brokenSpotlight === false){
             this.levantamientoTicket();
-            }
-            else{
-            this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
-            }
+            // }
+            // else{
+            // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+            // }
         }
       });
   }
@@ -172,6 +201,8 @@ export class FocosSalonComponent implements OnInit {
 
     // agregar fotos de limpieza de salon
     async addPhotoToGallery(idType: number) {
+      this.Ractivo = true;
+      this.photoService.limpiaStorage();
       const name = new Date().toISOString();
       await this.photoService.addNewToGallery();
       await this.photoService.loadSaved();
@@ -190,6 +221,7 @@ export class FocosSalonComponent implements OnInit {
         updatedDate: this.today,
       });
       console.log('fotos chicken', this.data);
+      this.conteoFotos();
     }
     // acciones para las fotos de limpieza de salon
     public async showActionSheet(photo, position: number) {

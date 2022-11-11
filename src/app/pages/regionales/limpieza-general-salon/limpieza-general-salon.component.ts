@@ -68,7 +68,7 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
           if (resp.result?.length !== 0 && resp.result !== null) {
             this.dataId = true; //si hay registro entonces se hara un put
             this.activeData = true;
-            this.data = resp.result;
+            this.data = resp.result[0];
             console.log('get data', this.data);
           }
           else {
@@ -257,8 +257,9 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
-          this.router.navigateByUrl('regional/limpieza-general/' + this.branchId);
+          // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+          // this.router.navigateByUrl('regional/limpieza-general/' + this.branchId);
+          window.location.reload();
           this.Ractivo = false;
           this.visibleGuardar = true;
         }
@@ -280,8 +281,9 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
         console.log('data', data);
-        this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
-        this.router.navigateByUrl('regional/limpieza-general/' + this.branchId);
+        // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+        // this.router.navigateByUrl('regional/limpieza-general/' + this.branchId);
+        window.location.reload();
         this.Ractivo = false;
         this.visibleGuardar = true;
       }
