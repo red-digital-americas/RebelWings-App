@@ -49,20 +49,31 @@
           &nbsp;
         </ion-col>
       </ion-row>
+  <!------------------------------------------------------------------------------------------------------------------------------------------->
+      <ion-list>
+        <ion-radio-group [(ngModel)]="radioValue">
 
       <!-- --------------chope clara---------------------- -->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">CHOPE CLARA</span>
+          <!-- <span class="titleProduct">CHOPE CLARA</span> -->
+          <ion-item *ngIf="this.pick1 === 3" color="success">
+            <ion-label >CHOPE CLARA</ion-label>
+            <ion-radio aria-checked="true" slot="end" value="1"></ion-radio>
+          </ion-item>
+          <ion-item *ngIf="this.pick1 !== 3" color="danger">
+            <ion-label>CHOPE CLARA</ion-label>
+            <ion-radio aria-checked="true" slot="end" value="1"></ion-radio>
+          </ion-item>
           <br>
         </ion-col>
-        <ion-col size="6"><span>¿FRIA?</span>
+        <ion-col size="6" *ngIf="this.radioValue === '1'"><span>¿FRIA?</span>
           <br>
           <ion-toggle [(ngModel)]="data.lightBeer"></ion-toggle>
         </ion-col>
 
 
-        <ion-col size="6" *ngIf="this.data.photoDrinksTemperatures.length === 3">
+        <ion-col size="6" *ngIf="this.pick1 === 3 && this.radioValue === '1'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card
             style="height: 9rem"
@@ -78,7 +89,7 @@
           </ion-card>
         </ion-col>
 
-        <ion-col size="6" *ngIf="this.data.photoDrinksTemperatures.length !== 3">
+        <ion-col size="6" *ngIf="this.pick1 !== 3 && this.radioValue === '1'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(1)">
             <div style="margin-top: 2rem">
@@ -88,7 +99,7 @@
         </ion-col>
       </ion-row>
       <!-- ---------fotos chope clara--------------------- -->
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="this.radioValue === '1'">
         <ion-col size="6"></ion-col>
 
         <ion-col size="6">
@@ -108,18 +119,27 @@
       <!-- -------------Chope oscura 2------------------- -->
       <ion-row>
         <ion-col size="12">
-          <span class="titleProduct">
+          <!-- <span class="titleProduct">
             CHOPE OSCURA
-          </span>
+          </span> -->
+          <ion-item *ngIf="this.pick2 === 3" color="success">
+            <ion-label>CHOPE OSCURA</ion-label>
+            <ion-radio slot="end" value="2"></ion-radio>
+          </ion-item>
+
+          <ion-item *ngIf="this.pick2 !== 3" color="danger">
+            <ion-label>CHOPE OSCURA</ion-label>
+            <ion-radio slot="end" value="2"></ion-radio>
+          </ion-item>
           <br>
         </ion-col>
-        <ion-col size="6"><span>¿FRIA?</span>
+        <ion-col size="6" *ngIf="this.radioValue === '2'"><span>¿FRIA?</span>
           <br>
           <ion-toggle [(ngModel)]="data.darkBeer"></ion-toggle>
         </ion-col>
 
 
-        <ion-col size="6" *ngIf="this.data.photoDrinksTemperatures.length === 3">
+        <ion-col size="6" *ngIf="this.pick2 === 3 && this.radioValue === '2'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card
             style="height: 9rem"
@@ -135,7 +155,7 @@
           </ion-card>
         </ion-col>
 
-        <ion-col size="6" *ngIf="this.data.photoDrinksTemperatures.length !== 3">
+        <ion-col size="6" *ngIf="this.pick2 !== 3 && this.radioValue === '2'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(2)">
             <div style="margin-top: 2rem">
@@ -145,7 +165,7 @@
         </ion-col>
       </ion-row>
       <!-- -------------fotos Chope oscura 2------ ----------- -->
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="this.radioValue === '2'">
         <ion-col size="6"></ion-col>
         <ion-col size="6">
           <ion-row>
@@ -164,12 +184,21 @@
       <!-- -------------Elige 5 bebidas aleatorias 3------------------- -->
       <ion-row>
         <ion-col size="12">
-          <span class="titleProduct">Elige 5 bebidas aleatorias</span>
+          <!-- <span class="titleProduct">Elige 5 bebidas aleatorias</span> -->
+          <ion-item *ngIf="this.pick3 === 3" color="success">
+            <ion-label>5 BEBIDAS ALEATORIAS</ion-label>
+            <ion-radio slot="end" value="3"></ion-radio>
+          </ion-item>
+
+          <ion-item *ngIf="this.pick3 !== 3" color="danger">
+            <ion-label>5 BEBIDAS ALEATORIAS</ion-label>
+            <ion-radio slot="end" value="3"></ion-radio>
+          </ion-item>
           <br><br>
-          <span >¿SE ENCUENTRAN FRIAS?</span>
+          <span *ngIf="this.radioValue === '3'">¿SE ENCUENTRAN FRIAS?</span>
         </ion-col>
         <!-- 5 toggle de bebidas -->
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="this.radioValue === '3'">
           <ion-row size="12" class="ion-align-self-center">
             <ion-col size="6">
               <span>BEBIDA 1</span><br>
@@ -195,7 +224,7 @@
         </ion-col>
 
 
-        <ion-col size="6" *ngIf="this.data.photoDrinksTemperatures.length === 3">
+        <ion-col size="6" *ngIf="this.pick3 === 3 && this.radioValue === '3'">
           <ion-label>AGREGA UNA FOTOGRAFIA DE LAS 5 BEBIDAS REVISADAS</ion-label>
           <ion-card
             style="height: 9rem"
@@ -211,7 +240,7 @@
           </ion-card>
         </ion-col>
 
-        <ion-col size="6" *ngIf="this.data.photoDrinksTemperatures.length !== 3">
+        <ion-col size="6" *ngIf="this.pick3 !== 3 && this.radioValue === '3'">
           <ion-label>AGREGA UNA FOTOGRAFIA DE LAS 5 BEBIDAS REVISADAS</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(3)">
             <div style="margin-top: 2rem">
@@ -221,7 +250,7 @@
         </ion-col>
       </ion-row>
       <!-- -------------fotos Elige 5 bebidas aleatorias 3------ ----------- -->
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="this.radioValue === '3'">
         <ion-col size="6"></ion-col>
 
         <ion-col size="6">
@@ -238,6 +267,9 @@
           </ion-row>
         </ion-col>
       </ion-row>
+    </ion-radio-group>
+  </ion-list>
+  <!------------------------------------------------------------------------------------------------------------------------------------------->
       <br><br><br>
     </ion-grid>
   </ion-content>

@@ -26,6 +26,11 @@ export class TemperaturasBebidasSalonComponent implements OnInit {
   public disabled = false;
   public activeData = false;
 
+  public radioValue = '1';
+  public pick1 = 0;
+  public pick2 = 0;
+  public pick3 = 0;
+
   public visibleGuardar = true;
 
   // ******fotos*********
@@ -79,6 +84,14 @@ export class TemperaturasBebidasSalonComponent implements OnInit {
         }
       });
   }
+
+  conteoFotos(){
+    this.pick1 = this.data.photoDrinksTemperatures.filter(pick => pick.type === 1).length;
+    this.pick2 = this.data.photoDrinksTemperatures.filter(pick => pick.type === 2).length;
+    this.pick3 = this.data.photoDrinksTemperatures.filter(pick => pick.type === 3).length;
+
+  }
+
   return() {
     // window.history.back();
     this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
@@ -97,6 +110,7 @@ export class TemperaturasBebidasSalonComponent implements OnInit {
             this.nameBranch = element.titulo;
             this.nameBranch = this.nameBranch.toUpperCase();
             console.log('nombre', this.nameBranch);
+            this.conteoFotos();
           }
         });
       }
@@ -124,6 +138,7 @@ export class TemperaturasBebidasSalonComponent implements OnInit {
       filepath: ''
     });
     console.log('fotos chicken', this.data);
+    this.conteoFotos();
   }
   // acciones para las fotos de limpieza de salon
   public async showActionSheet(photo, position: number) {

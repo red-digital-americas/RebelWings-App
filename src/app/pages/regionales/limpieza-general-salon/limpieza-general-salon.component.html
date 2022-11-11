@@ -69,13 +69,13 @@
       <ion-row size="12">
         <ion-col size="12">
           <!-- <span>LIMPIEZA EN SALON</span> -->
-          <ion-item *ngIf="this.pick1 === 3" color="success">
+          <ion-item *ngIf="this.pick1 !== 0" color="success">
             <ion-label >LIMPIEZA EN SALON</ion-label>
-            <ion-radio aria-checked="true" slot="end" value="1"></ion-radio>
+            <ion-radio  slot="end" value="1" [disabled]="Ractivo"></ion-radio>
           </ion-item>
-          <ion-item *ngIf="this.pick1 !== 3" color="danger">
+          <ion-item *ngIf="this.pick1 === 0" color="danger">
             <ion-label>LIMPIEZA EN SALON</ion-label>
-            <ion-radio aria-checked="true" slot="end" value="1"></ion-radio>
+            <ion-radio  slot="end" value="1" [disabled]="Ractivo"></ion-radio>
           </ion-item>
         </ion-col>
         <ion-col size="6" *ngIf="this.radioValue === '1'"><span>¿SE ENCUENTRA LIMPIO?</span>
@@ -131,14 +131,14 @@
       <ion-row>
         <!-- <ion-col size="12">LIMPIEZA EN CUBETAS</ion-col> -->
         <ion-col size="12">
-          <ion-item *ngIf="this.pick2 === 3" color="success">
+          <ion-item *ngIf="this.pick2 !== 0" color="success">
             <ion-label>LIMPIEZA EN CUBETAS</ion-label>
-            <ion-radio slot="end" value="2"></ion-radio>
+            <ion-radio slot="end" value="2" [disabled]="Ractivo"></ion-radio>
           </ion-item>
 
-          <ion-item *ngIf="this.pick2 !== 3" color="danger">
+          <ion-item *ngIf="this.pick2 === 0" color="danger">
             <ion-label>LIMPIEZA EN CUBETAS</ion-label>
-            <ion-radio slot="end" value="2"></ion-radio>
+            <ion-radio slot="end" value="2" [disabled]="Ractivo"></ion-radio>
           </ion-item>
         </ion-col>
         <ion-col size="6" *ngIf="this.radioValue === '2'"><span>¿SE ENCUENTRAN LIMPIAS?</span>
@@ -193,14 +193,14 @@
       <ion-row>
         <!-- <ion-col size="12">LIMPIEZA EN BOOTHS</ion-col> -->
         <ion-col size="12">
-          <ion-item *ngIf="this.pick3 === 3" color="success">
+          <ion-item *ngIf="this.pick3 !== 0" color="success">
             <ion-label>LIMPIEZA EN BOOTHS</ion-label>
-            <ion-radio slot="end" value="3"></ion-radio>
+            <ion-radio slot="end" value="3" [disabled]="Ractivo"></ion-radio>
           </ion-item>
 
-          <ion-item *ngIf="this.pick3 !== 3" color="danger">
+          <ion-item *ngIf="this.pick3 === 0" color="danger">
             <ion-label>LIMPIEZA EN BOOTHS</ion-label>
-            <ion-radio slot="end" value="3"></ion-radio>
+            <ion-radio slot="end" value="3" [disabled]="Ractivo"></ion-radio>
           </ion-item>
         </ion-col>
         <ion-col size="6" *ngIf="this.radioValue === '3'"><span>¿SE ENCUENTRAN LIMPIOS?</span>

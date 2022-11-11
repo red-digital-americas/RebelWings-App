@@ -35,6 +35,7 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
   public pick2 = 0;
   public pick3 = 0;
   public visibleGuardar = true;
+  public Ractivo = false;
 
 
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
@@ -109,10 +110,7 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
     this.pick1 = this.data.photoGeneralCleanings.filter(pick => pick.type === 1).length;
     this.pick2 = this.data.photoGeneralCleanings.filter(pick => pick.type === 2).length;
     this.pick3 = this.data.photoGeneralCleanings.filter(pick => pick.type === 3).length;
-
   }
-
-  
 
   validateSave() {
     if (
@@ -136,6 +134,7 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
   }
   // agregar fotos de limpieza de salon
   async addPhotoToGallery(idType: number) {
+    this.Ractivo = true;
     this.photoService.limpiaStorage();
     const name = new Date().toISOString();
     await this.photoService.addNewToGallery();
@@ -258,9 +257,12 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
-          //this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
           this.router.navigateByUrl('regional/limpieza-general/' + this.branchId);
+          this.Ractivo = false;
+          this.visibleGuardar = true;
         }
+        
       });
   }
   updateCleanGeneral() {
@@ -270,6 +272,7 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
         if (photo.id !== 0) {
           photo.photoPath = '';
         }
+        
       });
     }
     console.log('Obj To send put => ', this.data);
@@ -277,8 +280,10 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
         console.log('data', data);
-        //this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+        this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
         this.router.navigateByUrl('regional/limpieza-general/' + this.branchId);
+        this.Ractivo = false;
+        this.visibleGuardar = true;
       }
     });
   }
