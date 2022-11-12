@@ -33,7 +33,11 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
   public activeData = false;
   public toggleChicken = true;
 
+  public radioValue = '1'; 
+  public pick1 = 0;
+  public pick2 = 0;
   public visibleGuardar = true;
+  public Ractivo = false;
 
   constructor(public router: Router,
     private camera: Camera,
@@ -102,13 +106,33 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
             this.nameBranch = element.titulo;
             this.nameBranch = this.nameBranch.toUpperCase();
             console.log('nombre', this.nameBranch);
+            this.conteoFotos();
           }
         });
       }
     });
   }
+
+
+  conteoFotos(){
+    this.pick1 = this.data.photoWashBasinWithSoapPapers.filter(pick => pick.type === 1).length;
+    this.pick2 = this.data.photoWashBasinWithSoapPapers.filter(pick => pick.type === 2).length;
+    if(this.data.commentDryer === "" || this.data.commentDryer === undefined ){
+      if(this.data.commentDryer !== "."){
+      this.data.commentDryer = ".";
+      }
+    }
+    if(this.data.commentSoapPaper === "" || this.data.commentSoapPaper === undefined ){
+      if(this.data.commentSoapPaper !== "."){
+        this.data.commentSoapPaper = ".";
+        }
+    }
+  }
+
   // agregar fotos de limpieza de salon
   async addPhotoToGallery(idType: number) {
+    this.Ractivo = true;
+    this.photoService.limpiaStorage();
     const name = new Date().toISOString();
     await this.photoService.addNewToGallery();
     await this.photoService.loadSaved();
@@ -127,6 +151,7 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
       updatedDate: this.today,
     });
     console.log('fotos chicken', this.data);
+    this.conteoFotos();
   }
   // eliminacion de images en storage
   public async showActionSheet(photo, position: number) {
@@ -192,10 +217,10 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
     await actionSheet.present();
   }
   save() {
-    if(this.data.commentSoapPaper === "" || this.data.commentSoapPaper === null  || this.data.commentSoapPaper === undefined || this.data.commentDryer === "" || this.data.commentDryer === null  || this.data.commentDryer === undefined || this.data.photoWashBasinWithSoapPapers.length < 2){
-     this.alertCampos();
-    }
-    else{
+    // if(this.data.commentSoapPaper === "" || this.data.commentSoapPaper === null  || this.data.commentSoapPaper === undefined || this.data.commentDryer === "" || this.data.commentDryer === null  || this.data.commentDryer === undefined || this.data.photoWashBasinWithSoapPapers.length < 2){
+    //  this.alertCampos();
+    // }
+    // else{
     this.load.presentLoading('Guardando..');
     this.visibleGuardar = false;
     this.data.branchId = this.branchId;
@@ -209,7 +234,7 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
     } else {
       this.updateData();
     }
-  }
+  // }
   }
   addData() {
     this.data.createdBy = this.user.id;
@@ -222,7 +247,10 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/3`);
+          // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/3`);
+          window.location.reload();
+          this.Ractivo = false;
+          this.visibleGuardar = true;
         }
       });
   }
@@ -243,7 +271,10 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/3`);
+          // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/3`);
+          window.location.reload();
+          this.Ractivo = false;
+          this.visibleGuardar = true;
         }
       });
   }

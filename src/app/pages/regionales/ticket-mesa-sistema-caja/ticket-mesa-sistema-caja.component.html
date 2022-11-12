@@ -47,6 +47,10 @@
     <!-----------------faslse chicken----------------->
     <ion-grid>
 
+<!----------------------------------------------------------------------------------------------------------------->
+      <ion-list>
+        <ion-radio-group [(ngModel)]="radioValue">      
+
       <ion-row size="12">
         <ion-col size="12">
           <h5 class="description">REALIZA UNA COMPARATIVA DE PRODUCTOS EN UNA MESA ABIERTA VS EL TICKET EN SISTEMA</h5>
@@ -55,12 +59,22 @@
 
       <!--chicken in table-->
       <ion-row>
-        <ion-col size="12">
+        <!-- <ion-col size="12">
           <span class="titleProduct">ALIMENTOS Y BEBIDAS EN MESA</span>
+        </ion-col> -->
+
+        <ion-col size="12">
+          <ion-item *ngIf="this.pick1 !== 0" color="success">
+            <ion-label >ALIMENTOS Y BEBIDAS EN MESA</ion-label>
+            <ion-radio  slot="end" value="1" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+          <ion-item *ngIf="this.pick1 === 0" color="danger">
+            <ion-label>ALIMENTOS Y BEBIDAS EN MESA</ion-label>
+            <ion-radio  slot="end" value="1" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
         </ion-col>
 
-
-        <ion-col size="6" *ngIf="this.data.photoTicketTables.length === 3">
+        <ion-col size="6" *ngIf="this.pick1 === 3 && this.radioValue === '1'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card
             style="height: 9rem"
@@ -76,7 +90,7 @@
           </ion-card>
         </ion-col>
 
-        <ion-col size="6" *ngIf="this.data.photoTicketTables.length !== 3">
+        <ion-col size="6" *ngIf="this.pick1 !== 3 && this.radioValue === '1'">
           <ion-label>FOTOGRAFIA</ion-label>
           <!-- se manda id type 1 para table -->
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(1)">
@@ -85,7 +99,7 @@
             </div>
           </ion-card>
         </ion-col>
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="this.radioValue === '1'">
           <ion-label>COMENTARIO</ion-label>
           <ion-card>
             <ion-textarea [(ngModel)]="data.commentFoodOnTable" rows="6" cols="20" style="margin-top: 2px;">
@@ -93,7 +107,7 @@
           </ion-card>
         </ion-col>
         <!-- fotos  -->
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="this.radioValue === '1'">
           <!-- fotos sin id -->
           <ion-row>
             <ion-col size="6" *ngFor="let photo of data.photoTicketTables; index as position">
@@ -113,12 +127,22 @@
       <!-- chicken general -->
       <ion-row>
         <br>
-        <ion-col size="12">
+        <!-- <ion-col size="12">
           <span class="titleProduct">TICKET DEL SISTEMA</span>
+        </ion-col> -->
+
+        <ion-col size="12">
+          <ion-item *ngIf="this.pick2 !== 0" color="success">
+            <ion-label >TICKET DEL SISTEMA</ion-label>
+            <ion-radio  slot="end" value="2" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+          <ion-item *ngIf="this.pick2 === 0" color="danger">
+            <ion-label>TICKET DEL SISTEMA</ion-label>
+            <ion-radio  slot="end" value="2" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
         </ion-col>
 
-
-        <ion-col size="6" *ngIf="this.data.photoTicketTables.length === 3">
+        <ion-col size="6" *ngIf="this.pick2 === 3 && this.radioValue === '2'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card
             style="height: 9rem"
@@ -134,7 +158,7 @@
           </ion-card>
         </ion-col>
 
-        <ion-col size="6" *ngIf="this.data.photoTicketTables.length !== 3">
+        <ion-col size="6" *ngIf="this.pick2 !== 3 && this.radioValue === '2'">
           <ion-label>FOTOGRAFIA</ion-label>
           <!-- se manda id type 2 para general -->
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(2)">
@@ -143,7 +167,7 @@
             </div>
           </ion-card>
         </ion-col>
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="this.radioValue === '2'">
           <ion-label>COMENTARIO</ion-label>
           <ion-card>
             <ion-textarea [(ngModel)]="data.commentTicket" rows="6" cols="20" style="margin-top: 2px;">
@@ -151,7 +175,7 @@
           </ion-card>
         </ion-col>
         <!-- fotos  -->
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="this.radioValue === '2'">
           <!-- fotos sin id -->
           <ion-row>
             <ion-col size="6" *ngFor="let photo of data.photoTicketTables; index as position">
@@ -167,6 +191,11 @@
         </ion-col>
         <ion-col size="6"></ion-col>
       </ion-row>
+
+    </ion-radio-group>
+  </ion-list>
+ <!------------------------------------------------------------------------------------------------------------------------------------------------>
+
       <br><br>
     </ion-grid>
   </ion-content>

@@ -30,7 +30,11 @@ export class TicketMesaSistemaCajaComponent implements OnInit {
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
   public activeData = false;
 
+  public radioValue = '1'; 
+  public pick1 = 0;
+  public pick2 = 0;
   public visibleGuardar = true;
+  public Ractivo = false;
 
   constructor(public router: Router,
     private camera: Camera,
@@ -90,14 +94,33 @@ export class TicketMesaSistemaCajaComponent implements OnInit {
             this.nameBranch = element.titulo;
             this.nameBranch = this.nameBranch.toUpperCase();
             console.log('nombre', this.nameBranch);
+            this.conteoFotos();
           }
         });
       }
     });
   }
+
+  conteoFotos(){
+    this.pick1 = this.data.photoTicketTables.filter(pick => pick.type === 1).length;
+    this.pick2 = this.data.photoTicketTables.filter(pick => pick.type === 2).length;
+    if(this.data.commentFoodOnTable === "" || this.data.commentFoodOnTable === undefined ){
+      if(this.data.commentFoodOnTable !== " "){
+      this.data.commentFoodOnTable = " ";
+      }
+    }
+    if(this.data.commentTicket === "" || this.data.commentTicket === undefined ){
+      if(this.data.commentTicket !== " "){
+        this.data.commentTicket = " ";
+        }
+    }
+  }
+
   // ---------add product complete----------
 
   async addPhotoToGallery(idType: number) {
+    this.Ractivo = true;
+    this.photoService.limpiaStorage();
     const name = new Date().toISOString();
     await this.photoService.addNewToGallery();
     await this.photoService.loadSaved();
@@ -117,7 +140,7 @@ export class TicketMesaSistemaCajaComponent implements OnInit {
       filepath: ''
     });
     console.log('fotos chicken', this.data);
-
+    this.conteoFotos();
   }
 
   public async showActionSheet(photo, position: number) {
@@ -183,11 +206,11 @@ export class TicketMesaSistemaCajaComponent implements OnInit {
     await actionSheet.present();
   }
   save() {
-    if(this.data.commentFoodOnTable === "" || this.data.commentTicket === "" || this.data.commentFoodOnTable === null || this.data.commentTicket === null
-      || this.data.commentFoodOnTable === undefined || this.data.commentTicket === undefined || this.data.photoTicketTables.length < 2){
-     this.alertCampos();
-    }
-    else{
+    // if(this.data.commentFoodOnTable === "" || this.data.commentTicket === "" || this.data.commentFoodOnTable === null || this.data.commentTicket === null
+    //   || this.data.commentFoodOnTable === undefined || this.data.commentTicket === undefined || this.data.photoTicketTables.length < 2){
+    //  this.alertCampos();
+    // }
+    // else{
     this.visibleGuardar = false;
     this.load.presentLoading('Guardando..');
     this.disabled = true;
@@ -202,7 +225,7 @@ export class TicketMesaSistemaCajaComponent implements OnInit {
     } else {
       this.updateData();
     }
-  }
+  // }
   }
   addData() {
     this.data.createdBy = this.user.id;
@@ -215,7 +238,10 @@ export class TicketMesaSistemaCajaComponent implements OnInit {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/4`);
+          // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/4`);
+          window.location.reload();
+          this.Ractivo = false;
+          this.visibleGuardar = true;
         }
       });
   }
@@ -236,7 +262,10 @@ export class TicketMesaSistemaCajaComponent implements OnInit {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/4`);
+          // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/4`);
+          window.location.reload();
+          this.Ractivo = false;
+          this.visibleGuardar = true;
         }
       });
   }

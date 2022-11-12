@@ -26,7 +26,20 @@ export class CocinaMantenimientoComponent implements OnInit {
   public disabled = false;
   public activeData = false;
 
+  public radioValue = '1'; 
+  public pick1 = 0;
+  public pick2 = 0;
+  public pick3 = 0;
+  public pick4 = 0;
+  public pick5 = 0;
+  public pick6 = 0;
+  public pick7 = 0;
+  public pick8 = 0;
+  public pick9 = 0;
+  public pick10 = 0;
+  public pick11 = 0;
   public visibleGuardar = true;
+  public Ractivo = false;
 
   // ******fotos*********
   public base64 = 'data:image/jpeg;base64';
@@ -107,8 +120,83 @@ export class CocinaMantenimientoComponent implements OnInit {
       }
     });
   }
+
+
+  conteoFotos(){
+    this.pick1 = this.data.photoKitchens.filter(pick => pick.type === 1).length;
+    this.pick2 = this.data.photoKitchens.filter(pick => pick.type === 2).length;
+    this.pick3 = this.data.photoKitchens.filter(pick => pick.type === 3).length;
+    this.pick4 = this.data.photoKitchens.filter(pick => pick.type === 4).length;
+    this.pick5 = this.data.photoKitchens.filter(pick => pick.type === 5).length;
+    this.pick6 = this.data.photoKitchens.filter(pick => pick.type === 6).length;
+    this.pick7 = this.data.photoKitchens.filter(pick => pick.type === 7).length;
+    this.pick8 = this.data.photoKitchens.filter(pick => pick.type === 8).length;
+    this.pick9 = this.data.photoKitchens.filter(pick => pick.type === 9).length;
+    this.pick10 = this.data.photoKitchens.filter(pick => pick.type === 10).length;
+    this.pick11 = this.data.photoKitchens.filter(pick => pick.type === 11).length;
+
+    if(this.data.commentCorrectDistance === "" || this.data.commentCorrectDistance === undefined ){
+      if(this.data.commentCorrectDistance !== " "){
+      this.data.commentCorrectDistance = " ";
+      }
+    }
+    if(this.data.commentDoors === "" || this.data.commentDoors === undefined ){
+      if(this.data.commentDoors!== " "){
+        this.data.commentDoors = " ";
+        }
+    }
+    if(this.data.commentElectricalConnections === "" || this.data.commentElectricalConnections === undefined ){
+      if(this.data.commentElectricalConnections !== " "){
+      this.data.commentElectricalConnections = " ";
+      }
+    }
+    if(this.data.commentExtractor === "" || this.data.commentExtractor === undefined ){
+      if(this.data.commentExtractor !== " "){
+        this.data.commentExtractor = " ";
+        }
+    }
+    if(this.data.commentFryer === "" || this.data.commentFryer === undefined ){
+      if(this.data.commentFryer !== " "){
+      this.data.commentFryer = " ";
+      }
+    }
+    if(this.data.commentInteriorTemperature === "" || this.data.commentInteriorTemperature === undefined ){
+      if(this.data.commentInteriorTemperature !== " "){
+        this.data.commentInteriorTemperature = " ";
+        }
+    }
+    if(this.data.commentLuminaires === "" || this.data.commentLuminaires === undefined ){
+      if(this.data.commentLuminaires !== " "){
+      this.data.commentLuminaires = " ";
+      }
+    }
+    if(this.data.commentMixer === "" || this.data.commentMixer === undefined ){
+      if(this.data.commentMixer !== " "){
+        this.data.commentMixer = " ";
+        }
+    }
+    if(this.data.commentRefrigerator === "" || this.data.commentRefrigerator === undefined ){
+      if(this.data.commentRefrigerator !== " "){
+      this.data.commentRefrigerator = " ";
+      }
+    }
+    if(this.data.commentSink === "" || this.data.commentSink === undefined ){
+      if(this.data.commentSink !== " "){
+        this.data.commentSink = " ";
+        }
+    }
+    if(this.data.commentStrainer === "" || this.data.commentStrainer === undefined ){
+      if(this.data.commentStrainer !== " "){
+      this.data.commentStrainer = " ";
+      }
+    }
+
+  }
+
   // agregar fotos de limpieza de salon
   async addPhotoToGallery(idType: number) {
+    this.Ractivo = true;
+    this.photoService.limpiaStorage();
     const name = new Date().toISOString();
     await this.photoService.addNewToGallery();
     await this.photoService.loadSaved();
@@ -127,6 +215,7 @@ export class CocinaMantenimientoComponent implements OnInit {
       updatedDate: this.today,
     });
     console.log('fotos chicken', this.data);
+    this.conteoFotos();
   }
   // acciones para las fotos de limpieza de salon
   public async showActionSheet(photo, position: number) {
@@ -193,14 +282,14 @@ export class CocinaMantenimientoComponent implements OnInit {
   }
 
   save() {
-    if(this.data.commentCorrectDistance === "" || this.data.commentDoors === "" || this.data.commentElectricalConnections === "" || this.data.commentExtractor === ""
-      || this.data.commentFryer === "" || this.data.commentInteriorTemperature === "" || this.data.commentLuminaires === "" || this.data.commentMixer === "" ||
-      this.data.commentRefrigerator === "" || this.data.commentSink === "" || this.data.commentStrainer === "" || this.data.commentCorrectDistance === undefined || this.data.commentDoors === undefined || this.data.commentElectricalConnections === undefined || this.data.commentExtractor === undefined
-      || this.data.commentFryer === undefined || this.data.commentInteriorTemperature === undefined || this.data.commentLuminaires === undefined || this.data.commentMixer === undefined ||
-      this.data.commentRefrigerator === undefined || this.data.commentSink === undefined || this.data.commentStrainer === undefined || this.data.photoKitchens.length < 11){
-      this.alertCampos();
-    }
-    else{
+    // if(this.data.commentCorrectDistance === "" || this.data.commentDoors === "" || this.data.commentElectricalConnections === "" || this.data.commentExtractor === ""
+    //   || this.data.commentFryer === "" || this.data.commentInteriorTemperature === "" || this.data.commentLuminaires === "" || this.data.commentMixer === "" ||
+    //   this.data.commentRefrigerator === "" || this.data.commentSink === "" || this.data.commentStrainer === "" || this.data.commentCorrectDistance === undefined || this.data.commentDoors === undefined || this.data.commentElectricalConnections === undefined || this.data.commentExtractor === undefined
+    //   || this.data.commentFryer === undefined || this.data.commentInteriorTemperature === undefined || this.data.commentLuminaires === undefined || this.data.commentMixer === undefined ||
+    //   this.data.commentRefrigerator === undefined || this.data.commentSink === undefined || this.data.commentStrainer === undefined || this.data.photoKitchens.length < 11){
+    //   this.alertCampos();
+    // }
+    // else{
     this.visibleGuardar = false;
     this.load.presentLoading('Guardando..');
     this.disabled = true;
@@ -215,7 +304,7 @@ export class CocinaMantenimientoComponent implements OnInit {
     } else {
       this.updateData();
     }
-   }
+  //  }
   }
   addData() {
     this.data.createdBy = this.user.id;
@@ -229,14 +318,17 @@ export class CocinaMantenimientoComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
-          if(this.data.sink === false || this.data.mixer === false || this.data.strainer === false || this.data.fryer === false || this.data.extractor === false 
-            || this.data.refrigerator === false || this.data.interiorTemperature === false || this.data.doors === false || this.data.correctDistance === false 
-            || this.data.electricalConnections === false || this.data.luminaires === false ){
-            this.levantamientoTicket();
-           }
-           else{
-            this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
-           }
+          // if(this.data.sink === false || this.data.mixer === false || this.data.strainer === false || this.data.fryer === false || this.data.extractor === false 
+          //   || this.data.refrigerator === false || this.data.interiorTemperature === false || this.data.doors === false || this.data.correctDistance === false 
+          //   || this.data.electricalConnections === false || this.data.luminaires === false ){
+          //   this.levantamientoTicket();
+          //  }
+          //  else{
+          //   this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
+          //  }
+          window.location.reload();
+          this.Ractivo = false;
+          this.visibleGuardar = true;
           
         }
       });
@@ -249,14 +341,17 @@ export class CocinaMantenimientoComponent implements OnInit {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
         console.log('data', data);
-        if(this.data.sink === false || this.data.mixer === false || this.data.strainer === false || this.data.fryer === false || this.data.extractor === false 
-          || this.data.refrigerator === false || this.data.interiorTemperature === false || this.data.doors === false || this.data.correctDistance === false 
-          || this.data.electricalConnections === false || this.data.luminaires === false ){
-          this.levantamientoTicket();
-         }
-         else{
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
-         }
+        // if(this.data.sink === false || this.data.mixer === false || this.data.strainer === false || this.data.fryer === false || this.data.extractor === false 
+        //   || this.data.refrigerator === false || this.data.interiorTemperature === false || this.data.doors === false || this.data.correctDistance === false 
+        //   || this.data.electricalConnections === false || this.data.luminaires === false ){
+        //   this.levantamientoTicket();
+        //  }
+        //  else{
+        //   this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
+        //  }
+        window.location.reload();
+        this.Ractivo = false;
+        this.visibleGuardar = true;
       }
     });
   }

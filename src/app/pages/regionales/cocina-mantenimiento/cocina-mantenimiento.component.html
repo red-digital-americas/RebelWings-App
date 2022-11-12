@@ -46,6 +46,10 @@
 
     <ion-grid>
 
+<!----------------------------------------------------------------------------------------------------------------->
+<ion-list>
+  <ion-radio-group [(ngModel)]="radioValue"> 
+
       <ion-row size="12">
         <ion-col size="12">
           <h5 class="description">CHECK DE MANTENIMIENTO DEL AREA DE COCINA</h5>
@@ -55,7 +59,17 @@
       <!-------------------tarja--------------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">TARJAS</span>
+          <ion-item *ngIf="this.pick1 !== 0" color="success">
+            <ion-label >TARJAS</ion-label>
+            <ion-radio  slot="end" value="1" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+          <ion-item *ngIf="this.pick1 === 0" color="danger">
+            <ion-label>TARJAS</ion-label>
+            <ion-radio  slot="end" value="1" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" *ngIf="this.radioValue === '1'">
+          <!-- <span class="titleProduct">TARJAS</span> -->
           <br>
           <span>¿SUJETAS Y SIN FUGAS?</span>
           <br>
@@ -66,7 +80,7 @@
       <ion-row size="12">
 
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length === 3">
+        <ion-col size="6" *ngIf="this.pick1 === 3 && this.radioValue === '1'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card
             style="height: 9rem"
@@ -82,7 +96,7 @@
           </ion-card>
         </ion-col>
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length !== 3">
+        <ion-col size="6" *ngIf="this.pick1 !== 3 && this.radioValue === '1'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(1)">
             <div style="margin-top: 2rem">
@@ -90,7 +104,7 @@
             </div>
           </ion-card>
         </ion-col>
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="this.radioValue === '1'">
           <ion-label>COMENTARIO</ion-label>
           <ion-card>
             <ion-textarea [(ngModel)]="data.commentSink" rows="6" cols="20" style="margin-top: 2px;">
@@ -98,7 +112,7 @@
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="this.radioValue === '1'">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
@@ -118,8 +132,20 @@
       </ion-row>
       <!---------------------mezcladora---------------->
       <ion-row size="12">
+
         <ion-col size="12">
-          <span class="titleProduct">MEZCLADORA</span>
+          <ion-item *ngIf="this.pick2 !== 0" color="success">
+            <ion-label >MEZCLADORA</ion-label>
+            <ion-radio  slot="end" value="2" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+          <ion-item *ngIf="this.pick2 === 0" color="danger">
+            <ion-label>MEZCLADORA</ion-label>
+            <ion-radio  slot="end" value="2" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="12" *ngIf="this.radioValue === '2'">
+          <!-- <span class="titleProduct">MEZCLADORA</span> -->
           <br>
           <span>¿FUNCIONANDO?</span>
           <br>
@@ -130,7 +156,7 @@
       <ion-row size="12">
 
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length === 3">
+        <ion-col size="6" *ngIf="this.pick2 === 3 && this.radioValue === '2'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card
             style="height: 9rem"
@@ -146,7 +172,7 @@
           </ion-card>
         </ion-col>
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length !== 3">
+        <ion-col size="6" *ngIf="this.pick2 !== 3 && this.radioValue === '2'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(2)">
             <div style="margin-top: 2rem">
@@ -154,7 +180,7 @@
             </div>
           </ion-card>
         </ion-col>
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="this.radioValue === '2'">
           <ion-label>COMENTARIO</ion-label>
           <ion-card>
             <ion-textarea [(ngModel)]="data.commentMixer" rows="6" cols="20" style="margin-top: 2px;">
@@ -162,7 +188,7 @@
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="this.radioValue === '2'">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
@@ -184,7 +210,17 @@
       <!----------------coladora------------------->
       <ion-row>
         <ion-col size="12">
-          <span class="titleProduct">COLADERAS</span>
+          <ion-item *ngIf="this.pick3 !== 0" color="success">
+            <ion-label >COLADERAS</ion-label>
+            <ion-radio  slot="end" value="3" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+          <ion-item *ngIf="this.pick3 === 0" color="danger">
+            <ion-label>COLADERAS</ion-label>
+            <ion-radio  slot="end" value="3" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" *ngIf="this.radioValue === '3'">
+          <!-- <span class="titleProduct">COLADERAS</span> -->
           <br>
           <span>¿FIJAS CON TRAMPA DE OLOR Y TORNILLERIA?</span>
           <br>
@@ -195,7 +231,7 @@
       <ion-row size="12">
 
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length === 3">
+        <ion-col size="6" *ngIf="this.pick3 === 3 && this.radioValue === '3'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card
             style="height: 9rem"
@@ -211,7 +247,7 @@
           </ion-card>
         </ion-col>
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length !== 3">
+        <ion-col size="6" *ngIf="this.pick3 !== 3 && this.radioValue === '3'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(3)">
             <div style="margin-top: 2rem">
@@ -219,7 +255,7 @@
             </div>
           </ion-card>
         </ion-col>
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="this.radioValue === '3'">
           <ion-label>COMENTARIO</ion-label>
           <ion-card>
             <ion-textarea [(ngModel)]="data.commentStrainer" rows="6" cols="20" style="margin-top: 2px;">
@@ -227,7 +263,7 @@
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="this.radioValue === '3'">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
@@ -250,7 +286,17 @@
       <!----------------Freidoras--------------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">FREIDORAS</span>
+          <ion-item *ngIf="this.pick4 !== 0" color="success">
+            <ion-label >FREIDORAS</ion-label>
+            <ion-radio  slot="end" value="4" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+          <ion-item *ngIf="this.pick4 === 0" color="danger">
+            <ion-label>FREIDORAS</ion-label>
+            <ion-radio  slot="end" value="4" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" *ngIf="this.radioValue === '4'">
+          <!-- <span class="titleProduct">FREIDORAS</span> -->
           <br>
           <span>¿TEMPERATURA CORRECTA?</span>
           <br>
@@ -261,7 +307,7 @@
       <ion-row size="12">
 
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length === 3">
+        <ion-col size="6" *ngIf="this.pick4 === 3 && this.radioValue === '4'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card
             style="height: 9rem"
@@ -277,7 +323,7 @@
           </ion-card>
         </ion-col>
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length !== 3">
+        <ion-col size="6" *ngIf="this.pick4 !== 3 && this.radioValue === '4'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(4)">
             <div style="margin-top: 2rem">
@@ -285,7 +331,7 @@
             </div>
           </ion-card>
         </ion-col>
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="this.radioValue === '4'">
           <ion-label>COMENTARIOS</ion-label>
           <ion-card>
             <ion-textarea [(ngModel)]="data.commentFryer" rows="6" cols="20" style="margin-top: 2px;">
@@ -293,7 +339,7 @@
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="this.radioValue === '4'">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
@@ -316,7 +362,17 @@
       <!-----------------Extracción--------------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">EXTRACCION</span>
+          <ion-item *ngIf="this.pick5 !== 0" color="success">
+            <ion-label >EXTRACCION</ion-label>
+            <ion-radio  slot="end" value="5" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+          <ion-item *ngIf="this.pick5 === 0" color="danger">
+            <ion-label>EXTRACCION</ion-label>
+            <ion-radio  slot="end" value="5" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" *ngIf="this.radioValue === '5'">
+          <!-- <span class="titleProduct">EXTRACCION</span> -->
           <br>
           <span>¿EN BUEN ESTADO?</span>
           <br>
@@ -327,7 +383,7 @@
       <ion-row size="12">
 
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length === 3">
+        <ion-col size="6" *ngIf="this.pick5 === 3 && this.radioValue === '5'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card
             style="height: 9rem"
@@ -343,7 +399,7 @@
           </ion-card>
         </ion-col>
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length !== 3">
+        <ion-col size="6" *ngIf="this.pick5 !== 3 && this.radioValue === '5'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(5)">
             <div style="margin-top: 2rem">
@@ -351,7 +407,7 @@
             </div>
           </ion-card>
         </ion-col>
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="this.radioValue === '5'">
           <ion-label>COMENTARIO</ion-label>
           <ion-card>
             <ion-textarea [(ngModel)]="data.commentExtractor" rows="6" cols="20" style="margin-top: 2px;">
@@ -359,7 +415,7 @@
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="this.radioValue === '5'">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
@@ -382,7 +438,17 @@
       <!----------------Refrigeradores------------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">REFRIGERADORES</span>
+          <ion-item *ngIf="this.pick9 !== 0" color="success">
+            <ion-label >REFRIGERADORES</ion-label>
+            <ion-radio  slot="end" value="9" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+          <ion-item *ngIf="this.pick9 === 0" color="danger">
+            <ion-label>REFRIGERADORES</ion-label>
+            <ion-radio  slot="end" value="9" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" *ngIf="this.radioValue === '9'">
+          <!-- <span class="titleProduct">REFRIGERADORES</span> -->
           <br>
           <span>¿EN BUEN ESTADO?</span>
           <br>
@@ -393,7 +459,7 @@
       <ion-row size="12">
 
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length === 3">
+        <ion-col size="6" *ngIf="this.pick9 === 3 && this.radioValue === '9'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card
             style="height: 9rem"
@@ -409,7 +475,7 @@
           </ion-card>
         </ion-col>
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length !== 3">
+        <ion-col size="6" *ngIf="this.pick9 !== 3 && this.radioValue === '9'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(9)">
             <div style="margin-top: 2rem">
@@ -417,7 +483,7 @@
             </div>
           </ion-card>
         </ion-col>
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="this.radioValue === '9'">
           <ion-label>COMENTARIOS</ion-label>
           <ion-card>
             <ion-textarea [(ngModel)]="data.commentRefrigerator" rows="6" cols="20" style="margin-top: 2px;">
@@ -425,7 +491,7 @@
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="this.radioValue === '9'">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
@@ -447,7 +513,17 @@
       <!-------------Temperatura interior---------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">REFRIGERADORES</span>
+          <ion-item *ngIf="this.pick6 !== 0" color="success">
+            <ion-label >REFRIGERADORES</ion-label>
+            <ion-radio  slot="end" value="6" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+          <ion-item *ngIf="this.pick6 === 0" color="danger">
+            <ion-label>REFRIGERADORES</ion-label>
+            <ion-radio  slot="end" value="6" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" *ngIf="this.radioValue === '6'">
+          <!-- <span class="titleProduct">REFRIGERADORES</span> -->
           <br>
           <span>¿TEMPERATURA CORRECTA?</span>
           <br>
@@ -458,7 +534,7 @@
       <ion-row size="12">
 
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length === 3">
+        <ion-col size="6" *ngIf="this.pick6 === 3 && this.radioValue === '6'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card
             style="height: 9rem"
@@ -474,7 +550,7 @@
           </ion-card>
         </ion-col>
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length !== 3">
+        <ion-col size="6" *ngIf="this.pick6 !== 3 && this.radioValue === '6'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(6)">
             <div style="margin-top: 2rem">
@@ -482,7 +558,7 @@
             </div>
           </ion-card>
         </ion-col>
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="this.radioValue === '6'">
           <ion-label>COMENTARIO</ion-label>
           <ion-card>
             <ion-textarea [(ngModel)]="data.commentInteriorTemperature" rows="6" cols="20" style="margin-top: 2px;">
@@ -490,7 +566,7 @@
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="this.radioValue === '6'">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
@@ -513,7 +589,17 @@
       <!---------------Puertas--------------------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">REFRIGERADORES</span>
+          <ion-item *ngIf="this.pick7 !== 0" color="success">
+            <ion-label >REFRIGERADORES</ion-label>
+            <ion-radio  slot="end" value="7" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+          <ion-item *ngIf="this.pick7 === 0" color="danger">
+            <ion-label>REFRIGERADORES</ion-label>
+            <ion-radio  slot="end" value="7" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" *ngIf="this.radioValue === '7'">
+          <!-- <span class="titleProduct">REFRIGERADORES</span> -->
           <br>
           <span>¿LAS PUERTAS SELLAN CORRECTAMENTE?</span>
           <br>
@@ -524,7 +610,7 @@
       <ion-row size="12">
 
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length === 3">
+        <ion-col size="6" *ngIf="this.pick7 === 3 && this.radioValue === '7'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card
             style="height: 9rem"
@@ -540,7 +626,7 @@
           </ion-card>
         </ion-col>
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length !== 3">
+        <ion-col size="6" *ngIf="this.pick7 !== 3 && this.radioValue === '7'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(7)">
             <div style="margin-top: 2rem">
@@ -548,7 +634,7 @@
             </div>
           </ion-card>
         </ion-col>
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="this.radioValue === '7'">
           <ion-label>COMENTARIO</ion-label>
           <ion-card>
             <ion-textarea [(ngModel)]="data.commentDoors" rows="6" cols="20" style="margin-top: 2px;">
@@ -556,7 +642,7 @@
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="this.radioValue === '7'">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
@@ -579,7 +665,17 @@
       <!-------Distancia correcta hacia la pared--------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">REFRIGERADORES</span>
+          <ion-item *ngIf="this.pick8 !== 0" color="success">
+            <ion-label >REFRIGERADORES</ion-label>
+            <ion-radio  slot="end" value="8" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+          <ion-item *ngIf="this.pick8 === 0" color="danger">
+            <ion-label>REFRIGERADORES</ion-label>
+            <ion-radio  slot="end" value="8" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" *ngIf="this.radioValue === '8'"> 
+          <!-- <span class="titleProduct">REFRIGERADORES</span> -->
           <br>
           <span>¿TIENEN LA DISTANCIA CORRECTA HACIA LA PARED?</span>
           <br>
@@ -590,7 +686,7 @@
       <ion-row size="12">
 
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length === 3">
+        <ion-col size="6" *ngIf="this.pick8 === 3 && this.radioValue === '8'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card
             style="height: 9rem"
@@ -606,7 +702,7 @@
           </ion-card>
         </ion-col>
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length !== 3">
+        <ion-col size="6" *ngIf="this.pick8 !== 3 && this.radioValue === '8'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(8)">
             <div style="margin-top: 2rem">
@@ -614,7 +710,7 @@
             </div>
           </ion-card>
         </ion-col>
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="this.radioValue === '8'">
           <ion-label>COMENTARIO</ion-label>
           <ion-card>
             <ion-textarea [(ngModel)]="data.commentCorrectDistance" rows="6" cols="20" style="margin-top: 2px;">
@@ -622,7 +718,7 @@
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="this.radioValue === '8'">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
@@ -644,7 +740,17 @@
       <!-----------Conexiones eléctricas-------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">CONEXIONES ELECTRICAS</span>
+          <ion-item *ngIf="this.pick10 !== 0" color="success">
+            <ion-label >CONEXIONES ELECTRICAS</ion-label>
+            <ion-radio  slot="end" value="10" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+          <ion-item *ngIf="this.pick10 === 0" color="danger">
+            <ion-label>CONEXIONES ELECTRICAS</ion-label>
+            <ion-radio  slot="end" value="10" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" *ngIf="this.radioValue === '10'">
+          <!-- <span class="titleProduct">CONEXIONES ELECTRICAS</span> -->
           <br>
           <span>¿EN BUEN ESTADO?</span>
           <br>
@@ -655,7 +761,7 @@
       <ion-row size="12">
 
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length === 3">
+        <ion-col size="6" *ngIf="this.pick10 === 3 && this.radioValue === '10'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card
             style="height: 9rem"
@@ -671,7 +777,7 @@
           </ion-card>
         </ion-col>
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length !== 3">
+        <ion-col size="6" *ngIf="this.pick10 !== 3 && this.radioValue === '10'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(10)">
             <div style="margin-top: 2rem">
@@ -679,7 +785,7 @@
             </div>
           </ion-card>
         </ion-col>
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="this.radioValue === '10'">
           <ion-label>COMENTARIO</ion-label>
           <ion-card>
             <ion-textarea [(ngModel)]="data.commentElectricalConnections" rows="6" cols="20" style="margin-top: 2px;">
@@ -687,7 +793,7 @@
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="this.radioValue === '10'">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
@@ -709,7 +815,17 @@
       <!-------------Luminarias--------------------------->
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">LUMINARIAS</span>
+          <ion-item *ngIf="this.pick11 !== 0" color="success">
+            <ion-label >LUMINARIAS</ion-label>
+            <ion-radio  slot="end" value="11" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+          <ion-item *ngIf="this.pick11 === 0" color="danger">
+            <ion-label>LUMINARIAS</ion-label>
+            <ion-radio  slot="end" value="11" [disabled]="Ractivo"></ion-radio>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" *ngIf="this.radioValue === '11'">
+          <!-- <span class="titleProduct">LUMINARIAS</span> -->
           <br>
           <span>COMPLETAS Y FUNCIONANDO</span>
           <br>
@@ -720,7 +836,7 @@
       <ion-row size="12">
 
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length === 3">
+        <ion-col size="6" *ngIf="this.pick11 === 3 && this.radioValue === '11'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card
             style="height: 9rem"
@@ -736,7 +852,7 @@
           </ion-card>
         </ion-col>
 
-        <ion-col size="6" *ngIf="this.data.photoKitchens.length !== 3">
+        <ion-col size="6" *ngIf="this.pick11 !== 3 && this.radioValue === '11'">
           <ion-label>FOTOGRAFIA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(11)">
             <div style="margin-top: 2rem">
@@ -744,7 +860,7 @@
             </div>
           </ion-card>
         </ion-col>
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="this.radioValue === '11'">
           <ion-label>COMENTARIO</ion-label>
           <ion-card>
             <ion-textarea [(ngModel)]="data.commentLuminaires" rows="6" cols="20" style="margin-top: 2px;">
@@ -752,7 +868,7 @@
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row  size="12">
+      <ion-row  size="12" *ngIf="this.radioValue === '11'">
         <ion-col size="6">
           <!-- fotos sin id -->
           <ion-row>
@@ -770,6 +886,10 @@
         </ion-col>
         <ion-col size="6"></ion-col>
       </ion-row>
+
+    </ion-radio-group>
+  </ion-list>
+ <!------------------------------------------------------------------------------------------------------------------------------------------------>
       <br><br><br>
     </ion-grid>
   </ion-content>

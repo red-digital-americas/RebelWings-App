@@ -153,7 +153,7 @@ export class FocosSalonComponent implements OnInit {
           this.Ractivo = false;
           this.visibleGuardar = true;
           // if(this.data.brokenSpotlight === false){
-          this.levantamientoTicket();
+          //this.levantamientoTicket();
           // }
           // else{
           // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
