@@ -1,6 +1,6 @@
 import { DialogNotificationComponent } from './pages/nav/dialog-notification/dialog-notification.component';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -72,6 +72,7 @@ import { FormatePipePipe } from './pages/shared/formate-pipe.pipe';
   providers: [
     LoaderComponent,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
     Camera,
     Dialogs,
     DatePipe,
