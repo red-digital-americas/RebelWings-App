@@ -28,7 +28,13 @@ export class BanosMantenimientoComponent implements OnInit {
   public base64 = 'data:image/jpeg;base64';
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
 
+  public radioValue = '1'; 
+  public pick1 = 0;
+  public pick2 = 0;
+  public pick3 = 0;
+  public pick4 = 0;
   public visibleGuardar = true;
+  public Ractivo = false;
 
   constructor(public router: Router,
     public routerActive: ActivatedRoute,
@@ -93,14 +99,48 @@ export class BanosMantenimientoComponent implements OnInit {
             this.nameBranch = element.titulo;
             this.nameBranch = this.nameBranch.toUpperCase();
             console.log('nombre', this.nameBranch);
+            this.conteoFotos();
           }
         });
       }
     });
   }
 
+  conteoFotos(){
+    this.pick1 = this.data.photoBathrooms.filter(pick => pick.type === 1).length;
+    this.pick2 = this.data.photoBathrooms.filter(pick => pick.type === 2).length;
+    this.pick3 = this.data.photoBathrooms.filter(pick => pick.type === 3).length;
+    this.pick4 = this.data.photoBathrooms.filter(pick => pick.type === 4).length;
+
+
+    if(this.data.commentDoors === "" || this.data.commentDoors === undefined ){
+      if(this.data.commentDoors  !== " "){
+      this.data.commentDoors  = " ";
+      }
+    }
+    if(this.data.commentHandWashBasin === "" || this.data.commentHandWashBasin === undefined ){
+      if(this.data.commentHandWashBasin !== " "){
+        this.data.commentHandWashBasin = " ";
+        }
+    }
+    if(this.data.commentLuminaires === "" || this.data.commentLuminaires === undefined ){
+      if(this.data.commentLuminaires !== " "){
+      this.data.commentLuminaires = " ";
+      }
+    }
+    if(this.data.commentUrinals === "" || this.data.commentUrinals === undefined ){
+      if(this.data.commentUrinals !== " "){
+        this.data.commentUrinals = " ";
+        }
+    }
+
+
+  }
+
   // agregar fotos de limpieza de salon
   async addPhotoToGallery(idType: number) {
+    this.Ractivo = true;
+    this.photoService.limpiaStorage();
     const name = new Date().toISOString();
     await this.photoService.addNewToGallery();
     await this.photoService.loadSaved();
@@ -119,6 +159,7 @@ export class BanosMantenimientoComponent implements OnInit {
       updatedDate: this.today,
     });
     console.log('fotos chicken', this.data);
+    this.conteoFotos();
   }
   // acciones para las fotos de limpieza de salon
   public async showActionSheet(photo, position: number) {
@@ -185,11 +226,11 @@ export class BanosMantenimientoComponent implements OnInit {
   }
 
   save() {
-    if(this.data.commentDoors === undefined || this.data.commentHandWashBasin === undefined || this.data.commentLuminaires === undefined || this.data.commentUrinals === undefined
-      || this.data.commentDoors === "" || this.data.commentHandWashBasin === "" || this.data.commentLuminaires === "" || this.data.commentUrinals === "" || this.data.photoBathrooms.length < 4){
-      this.alertCampos();
-    }
-    else{
+    // if(this.data.commentDoors === undefined || this.data.commentHandWashBasin === undefined || this.data.commentLuminaires === undefined || this.data.commentUrinals === undefined
+    //   || this.data.commentDoors === "" || this.data.commentHandWashBasin === "" || this.data.commentLuminaires === "" || this.data.commentUrinals === "" || this.data.photoBathrooms.length < 4){
+    //   this.alertCampos();
+    // }
+    // else{
     this.load.presentLoading('Guardando..');
     this.visibleGuardar = false;
     this.disabled = true;
@@ -204,7 +245,7 @@ export class BanosMantenimientoComponent implements OnInit {
     } else {
       this.updateData();
     }
-  }
+  // }
   }
   addData() {
     this.data.createdBy = this.user.id;
@@ -218,12 +259,15 @@ export class BanosMantenimientoComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
-          if(this.data.urinals === false || this.data.handWashBasin === false || this.data.luminaires === false || this.data.doors === false){
-             this.levantamientoTicket();
-          }
-          else{
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
-          }
+          // if(this.data.urinals === false || this.data.handWashBasin === false || this.data.luminaires === false || this.data.doors === false){
+          //    this.levantamientoTicket();
+          // }
+          // else{
+          // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
+          // }
+          window.location.reload();
+          this.Ractivo = false;
+          this.visibleGuardar = true;
         }
       });
   }
@@ -235,12 +279,15 @@ export class BanosMantenimientoComponent implements OnInit {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
         console.log('data', data);
-       if(this.data.urinals === false || this.data.handWashBasin === false || this.data.luminaires === false || this.data.doors === false){
-          this.levantamientoTicket();
-       }
-       else{
-       this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
-       }
+      //  if(this.data.urinals === false || this.data.handWashBasin === false || this.data.luminaires === false || this.data.doors === false){
+      //     this.levantamientoTicket();
+      //  }
+      //  else{
+      //  this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
+      //  }
+      window.location.reload();
+      this.Ractivo = false;
+      this.visibleGuardar = true;
       }
     });
   }

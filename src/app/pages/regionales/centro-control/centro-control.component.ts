@@ -270,9 +270,9 @@ export class CentroControlComponent implements OnInit {
   //---------------------- baño---------------------
 
   lavabosBano() {
-    if(this.data[1].isComplete == false){
+    // if(this.data[1].isComplete == false){
     this.router.navigateByUrl('regional/lavabos-jabon-papel/' + this.branchId);
-    }
+    // }
   }
   estadoGeneral() {
     if(this.data[0].isComplete == false){
@@ -281,9 +281,9 @@ export class CentroControlComponent implements OnInit {
   }
   //---------------------- sistema y caja---------------------
   ticketMesa() {
-    if(this.data[0].isComplete == false){
+    // if(this.data[0].isComplete == false){
     this.router.navigateByUrl('regional/ticket-mesa/' + this.branchId);
-    }
+    // }
   }
   entradasCargadas() {
     if(this.data[1].isComplete == false){
@@ -302,24 +302,24 @@ export class CentroControlComponent implements OnInit {
   }
   //---------------------- MANTENIMIENTO---------------------
   cocinaMantenimiento() {
-    if(this.data[0].isComplete == false){
+    // if(this.data[0].isComplete == false){
     this.router.navigateByUrl('regional/cocina-mantenimiento/' + this.branchId);
-    }
+    // }
   }
   salonMantenimiento() {
-    if(this.data[1].isComplete == false){
+    // if(this.data[1].isComplete == false){
     this.router.navigateByUrl('regional/salon-mantenimiento/' + this.branchId);
-    }
+    // }
   }
   banosMantenimiento() {
-    if(this.data[2].isComplete == false){
+    // if(this.data[2].isComplete == false){
     this.router.navigateByUrl('regional/baño-mantenimiento/' + this.branchId);
-    }
+    // }
   }
   barraMantenimiento() {
-    if(this.data[3].isComplete == false){
+    // if(this.data[3].isComplete == false){
     this.router.navigateByUrl('regional/barra-mantenimiento/' + this.branchId);
-    }
+    // }
   }
   async cerrarSesion() {
     console.log('cerrar sesion');

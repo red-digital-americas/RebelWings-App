@@ -27,7 +27,17 @@ export class SalonMantenimientoComponent implements OnInit {
   public disabled = false;
   public activeData = false;
 
+  public radioValue = '1'; 
+  public pick1 = 0;
+  public pick2 = 0;
+  public pick3 = 0;
+  public pick4 = 0;
+  public pick5 = 0;
+  public pick6 = 0;
+  public pick7 = 0;
+  public pick8 = 0;
   public visibleGuardar = true;
+  public Ractivo = false;
 
   // ******fotos*********
   public base64 = 'data:image/jpeg;base64';
@@ -96,14 +106,72 @@ export class SalonMantenimientoComponent implements OnInit {
             this.nameBranch = element.titulo;
             this.nameBranch = this.nameBranch.toUpperCase();
             console.log('nombre', this.nameBranch);
+            this.conteoFotos();
           }
         });
       }
     });
   }
 
+  conteoFotos(){
+    this.pick1 = this.data.photoSalons.filter(pick => pick.type === 1).length;
+    this.pick2 = this.data.photoSalons.filter(pick => pick.type === 2).length;
+    this.pick3 = this.data.photoSalons.filter(pick => pick.type === 3).length;
+    this.pick4 = this.data.photoSalons.filter(pick => pick.type === 4).length;
+    this.pick5 = this.data.photoSalons.filter(pick => pick.type === 5).length;
+    this.pick6 = this.data.photoSalons.filter(pick => pick.type === 6).length;
+    this.pick7 = this.data.photoSalons.filter(pick => pick.type === 7).length;
+    this.pick8 = this.data.photoSalons.filter(pick => pick.type === 8).length;
+
+
+    if(this.data.commentAccessDoors === "" || this.data.commentAccessDoors=== undefined ){
+      if(this.data.commentAccessDoors !== " "){
+      this.data.commentAccessDoors = " ";
+      }
+    }
+    if(this.data.commentBadges === "" || this.data.commentBadges === undefined ){
+      if(this.data.commentBadges!== " "){
+        this.data.commentBadges = " ";
+        }
+    }
+    if(this.data.commentBoths === "" || this.data.commentBoths === undefined ){
+      if(this.data.commentBoths !== " "){
+      this.data.commentBoths = " ";
+      }
+    }
+    if(this.data.commentFireExtinguishers === "" || this.data.commentFireExtinguishers === undefined ){
+      if(this.data.commentFireExtinguishers !== " "){
+        this.data.commentFireExtinguishers = " ";
+        }
+    }
+    if(this.data.commentFurnitureOne === "" || this.data.commentFurnitureOne === undefined ){
+      if(this.data.commentFurnitureOne !== " "){
+      this.data.commentFurnitureOne = " ";
+      }
+    }
+    if(this.data.commentFurnitureTwo === "" || this.data.commentFurnitureTwo === undefined ){
+      if(this.data.commentFurnitureTwo !== " "){
+        this.data.commentFurnitureTwo = " ";
+        }
+    }
+    if(this.data.commentLuminaires === "" || this.data.commentLuminaires === undefined ){
+      if(this.data.commentLuminaires !== " "){
+      this.data.commentLuminaires = " ";
+      }
+    }
+    if(this.data.commentSwitches === "" || this.data.commentSwitches=== undefined ){
+      if(this.data.commentSwitches !== " "){
+        this.data.commentSwitches = " ";
+        }
+    }
+
+
+  }
+
   // agregar fotos de limpieza de salon
   async addPhotoToGallery(idType: number) {
+    this.Ractivo = true;
+    this.photoService.limpiaStorage();
     const name = new Date().toISOString();
     await this.photoService.addNewToGallery();
     await this.photoService.loadSaved();
@@ -122,6 +190,7 @@ export class SalonMantenimientoComponent implements OnInit {
       updatedDate: this.today,
     });
     console.log('fotos chicken', this.data);
+    this.conteoFotos();
   }
   // acciones para las fotos de limpieza de salon
   public async showActionSheet(photo, position: number) {
@@ -192,13 +261,13 @@ export class SalonMantenimientoComponent implements OnInit {
   }
   save() {
 
-    if(this.data.commentAccessDoors === undefined || this.data.commentBadges === undefined || this.data.commentBoths === undefined || this.data.commentFireExtinguishers === undefined
-      || this.data.commentFurnitureOne === undefined || this.data.commentFurnitureTwo === undefined || this.data.commentLuminaires === undefined || this.data.commentSwitches === undefined
-      ||this.data.commentAccessDoors === "" || this.data.commentBadges === "" || this.data.commentBoths === "" || this.data.commentFireExtinguishers === ""
-      || this.data.commentFurnitureOne === "" || this.data.commentFurnitureTwo === "" || this.data.commentLuminaires === "" || this.data.commentSwitches === "" || this.data.photoSalons.length < 8){
-     this.alertCampos();
-    }
-    else{
+    // if(this.data.commentAccessDoors === undefined || this.data.commentBadges === undefined || this.data.commentBoths === undefined || this.data.commentFireExtinguishers === undefined
+    //   || this.data.commentFurnitureOne === undefined || this.data.commentFurnitureTwo === undefined || this.data.commentLuminaires === undefined || this.data.commentSwitches === undefined
+    //   ||this.data.commentAccessDoors === "" || this.data.commentBadges === "" || this.data.commentBoths === "" || this.data.commentFireExtinguishers === ""
+    //   || this.data.commentFurnitureOne === "" || this.data.commentFurnitureTwo === "" || this.data.commentLuminaires === "" || this.data.commentSwitches === "" || this.data.photoSalons.length < 8){
+    //  this.alertCampos();
+    // }
+    // else{
     this.load.presentLoading('Guardando..');
     this.visibleGuardar = false;
     this.disabled = true;
@@ -213,7 +282,7 @@ export class SalonMantenimientoComponent implements OnInit {
     } else {
       this.updateData();
     }
-  }
+  // }
   }
   addData() {
     this.data.createdBy = this.user.id;
@@ -225,13 +294,16 @@ export class SalonMantenimientoComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
-          if(this.data.accessDoors === false || this.data.badges === false || this.data.luminaires === false || this.data.switches === false || this.data.furnitureOne === false
-            || this.data.furnitureTwo === false || this.data.boths === false || this.data.fireExtinguishers === false){
-           this.levantamientoTicket();
-          }
-          else{
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
-          }
+          // if(this.data.accessDoors === false || this.data.badges === false || this.data.luminaires === false || this.data.switches === false || this.data.furnitureOne === false
+          //   || this.data.furnitureTwo === false || this.data.boths === false || this.data.fireExtinguishers === false){
+          //  this.levantamientoTicket();
+          // }
+          // else{
+          // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
+          // }
+          window.location.reload();
+          this.Ractivo = false;
+          this.visibleGuardar = true;
         }
       });
   }
@@ -241,13 +313,16 @@ export class SalonMantenimientoComponent implements OnInit {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
         console.log('data', data);
-        if(this.data.accessDoors === false || this.data.badges === false || this.data.luminaires === false || this.data.switches === false || this.data.furnitureOne === false
-          || this.data.furnitureTwo === false || this.data.boths === false || this.data.fireExtinguishers === false){
-         this.levantamientoTicket();
-        }
-        else{
-        this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
-        }
+        // if(this.data.accessDoors === false || this.data.badges === false || this.data.luminaires === false || this.data.switches === false || this.data.furnitureOne === false
+        //   || this.data.furnitureTwo === false || this.data.boths === false || this.data.fireExtinguishers === false){
+        //  this.levantamientoTicket();
+        // }
+        // else{
+        // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
+        // }
+        window.location.reload();
+        this.Ractivo = false;
+        this.visibleGuardar = true;
       }
     });
   }

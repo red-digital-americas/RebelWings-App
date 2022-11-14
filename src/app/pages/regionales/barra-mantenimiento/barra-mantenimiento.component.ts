@@ -29,7 +29,13 @@ export class BarraMantenimientoComponent implements OnInit {
   public base64 = 'data:image/jpeg;base64';
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
 
+  public radioValue = '1'; 
+  public pick1 = 0;
+  public pick2 = 0;
+  public pick3 = 0;
+  public pick4 = 0;
   public visibleGuardar = true;
+  public Ractivo = false;
 
   constructor(public router: Router,
     public routerActive: ActivatedRoute,
@@ -93,14 +99,48 @@ export class BarraMantenimientoComponent implements OnInit {
             this.nameBranch = element.titulo;
             this.nameBranch = this.nameBranch.toUpperCase();
             console.log('nombre', this.nameBranch);
+            this.conteoFotos();
           }
         });
       }
     });
   }
 
+  conteoFotos(){
+    this.pick1 = this.data.photoBars.filter(pick => pick.type === 1).length;
+    this.pick2 = this.data.photoBars.filter(pick => pick.type === 2).length;
+    this.pick3 = this.data.photoBars.filter(pick => pick.type === 3).length;
+    this.pick4 = this.data.photoBars.filter(pick => pick.type === 4).length;
+
+
+    if(this.data.commentElectricalConnections === "" || this.data.commentElectricalConnections === undefined ){
+      if(this.data.commentElectricalConnections  !== " "){
+      this.data.commentElectricalConnections  = " ";
+      }
+    }
+    if(this.data.commentMixer === "" || this.data.commentMixer === undefined ){
+      if(this.data.commentMixer !== " "){
+        this.data.commentMixer = " ";
+        }
+    }
+    if(this.data.commentRefrigerator === "" || this.data.commentRefrigerator === undefined ){
+      if(this.data.commentRefrigerator !== " "){
+      this.data.commentRefrigerator = " ";
+      }
+    }
+    if(this.data.commentSink === "" || this.data.commentSink === undefined ){
+      if(this.data.commentSink !== " "){
+        this.data.commentSink = " ";
+        }
+    }
+
+
+  }
+
   // agregar fotos de limpieza de salon
   async addPhotoToGallery(idType: number) {
+    this.Ractivo = true;
+    this.photoService.limpiaStorage();
     const name = new Date().toISOString();
     await this.photoService.addNewToGallery();
     await this.photoService.loadSaved();
@@ -119,6 +159,7 @@ export class BarraMantenimientoComponent implements OnInit {
       updatedDate: this.today,
     });
     console.log('fotos chicken', this.data);
+    this.conteoFotos();
   }
   // acciones para las fotos de limpieza de salon
   public async showActionSheet(photo, position: number) {
@@ -185,11 +226,11 @@ export class BarraMantenimientoComponent implements OnInit {
   }
 
   save() {
-    if(this.data.commentElectricalConnections === undefined || this.data.commentMixer === undefined || this.data.commentRefrigerator === undefined || this.data.commentSink === undefined
-      || this.data.commentElectricalConnections === "" || this.data.commentMixer === "" || this.data.commentRefrigerator === "" || this.data.commentSink === "" || this.data.photoBars.length < 4){
-      this.alertCampos();
-    }
-    else{
+    // if(this.data.commentElectricalConnections === undefined || this.data.commentMixer === undefined || this.data.commentRefrigerator === undefined || this.data.commentSink === undefined
+    //   || this.data.commentElectricalConnections === "" || this.data.commentMixer === "" || this.data.commentRefrigerator === "" || this.data.commentSink === "" || this.data.photoBars.length < 4){
+    //   this.alertCampos();
+    // }
+    // else{
     this.visibleGuardar = false;
     this.load.presentLoading('Guardando..');
     this.disabled = true;
@@ -204,7 +245,7 @@ export class BarraMantenimientoComponent implements OnInit {
     } else {
       this.updateData();
     }
-  }
+  // }
   }
   addData() {
     this.data.createdBy = this.user.id;
@@ -216,12 +257,15 @@ export class BarraMantenimientoComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
-          if(this.data.sink === false || this.data.mixer === false || this.data.refrigerator === false || this.data.electricalConnections === false){
-            this.levantamientoTicket();
-          }
-          else{
-          this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
-          }
+          // if(this.data.sink === false || this.data.mixer === false || this.data.refrigerator === false || this.data.electricalConnections === false){
+          //   this.levantamientoTicket();
+          // }
+          // else{
+          // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
+          // }
+          window.location.reload();
+          this.Ractivo = false;
+          this.visibleGuardar = true;
         }
       });
   }
@@ -231,12 +275,16 @@ export class BarraMantenimientoComponent implements OnInit {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
         console.log('data', data);
-        if(this.data.sink === false || this.data.mixer === false || this.data.refrigerator === false || this.data.electricalConnections === false){
-          this.levantamientoTicket();
-        }
-        else{
-        this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
-        }
+        // if(this.data.sink === false || this.data.mixer === false || this.data.refrigerator === false || this.data.electricalConnections === false){
+        //   this.levantamientoTicket();
+        // }
+        // else{
+        // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
+        // }
+        window.location.reload();
+        this.Ractivo = false;
+        this.visibleGuardar = true;
+        
       }
     });
   }
