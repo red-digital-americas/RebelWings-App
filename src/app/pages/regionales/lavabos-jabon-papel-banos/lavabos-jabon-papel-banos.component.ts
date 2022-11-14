@@ -260,7 +260,7 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
           // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/3`);
-          window.location.reload();
+          //window.location.reload();
           this.Ractivo = false;
           this.visibleGuardar = true;
         }

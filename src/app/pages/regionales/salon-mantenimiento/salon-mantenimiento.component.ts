@@ -301,7 +301,7 @@ export class SalonMantenimientoComponent implements OnInit {
           // else{
           // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
           // }
-          window.location.reload();
+          //window.location.reload();
           this.Ractivo = false;
           this.visibleGuardar = true;
         }

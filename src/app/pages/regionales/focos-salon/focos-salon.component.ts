@@ -181,7 +181,7 @@ export class FocosSalonComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
-          window.location.reload();
+          //window.location.reload();
           this.Ractivo = false;
           this.visibleGuardar = true;
           // if(this.data.brokenSpotlight === false){

@@ -245,7 +245,7 @@ export class TemperaturasBebidasSalonComponent implements OnInit {
           console.log('data', data);
           // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
           // this.router.navigateByUrl('regional/temperatura-bebidas/' + this.branchId);
-          window.location.reload();
+          //window.location.reload();
           this.Ractivo = false;
           this.visibleGuardar = true;
         }
