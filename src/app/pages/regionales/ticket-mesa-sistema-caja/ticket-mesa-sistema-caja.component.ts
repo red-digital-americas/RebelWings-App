@@ -31,6 +31,8 @@ export class TicketMesaSistemaCajaComponent implements OnInit {
   public activeData = false;
 
   public radioValue = '1'; 
+  public comentarioId = false; 
+  public pick = 0;
   public pick1 = 0;
   public pick2 = 0;
   public visibleGuardar = true;
@@ -206,11 +208,20 @@ export class TicketMesaSistemaCajaComponent implements OnInit {
     await actionSheet.present();
   }
   save() {
-    // if(this.data.commentFoodOnTable === "" || this.data.commentTicket === "" || this.data.commentFoodOnTable === null || this.data.commentTicket === null
-    //   || this.data.commentFoodOnTable === undefined || this.data.commentTicket === undefined || this.data.photoTicketTables.length < 2){
-    //  this.alertCampos();
-    // }
-    // else{
+    this.comentarioId = true;
+    if(this.radioValue === '1' && this.data.commentFoodOnTable === " "){
+       this.comentarioId = false;
+       console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '2' && this.data.commentTicket === " "){
+      this.comentarioId = false;
+      console.log('nombre', this.comentarioId);
+    }
+    this.pick = this.data.photoTicketTables.filter(pick => pick.type === Number(this.radioValue)).length;
+    if(this.pick === 0 || this.comentarioId === false){
+     this.alertCampos();
+    }
+    else{
     this.visibleGuardar = false;
     this.load.presentLoading('Guardando..');
     this.disabled = true;
@@ -225,7 +236,7 @@ export class TicketMesaSistemaCajaComponent implements OnInit {
     } else {
       this.updateData();
     }
-  // }
+  }
   }
   addData() {
     this.data.createdBy = this.user.id;

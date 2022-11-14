@@ -31,6 +31,7 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
   public fotosCleanCubeta: any;
   public fotosCleanBooths: any;
   public radioValue = '1'; 
+  public pick = 0;
   public pick1 = 0;
   public pick2 = 0;
   public pick3 = 0;
@@ -68,7 +69,7 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
           if (resp.result?.length !== 0 && resp.result !== null) {
             this.dataId = true; //si hay registro entonces se hara un put
             this.activeData = true;
-            this.data = resp.result[0];
+            this.data = resp.result;
             console.log('get data', this.data);
           }
           else {
@@ -224,11 +225,11 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
   }
 
   save() {
-
-    // if(this.data.photoGeneralCleanings.length < 3){
-    //  this.alertCampos();
-    // }
-    // else{
+    this.pick = this.data.photoGeneralCleanings.filter(pick => pick.type === Number(this.radioValue)).length;
+    if(this.pick === 0){
+     this.alertCampos();
+    }
+    else{
     this.data.tableN = "1";
     this.load.presentLoading('Guardando..');
     this.visibleGuardar = false;
@@ -245,7 +246,7 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
     } else {
       this.updateCleanGeneral();
     }
-  //  }
+  }
   }
   addCleanGeneral() {
     this.data.createdBy = this.user.id;

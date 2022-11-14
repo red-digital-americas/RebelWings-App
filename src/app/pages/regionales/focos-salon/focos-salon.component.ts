@@ -29,6 +29,8 @@ export class FocosSalonComponent implements OnInit {
   public url = 'http://34.237.214.147/back/api_rebel_wings/';
 
   public radioValue = '1'; 
+  public comentarioId = false; 
+  public pick = 0;
   public pick1 = 0;
   public pick2 = 0;
   public pick3 = 0;
@@ -81,13 +83,13 @@ export class FocosSalonComponent implements OnInit {
     this.pick1 = this.data.photoSpotlights.filter(pick => pick.type === 1).length;
     this.pick2 = this.data.photoSpotlights.filter(pick => pick.type === 2).length;
     if(this.data.commentAutorizados === "" || this.data.commentAutorizados === undefined ){
-      if(this.data.commentAutorizados !== "."){
-      this.data.commentAutorizados = ".";
+      if(this.data.commentAutorizados !== " "){
+      this.data.commentAutorizados = " ";
       }
     }
     if(this.data.commentFoco === "" || this.data.commentFoco === undefined ){
-      if(this.data.commentFoco !== "."){
-        this.data.commentFoco = ".";
+      if(this.data.commentFoco !== " "){
+        this.data.commentFoco = " ";
         }
     }
   }
@@ -120,10 +122,20 @@ export class FocosSalonComponent implements OnInit {
     this.router.navigateByUrl('regional/levantamiento-ticket/' + this.branchId);
   }
   save() {
-    // if(this.data.commentFoco === "" || this.data.commentFoco === null || this.data.commentFoco === undefined || this.data.commentAutorizados === "" || this.data.commentAutorizados === null || this.data.commentAutorizados === undefined || this.data.photoSpotlights.length < 2){
-    //  this.alertCampos();
-    // }
-    // else{
+    this.comentarioId = true;
+    if(this.radioValue === '1' && this.data.commentFoco === " "){
+       this.comentarioId = false;
+       console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '2' && this.data.commentAutorizados === " "){
+      this.comentarioId = false;
+      console.log('nombre', this.comentarioId);
+    }
+    this.pick = this.data.photoSpotlights.filter(pick => pick.type === Number(this.radioValue)).length;
+    if(this.pick === 0 || this.comentarioId === false){
+     this.alertCampos();
+    }
+    else{
     this.load.presentLoading('Guardando..');
     this.visibleGuardar = false;
     this.disabled = true;
@@ -137,7 +149,7 @@ export class FocosSalonComponent implements OnInit {
     } else {
       this.updateSpotlight();
     }
-  // }
+  }
   }
   addSpotlight() {
     this.data.createdBy = this.user.id;

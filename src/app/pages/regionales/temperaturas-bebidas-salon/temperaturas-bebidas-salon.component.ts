@@ -27,6 +27,7 @@ export class TemperaturasBebidasSalonComponent implements OnInit {
   public activeData = false;
 
   public radioValue = '1';
+  public pick = 0;
   public pick1 = 0;
   public pick2 = 0;
   public pick3 = 0;
@@ -208,11 +209,12 @@ export class TemperaturasBebidasSalonComponent implements OnInit {
   }
 
   save() {
-    // if(this.data.photoDrinksTemperatures.length < 3){
-    //  this.alertCampos();
-    // }
-    // else{
-    //this.load.presentLoading('Guardando..');
+    this.pick = this.data.photoDrinksTemperatures.filter(pick => pick.type === Number(this.radioValue)).length;
+    if(this.pick === 0){
+     this.alertCampos();
+    }
+    else{
+    this.load.presentLoading('Guardando..');
     this.visibleGuardar = false;
     this.disabled = true;
     this.fotosCleanBooths = [];
@@ -227,7 +229,7 @@ export class TemperaturasBebidasSalonComponent implements OnInit {
     } else {
       this.updateDrinkTemperature();
     }
-  // }
+  }
   }
   addDrinkTemperature() {
     this.data.createdBy = this.user.id;

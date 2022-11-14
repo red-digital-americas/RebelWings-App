@@ -34,6 +34,8 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
   public toggleChicken = true;
 
   public radioValue = '1'; 
+  public comentarioId = false; 
+  public pick = 0;
   public pick1 = 0;
   public pick2 = 0;
   public visibleGuardar = true;
@@ -118,13 +120,13 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
     this.pick1 = this.data.photoWashBasinWithSoapPapers.filter(pick => pick.type === 1).length;
     this.pick2 = this.data.photoWashBasinWithSoapPapers.filter(pick => pick.type === 2).length;
     if(this.data.commentDryer === "" || this.data.commentDryer === undefined ){
-      if(this.data.commentDryer !== "."){
-      this.data.commentDryer = ".";
+      if(this.data.commentDryer !== " "){
+      this.data.commentDryer = " ";
       }
     }
     if(this.data.commentSoapPaper === "" || this.data.commentSoapPaper === undefined ){
-      if(this.data.commentSoapPaper !== "."){
-        this.data.commentSoapPaper = ".";
+      if(this.data.commentSoapPaper !== " "){
+        this.data.commentSoapPaper = " ";
         }
     }
   }
@@ -217,10 +219,20 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
     await actionSheet.present();
   }
   save() {
-    // if(this.data.commentSoapPaper === "" || this.data.commentSoapPaper === null  || this.data.commentSoapPaper === undefined || this.data.commentDryer === "" || this.data.commentDryer === null  || this.data.commentDryer === undefined || this.data.photoWashBasinWithSoapPapers.length < 2){
-    //  this.alertCampos();
-    // }
-    // else{
+    this.comentarioId = true;
+    if(this.radioValue === '1' && this.data.commentSoapPaper === " "){
+       this.comentarioId = false;
+       console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '2' && this.data.commentDryer=== " "){
+      this.comentarioId = false;
+      console.log('nombre', this.comentarioId);
+    }
+    this.pick = this.data.photoWashBasinWithSoapPapers.filter(pick => pick.type === Number(this.radioValue)).length;
+    if(this.pick === 0 || this.comentarioId === false){
+     this.alertCampos();
+    }
+    else{
     this.load.presentLoading('Guardando..');
     this.visibleGuardar = false;
     this.data.branchId = this.branchId;
@@ -234,7 +246,7 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
     } else {
       this.updateData();
     }
-  // }
+  }
   }
   addData() {
     this.data.createdBy = this.user.id;
