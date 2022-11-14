@@ -27,7 +27,7 @@
           <img src="./assets/icon/ilustracion_refrigeradores.png" alt="Refrigerador" />
         </ion-col>
         <ion-col size="9.5" class="ion-align-self-center">
-          <h3 class="title">REFRIGERADOR</h3>
+          <h3 class="title">REFRI</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -65,7 +65,7 @@
           <ion-col size="9"></ion-col>
           <ion-col *ngIf="dataId === false" size="3" class="ion-align-items-end">
             <div class="end">
-              <ion-icon *ngIf="index !== 0" color="danger" name="close-outline" (click)="deleteObjProduct(index)">
+              <ion-icon *ngIf="index !== 0" color="danger" name="trash-outline" size="large" (click)="deleteObjProduct(index)">
               </ion-icon>
             </div>
           </ion-col>
