@@ -3,6 +3,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import { AlertController } from '@ionic/angular';
+import { ActionSheetController } from '@ionic/angular';
+import {
+  UserPhoto,
+  PhotoService,
+} from 'src/app/core/services/services/photo.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-encuesta-salon',
   templateUrl: './encuesta-salon.component.html',
@@ -29,7 +35,9 @@ export class EncuestaSalonComponent implements OnInit {
     public routerActive: ActivatedRoute,
     public alertController: AlertController,
     public service: ServiceGeneralService,
-    public load: LoaderComponent) { }
+    public actionSheetController: ActionSheetController,
+    public load: LoaderComponent,
+    public photoService: PhotoService) { }
 
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
@@ -54,15 +62,16 @@ export class EncuestaSalonComponent implements OnInit {
         if (resp.success) {
           if (resp.result?.length !== 0 && resp.result !== null) {
             this.dataId = true; //si hay registro entonces se hara un put
-            console.log('si hay registros del dia');
             this.activeData = true;
+            console.log('si hay registros del dia');
             this.data = resp.result;
             console.log('get data', this.data);
           }
-          else{
+          else {
             console.log('Completar la tarea');
             this.dataId = false; //no hay registro entonces se hara un post
             this.activeData = true;
+            this.data.id = 0;
           }
         }
       });
@@ -122,7 +131,7 @@ export class EncuestaSalonComponent implements OnInit {
     } 
   }
   save() {
-    if(this.data.name === "" || this.data.name === undefined || this.data.name === null || this.data.email === "" || this.data.email === undefined || this.data.email === null){
+    if(this.data.name === "" || this.data.name === undefined || this.data.name === null || this.data.email === "" || this.data.email === undefined || this.data.email === null || this.data.photoSatisfactionSurveys.length === 0){
       this.alertCampos();
       this.validateSave()
     }
@@ -135,29 +144,40 @@ export class EncuestaSalonComponent implements OnInit {
   addPropina() {
     this.data.createdBy = this.user.id;
     this.data.createdDate = this.today;
+    console.log('Obj To send post => ', this.data);
+    
     this.service
       .serviceGeneralPostWithUrl('SatisfactionSurvey', this.data)
       .subscribe((data) => {
         if (data.success) {
           this.load.presentLoading('Guardando..');
-          console.log('data', this.data);
-          this.data = {};
+          console.log('data', data);
+          this.photoService.deleteAllPhoto(this.data);
           this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
         }
       });
 
   }
   updatePropina() {
-    const list: any[] = [];
-    list.push(this.data);
-    console.log('');
-    this.service.serviceGeneralPut('SatisfactionSurvey', this.data).subscribe((data) => {
-      if (data.success) {
-        this.load.presentLoading('Actualizando..');
-        console.log('data', data);
-        this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
-      }
-    });
+    console.log('Obj To send put => ', this.data);
+    this.service
+      .serviceGeneralPut('Spotlight', this.data)
+      .subscribe((data) => {
+        if (data.success) {
+          this.load.presentLoading('Actualizando..');
+          console.log('data', data);
+          //window.location.reload();
+          // this.Ractivo = false;
+          // this.visibleGuardar = true;
+          // if(this.data.brokenSpotlight === false){
+            //this.levantamientoTicket();
+            // }
+            // else{
+            // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+            // }
+            this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
+        }
+      });
   }
   async alertCampos(){
 
@@ -200,6 +220,92 @@ export class EncuestaSalonComponent implements OnInit {
     //   this.updatePropina();
     // }
   }
+
+    // agregar fotos de limpieza de salon
+    async addPhotoToGallery(idType: number) {
+      this.photoService.limpiaStorage();
+      const name = new Date().toISOString();
+      await this.photoService.addNewToGallery();
+      await this.photoService.loadSaved();
+      // agregaremos las fotos pero con id type de acuerdo al caso
+      // al agregar las fotos en storage, las pasamos por lista
+      console.log('obj fotos', this.photoService);
+      this.data.photoSatisfactionSurveys.push({
+        id: 0,
+        spotlightId: this.data.id,
+        photo: this.photoService.photos[0].webviewPath,
+        photoPath: 'jpeg',
+        type: idType,
+        createdBy: this.user.id,
+        createdDate: this.today,
+        updatedBy: this.user.id,
+        updatedDate: this.today,
+      });
+      console.log('fotos chicken', this.data);
+    }
+    // acciones para las fotos de limpieza de salon
+    public async showActionSheet(photo, position: number) {
+      console.log('photo', photo);
+      console.log('posicion', position);
+  
+      const actionSheet = await this.actionSheetController.create({
+        header: 'Photos',
+        buttons: [
+          {
+            text: 'Delete',
+            role: 'destructive',
+            icon: 'trash',
+            handler: () => {
+              this.photoService.deletePicture(photo, position);
+              //
+              this.data.photoSatisfactionSurveys.splice(position, 1);
+            },
+          },
+          {
+            text: 'Cancel',
+            icon: 'close',
+            role: 'cancel',
+            handler: () => {
+              // Nothing to do, action sheet is automatically closed
+            },
+          },
+        ],
+      });
+      await actionSheet.present();
+    }
+  //eliminar imagenes bd
+  public async deleteImgShowAction(id) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Photos',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.service
+              .serviceGeneralDelete(`SatisfactionSurvey/${id}/Photo`)
+              .subscribe((data) => {
+                if (data.success) {
+                  this.load.presentLoading('Eliminando..');
+                  console.log('data', data);
+                  this.ionViewWillEnter();
+                }
+              });
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            // Nothing to do, action sheet is automatically closed
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
 }
 class EncuestaModel {
   id: number;
@@ -217,6 +323,15 @@ class EncuestaModel {
   createdDate: Date;
   updatedBy: number;
   updatedDate: Date;
+  photoSatisfactionSurveys: PhotoSatisfactionSurveyModel[] = [];
 }
-
-
+class PhotoSatisfactionSurveyModel {
+  id: number;
+  satisfactionsurveyId: number;
+  photo: string;
+  photoPath: string;
+  createdBy: number;
+  createdDate: Date;
+  updatedBy: number;
+  updatedDate: Date;
+}
