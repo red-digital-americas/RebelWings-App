@@ -28,7 +28,7 @@
           <img src="./assets/icon/ilustracion_refrigeradores.png" alt="Refrigerador" />
         </ion-col>
         <ion-col size="9.5" class="ion-align-self-center">
-          <h3 class="title">REFRIGERADOR</h3>
+          <h3 class="title">REFRIS</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -68,7 +68,7 @@
           <ion-col size="9"></ion-col>
           <ion-col *ngIf="dataId === false" size="3" class="ion-align-items-end">
             <div class="end">
-              <ion-icon *ngIf="index !== 0" color="danger" name="close-outline" (click)="deleteObjProduct(index)">
+              <ion-icon *ngIf="index !== 0" color="danger" name="trash-outline" size="large" (click)="deleteObjProduct(index)">
               </ion-icon>
             </div>
           </ion-col>
@@ -81,7 +81,7 @@
           <ion-col size="6">
             <ion-row size="12">
               <ion-col size="12">
-                <span class="titleProduct">¿LOS REFRIGERADORES ESTAN ACOMODADOS DE ACUERDO AL LAY OUT?</span>
+                <span class="titleProduct">¿ACOMODADO DE ACUERDO AL LAY OUT?</span>
               </ion-col>
               <ion-col size="12">
                 <ion-toggle [(ngModel)]="item.layOut"></ion-toggle>
@@ -91,7 +91,7 @@
           <ion-col size="6">
             <ion-row size="12">
               <ion-col size="12">
-                <span class="titleProduct">¿HAY ALGUN FALTANTE DE PRODUCTO EN EL REFRIGERADOR?
+                <span class="titleProduct">¿HAY ALGUN FALTANTE DE PRODUCTO?
                 </span>
                 <br>
               </ion-col>
@@ -122,7 +122,6 @@
           </ion-col>
   
           <ion-col size="6" *ngIf="this.objProduct[index].photoFridgeSalons.length !== 3">
-            <br><br><br>
             <ion-label>FOTOGRAFIA</ion-label>
             <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(index)">
               <div style="margin-top: 2rem">
@@ -131,7 +130,7 @@
             </ion-card>
           </ion-col>
           <ion-col size="6">
-            <ion-label>COMENTARIO (SI TENEMOS FALTANTE DE PRODUCTO, REGISTRARLO EN COMENTARIOS)</ion-label>
+            <ion-label>COMENTARIO</ion-label>
             <ion-card>
               <ion-textarea [(ngModel)]="item.comment" rows="6" cols="20" style="margin-top: 2px;">
               </ion-textarea>

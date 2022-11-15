@@ -180,8 +180,8 @@ export class EncuestaSalonComponent implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'GRACIAS',
-      subHeader: 'PIDE TU PROMOCION',
-      message: '"GRACIAS POR TUS COMENTARIOS <BR>SOLICITA UN CUPON O PROMOCION<BR>COMO AGRADECIMIENTO DE LA ENCUESTA"',
+      subHeader: 'ENTREGA TU PROMOCION',
+      message: '"RECUERDA ENTREGAR TU CUPON O PROMOCION COMO AGRADECIMIENTO DE TU ENCUESTA"',
       mode: 'ios',
       buttons: ['OK'],
     });

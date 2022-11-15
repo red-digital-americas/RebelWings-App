@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import { AlertController } from '@ionic/angular';
+import { isThisSecond } from 'date-fns';
 @Component({
   selector: 'app-audio-video-salon',
   templateUrl: './audio-video-salon.component.html',
@@ -20,6 +21,7 @@ export class AudioVideoSalonComponent implements OnInit {
   public activeData = false;
 
   public visibleGuardar = true;
+  public Terraza = false;
 
   constructor(public router: Router,
     public routerActive: ActivatedRoute,
@@ -67,6 +69,16 @@ export class AudioVideoSalonComponent implements OnInit {
         }
       });
   }
+
+  updateTerraza() {
+    if(this.Terraza === true){
+      this.data.terraceTvWorksProperly = true;
+      this.data.terraceSpeakersWorkProperly = true;
+      this.data.commentTerraceSpeakersWorkProperly = "NO APLICA";
+      this.data.commentTerraceTvWorksProperly = "NO APLICA";
+    }
+  }
+
   return() {
     // window.history.back();
     this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);

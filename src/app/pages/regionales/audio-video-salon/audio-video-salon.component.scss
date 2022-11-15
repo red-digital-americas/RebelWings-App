@@ -60,7 +60,15 @@ ion-footer {
   font-size: 1rem;
 }
 
+ion-checkbox {
+  --size: 32px;
+  --background-checked: #0fa50a;
+}
 
+ion-checkbox::part(container) {
+  border-radius: 6px;
+  border: 2px solid  #0fa50a;
+}
 // estilos para skeleton text
 .custom-skeleton ion-skeleton-text {
   line-height: 13px;
@@ -118,4 +126,5 @@ ion-toggle[aria-checked="true"] {
     top: 12px;
     color: #fff;
   }
+
 }
