@@ -28,6 +28,8 @@ export class EncuestaSalonComponent implements OnInit {
   // ******variables de validacion ********
   public activeName = false;
   public activeEmail = false;
+  public base64 = 'data:image/jpeg;base64';
+  public url = 'http://34.237.214.147/back/api_rebel_wings/';
 
   public visibleGuardar = true;
 
