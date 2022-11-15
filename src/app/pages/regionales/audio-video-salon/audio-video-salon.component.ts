@@ -3,6 +3,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import { AlertController } from '@ionic/angular';
+import { ActionSheetController } from '@ionic/angular';
+import {
+  UserPhoto,
+  PhotoService,
+} from 'src/app/core/services/services/photo.service';
 import { isThisSecond } from 'date-fns';
 @Component({
   selector: 'app-audio-video-salon',
@@ -19,6 +24,10 @@ export class AudioVideoSalonComponent implements OnInit {
   public nameBranch = '';
   public disabled = false;
   public activeData = false;
+  public base64 = 'data:image/jpeg;base64';
+  public url = 'http://34.237.214.147/back/api_rebel_wings/';
+  public pick1 = 0;
+  public pick2 = 0;
 
   public visibleGuardar = true;
   public Terraza = false;
@@ -27,8 +36,9 @@ export class AudioVideoSalonComponent implements OnInit {
     public routerActive: ActivatedRoute,
     public alertController: AlertController,
     public service: ServiceGeneralService,
+    public actionSheetController: ActionSheetController,
     public load: LoaderComponent,
-  ) { }
+    public photoService: PhotoService) { }
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.routerActive.snapshot.paramMap.get('id'));
@@ -48,6 +58,7 @@ export class AudioVideoSalonComponent implements OnInit {
           if (resp.result?.length !== 0 && resp.result !== null) {
             this.dataId = true; //si hay registro entonces se hara un put
             this.activeData = true;
+            console.log('si hay registros del dia');
             this.data = resp.result;
             console.log('get data', this.data);
           }
@@ -77,6 +88,12 @@ export class AudioVideoSalonComponent implements OnInit {
       this.data.commentTerraceSpeakersWorkProperly = "NO APLICA";
       this.data.commentTerraceTvWorksProperly = "NO APLICA";
     }
+    else{
+      this.data.terraceTvWorksProperly = false;
+      this.data.terraceSpeakersWorkProperly = false;
+      this.data.commentTerraceSpeakersWorkProperly = "";
+      this.data.commentTerraceTvWorksProperly = "";
+    }
   }
 
   return() {
@@ -97,15 +114,23 @@ export class AudioVideoSalonComponent implements OnInit {
             this.nameBranch = element.titulo;
             this.nameBranch = this.nameBranch.toUpperCase();
             console.log('nombre', this.nameBranch);
+            this.conteoFotos();
           }
         });
       }
     });
   }
+
+  conteoFotos(){
+    this.pick1 = this.data.photoAudioVideos.filter(pick => pick.type === 1).length;
+    this.pick2 = this.data.photoAudioVideos.filter(pick => pick.type === 2).length;
+  }
+
   save() {
     if(this.data.commentSpeakersWorkProperly === "" || this.data.commentTerraceSpeakersWorkProperly === "" || this.data.commentTerraceTvWorksProperly === "" || this.data.commentTvWorksProperly === ""
     || this.data.commentSpeakersWorkProperly === null || this.data.commentTerraceSpeakersWorkProperly === null || this.data.commentTerraceTvWorksProperly === null || this.data.commentTvWorksProperly === null
-    || this.data.commentSpeakersWorkProperly === undefined || this.data.commentTerraceSpeakersWorkProperly === undefined || this.data.commentTerraceTvWorksProperly === undefined || this.data.commentTvWorksProperly === undefined){
+    || this.data.commentSpeakersWorkProperly === undefined || this.data.commentTerraceSpeakersWorkProperly === undefined || this.data.commentTerraceTvWorksProperly === undefined || this.data.commentTvWorksProperly === undefined
+    || this.pick1 === 0 || this.pick2 === 0){
      this.alertCampos();
     }
     else{
@@ -139,6 +164,7 @@ export class AudioVideoSalonComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
+          this.photoService.deleteAllPhoto(this.data);
           if(this.data.speakersWorkProperly === false || this.data.terraceSpeakersWorkProperly === false || this.data.terraceTvWorksProperly === false || this.data.tvWorksProperly === false){
             this.levantamientoTicket();
           }
@@ -182,6 +208,93 @@ export class AudioVideoSalonComponent implements OnInit {
 
   }
 
+    // agregar fotos de limpieza de salon
+    async addPhotoToGallery(idType: number) {
+      this.photoService.limpiaStorage();
+      const name = new Date().toISOString();
+      await this.photoService.addNewToGallery();
+      await this.photoService.loadSaved();
+      // agregaremos las fotos pero con id type de acuerdo al caso
+      // al agregar las fotos en storage, las pasamos por lista
+      console.log('obj fotos', this.photoService);
+      this.data.photoAudioVideos.push({
+        id: 0,
+        audiovideoId: this.data.id,
+        photo: this.photoService.photos[0].webviewPath,
+        photoPath: 'jpeg',
+        type: idType,
+        createdBy: this.user.id,
+        createdDate: this.today,
+        updatedBy: this.user.id,
+        updatedDate: this.today,
+      });
+      console.log('fotos chicken', this.data);
+      this.conteoFotos();
+    }
+    // acciones para las fotos de limpieza de salon
+    public async showActionSheet(photo, position: number) {
+      console.log('photo', photo);
+      console.log('posicion', position);
+  
+      const actionSheet = await this.actionSheetController.create({
+        header: 'Photos',
+        buttons: [
+          {
+            text: 'Delete',
+            role: 'destructive',
+            icon: 'trash',
+            handler: () => {
+              this.photoService.deletePicture(photo, position);
+              //
+              this.data.photoAudioVideos.splice(position, 1);
+            },
+          },
+          {
+            text: 'Cancel',
+            icon: 'close',
+            role: 'cancel',
+            handler: () => {
+              // Nothing to do, action sheet is automatically closed
+            },
+          },
+        ],
+      });
+      await actionSheet.present();
+    }
+  //eliminar imagenes bd
+  public async deleteImgShowAction(id) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Photos',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.service
+              .serviceGeneralDelete(`SatisfactionSurvey/${id}/Photo`)
+              .subscribe((data) => {
+                if (data.success) {
+                  this.load.presentLoading('Eliminando..');
+                  console.log('data', data);
+                  this.ionViewWillEnter();
+                }
+              });
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            // Nothing to do, action sheet is automatically closed
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
+
 }
 class PrecookedChickenModel {
   id: number;
@@ -194,6 +307,18 @@ class PrecookedChickenModel {
   commentTerraceTvWorksProperly: string;
   terraceSpeakersWorkProperly: boolean;
   commentTerraceSpeakersWorkProperly: string;
+  createdBy: number;
+  createdDate: Date;
+  updatedBy: number;
+  updatedDate: Date;
+  photoAudioVideos: PhotoAudioVideoModel[] = [];
+}
+class PhotoAudioVideoModel {
+  id: number;
+  audiovideoId: number;
+  photo: string;
+  photoPath: string;
+  type: number;
   createdBy: number;
   createdDate: Date;
   updatedBy: number;

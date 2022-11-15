@@ -133,6 +133,95 @@
         </ion-col>
       </ion-row>
       <br><br>
+      <ion-row size="12">
+        <ion-col size="12">
+          <h5 class="description">EVIDENCIAS CONTENIDOS</h5>
+        </ion-col>
+      </ion-row>
+
+      <ion-row size="12">
+
+
+        <ion-col size="6" *ngIf="this.pick1 === 2">
+          <ion-label>FOTOGRAFIA CONT. A</ion-label>
+          <ion-card
+            style="height: 9rem"
+            class="center"
+         
+          >
+            <div style="margin-top: 2rem">
+              <ion-icon
+                class="sizePhoto"
+                src="./assets/icon/icon_foto.svg"
+              ></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+  
+        <ion-col size="6" *ngIf="this.pick1 !== 2">
+          <ion-label>FOTOGRAFIA CONT. A</ion-label>
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(1)">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="6" *ngIf="this.pick2 === 2">
+          <ion-label>FOTOGRAFIA CONT. B</ion-label>
+          <ion-card
+            style="height: 9rem"
+            class="center"
+         
+          >
+            <div style="margin-top: 2rem">
+              <ion-icon
+                class="sizePhoto"
+                src="./assets/icon/icon_foto.svg"
+              ></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+  
+        <ion-col size="6" *ngIf="this.pick2 !== 2">
+          <ion-label>FOTOGRAFIA CONT. B</ion-label>
+          <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(2)">
+            <div style="margin-top: 2rem">
+              <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
+            </div>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="6">
+          <!-- fotos sin id -->
+          <ion-row>
+            <ion-col size="6" *ngFor="let photo of data.photoAudioVideos; index as position">
+              <!-- se mostara esta imagen si no tiene id  -->
+              <ion-img *ngIf="photo.id === 0 && photo.type === 1" src="{{ base64 }},{{ photo.photo }}" (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- se mostrara esta imagen si esta guardada -->
+              <ion-img *ngIf="photo.id !== 0 && photo.type === 1" src="{{ url }}{{ photo.photo }}" (click)="deleteImgShowAction(photo.id)"></ion-img>
+  
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="6">
+          <!-- fotos sin id -->
+          <ion-row>
+            <ion-col size="6" *ngFor="let photo of data.photoAudioVideos; index as position">
+              <!-- se mostara esta imagen si no tiene id  -->
+              <ion-img *ngIf="photo.id === 0 && photo.type === 2" src="{{ base64 }},{{ photo.photo }}" (click)="showActionSheet(photo, position)">
+              </ion-img>
+              <!-- se mostrara esta imagen si esta guardada -->
+              <ion-img *ngIf="photo.id !== 0 && photo.type === 2" src="{{ url }}{{ photo.photo }}" (click)="deleteImgShowAction(photo.id)"></ion-img>
+  
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <br><br>
     </ion-grid>
   </ion-content>
   <ion-footer *ngIf="activeData === true" no-border>
