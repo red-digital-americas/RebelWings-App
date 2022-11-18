@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiURL: 'http://34.237.214.147/back/api_rebel_wings/api/',
+  apiURL: 'http://192.168.11.102/back/api_rebel_wings/api/',
   //apiURL: "https://localhost:44334/api/"
 };
 

@@ -3,7 +3,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import { AlertController } from '@ionic/angular';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { ActionSheetController } from '@ionic/angular';
+import {
+  UserPhoto,
+  PhotoService,
+} from 'src/app/core/services/services/photo.service';
 @Component({
   selector: 'app-estado-general-banos',
   templateUrl: './estado-general-banos.component.html',
@@ -21,14 +25,18 @@ export class EstadoGeneralBanosComponent implements OnInit {
   public disabled = false;
   public activeData = false;
 
+  public base64 = 'data:image/jpeg;base64';
+  public url = 'http://34.237.214.147/back/api_rebel_wings/';
+
   public visibleGuardar = true;
 
   constructor(public router: Router,
     public routerActive: ActivatedRoute,
     public alertController: AlertController,
     public service: ServiceGeneralService,
+    public actionSheetController: ActionSheetController,
     public load: LoaderComponent,
-  ) { }
+    public photoService: PhotoService) { }
 
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
@@ -49,6 +57,7 @@ export class EstadoGeneralBanosComponent implements OnInit {
           if (resp.result?.length !== 0 && resp.result !== null) {
             this.dataId = true; //si hay registro entonces se hara un put
             this.activeData = true;
+            console.log('si hay registros del dia');
             this.data = resp.result;
             console.log('get data', this.data);
           }
@@ -99,7 +108,7 @@ export class EstadoGeneralBanosComponent implements OnInit {
   save() {
     if(this.data.commentAreThereAnyFaultsMen === "" || this.data.commentAreThereAnyFaultsWomen === "" || this.data.commentDoesAnyBathroomLeakMen === "" || this.data.commentDoesAnyBathroomLeakWomen === ""
     || this.data.commentAreThereAnyFaultsMen === null || this.data.commentAreThereAnyFaultsWomen === null || this.data.commentDoesAnyBathroomLeakMen === null || this.data.commentDoesAnyBathroomLeakWomen === null
-    || this.data.commentAreThereAnyFaultsMen === undefined || this.data.commentAreThereAnyFaultsWomen === undefined || this.data.commentDoesAnyBathroomLeakMen === undefined || this.data.commentDoesAnyBathroomLeakWomen === undefined){
+    || this.data.commentAreThereAnyFaultsMen === undefined || this.data.commentAreThereAnyFaultsWomen === undefined || this.data.commentDoesAnyBathroomLeakMen === undefined || this.data.commentDoesAnyBathroomLeakWomen === undefined || this.data.photoBathRoomsOverallStatuss.length === 0){
      this.alertCampos();
     }
     else{
@@ -128,6 +137,7 @@ export class EstadoGeneralBanosComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
+          this.photoService.deleteAllPhoto(this.data);
           if(this.data.doesAnyBathroomLeakMen === true || this.data.doesAnyBathroomLeakWomen === true || this.data.isThereAnyFaultsMen === true || this.data.isThereAnyFaultsWomen === true){
            this.levantamientoTicket();
           }
@@ -171,6 +181,91 @@ export class EstadoGeneralBanosComponent implements OnInit {
 
   }
 
+    // agregar fotos de limpieza de salon
+    async addPhotoToGallery(idType: number) {
+      this.photoService.limpiaStorage();
+      const name = new Date().toISOString();
+      await this.photoService.addNewToGallery();
+      await this.photoService.loadSaved();
+      // agregaremos las fotos pero con id type de acuerdo al caso
+      // al agregar las fotos en storage, las pasamos por lista
+      console.log('obj fotos', this.photoService);
+      this.data.photoBathRoomsOverallStatuss.push({
+        id: 0,
+        bathroomsoverallstatusId: this.data.id,
+        photo: this.photoService.photos[0].webviewPath,
+        photoPath: 'jpeg',
+        type: idType,
+        createdBy: this.user.id,
+        createdDate: this.today,
+        updatedBy: this.user.id,
+        updatedDate: this.today,
+      });
+      console.log('fotos chicken', this.data);
+    }
+    // acciones para las fotos de limpieza de salon
+    public async showActionSheet(photo, position: number) {
+      console.log('photo', photo);
+      console.log('posicion', position);
+  
+      const actionSheet = await this.actionSheetController.create({
+        header: 'Photos',
+        buttons: [
+          {
+            text: 'Delete',
+            role: 'destructive',
+            icon: 'trash',
+            handler: () => {
+              this.photoService.deletePicture(photo, position);
+              //
+              this.data.photoBathRoomsOverallStatuss.splice(position, 1);
+            },
+          },
+          {
+            text: 'Cancel',
+            icon: 'close',
+            role: 'cancel',
+            handler: () => {
+              // Nothing to do, action sheet is automatically closed
+            },
+          },
+        ],
+      });
+      await actionSheet.present();
+    }
+  //eliminar imagenes bd
+  public async deleteImgShowAction(id) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Photos',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.service
+              .serviceGeneralDelete(`SatisfactionSurvey/${id}/Photo`)
+              .subscribe((data) => {
+                if (data.success) {
+                  this.load.presentLoading('Eliminando..');
+                  console.log('data', data);
+                  this.ionViewWillEnter();
+                }
+              });
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            // Nothing to do, action sheet is automatically closed
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
   
 
 }
@@ -189,5 +284,16 @@ class GeneralStateModel {
   createdDate: Date;
   updatedBy: number;
   updatedDate: Date;
+  photoBathRoomsOverallStatuss: PhotoBathRoomsOverallStatusModel[] = [];
 }
-
+class PhotoBathRoomsOverallStatusModel {
+  id: number;
+  bathroomsoverallstatusId: number;
+  photo: string;
+  photoPath: string;
+  type: number;
+  createdBy: number;
+  createdDate: Date;
+  updatedBy: number;
+  updatedDate: Date;
+}
