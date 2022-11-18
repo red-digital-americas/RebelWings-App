@@ -33,7 +33,7 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
   public createDate = '';
   public visibleGuardar = true;
 
-  public url = 'http://34.237.214.147/back/api_rebel_wings/';
+  public url = 'http://opera.no-ip.net/back/api_rebel_wings/';
   constructor(public router: Router,
     private camera: Camera,
     public routerActive: ActivatedRoute,

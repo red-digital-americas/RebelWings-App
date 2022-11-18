@@ -26,7 +26,7 @@ export class EstadoGeneralBanosComponent implements OnInit {
   public activeData = false;
 
   public base64 = 'data:image/jpeg;base64';
-  public url = 'http://34.237.214.147/back/api_rebel_wings/';
+  public url = 'http://opera.no-ip.net/back/api_rebel_wings/';
 
   public visibleGuardar = true;
 

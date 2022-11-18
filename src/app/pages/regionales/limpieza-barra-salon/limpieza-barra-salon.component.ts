@@ -26,7 +26,7 @@ export class LimpiezaBarraSalonComponent implements OnInit {
   public base64 = 'data:image/jpeg;base64';
   public disabled = false;
   public fotosRefrigerador: any;
-  public url = 'http://34.237.214.147/back/api_rebel_wings/';
+  public url = 'http://opera.no-ip.net/back/api_rebel_wings/';
   public activeData = false;
   public toggleChicken = true;
 

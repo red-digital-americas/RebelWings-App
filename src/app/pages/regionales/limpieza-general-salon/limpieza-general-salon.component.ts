@@ -39,7 +39,7 @@ export class LimpiezaGeneralSalonComponent implements OnInit {
   public Ractivo = false;
 
 
-  public url = 'http://34.237.214.147/back/api_rebel_wings/';
+  public url = 'http://opera.no-ip.net/back/api_rebel_wings/';
   // ******variables de validacion ********
   public activeNumTable = false;
 

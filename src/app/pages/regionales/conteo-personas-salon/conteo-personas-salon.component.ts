@@ -26,7 +26,7 @@ export class ConteoPersonasSalonComponent implements OnInit {
   // ******variables de validacion ********
   public activeMesas = false;
   public activeComensales = false;
-  public url = 'http://34.237.214.147/back/api_rebel_wings/';
+  public url = 'http://opera.no-ip.net/back/api_rebel_wings/';
 
   public visibleGuardar = true;
   public fotosPeople: any;

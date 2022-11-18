@@ -27,7 +27,7 @@ export class LoungeMountedComponent implements OnInit {
   public base64 = 'data:image/jpeg;base64';
   public disabled = false;
   public fotosSalon;
-  public url = 'http://34.237.214.147/back/api_rebel_wings/';
+  public url = 'http://opera.no-ip.net/back/api_rebel_wings/';
   public activeData = false;
   public createDate = '';
   public visibleGuardar = true;
