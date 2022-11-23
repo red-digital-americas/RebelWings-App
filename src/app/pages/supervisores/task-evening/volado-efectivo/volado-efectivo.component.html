@@ -75,17 +75,17 @@
             <ion-input
               [(ngModel)]="data.amount"
               type="number"
-              (focus)="activeAmount = false"
+              
               
               placeholder="MXN"
-              [disabled]="( this.suficiente === false)"
+              
             ></ion-input>
           </ion-card>
-          <ion-label
+          <!-- <ion-label
             style="color: #ad182d; font-size: 12px"
             *ngIf="activeAmount"
             >CAMPO REQUERIDO</ion-label
-          >
+          > -->
         </ion-col>
         <ion-col size="6"></ion-col>
       </ion-row>
@@ -135,9 +135,9 @@
               style="margin-top: 2px;"
             ></ion-textarea>
           </ion-card>
-          <ion-label style="color: #ad182d; font-size: 12px" *ngIf="activeComment"
+          <!-- <ion-label style="color: #ad182d; font-size: 12px" *ngIf="activeComment"
             >CAMPO REQUERIDO</ion-label
-          >
+          > -->
         </ion-col>
       </ion-row>
       <ion-row size="12">

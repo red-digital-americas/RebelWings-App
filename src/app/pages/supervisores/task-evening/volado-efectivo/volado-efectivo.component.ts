@@ -28,8 +28,8 @@ export class VoladoEfectivoComponent implements OnInit {
   public url = 'http://opera.no-ip.net/back/api_rebel_wings/';
   public turno;
   // ******variables de validacion ********
-  public activeAmount = false;
-  public activeComment = false;
+  public activeAmount = true;
+  public activeComment = true;
   // nombre de sucursal
   public branchId;
   public nameBranch = '';
@@ -213,18 +213,18 @@ export class VoladoEfectivoComponent implements OnInit {
       this.data.amount === undefined ||
       this.data.amount === null
     ) {
-      this.activeAmount = true;
+      //this.activeAmount = true;
     } else {
-      this.activeAmount = false;
+      //this.activeAmount = false;
     }
     if (
       this.data.comment === '' ||
       this.data.comment === undefined ||
       this.data.comment === null
     ) {
-      this.activeComment = true;
+      //this.activeComment = true;
     } else {
-      this.activeComment = false;
+      //this.activeComment = false;
     }
     if (
       this.data.amount === 0 ||
