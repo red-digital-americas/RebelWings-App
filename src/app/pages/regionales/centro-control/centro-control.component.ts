@@ -23,6 +23,8 @@ export class CentroControlComponent implements OnInit {
   // variable menu seleccionable
   public task;
   public ValMenu = 0;
+  public Martes = false;
+  public today = new Date();
 
   constructor(
     public router: Router, public routerActive: ActivatedRoute,
@@ -45,7 +47,8 @@ export class CentroControlComponent implements OnInit {
     this.task = this.routerActive.snapshot.paramMap.get(`idTarea`);
     this.getDataControl(this.task);
     this.getBranch(this.user.stateId);
-    this.getNotification();
+    //this.getNotification();
+    this.esMartes();
   }
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('userData'));
@@ -77,6 +80,14 @@ export class CentroControlComponent implements OnInit {
       });
     
   }
+
+  esMartes(){
+    if(this.today.getDay() === 2){
+      this.Martes = true;
+    }
+    else{this.Martes = false;}
+  }
+
   return() {
     console.log('return');
     this.router.navigateByUrl('regional');

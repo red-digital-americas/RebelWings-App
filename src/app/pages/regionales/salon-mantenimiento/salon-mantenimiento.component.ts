@@ -36,8 +36,10 @@ export class SalonMantenimientoComponent implements OnInit {
   public pick6 = 0;
   public pick7 = 0;
   public pick8 = 0;
+  public pick = 0;
   public visibleGuardar = true;
   public Ractivo = false;
+  public comentarioId = false; 
 
   // ******fotos*********
   public base64 = 'data:image/jpeg;base64';
@@ -261,13 +263,45 @@ export class SalonMantenimientoComponent implements OnInit {
   }
   save() {
 
-    // if(this.data.commentAccessDoors === undefined || this.data.commentBadges === undefined || this.data.commentBoths === undefined || this.data.commentFireExtinguishers === undefined
-    //   || this.data.commentFurnitureOne === undefined || this.data.commentFurnitureTwo === undefined || this.data.commentLuminaires === undefined || this.data.commentSwitches === undefined
-    //   ||this.data.commentAccessDoors === "" || this.data.commentBadges === "" || this.data.commentBoths === "" || this.data.commentFireExtinguishers === ""
-    //   || this.data.commentFurnitureOne === "" || this.data.commentFurnitureTwo === "" || this.data.commentLuminaires === "" || this.data.commentSwitches === "" || this.data.photoSalons.length < 8){
-    //  this.alertCampos();
-    // }
-    // else{
+    this.comentarioId = true;
+    if(this.radioValue === '1' && this.data.commentAccessDoors === " "){
+       this.comentarioId = false;
+       console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '2' && this.data.commentBadges === " "){
+      this.comentarioId = false;
+      console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '3' && this.data.commentLuminaires === " "){
+       this.comentarioId = false;
+       console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '4' && this.data.commentSwitches === " "){
+      this.comentarioId = false;
+      console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '5' && this.data.commentFurnitureOne === " "){
+       this.comentarioId = false;
+       console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '6' && this.data.commentFurnitureTwo === " "){
+      this.comentarioId = false;
+      console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '7' && this.data.commentBoths === " "){
+       this.comentarioId = false;
+       console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '8' && this.data.commentFireExtinguishers === " "){
+      this.comentarioId = false;
+      console.log('nombre', this.comentarioId);
+    }
+
+    this.pick = this.data.photoSalons.filter(pick => pick.type === Number(this.radioValue)).length;
+    if(this.pick === 0 || this.comentarioId === false){
+     this.alertCampos();
+    }
+    else{
     this.load.presentLoading('Guardando..');
     this.visibleGuardar = false;
     this.disabled = true;
@@ -282,7 +316,7 @@ export class SalonMantenimientoComponent implements OnInit {
     } else {
       this.updateData();
     }
-  // }
+   }
   }
   addData() {
     this.data.createdBy = this.user.id;

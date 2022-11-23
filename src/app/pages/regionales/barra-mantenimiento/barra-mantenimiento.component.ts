@@ -34,8 +34,10 @@ export class BarraMantenimientoComponent implements OnInit {
   public pick2 = 0;
   public pick3 = 0;
   public pick4 = 0;
+  public pick = 0;
   public visibleGuardar = true;
   public Ractivo = false;
+  public comentarioId = false; 
 
   constructor(public router: Router,
     public routerActive: ActivatedRoute,
@@ -226,11 +228,29 @@ export class BarraMantenimientoComponent implements OnInit {
   }
 
   save() {
-    // if(this.data.commentElectricalConnections === undefined || this.data.commentMixer === undefined || this.data.commentRefrigerator === undefined || this.data.commentSink === undefined
-    //   || this.data.commentElectricalConnections === "" || this.data.commentMixer === "" || this.data.commentRefrigerator === "" || this.data.commentSink === "" || this.data.photoBars.length < 4){
-    //   this.alertCampos();
-    // }
-    // else{
+    this.comentarioId = true;
+    if(this.radioValue === '1' && this.data.commentSink === " "){
+       this.comentarioId = false;
+       console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '2' && this.data.commentMixer === " "){
+      this.comentarioId = false;
+      console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '3' && this.data.commentRefrigerator === " "){
+       this.comentarioId = false;
+       console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '4' && this.data.commentElectricalConnections === " "){
+      this.comentarioId = false;
+      console.log('nombre', this.comentarioId);
+    }
+
+    this.pick = this.data.photoBars.filter(pick => pick.type === Number(this.radioValue)).length;
+    if(this.pick === 0 || this.comentarioId === false){
+     this.alertCampos();
+    }
+    else{
     this.visibleGuardar = false;
     this.load.presentLoading('Guardando..');
     this.disabled = true;
@@ -245,7 +265,7 @@ export class BarraMantenimientoComponent implements OnInit {
     } else {
       this.updateData();
     }
-  // }
+   }
   }
   addData() {
     this.data.createdBy = this.user.id;

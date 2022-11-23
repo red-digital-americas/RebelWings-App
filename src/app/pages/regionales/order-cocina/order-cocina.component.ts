@@ -16,6 +16,7 @@ import { ActionSheetController } from '@ionic/angular';
   styleUrls: ['./order-cocina.component.scss'],
 })
 export class OrderCocinaComponent implements OnInit {
+  
   public today = new Date();
   public user: any;
   public branchId;
@@ -51,6 +52,10 @@ export class OrderCocinaComponent implements OnInit {
     this.branchId = this.routerActive.snapshot.paramMap.get('id');
     this.getData();
     this.getBranch(this.user.stateId);
+    
+    
+    
+    
   }
   // get data order
   getData() {
@@ -258,14 +263,16 @@ export class OrderCocinaComponent implements OnInit {
     // }
   }
   save() {
+
     if(this.objProduct[0].averageTime === "" || this.objProduct[0].averageTime === undefined || this.objProduct[0].averageTime === null 
       || this.objProduct[0].comment === null || this.objProduct[0].comment === "" || this.objProduct[0].comment === undefined
       || this.objProduct[0].photoOrders.length === 0){
         this.alertCampos();
     }
     else{
-      debugger;
+
       console.log('data', this.objProduct);
+  
       this.load.presentLoading('Guardando..');
       this.visibleGuardar = false;
       this.disabled = true;

@@ -33,8 +33,10 @@ export class BanosMantenimientoComponent implements OnInit {
   public pick2 = 0;
   public pick3 = 0;
   public pick4 = 0;
+  public pick = 0;
   public visibleGuardar = true;
   public Ractivo = false;
+  public comentarioId = false; 
 
   constructor(public router: Router,
     public routerActive: ActivatedRoute,
@@ -226,11 +228,29 @@ export class BanosMantenimientoComponent implements OnInit {
   }
 
   save() {
-    // if(this.data.commentDoors === undefined || this.data.commentHandWashBasin === undefined || this.data.commentLuminaires === undefined || this.data.commentUrinals === undefined
-    //   || this.data.commentDoors === "" || this.data.commentHandWashBasin === "" || this.data.commentLuminaires === "" || this.data.commentUrinals === "" || this.data.photoBathrooms.length < 4){
-    //   this.alertCampos();
-    // }
-    // else{
+    this.comentarioId = true;
+    if(this.radioValue === '1' && this.data.commentUrinals === " "){
+       this.comentarioId = false;
+       console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '2' && this.data.commentHandWashBasin === " "){
+      this.comentarioId = false;
+      console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '3' && this.data.commentLuminaires === " "){
+       this.comentarioId = false;
+       console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '4' && this.data.commentDoors === " "){
+      this.comentarioId = false;
+      console.log('nombre', this.comentarioId);
+    }
+
+    this.pick = this.data.photoBathrooms.filter(pick => pick.type === Number(this.radioValue)).length;
+    if(this.pick === 0 || this.comentarioId === false){
+     this.alertCampos();
+    }
+    else{
     this.load.presentLoading('Guardando..');
     this.visibleGuardar = false;
     this.disabled = true;
@@ -245,7 +265,7 @@ export class BanosMantenimientoComponent implements OnInit {
     } else {
       this.updateData();
     }
-  // }
+   }
   }
   addData() {
     this.data.createdBy = this.user.id;

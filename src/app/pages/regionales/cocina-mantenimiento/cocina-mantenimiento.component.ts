@@ -38,8 +38,10 @@ export class CocinaMantenimientoComponent implements OnInit {
   public pick9 = 0;
   public pick10 = 0;
   public pick11 = 0;
+  public pick = 0;
   public visibleGuardar = true;
   public Ractivo = false;
+  public comentarioId = false; 
 
   // ******fotos*********
   public base64 = 'data:image/jpeg;base64';
@@ -283,14 +285,56 @@ export class CocinaMantenimientoComponent implements OnInit {
   }
 
   save() {
-    // if(this.data.commentCorrectDistance === "" || this.data.commentDoors === "" || this.data.commentElectricalConnections === "" || this.data.commentExtractor === ""
-    //   || this.data.commentFryer === "" || this.data.commentInteriorTemperature === "" || this.data.commentLuminaires === "" || this.data.commentMixer === "" ||
-    //   this.data.commentRefrigerator === "" || this.data.commentSink === "" || this.data.commentStrainer === "" || this.data.commentCorrectDistance === undefined || this.data.commentDoors === undefined || this.data.commentElectricalConnections === undefined || this.data.commentExtractor === undefined
-    //   || this.data.commentFryer === undefined || this.data.commentInteriorTemperature === undefined || this.data.commentLuminaires === undefined || this.data.commentMixer === undefined ||
-    //   this.data.commentRefrigerator === undefined || this.data.commentSink === undefined || this.data.commentStrainer === undefined || this.data.photoKitchens.length < 11){
-    //   this.alertCampos();
-    // }
-    // else{
+    this.comentarioId = true;
+    if(this.radioValue === '1' && this.data.commentSink === " "){
+       this.comentarioId = false;
+       console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '2' && this.data.commentMixer === " "){
+      this.comentarioId = false;
+      console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '3' && this.data.commentStrainer === " "){
+       this.comentarioId = false;
+       console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '4' && this.data.commentFryer === " "){
+      this.comentarioId = false;
+      console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '5' && this.data.commentExtractor === " "){
+       this.comentarioId = false;
+       console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '6' && this.data.commentRefrigerator === " "){
+      this.comentarioId = false;
+      console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '7' && this.data.commentInteriorTemperature === " "){
+       this.comentarioId = false;
+       console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '8' && this.data.commentDoors === " "){
+      this.comentarioId = false;
+      console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '9' && this.data.commentCorrectDistance === " "){
+       this.comentarioId = false;
+       console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '10' && this.data.commentElectricalConnections === " "){
+      this.comentarioId = false;
+      console.log('nombre', this.comentarioId);
+    }
+    if(this.radioValue === '11' && this.data.commentLuminaires === " "){
+       this.comentarioId = false;
+       console.log('nombre', this.comentarioId);
+    }
+    this.pick = this.data.photoKitchens.filter(pick => pick.type === Number(this.radioValue)).length;
+    if(this.pick === 0 || this.comentarioId === false){
+     this.alertCampos();
+    }
+    else{
     this.visibleGuardar = false;
     this.load.presentLoading('Guardando..');
     this.disabled = true;
@@ -305,7 +349,7 @@ export class CocinaMantenimientoComponent implements OnInit {
     } else {
       this.updateData();
     }
-  //  }
+    }
   }
   addData() {
     this.data.createdBy = this.user.id;
