@@ -32,6 +32,7 @@
     </ion-grid>
   </ion-header>
   <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
+    
     <ion-grid>
 
       <ion-card *ngFor="let person of data">
@@ -110,6 +111,7 @@
         </ion-row>
       </ion-card>
     </ion-grid>
+
   </ion-content>
   <!-- skeletor -->
   <ion-header *ngIf="activeData === false" class="ion-no-border ion-padding">

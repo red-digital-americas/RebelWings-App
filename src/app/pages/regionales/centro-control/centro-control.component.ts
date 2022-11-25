@@ -59,7 +59,7 @@ export class CentroControlComponent implements OnInit {
     
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet(`ControlCenter/${this.branchId}/${task}/Regional`)
+      .serviceGeneralGet(`ControlCenter/${this.branchId}/${task}/${this.user.id}/Regional`)
       .subscribe((resp) => {
         if (resp.success) {
           this.data = resp.result.controlCenters;
