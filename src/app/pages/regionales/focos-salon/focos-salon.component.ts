@@ -161,15 +161,14 @@ export class FocosSalonComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Guardando..');
           console.log('data', data);
-          window.location.reload();
-          this.Ractivo = false;
-          this.visibleGuardar = true;
-          // if(this.data.brokenSpotlight === false){
-          //this.levantamientoTicket();
-          // }
-          // else{
-          // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
-          // }
+          if(this.data.brokenSpotlight === false){
+            this.levantamientoTicket();
+            }
+            else{
+              window.location.reload();
+              this.Ractivo = false;
+              this.visibleGuardar = true;
+            }
         }
       });
   }
@@ -181,15 +180,15 @@ export class FocosSalonComponent implements OnInit {
         if (data.success) {
           this.load.presentLoading('Actualizando..');
           console.log('data', data);
-          window.location.reload();
-          this.Ractivo = false;
-          this.visibleGuardar = true;
-          // if(this.data.brokenSpotlight === false){
-            //this.levantamientoTicket();
-            // }
-            // else{
-            // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/2`);
-            // }
+          
+          if(this.data.brokenSpotlight === false){
+            this.levantamientoTicket();
+            }
+            else{
+              window.location.reload();
+              this.Ractivo = false;
+              this.visibleGuardar = true;
+            }
         }
       });
   }

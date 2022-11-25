@@ -347,16 +347,23 @@ export class SalonMantenimientoComponent implements OnInit {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
         console.log('data', data);
-        // if(this.data.accessDoors === false || this.data.badges === false || this.data.luminaires === false || this.data.switches === false || this.data.furnitureOne === false
-        //   || this.data.furnitureTwo === false || this.data.boths === false || this.data.fireExtinguishers === false){
-        //  this.levantamientoTicket();
-        // }
-        // else{
-        // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
-        // }
-        window.location.reload();
-        this.Ractivo = false;
-        this.visibleGuardar = true;
+
+        if(this.pick1 !== 0 && this.pick2 !== 0 && this.pick3 !== 0 && this.pick4 !== 0 && this.pick5 !== 0 && this.pick6 !== 0 && this.pick7 !== 0 && this.pick8 !== 0 ){
+          if(this.data.accessDoors === false || this.data.badges === false || this.data.luminaires === false || this.data.switches === false || this.data.furnitureOne === false
+               || this.data.furnitureTwo === false || this.data.boths === false || this.data.fireExtinguishers === false){
+            this.levantamientoTicket();
+          }
+          else{
+            window.location.reload();
+            this.Ractivo = false;
+            this.visibleGuardar = true;
+           }
+        }
+        else{
+         window.location.reload();
+         this.Ractivo = false;
+         this.visibleGuardar = true;
+        }
       }
     });
   }

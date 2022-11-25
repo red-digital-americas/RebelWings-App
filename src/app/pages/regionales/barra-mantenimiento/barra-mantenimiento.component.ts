@@ -295,15 +295,21 @@ export class BarraMantenimientoComponent implements OnInit {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
         console.log('data', data);
-        // if(this.data.sink === false || this.data.mixer === false || this.data.refrigerator === false || this.data.electricalConnections === false){
-        //   this.levantamientoTicket();
-        // }
-        // else{
-        // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
-        // }
+       if(this.pick1 !== 0 && this.pick2 !== 0 && this.pick3 !== 0 && this.pick4 !== 0){
+          if(this.data.sink === false || this.data.mixer === false || this.data.refrigerator === false || this.data.electricalConnections === false){
+            this.levantamientoTicket();
+          }
+          else{
+            window.location.reload();
+            this.Ractivo = false;
+            this.visibleGuardar = true;
+           }
+       }
+       else{
         window.location.reload();
         this.Ractivo = false;
         this.visibleGuardar = true;
+       }
         
       }
     });

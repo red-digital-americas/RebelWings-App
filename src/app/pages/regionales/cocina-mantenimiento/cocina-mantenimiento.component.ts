@@ -386,17 +386,24 @@ export class CocinaMantenimientoComponent implements OnInit {
       if (data.success) {
         this.load.presentLoading('Actualizando..');
         console.log('data', data);
-        // if(this.data.sink === false || this.data.mixer === false || this.data.strainer === false || this.data.fryer === false || this.data.extractor === false 
-        //   || this.data.refrigerator === false || this.data.interiorTemperature === false || this.data.doors === false || this.data.correctDistance === false 
-        //   || this.data.electricalConnections === false || this.data.luminaires === false ){
-        //   this.levantamientoTicket();
-        //  }
-        //  else{
-        //   this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/5`);
-        //  }
-        window.location.reload();
-        this.Ractivo = false;
-        this.visibleGuardar = true;
+
+       if(this.pick1 !== 0 && this.pick2 !== 0 && this.pick3 !== 0 && this.pick4 !== 0 && this.pick5 !== 0 && this.pick6 !== 0 && this.pick7 !== 0 && this.pick8 !== 0 && this.pick9 !== 0 && this.pick10 !== 0 && this.pick11 !== 0){
+          if(this.data.sink === false || this.data.mixer === false || this.data.strainer === false || this.data.fryer === false || this.data.extractor === false 
+               || this.data.refrigerator === false || this.data.interiorTemperature === false || this.data.doors === false || this.data.correctDistance === false 
+               || this.data.electricalConnections === false || this.data.luminaires === false){
+            this.levantamientoTicket();
+          }
+          else{
+            window.location.reload();
+            this.Ractivo = false;
+            this.visibleGuardar = true;
+           }
+        }
+        else{
+         window.location.reload();
+         this.Ractivo = false;
+         this.visibleGuardar = true;
+        }
       }
     });
   }

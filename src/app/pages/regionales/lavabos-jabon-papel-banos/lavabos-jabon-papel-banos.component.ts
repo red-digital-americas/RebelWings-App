@@ -260,9 +260,14 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
           // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/3`);
+          if(this.radioValue === '2' && this.data.isThereDryer === false){
+            this.levantamientoTicket();
+          }
+          else{
           window.location.reload();
           this.Ractivo = false;
           this.visibleGuardar = true;
+          }
         }
       });
   }
@@ -284,9 +289,14 @@ export class LavabosJabonPapelBanosComponent implements OnInit {
           console.log('data', data);
           this.photoService.deleteAllPhoto(this.data);
           // this.router.navigateByUrl(`regional/centro-control/${this.branchId}/tarea/3`);
+          if(this.radioValue === '2' && this.data.isThereDryer === false){
+            this.levantamientoTicket();
+          }
+          else{
           window.location.reload();
           this.Ractivo = false;
           this.visibleGuardar = true;
+          }
         }
       });
   }
