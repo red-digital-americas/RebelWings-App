@@ -53,7 +53,7 @@ export class EstacionSalonComponent implements OnInit {
   getData() {
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('Station/' + this.branchId)
+      .serviceGeneralGet('Station/' + this.branchId+'/'+this.user.id)
       .subscribe((resp) => {
         if (resp.success) {
           if (resp.result?.length !== 0 && resp.result !== null) {

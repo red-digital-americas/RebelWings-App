@@ -58,7 +58,7 @@ export class BarraMantenimientoComponent implements OnInit {
   getData() {
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('Bar/' + this.branchId)
+      .serviceGeneralGet('Bar/' + this.branchId+'/'+this.user.id)
       .subscribe((resp) => {
         if (resp.success) {
           if (resp.result?.length !== 0 && resp.result !== null) {

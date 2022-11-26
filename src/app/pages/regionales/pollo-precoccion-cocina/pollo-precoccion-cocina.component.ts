@@ -52,7 +52,7 @@ export class PolloPrecoccionCocinaComponent implements OnInit {
   getData() {
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('PrecookedChicken/' + this.branchId)
+      .serviceGeneralGet('PrecookedChicken/' + this.branchId+'/'+this.user.id)
       .subscribe((resp) => {
         if (resp.success) {
           if (resp.result?.length !== 0 && resp.result !== null) {

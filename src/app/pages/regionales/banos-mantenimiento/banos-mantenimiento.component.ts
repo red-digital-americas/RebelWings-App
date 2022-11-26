@@ -58,7 +58,7 @@ export class BanosMantenimientoComponent implements OnInit {
   getData() {
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('Bathroom/' + this.branchId)
+      .serviceGeneralGet('Bathroom/' + this.branchId+'/'+this.user.id)
       .subscribe((resp) => {
         if (resp.success) {
           if (resp.result?.length !== 0 && resp.result !== null) {

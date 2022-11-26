@@ -52,7 +52,7 @@ export class AudioVideoSalonComponent implements OnInit {
   getData() {
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('AudioVideo/' + this.branchId)
+      .serviceGeneralGet('AudioVideo/' + this.branchId+'/'+this.user.id)
       .subscribe((resp) => {
         if (resp.success) {
           if (resp.result?.length !== 0 && resp.result !== null) {

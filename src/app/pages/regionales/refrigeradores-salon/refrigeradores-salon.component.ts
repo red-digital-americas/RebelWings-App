@@ -57,7 +57,7 @@ export class RefrigeradoresSalonComponent implements OnInit {
     console.log('get de refrigeradores');
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('FridgeSalon/' + this.branchId)
+      .serviceGeneralGet('FridgeSalon/' + this.branchId+'/'+this.user.id)
       .subscribe((resp) => {
         if (resp.success) {
           // comprobar si tiene registros por dia

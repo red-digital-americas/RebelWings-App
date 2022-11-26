@@ -58,7 +58,7 @@ export class FocosSalonComponent implements OnInit {
   getData() {
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('Spotlight/' + this.branchId)
+      .serviceGeneralGet('Spotlight/' + this.branchId+'/'+this.user.id)
       .subscribe((resp) => {
         if (resp.success) {
           // comprobar si tiene registros por dia

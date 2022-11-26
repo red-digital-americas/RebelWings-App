@@ -60,7 +60,7 @@ export class RefrigeradoresCocinaComponent implements OnInit {
     console.log('get de refrigeradores');
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('Fridge/' + this.branchId)
+      .serviceGeneralGet('Fridge/' + this.branchId+'/'+this.user.id)
       .subscribe((resp) => {
         if (resp.success) {
           // comprobar si tiene registros por dia

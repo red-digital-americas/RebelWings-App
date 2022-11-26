@@ -57,7 +57,7 @@ export class LimpiezaBarraSalonComponent implements OnInit {
     this.load.presentLoading('Cargando..');
     this.service
       // this.user.branchId
-      .serviceGeneralGet('BarCleaning/' + this.branchId)
+      .serviceGeneralGet('BarCleaning/' + this.branchId+'/'+this.user.id)
       .subscribe((resp) => {
         if (resp.success) {
           // comprobar si tiene registros por dia

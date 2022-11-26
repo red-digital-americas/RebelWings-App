@@ -61,7 +61,7 @@ export class OrderCocinaComponent implements OnInit {
   getData() {
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('Order/' + this.branchId)
+      .serviceGeneralGet('Order/' + this.branchId+'/'+this.user.id)
       .subscribe((resp) => {
         if (resp.success) {
           // comprobar si tiene registros por dia
