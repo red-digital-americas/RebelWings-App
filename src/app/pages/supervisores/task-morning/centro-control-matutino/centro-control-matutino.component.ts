@@ -158,11 +158,11 @@ export class CentroControlMatutinoComponent implements OnInit {
   }
   showUsuario(){
     if(this.ValUsuario == 1){
-      this.ValUsuario = 2;
+      this.ValUsuario = 70;
     }
     else{
-      if(this.ValUsuario == 2){
-        this.ValUsuario = 3;
+      if(this.ValUsuario == 70){
+        this.ValUsuario = 71;
       }
       else{
       this.ValUsuario = 1;
@@ -439,17 +439,17 @@ export class CentroControlMatutinoComponent implements OnInit {
         id = 0;
       }
       this.stopTimer();
-      this.router.navigateByUrl('supervisor/validacion-gas/' + id);
+      this.router.navigateByUrl('supervisor/validacion-gas/' + id+'/'+this.ValUsuario);
     }
   }
   salonMontado(id: number) {
-    if(this.data[2].isComplete == false){
+    // if(this.data[2].isComplete == false){
       if (id === null) {
         id = 0;
       }
       this.stopTimer();
-      this.router.navigateByUrl('supervisor/salon-montado/' + id);
-    }
+      this.router.navigateByUrl('supervisor/salon-montado/' + id+'/'+this.ValUsuario);
+    // }
   }
   banosMatutino(id: number) {
     if(this.data[6].isComplete == false){
@@ -457,7 +457,7 @@ export class CentroControlMatutinoComponent implements OnInit {
         id = 0;
       }
       this.stopTimer();
-      this.router.navigateByUrl('supervisor/banos-matutino/' + id);
+      this.router.navigateByUrl('supervisor/banos-matutino/' + id+'/'+this.ValUsuario);
     }
   }
   stockPollo(id: number) {
@@ -474,7 +474,7 @@ export class CentroControlMatutinoComponent implements OnInit {
         id = 0;
       }
       this.stopTimer();
-      this.router.navigateByUrl(`supervisor/mesa-espera/1/${id}`);
+      this.router.navigateByUrl(`supervisor/mesa-espera/1/${id}`+'/'+this.ValUsuario);
     }
   }
   remisiones(id) {
@@ -504,7 +504,7 @@ export class CentroControlMatutinoComponent implements OnInit {
     id = 0;
   }
   this.stopTimer();
-  this.router.navigateByUrl('supervisor/volado-efectivo/1/' + id);
+  this.router.navigateByUrl('supervisor/volado-efectivo/1/' + id+'/'+this.ValUsuario);
   }
 
 

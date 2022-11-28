@@ -8,6 +8,7 @@ import { DialogNotificationComponent } from 'src/app/pages/nav/dialog-notificati
 import { LogoutComponent } from 'src/app/pages/popover/logout/logout.component';
 import { AlertController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -148,11 +149,11 @@ export class CentroControlVespertinoComponent implements OnInit {
 
   showUsuario(){
     if(this.ValUsuario == 1){
-      this.ValUsuario = 2;
+      this.ValUsuario = 70;
     }
     else{
-      if(this.ValUsuario == 2){
-        this.ValUsuario = 3;
+      if(this.ValUsuario == 70){
+        this.ValUsuario = 71;
       }
       else{
       this.ValUsuario = 1;
@@ -521,7 +522,7 @@ voladoEfectivo(id) {
     id = 0;
   }
   this.stopTimer();
-  this.router.navigateByUrl('supervisor/volado-efectivo/2/' + id);
+  this.router.navigateByUrl('supervisor/volado-efectivo/2/' + id+'/'+this.ValUsuario);
 }
 resguardoPropina(id) {
   if(this.data[3].isComplete == false){
@@ -529,7 +530,7 @@ resguardoPropina(id) {
       id = 0;
     }
     this.stopTimer();
-    this.router.navigateByUrl('supervisor/resguardo-propina/' + id);
+    this.router.navigateByUrl('supervisor/resguardo-propina/' + id+'/'+this.ValUsuario);
   }
 }
 limpiezaSalonBanos(id) {
@@ -538,7 +539,7 @@ limpiezaSalonBanos(id) {
       id = 0;
     }
     this.stopTimer();
-    this.router.navigateByUrl('supervisor/limpieza-salon-banos/' + id);
+    this.router.navigateByUrl('supervisor/limpieza-salon-banos/' + id +'/'+this.ValUsuario);
   }
 }
 resguardoTableta(id) {
@@ -546,7 +547,7 @@ resguardoTableta(id) {
     id = 0;
   }
   this.stopTimer();
-  this.router.navigateByUrl('supervisor/resguardo-tableta/' + id);
+  this.router.navigateByUrl('supervisor/resguardo-tableta/' + id+'/'+this.ValUsuario);
 }
 alarma(id) {
   if (id === null) {
@@ -565,7 +566,7 @@ tabletAndAlarma(idTablet, idAlarma) {
     }
     this.stopTimer();
     console.log(`id tablet ${idTablet} id tablet ${idAlarma}`);
-    this.router.navigateByUrl(`supervisor/resguardo-tableta/${idTablet}/alarma/${idAlarma}`);
+    this.router.navigateByUrl(`supervisor/resguardo-tableta/${idTablet}/alarma/${idAlarma}`+'/'+this.ValUsuario);
   }
 }
 mesas(id: number) {
@@ -574,7 +575,7 @@ mesas(id: number) {
       id = 0;
     }
     this.stopTimer();
-    this.router.navigateByUrl(`supervisor/mesa-espera/2/${id}`);
+    this.router.navigateByUrl(`supervisor/mesa-espera/2/${id}`+'/'+this.ValUsuario);
   }
 }
 stockPollo(id: number) {

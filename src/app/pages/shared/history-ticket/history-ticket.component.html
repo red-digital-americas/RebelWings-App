@@ -40,29 +40,30 @@
   <ion-content *ngIf="data?.length !== 0" fullscreen="false" class="ion-padding">
     <ion-list>
       <ion-list-header class="center" color="warning" lines="inset">
-        <ion-label>ID</ion-label>
-        <ion-label>SOLICITANTE</ion-label>
+        <ion-label>CATEGORIA</ion-label>
         <ion-label>ESTATUS</ion-label>
         <ion-label>FECHA</ion-label>
-        <ion-label>CERADO</ion-label>
+        <!-- <ion-label>FECHA</ion-label>
+        <ion-label>CERADO</ion-label> -->
       </ion-list-header>
       <ion-item class="center" *ngFor="let item of data" (click)="openTicket(item.id)">
         <ion-label (click)="openTicket(item.id)" color="danger">
-          <span class="table">{{item.noTicketing}}</span>
+          <span class="table">{{item.category}}</span>
         </ion-label>
         <ion-label color="primary">
-          <span class="table">{{item.regional}}</span>
+          <span class="table" *ngIf="item.status == true">ABIERTO</span>
+          <span class="table" *ngIf="item.status == false">CERRADO</span>
         </ion-label>
         <ion-label color="primary">
-          <span class="table">{{item.status}}</span>
+          <span class="table">{{item.opened | date: "dd MMM yyy"}}</span>
         </ion-label>
-        <ion-label color="primary">
+        <!-- <ion-label color="primary">
           <span class="table">{{item.opened | date: "dd MMM yyy"}}</span>
         </ion-label>
         <ion-label color="primary">
           <span *ngIf="item.closed !== null" class="table">{{item.closed | date: "dd MMM yyy"}}</span>
           <span *ngIf="item.closed === null" class="table"> -- </span>
-        </ion-label>
+        </ion-label> -->
       </ion-item>
     </ion-list>
   </ion-content>

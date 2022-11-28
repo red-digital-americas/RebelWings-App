@@ -3,25 +3,28 @@
   <ion-header *ngIf="activeData === true" class="ion-no-border ion-padding">
     <ion-grid>
       <ion-row>
-        <ion-col>
+        <ion-col size="3">
           <div>
-            <p (click)="return()" class="ion-align-items-start return">
-              < REGRESAR </p>
+            <!-- <p (click)="return()" class="ion-align-items-start return">
+              < REGRESAR</p> -->
+              <ion-button (click)="return()" shape="round" color="warning" expand="full" size="small">
+                REGRESAR
+              </ion-button>
           </div>
         </ion-col>
       </ion-row>
       <ion-row size="12">
-        <ion-col size="1">
+        <!-- <ion-col size="1">
           <img src="./assets/icon/ilustracion_ticket.png" alt="Validaccion de assistencia" />
-        </ion-col>
-        <ion-col size="5" class="ion-align-self-center">
+        </ion-col> -->
+        <ion-col size="6" class="ion-align-self-center">
           <h3 class="title">TICKET {{data.noTicket}}</h3>
         </ion-col>
         <ion-col size="6">
-          <ion-label floating>Estatus</ion-label>
+          <ion-label floating>ESTATUS</ion-label>
           <ion-card class="closed">
             <ion-item>
-              <ion-label>Estatus</ion-label>
+              <!-- <ion-label>Estatus</ion-label> -->
               <ion-select [(ngModel)]="data.status">
                 <ion-select-option [value]="true">
                   Abierto
@@ -35,41 +38,44 @@
         </ion-col>
       </ion-row>
       <ion-row size="12">
-        <ion-col size="4" class="ion-align-self-center">
-          <h5 class="subtitle-negro">SUCURSAL {{nameBranch}}</h5>
+        <ion-col size="9" class="ion-align-self-center">
+          <h5 class="subtitle-negro">{{nameBranch}}</h5>
         </ion-col>
-        <ion-col size="2" class="ion-align-self-center">
+        <ion-col size="3" class="ion-align-self-center">
           <span class="date-grey">
-            {{ data.dateOpen | date: "dd MMM yyy" }}
+            {{ data.dateOpen | date: "dd/MM/yyy" }}
           </span>
         </ion-col>
-        <ion-col size="6" class="ion-align-self-center">
+
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="12" class="ion-align-self-center">
           <ion-row size="12">
-            <ion-col size="2">
+            <!-- <ion-col size="2">
               <img class="avatar" src="./assets/icon/skeleton-circle.png" alt="avatar" />
-            </ion-col>
-            <ion-col size="10">
+            </ion-col> -->
+            <ion-col size="12">
               <ion-row size="12">
                 <ion-col size="12">
                   <span *ngIf="data.createdByNavigation.roleId === 1">
                     <b>
-                      Supervisor
+                      SUPERVISOR: 
                     </b>
+                    <span class="nameticket">{{ data.createdByNavigation.name}} {{data.createdByNavigation.lastName}}</span>
                   </span>
                   <span *ngIf="data.createdByNavigation.roleId === 2">
                     <b>
-                      Regional
+                      REGIONAL: 
                     </b>
+                    <span class="nameticket">{{ data.createdByNavigation.name}} {{data.createdByNavigation.lastName}}</span>
                   </span>
-                </ion-col>
-                <ion-col size="12">
-                  <span class="nameticket">{{ data.createdByNavigation.name}} {{data.createdByNavigation.lastName}}</span>
                 </ion-col>
               </ion-row>
             </ion-col>
           </ion-row>
         </ion-col>
       </ion-row>
+
     </ion-grid>
   </ion-header>
   <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
@@ -79,7 +85,7 @@
         <ion-col size="6">
           <ion-row size="12">
             <ion-col size="12">
-              <ion-label floating>Lugar específico</ion-label>
+              <ion-label floating>LUGAR ESPECIFICO</ion-label>
               <ion-card class="closed">
                 <ion-item>
                   <span>
@@ -89,7 +95,7 @@
               </ion-card>
             </ion-col>
             <ion-col size="12">
-              <ion-label floating>Parte de la sucursal</ion-label>
+              <ion-label floating>PARTE DE LA SUCURSAL</ion-label>
               <ion-card class="closed">
                 <ion-item>
                   {{data.categoryNavigation.category}}
@@ -100,7 +106,7 @@
         </ion-col>
         <!-- coment -->
         <ion-col size="6">
-          <ion-label>Comentario</ion-label>
+          <ion-label>COMENTARIO</ion-label>
           <ion-card>
             <ion-textarea disabled [(ngModel)]="data.describeProblem" rows="6" cols="20">
             </ion-textarea>
@@ -109,7 +115,7 @@
       </ion-row>
       <ion-row size="12">
         <ion-col size="6">
-          <ion-label floating>Precio</ion-label>
+          <ion-label floating>PRECIO</ion-label>
           <ion-card class="closed">
             <ion-input [(ngModel)]="data.cost" required placeholder=" $ MXN">
             </ion-input>
@@ -119,7 +125,7 @@
       </ion-row>
       <ion-row size="12">
         <ion-col size="12">
-          <span class="titleProduct">Fotografías</span>
+          <span class="titleProduct">FOTOGRAFIAS</span>
         </ion-col>
         <!-- fotos  -->
         <ion-col size="6" *ngFor="let photo of data.photoTicketings; index as position">

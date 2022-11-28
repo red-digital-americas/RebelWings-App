@@ -37,6 +37,8 @@ export class ResguardoPropinaComponent implements OnInit {
   public createDate = '';
   public visibleGuardar = true;
 
+  public valUsuario = 0;
+
 
   constructor(
     public router: Router,
@@ -57,6 +59,11 @@ export class ResguardoPropinaComponent implements OnInit {
     // get nema de sucursal
     this.branchId = this.user.branchId;
     this.getBranch();
+
+    this.valUsuario =Number(this.routerActive.snapshot.paramMap.get('us'));
+    console.log(this.valUsuario);
+    if(this.valUsuario === 1){this.valUsuario = this.user.id}
+
     if (this.idPropina === '0') {
       console.log('Completar la tarea');
       this.activeData = true;
@@ -127,7 +134,7 @@ export class ResguardoPropinaComponent implements OnInit {
       photoPath: 'jpeg',
       createdBy: this.user.id,
       createdDate: this.today,
-      updatedBy: this.user.id,
+      updatedBy: this.valUsuario,
       updatedDate: this.today,
     });
     console.log('fotos chicken', this.data);
@@ -250,7 +257,7 @@ export class ResguardoPropinaComponent implements OnInit {
     console.log('date', date);
     this.createDate = `${date}T${time}`;
     console.log('createDate', this.createDate);
-    this.data.updatedBy = this.user.id;
+    this.data.updatedBy = this.valUsuario,
     this.data.updatedDate = this.createDate;
     if (this.idPropina === '0') {
       this.addPropina();

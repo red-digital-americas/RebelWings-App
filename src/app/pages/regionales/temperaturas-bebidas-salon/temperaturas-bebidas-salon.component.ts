@@ -35,6 +35,7 @@ export class TemperaturasBebidasSalonComponent implements OnInit {
 
   public visibleGuardar = true;
 
+
   // ******fotos*********
   public base64 = 'data:image/jpeg;base64';
   public fotosCleanRoom: any;
@@ -69,6 +70,7 @@ export class TemperaturasBebidasSalonComponent implements OnInit {
             this.activeData = true;
             this.data = resp.result[0];
             console.log('get data', this.data);
+            if(this.data.chope == false){ this.radioValue = '3'}
           }
           else {
             this.data.id = 0;
@@ -82,6 +84,8 @@ export class TemperaturasBebidasSalonComponent implements OnInit {
             this.data.drinkThree = false;
             this.data.drinkFour = false;
             this.data.drinkFive = false;
+            this.data.chope = true;
+
           }
         }
       });
@@ -118,7 +122,12 @@ export class TemperaturasBebidasSalonComponent implements OnInit {
       }
     });
   }
-
+  myChange($event) {
+    if(this.data.chope == false){
+      this.radioValue = '3';
+    }
+    else{this.radioValue = '1';}
+  }
   // agregar fotos de limpieza de salon
   async addPhotoToGallery(idType: number) {
     this.Ractivo = true;
@@ -311,6 +320,7 @@ class DrinkTemperatureModel {
   updatedBy: number;
   updatedDate: Date;
   photoDrinksTemperatures: PhotoDrinksTemperaturesModel[] = [];
+  chope: boolean;
 }
 class PhotoDrinksTemperaturesModel {
   id: number;

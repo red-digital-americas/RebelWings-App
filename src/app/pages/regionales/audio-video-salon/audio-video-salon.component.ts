@@ -30,7 +30,7 @@ export class AudioVideoSalonComponent implements OnInit {
   public pick2 = 0;
 
   public visibleGuardar = true;
-  public Terraza = false;
+  public Terraza = true;
 
   constructor(public router: Router,
     public routerActive: ActivatedRoute,
@@ -82,7 +82,7 @@ export class AudioVideoSalonComponent implements OnInit {
   }
 
   updateTerraza() {
-    if(this.Terraza === true){
+    if(this.Terraza === false){
       this.data.terraceTvWorksProperly = true;
       this.data.terraceSpeakersWorkProperly = true;
       this.data.commentTerraceSpeakersWorkProperly = "NO APLICA";

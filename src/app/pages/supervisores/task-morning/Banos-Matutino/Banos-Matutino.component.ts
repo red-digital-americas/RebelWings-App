@@ -32,7 +32,7 @@ export class BanosMatutinoComponent implements OnInit {
   public createDate = '';
   public visibleGuardar = true;
 
-
+  public valUsuario = 0;
 
   constructor(
     public router: Router,
@@ -58,6 +58,10 @@ export class BanosMatutinoComponent implements OnInit {
       this.getData();
 
     }
+
+    this.valUsuario =Number(this.routerActive.snapshot.paramMap.get('us'));
+    console.log(this.valUsuario);
+    if(this.valUsuario === 1){this.valUsuario = this.user.id}
   }
 
   ngOnInit() {
@@ -94,7 +98,7 @@ export class BanosMatutinoComponent implements OnInit {
       photoPath: 'jpeg',
       createdBy: this.user.id,
       createdDate: this.today,
-      updatedBy: this.user.id,
+      updatedBy: this.valUsuario,
       updatedDate: this.today,
     });
     console.log('fotos Baños', this.data);
@@ -202,7 +206,7 @@ export class BanosMatutinoComponent implements OnInit {
     console.log('date', date);
     this.createDate = `${date}T${time}`;
     console.log('createDate', this.createDate);
-    this.data.updatedBy = this.user.id;
+    this.data.updatedBy = this.valUsuario,
     this.data.updatedDate = this.createDate;
     if (this.branchId === '0') {
       this.addBanos();

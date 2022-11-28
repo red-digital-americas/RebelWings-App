@@ -27,6 +27,8 @@ export class ResguardoTabletaComponent implements OnInit {
   public nameBranch = '';
   public dataBranch: any[] = [];
 
+  public valUsuario = 0;
+
   constructor(
     public router: Router,
     private camera: Camera,
@@ -44,6 +46,11 @@ export class ResguardoTabletaComponent implements OnInit {
     // get name de sucursal
     this.branchId = this.user.branchId;
     this.getBranch();
+
+    this.valUsuario =Number(this.routerActive.snapshot.paramMap.get('us'));
+    console.log(this.valUsuario);
+    if(this.valUsuario === 1){this.valUsuario = this.user.id}
+
     if (this.idTablet === '0') {
       console.log('Completar la tarea');
     } else {
@@ -103,7 +110,7 @@ export class ResguardoTabletaComponent implements OnInit {
       photoPath: 'jpeg',
       createdBy: this.user.id,
       createdDate: this.today,
-      updatedBy: this.user.id,
+      updatedBy: this.valUsuario,
       updatedDate: this.today,
     });
     console.log('fotos chicken', this.data);
@@ -178,7 +185,7 @@ export class ResguardoTabletaComponent implements OnInit {
     this.fotosTablet = [];
     // esto se pone aqui por que aun no se estrae la data de un get
     this.data.branchId = this.user.branchId;
-    this.data.updatedBy = this.user.id;
+    this.data.updatedBy = this.valUsuario,
     this.data.updatedDate = this.today;
     console.log('Obj To send => ', this.data);
 

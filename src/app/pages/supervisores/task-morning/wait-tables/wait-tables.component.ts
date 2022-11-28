@@ -25,6 +25,8 @@ export class WaitTablesComponent implements OnInit {
   public createDate = '';
   public visibleGuardar = true;
 
+  public valUsuario = 0;
+
   public fotosWaitlist;
   public options: CameraOptions = {
     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
@@ -51,6 +53,12 @@ export class WaitTablesComponent implements OnInit {
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idTable = this.routerActive.snapshot.paramMap.get('id');
     this.turno = this.routerActive.snapshot.paramMap.get('turno');
+
+
+    this.valUsuario =Number(this.routerActive.snapshot.paramMap.get('us'));
+    console.log(this.valUsuario);
+    if(this.valUsuario === 1){this.valUsuario = this.user.id}
+
     console.log('turno select', this.turno);
     if (this.idTable === '0') {
       console.log('Completar la tarea');
@@ -59,7 +67,7 @@ export class WaitTablesComponent implements OnInit {
       console.log('Actualizar la tarea');
       this.getData();
     }
-    console.log('fotos count', this.data.photoWaitlistTable.length);
+    console.log('fotos count', this.data.photoWaitlistTables.length);
   }
 
   async ngOnInit() { }
@@ -94,18 +102,18 @@ export class WaitTablesComponent implements OnInit {
     // agregaremos las fotos pero con id type de acuerdo al caso
     // al agregar las fotos en storage, las pasamos por lista
     console.log('obj fotos', this.photoService);
-    this.data.photoWaitlistTable.push({
+    this.data.photoWaitlistTables.push({
       id: 0,
       waitlistTableId: this.data.id,
       photo: this.photoService.photos[0].webviewPath,
       photoPath: 'jpeg',
       createdBy: this.user.id,
       createdDate: this.today,
-      updatedBy: this.user.id,
+      updatedBy: this.valUsuario,
       updatedDate: this.today,
     });
     console.log('fotos mesas en espera', this.data);
-    console.log('fotos count', this.data.photoWaitlistTable.length);
+    console.log('fotos count', this.data.photoWaitlistTables.length);
   }
 
   async alertCampos(){
@@ -138,7 +146,7 @@ export class WaitTablesComponent implements OnInit {
           handler: () => {
             this.photoService.deletePicture(photo, position);
             //
-            this.data.photoWaitlistTable.splice(position, 1);
+            this.data.photoWaitlistTables.splice(position, 1);
           },
         },
         {
@@ -211,7 +219,7 @@ export class WaitTablesComponent implements OnInit {
     console.log('date', date);
     this.createDate = `${date}T${time}`;
     console.log('createDate', this.createDate);
-    this.data.updatedBy = this.user.id;
+    this.data.updatedBy = this.valUsuario,
     this.data.updatedDate = this.createDate;
     if (this.idTable === '0') {
       console.log('add data');
@@ -225,8 +233,11 @@ export class WaitTablesComponent implements OnInit {
   }
 
   save() {
+    if(this.valUsuario !== 1){
+      this.data.updatedBy = this.valUsuario;
+      }
 
-    if(this.data.numberPeople == undefined || this.data.numberPeople == null || this.data.comment == undefined || this.data.comment == null || this.data.comment == "" || this.data.photoWaitlistTable.length == 0){
+    if(this.data.numberPeople == undefined || this.data.numberPeople == null || this.data.comment == undefined || this.data.comment == null || this.data.comment == "" || this.data.photoWaitlistTables.length == 0){
      this.alertCampos();
     }
     else{
@@ -235,8 +246,8 @@ export class WaitTablesComponent implements OnInit {
 
       this.disabled = true;
       this.fotosWaitlist = [];
-      if (this.data.photoWaitlistTable.length !== 0) {
-        this.data.photoWaitlistTable.forEach((photo) => {
+      if (this.data.photoWaitlistTables.length !== 0) {
+        this.data.photoWaitlistTables.forEach((photo) => {
           if (photo.id !== 0) {
             photo.photoPath = '';
           }
@@ -309,7 +320,7 @@ class WaitTableModel {
   createdDate: string;
   updatedBy: number;
   updatedDate: string;
-  photoWaitlistTable: PhotoWaitlistModel[] = [];
+  photoWaitlistTables: PhotoWaitlistModel[] = [];
 }
 class PhotoWaitlistModel {
   id: number;

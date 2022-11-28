@@ -30,8 +30,19 @@ export class LoungeMountedComponent implements OnInit {
   public url = 'http://opera.no-ip.net/back/api_rebel_wings/';
   public activeData = false;
   public createDate = '';
-  public visibleGuardar = true;
 
+  public radioValue = '1'; 
+  public pick = 0;
+  public pick1 = 0;
+  public pick2 = 0;
+  public pick3 = 0;
+  public pick4 = 0;
+  public pick5 = 0;
+  public pick6 = 0;
+  public visibleGuardar = true;
+  public Ractivo = false;
+
+  public valUsuario = 0;
 
   constructor(
     public router: Router,
@@ -49,14 +60,12 @@ export class LoungeMountedComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.branchId = this.routerActive.snapshot.paramMap.get('id');
-    if (this.branchId === '0') {
-      console.log('Completar la tarea');
-      this.activeData = true;
-    } else {
-      console.log('Actualizar la tarea');
-      this.getData();
+    
+    this.getData();
 
-    }
+    this.valUsuario =Number(this.routerActive.snapshot.paramMap.get('us'));
+    console.log(this.valUsuario);
+    if(this.valUsuario === 1){this.valUsuario = this.user.id}
   }
 
   ngOnInit() {
@@ -68,36 +77,81 @@ export class LoungeMountedComponent implements OnInit {
   getData() {
     this.load.presentLoading('Cargando..');
     this.service
-      .serviceGeneralGet('ToSetTable/' + this.branchId)
+      .serviceGeneralGet('ToSetTable/' + this.branchId+'/'+this.user.id)
       .subscribe((resp) => {
         if (resp.success) {
-          this.activeData = true;
-          this.data = resp.result;
-          console.log('get data', this.data);
+          if (resp.result?.length !== 0 && resp.result !== null) {
+            this.dataId = true; //si hay registro entonces se hara un put
+            this.activeData = true;
+            console.log('si hay registros del dia');
+            this.data = resp.result;
+            console.log('get data', this.data);
+          }
+          else {
+            this.activeData = true;
+            console.log('completar tarea');
+            this.dataId = false; //no hay registro entonces se hara un post
+            this.data.id = 0;
+            this.data.cajeros = 0;
+            this.data.cocineros = 0;
+            this.data.vendedores = 0;      
+
+          }
         }
       });
   }
 
-  async addPhotoToGallery() {
-    const name = new Date().toISOString();
-    await this.photoService.addNewToGallery();
-    await this.photoService.loadSaved();
+    conteoFotos(){
+    this.pick1 = this.data.photoToSetTables.filter(pick => pick.type === 1).length;
+    this.pick2 = this.data.photoToSetTables.filter(pick => pick.type === 2).length;
+    this.pick3 = this.data.photoToSetTables.filter(pick => pick.type === 3).length;
+    this.pick4 = this.data.photoToSetTables.filter(pick => pick.type === 4).length;
+    this.pick5 = this.data.photoToSetTables.filter(pick => pick.type === 5).length;
+    this.pick6 = this.data.photoToSetTables.filter(pick => pick.type === 6).length;
 
-    // agregaremos las fotos pero con id type de acuerdo al caso
-    // al agregar las fotos en storage, las pasamos por lista
-    console.log('obj fotos', this.photoService);
-    this.data.photoToSetTables.push({
-      id: 0,
-      toSetTableId: this.data.id,
-      photo: this.photoService.photos[0].webviewPath,
-      photoPath: 'jpeg',
-      createdBy: this.user.id,
-      createdDate: this.today,
-      updatedBy: this.user.id,
-      updatedDate: this.today,
-    });
-    console.log('fotos salon montado', this.data);
-  }
+    if(this.data.commentCocina === "" || this.data.commentCocina === undefined ){
+      if(this.data.commentCocina  !== " "){
+      this.data.commentCocina  = " ";
+      }
+    }
+    if(this.data.commentMeet === "" || this.data.commentMeet === undefined ){
+      if(this.data.commentMeet !== " "){
+        this.data.commentMeet = " ";
+        }
+    }
+    if(this.data.commentSalon === "" || this.data.commentSalon === undefined ){
+      if(this.data.commentSalon !== " "){
+      this.data.commentSalon = " ";
+      }
+    }
+
+
+    }
+
+    // agregar fotos de limpieza de salon
+    async addPhotoToGallery(idType: number) {
+      this.Ractivo = true;
+      this.photoService.limpiaStorage();
+      const name = new Date().toISOString();
+      await this.photoService.addNewToGallery();
+      await this.photoService.loadSaved();
+      // agregaremos las fotos pero con id type de acuerdo al caso
+      // al agregar las fotos en storage, las pasamos por lista
+      console.log('obj fotos', this.photoService);
+      this.data.photoToSetTables.push({
+        id: 0,
+        toSetTableId: this.data.id,
+        photo: this.photoService.photos[0].webviewPath,
+        photoPath: 'jpeg',
+        type: idType,
+        createdBy: this.user.id,
+        createdDate: this.today,
+        updatedBy: this.valUsuario,
+        updatedDate: this.today,
+      });
+      console.log('fotos chicken', this.data);
+      this.conteoFotos();
+    }
   public async showActionSheet(photo, position: number) {
     console.log('photo', photo);
     console.log('posicion', position);
@@ -200,9 +254,9 @@ export class LoungeMountedComponent implements OnInit {
     console.log('date', date);
     this.createDate = `${date}T${time}`;
     console.log('createDate', this.createDate);
-    this.data.updatedBy = this.user.id;
+    this.data.updatedBy = this.valUsuario,
     this.data.updatedDate = this.createDate;
-    if (this.branchId === '0') {
+    if (this.data.id === 0) {
       this.addSalon();
     } else {
       this.updateSAlon();
@@ -210,7 +264,20 @@ export class LoungeMountedComponent implements OnInit {
   }
 
   save() {
-    if(this.data.comment === undefined || this.data.comment === null || this.data.photoToSetTables.length == 0 || this.data.comment === ""){
+    this.pick=0;
+    if(this.radioValue == '1' && this.pick1 !== 0 && this.data.commentSalon !== " "){
+      this.pick = 1;
+    }
+    if(this.radioValue == '2' && this.pick2 !== 0 && this.data.commentCocina !== " "){
+      this.pick = 1;
+    }
+    if(this.radioValue == '3' && this.pick3 !== 0 && this.pick4 !== 0 && this.pick5 !== 0){
+      this.pick = 1;
+    }
+    if(this.radioValue == '4' && this.pick6 !== 0 && this.data.commentMeet !== " "){
+      this.pick = 1;
+    }
+    if(this.pick === 0){
       this.alertCampos();
     }
     else{
@@ -245,7 +312,10 @@ export class LoungeMountedComponent implements OnInit {
           this.load.presentLoading('Guardando..');
           console.log('Resp Serv =>', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('supervisor/control-matutino/tarea/1');
+          //this.router.navigateByUrl('supervisor/control-matutino/tarea/1');
+          window.location.reload();
+          this.Ractivo = false;
+          this.visibleGuardar = true;
         }
       });
   }
@@ -258,7 +328,10 @@ export class LoungeMountedComponent implements OnInit {
           this.load.presentLoading('Actualizando..');
           console.log('Resp Serv =>', data);
           this.photoService.deleteAllPhoto(this.data);
-          this.router.navigateByUrl('supervisor/control-matutino/tarea/1');
+          //this.router.navigateByUrl('supervisor/control-matutino/tarea/1');
+          window.location.reload();
+          this.Ractivo = false;
+          this.visibleGuardar = true;
           this.disabled = false;
         } else {
           this.disabled = false;
@@ -270,7 +343,12 @@ export class LoungeMountedComponent implements OnInit {
 class SalonDataModel {
   id: number;
   branch: number;
-  comment: string;
+  commentSalon: string;
+  commentCocina: string;
+  commentMeet: string;
+  cajeros: number;
+  vendedores: number;
+  cocineros: number;
   createdBy: number;
   createdDate: string;
   updatedBy: number;
@@ -282,6 +360,7 @@ class PhotoTableModel {
   toSetTableId: number;
   photoPath: string;
   photo: string;
+  type: number;
   createdBy: number;
   createdDate: Date;
   updatedBy: number;

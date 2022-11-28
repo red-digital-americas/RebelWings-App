@@ -37,15 +37,15 @@ const routes: Routes = [
     component: AttendanceValidationComponent,
   },
   {
-    path: 'validacion-gas/:id',
+    path: 'validacion-gas/:id/:us',
     component: GasValidationComponent,
   },
   {
-    path: 'salon-montado/:id',
+    path: 'salon-montado/:id/:us',
     component: LoungeMountedComponent,
   },
   {
-    path: 'banos-matutino/:id',
+    path: 'banos-matutino/:id/:us',
     component: BanosMatutinoComponent,
   },
   {
@@ -53,7 +53,7 @@ const routes: Routes = [
     component: SalesExpectationComponent,
   },
   {
-    path: 'mesa-espera/:turno/:id',
+    path: 'mesa-espera/:turno/:id/:us',
     component: WaitTablesComponent,
   },
   {
@@ -73,15 +73,15 @@ const routes: Routes = [
     component: TransferenciasComponent,
   },
   {
-    path: 'volado-efectivo/:turno/:id',
+    path: 'volado-efectivo/:turno/:id/:us',
     component: VoladoEfectivoComponent,
   },
   {
-    path: 'resguardo-propina/:id',
+    path: 'resguardo-propina/:id/:us',
     component: ResguardoPropinaComponent,
   },
   {
-    path: 'limpieza-salon-banos/:id',
+    path: 'limpieza-salon-banos/:id/:us',
     component: LimpiezaSalonBanosComponent,
   },
   {
@@ -93,7 +93,7 @@ const routes: Routes = [
     component: AlarmaComponent,
   },
   {
-    path: 'resguardo-tableta/:idTablet/alarma/:idAlarma',
+    path: 'resguardo-tableta/:idTablet/alarma/:idAlarma/:us',
     component: ResguardoTabletAlarmaComponent,
   }
 ];

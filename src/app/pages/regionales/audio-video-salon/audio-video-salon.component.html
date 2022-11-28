@@ -89,14 +89,13 @@
             </ion-col>
           </ion-row>
         </ion-col>
+        <ion-col size="6"><h5 class="description">TERRAZA</h5>
+          <ion-toggle [(ngModel)]="Terraza" (ionChange)="updateTerraza()"></ion-toggle>
+        </ion-col>
         <ion-col size="12">
-          <ion-item>
-            <ion-checkbox slot="start" [(ngModel)]="Terraza" (ionChange)="updateTerraza()"></ion-checkbox>
-            <ion-label>NO APLICA</ion-label>
-          </ion-item>
       </ion-col>
         <!----------------- tv terraza -------------------------->
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="this.Terraza === true">
           <ion-row size="12">
             <ion-col size="12">
               <span class="titleProduct">¿FUNCIONAN DE MANERA CORRECTA TODAS LAS TVS EN TERRAZA?</span>
@@ -114,7 +113,7 @@
           </ion-row>
         </ion-col>
         <!----------------- bocina terraza -------------------------->
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="this.Terraza === true">
           <ion-row size="12">
             <ion-col size="12">
               <span class="titleProduct">¿FUNCIONAN DE MANERA CORRECTA TODAS LAS BOCINAS EN TERRAZA?</span>

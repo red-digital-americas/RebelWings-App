@@ -52,9 +52,14 @@
   <!------------------------------------------------------------------------------------------------------------------------------------------->
       <ion-list>
         <ion-radio-group [(ngModel)]="radioValue">
-
+      <ion-row ion-row size="12">
+        <ion-col size="6"><span>¿CUENTAS CON CHOPE?</span>
+          <br>
+          <ion-toggle [(ngModel)]="this.data.chope" (ionChange)="myChange($event)"></ion-toggle>
+        </ion-col>
+      </ion-row>
       <!-- --------------chope clara---------------------- -->
-      <ion-row size="12">
+      <ion-row size="12" *ngIf="this.data.chope === true">
         <ion-col size="12">
           <!-- <span class="titleProduct">CHOPE CLARA</span> -->
           <ion-item *ngIf="this.pick1 !== 0" color="success">
@@ -74,7 +79,7 @@
 
 
         <ion-col size="6" *ngIf="this.pick1 === 3 && this.radioValue === '1'">
-          <ion-label>FOTOGRAFIA</ion-label>
+          <ion-label>FOTOGRAFIA TEMPERATURA</ion-label>
           <ion-card
             style="height: 9rem"
             class="center"
@@ -90,7 +95,7 @@
         </ion-col>
 
         <ion-col size="6" *ngIf="this.pick1 !== 3 && this.radioValue === '1'">
-          <ion-label>FOTOGRAFIA</ion-label>
+          <ion-label>FOTOGRAFIA TEMPERATURA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(1)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -117,7 +122,7 @@
         </ion-col>
       </ion-row>
       <!-- -------------Chope oscura 2------------------- -->
-      <ion-row>
+      <ion-row *ngIf="this.data.chope === true">
         <ion-col size="12">
           <!-- <span class="titleProduct">
             CHOPE OSCURA
@@ -140,7 +145,7 @@
 
 
         <ion-col size="6" *ngIf="this.pick2 === 3 && this.radioValue === '2'">
-          <ion-label>FOTOGRAFIA</ion-label>
+          <ion-label>FOTOGRAFIA TEMPERATURA</ion-label>
           <ion-card
             style="height: 9rem"
             class="center"
@@ -156,7 +161,7 @@
         </ion-col>
 
         <ion-col size="6" *ngIf="this.pick2 !== 3 && this.radioValue === '2'">
-          <ion-label>FOTOGRAFIA</ion-label>
+          <ion-label>FOTOGRAFIA TEMPERATURA</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(2)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>
@@ -198,7 +203,7 @@
           <span *ngIf="this.radioValue === '3'">¿SE ENCUENTRAN FRIAS?</span>
         </ion-col>
         <!-- 5 toggle de bebidas -->
-        <ion-col size="6" *ngIf="this.radioValue === '3'">
+        <ion-col size="12" *ngIf="this.radioValue === '3'">
           <ion-row size="12" class="ion-align-self-center">
             <ion-col size="6">
               <span>BEBIDA 1</span><br>
@@ -224,8 +229,8 @@
         </ion-col>
 
 
-        <ion-col size="6" *ngIf="this.pick3 === 3 && this.radioValue === '3'">
-          <ion-label>AGREGA UNA FOTOGRAFIA DE LAS 5 BEBIDAS REVISADAS</ion-label>
+        <ion-col size="12" *ngIf="this.pick3 === 3 && this.radioValue === '3'">
+          <ion-label>AGREGA UNA FOTOGRAFIA DE LAS 5 BEBIDAS Y FOTOGRAFIAS DE LA TEMPERATURA DE LOS REFRIS</ion-label>
           <ion-card
             style="height: 9rem"
             class="center"
@@ -240,8 +245,8 @@
           </ion-card>
         </ion-col>
 
-        <ion-col size="6" *ngIf="this.pick3 !== 3 && this.radioValue === '3'">
-          <ion-label>AGREGA UNA FOTOGRAFIA DE LAS 5 BEBIDAS REVISADAS</ion-label>
+        <ion-col size="12" *ngIf="this.pick3 !== 3 && this.radioValue === '3'">
+          <ion-label>AGREGA UNA FOTOGRAFIA DE LAS 5 BEBIDAS Y FOTOGRAFIAS DE LA TEMPERATURA DE LOS REFRIS</ion-label>
           <ion-card style="height: 9rem" class="center" (click)="addPhotoToGallery(3)">
             <div style="margin-top: 2rem">
               <ion-icon class="sizePhoto" src="./assets/icon/icon_foto.svg"></ion-icon>

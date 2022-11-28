@@ -28,7 +28,7 @@ export class GasValidationComponent implements OnInit {
   public radioValue = '1'; 
   public visibleGuardar = true;
 
-  
+  public valUsuario = 0;
 
 
   public fotosGas;
@@ -56,6 +56,11 @@ export class GasValidationComponent implements OnInit {
     console.log(this.user);
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idGas = this.routerActive.snapshot.paramMap.get('id');
+    
+    this.valUsuario =Number(this.routerActive.snapshot.paramMap.get('us'));
+    console.log(this.valUsuario);
+    if(this.valUsuario === 1){this.valUsuario = this.user.id}
+
     if (this.idGas === '0') {
       console.log('Completar la tarea');
     } else {
@@ -95,7 +100,7 @@ export class GasValidationComponent implements OnInit {
       photoPath: 'jpeg',
       createdBy: this.user.id,
       createdDate: this.today,
-      updatedBy: this.user.id,
+      updatedBy: this.valUsuario,
       updatedDate: this.today,
     });
     console.log('fotos validacion gas', this.data);
@@ -194,7 +199,7 @@ export class GasValidationComponent implements OnInit {
     console.log('date', date);
     this.createDate = `${date}T${time}`;
     console.log('createDate', this.createDate);
-    this.data.updatedBy = this.user.id;
+    this.data.updatedBy = this.valUsuario,
     this.data.updatedDate = this.createDate;
     if (this.idGas === '0') {
       this.addData();

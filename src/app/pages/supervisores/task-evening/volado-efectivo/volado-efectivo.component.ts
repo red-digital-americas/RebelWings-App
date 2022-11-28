@@ -37,6 +37,8 @@ export class VoladoEfectivoComponent implements OnInit {
   public createDate = '';
   public voladoEfectivo;
   public suficiente = false;
+
+  public valUsuario = 0;
  
 
   constructor(
@@ -71,6 +73,10 @@ export class VoladoEfectivoComponent implements OnInit {
       this.getData();
     }
     this.Habilitado();
+
+    this.valUsuario =Number(this.routerActive.snapshot.paramMap.get('us'));
+    console.log(this.valUsuario);
+    if(this.valUsuario === 1){this.valUsuario = this.user.id}
   }
 
   ngOnInit() { }
@@ -138,7 +144,7 @@ export class VoladoEfectivoComponent implements OnInit {
       photoPath: 'jpeg',
       createdBy: this.user.id,
       createdDate: this.today,
-      updatedBy: this.user.id,
+      updatedBy: this.valUsuario,
       updatedDate: this.today,
     });
     console.log('fotos ', this.data);
@@ -283,7 +289,7 @@ export class VoladoEfectivoComponent implements OnInit {
     console.log('date', date);
     this.createDate = `${date}T${time}`;
     console.log('createDate', this.createDate);
-    this.data.updatedBy = this.user.id;
+    this.data.updatedBy = this.valUsuario,
     this.data.updatedDate = this.createDate;
     if (this.idEfectivo === '0') {
       this.addData();

@@ -36,6 +36,8 @@ export class LimpiezaSalonBanosComponent implements OnInit {
   public createDate = '';
   public visibleGuardar = true;
 
+  public valUsuario = 0;
+
   constructor(
     public router: Router,
     private camera: Camera,
@@ -52,6 +54,12 @@ export class LimpiezaSalonBanosComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.routerActive.snapshot.paramMap.get('id'));
     this.idLimpieza = this.routerActive.snapshot.paramMap.get('id');
+
+    
+    this.valUsuario =Number(this.routerActive.snapshot.paramMap.get('us'));
+    console.log(this.valUsuario);
+    if(this.valUsuario === 1){this.valUsuario = this.user.id}
+
     // get name de sucursal
     this.branchId = this.user.branchId;
     this.getBranch();
@@ -124,7 +132,7 @@ export class LimpiezaSalonBanosComponent implements OnInit {
       photoPath: 'jpeg',
       createdBy: this.user.id,
       createdDate: this.today,
-      updatedBy: this.user.id,
+      updatedBy: this.valUsuario,
       updatedDate: this.today,
     });
     console.log('fotos', this.data);
@@ -253,7 +261,7 @@ export class LimpiezaSalonBanosComponent implements OnInit {
     console.log('date', date);
     this.createDate = `${date}T${time}`;
     console.log('createDate', this.createDate);
-    this.data.updatedBy = this.user.id;
+    this.data.updatedBy = this.valUsuario;
     this.data.updatedDate = this.createDate;
     if (this.idLimpieza === '0') {
       this.addData();

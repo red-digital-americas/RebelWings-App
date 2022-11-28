@@ -33,6 +33,8 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
   public createDate = '';
   public visibleGuardar = true;
 
+  public valUsuario = 0;
+
   public url = 'http://opera.no-ip.net/back/api_rebel_wings/';
   constructor(public router: Router,
     private camera: Camera,
@@ -58,6 +60,10 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
       console.log('Actualizar la tarea');
       this.getDataTablet();
     }
+
+    this.valUsuario =Number(this.routerActive.snapshot.paramMap.get('us'));
+    console.log(this.valUsuario);
+    if(this.valUsuario === 1){this.valUsuario = this.user.id}
     // if (this.idAlarma === '0') {
     //   console.log('Completar la tarea');
     // } else {
@@ -123,7 +129,7 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
       photoPath: 'jpeg',
       createdBy: this.user.id,
       createdDate: this.today,
-      updatedBy: this.user.id,
+      updatedBy: this.valUsuario,
       updatedDate: this.today,
     });
     console.log('fotos chicken', this.dataTablet);
@@ -333,7 +339,7 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
     this.fotosTablet = [];
     // esto se pone aqui por que aun no se estrae la data de un get
     this.dataTablet.branchId = this.user.branchId;
-    this.dataTablet.updatedBy = this.user.id;
+    this.dataTablet.updatedBy = this.valUsuario,
     this.dataTablet.updatedDate = this.createDate;
     if (this.idTablet === '0') {
       this.addTablet();
