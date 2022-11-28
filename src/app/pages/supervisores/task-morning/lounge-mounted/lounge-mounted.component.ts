@@ -86,6 +86,7 @@ export class LoungeMountedComponent implements OnInit {
             console.log('si hay registros del dia');
             this.data = resp.result;
             console.log('get data', this.data);
+            this.conteoFotos();
           }
           else {
             this.activeData = true;
@@ -98,7 +99,9 @@ export class LoungeMountedComponent implements OnInit {
 
           }
         }
+        this.conteoFotos();
       });
+      this.conteoFotos();
   }
 
     conteoFotos(){
