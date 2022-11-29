@@ -25,6 +25,7 @@ export class SalesExpectationComponent implements OnInit {
   public data;
   public validado : boolean[] = [];
   public contador: number[] = [];
+  public strikes: number[] = [];
   handlerRespMessage = '';
   handlerRespValor;
   constructor(
@@ -141,7 +142,11 @@ export class SalesExpectationComponent implements OnInit {
         else {
           console.log('no hay diferencia', stock);
           this.contador[i] = 3;
+          if(isNaN(this.strikes[i])){this.strikes[i] = 1;}
+          else{this.strikes[i] += 1;}
+          
           console.log('cont', this.contador[i]);
+          console.log('st', this.strikes[i]);
           this.validaO(i);
         }
       });
@@ -150,12 +155,16 @@ export class SalesExpectationComponent implements OnInit {
   async openDialogValidarStock(nodo,i) {
     if(isNaN(this.contador[i])){
       this.contador[i] = 1;
-
+      
     }
     else{
     this.contador[i] += 1;
+    
     }
+    if(isNaN(this.strikes[i])){this.strikes[i] = 1;}
+          else{this.strikes[i] += 1;}
     console.log('contador: ', this.contador[i]);
+    console.log('st', this.strikes[i]);
     this.validaO(i);
     
     if(this.contador[i] < 3){

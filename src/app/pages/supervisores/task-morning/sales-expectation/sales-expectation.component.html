@@ -49,11 +49,25 @@
         <ion-col size="3" class="ion-align-self-center">
           <span>UDS:</span>
         </ion-col>
-        <ion-col size="6" class="ion-align-self-center"></ion-col>
+        <ion-col size="6" class="ion-align-self-center">
+        </ion-col>
       </ion-row>
       <br>
       <div *ngIf="data !== []">
         <ion-row size="12" class="my-3" *ngFor="let item of data;  let i=index;">
+
+          <ion-col size="3" class="ion-align-self-center">
+            
+          </ion-col>
+          <ion-col size="3" class="ion-align-self-center">
+            
+          </ion-col>
+          <ion-col size="6" class="ion-align-self-center">INTENTOS: 
+            <ion-button shape="circle" color="success" *ngIf="this.strikes[i] === 1">1</ion-button>
+            <ion-button shape="circle" color="warning" *ngIf="this.strikes[i] === 2">2</ion-button>
+            <ion-button shape="circle" color="danger" *ngIf="this.strikes[i] === 3">3</ion-button>
+          </ion-col>
+
           <ion-col size="3" class="ion-align-self-center">
             <ion-label floating>{{item.descripcion}}</ion-label>
           </ion-col>

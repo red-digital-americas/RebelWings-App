@@ -64,3 +64,8 @@ ion-footer {
 .align-end-text {
   text-align: end;
 }
+ion-button[shape=circle] {
+  --border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
