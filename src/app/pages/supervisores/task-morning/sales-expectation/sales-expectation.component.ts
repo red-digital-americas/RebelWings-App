@@ -7,6 +7,7 @@ import { DialogAddPackageComponent } from '../../dialog/dialog-add-package/dialo
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import { DialogUpdateStockPolloComponent } from '../../dialog/dialog-update-stock-pollo/dialog-update-stock-pollo.component';
 import { AlertController } from '@ionic/angular';
+import { DatePipe } from '@angular/common';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
@@ -22,7 +23,9 @@ export class SalesExpectationComponent implements OnInit {
   public user: any;
   public idSucursal: string;
   public disabled = false;
+  public createDate = '';
   public data;
+  public dataInv: InvModel = new InvModel();
   public validado : boolean[] = [];
   public contador: number[] = [];
   public strikes: number[] = [];
@@ -35,6 +38,7 @@ export class SalesExpectationComponent implements OnInit {
     public service: ServiceGeneralService,
     public load: LoaderComponent,
     public alertController: AlertController,
+    public datepipe: DatePipe,
 
   ) { }
   ionViewWillEnter() {
@@ -77,6 +81,8 @@ export class SalesExpectationComponent implements OnInit {
   return() {
     this.router.navigateByUrl('supervisor/control-vespertino/tarea/1');
   }
+
+
 
   async addPackage(idPack: number) {
     console.log('id paquete', idPack);
@@ -121,7 +127,55 @@ export class SalesExpectationComponent implements OnInit {
         }
       });
     console.log('sin data');
+    this.addInv(item,i);
   }
+
+  addInv(item,i) {
+    this.formartDate();
+    this.dataInv.branch = this.user.branch;
+    this.dataInv.invInicial = item.cantidad - item.diferencia;
+    this.dataInv.invReg = item.cantidad;
+    this.dataInv.diferencia = item.diferencia;
+    this.dataInv.intentos = this.strikes[i];
+    this.dataInv.articulo = item.descripcion;
+    this.dataInv.createdBy = this.user.id;
+    this.dataInv.createdDate = this.createDate;
+    this.dataInv.updatedBy = this.user.id;
+    this.dataInv.updatedDate = this.createDate;
+    console.log('Obj To send  post=> ', this.dataInv);
+    this.service
+      .serviceGeneralPostWithUrl('Inventario', this.dataInv)
+      .subscribe((data) => {
+        if (data.success) {
+          this.load.presentLoading('Guardando..');
+          console.log('data inventario:', data);
+          
+        }
+      });
+  }
+
+  formartDate() {
+    // 2022-03-11T17:27:00
+    console.log('date', this.today);
+    let time = '';
+    const hour = this.today.getHours();
+    const minute = this.today.getMinutes();
+    let hourString = hour.toString();
+    let minuteString = minute.toString();
+    const date = this.datepipe.transform(this.today, 'yyyy-MM-dd');
+    if (hourString.length < 2) {
+      hourString = `0${hourString}`;
+    }
+    if (minuteString.length < 2) {
+      minuteString = `0${minuteString}`;
+    }
+    console.log('hour', hourString);
+    console.log('minute', minuteString);
+    time = `${hourString}:${minuteString}:00`;
+    console.log('date', date);
+    this.createDate = `${date}T${time}`;
+  }
+
   async validarCantidad(stock, i) {
     let respValidar;
     console.log('info de validar', stock);
@@ -221,4 +275,17 @@ export class SalesExpectationComponent implements OnInit {
   }
   
 
+}
+class InvModel {
+  id: number;
+  branch: number;
+  invInicial: number;
+  invReg: number;
+  diferencia: number;
+  intentos: number;
+  articulo: string;
+  createdBy: number;
+  createdDate: String;
+  updatedBy: number;
+  updatedDate: String;
 }

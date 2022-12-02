@@ -21,6 +21,25 @@
           <h3 class="title">TICKET {{data.noTicket}}</h3>
         </ion-col>
         <ion-col size="6">
+        </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="9" class="ion-align-self-center">
+          <h5 class="subtitle-negro">{{nameBranch}}</h5>
+        </ion-col>
+        <ion-col size="3" class="ion-align-self-center">
+          <span class="date-grey">
+            {{ data.dateOpen | date: "dd/MM/yyy" }}
+          </span>
+        </ion-col>
+
+      </ion-row>
+
+      <ion-row size="12">
+        <!-- <ion-col size="1">
+          <img src="./assets/icon/ilustracion_ticket.png" alt="Validaccion de assistencia" />
+        </ion-col> -->
+        <ion-col size="12">
           <ion-label floating>ESTATUS</ion-label>
           <ion-card class="closed">
             <ion-item>
@@ -36,53 +55,44 @@
             </ion-item>
           </ion-card>
         </ion-col>
-      </ion-row>
-      <ion-row size="12">
-        <ion-col size="9" class="ion-align-self-center">
-          <h5 class="subtitle-negro">{{nameBranch}}</h5>
-        </ion-col>
-        <ion-col size="3" class="ion-align-self-center">
-          <span class="date-grey">
-            {{ data.dateOpen | date: "dd/MM/yyy" }}
-          </span>
-        </ion-col>
 
       </ion-row>
+
+
       <ion-row size="12">
-        <ion-col size="12" class="ion-align-self-center">
-          <ion-row size="12">
-            <!-- <ion-col size="2">
-              <img class="avatar" src="./assets/icon/skeleton-circle.png" alt="avatar" />
-            </ion-col> -->
-            <ion-col size="12">
-              <ion-row size="12">
-                <ion-col size="12">
-                  <span *ngIf="data.createdByNavigation.roleId === 1">
-                    <b>
-                      SUPERVISOR: 
-                    </b>
-                    <span class="nameticket">{{ data.createdByNavigation.name}} {{data.createdByNavigation.lastName}}</span>
-                  </span>
-                  <span *ngIf="data.createdByNavigation.roleId === 2">
-                    <b>
-                      REGIONAL: 
-                    </b>
-                    <span class="nameticket">{{ data.createdByNavigation.name}} {{data.createdByNavigation.lastName}}</span>
-                  </span>
-                </ion-col>
-              </ion-row>
-            </ion-col>
-          </ion-row>
+        <ion-col size="12">
+          <span *ngIf="data.createdByNavigation.roleId === 1">
+            
+              SUPERVISOR: 
+            
+            <span class="nameticket">{{ data.createdByNavigation.name}} {{data.createdByNavigation.lastName}}</span>
+          </span>
+          <span *ngIf="data.createdByNavigation.roleId === 2">
+            
+              REGIONAL: 
+            
+            <span class="nameticket">{{ data.createdByNavigation.name}} {{data.createdByNavigation.lastName}}</span>
+          </span>
         </ion-col>
       </ion-row>
+
 
     </ion-grid>
   </ion-header>
   <ion-content *ngIf="activeData === true" fullscreen="false" class="ion-padding">
     <ion-grid>
       <ion-row size="12">
+        <!-- coment -->
+        <ion-col size="12">
+          <ion-label>COMENTARIO</ion-label>
+          <ion-card>
+            <ion-textarea disabled [(ngModel)]="data.describeProblem" rows="6" cols="20">
+            </ion-textarea>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
         <!--selects-->
-        <ion-col size="6">
           <ion-row size="12">
             <ion-col size="12">
               <ion-label floating>LUGAR ESPECIFICO</ion-label>
@@ -103,16 +113,7 @@
               </ion-card>
             </ion-col>
           </ion-row>
-        </ion-col>
-        <!-- coment -->
-        <ion-col size="6">
-          <ion-label>COMENTARIO</ion-label>
-          <ion-card>
-            <ion-textarea disabled [(ngModel)]="data.describeProblem" rows="6" cols="20">
-            </ion-textarea>
-          </ion-card>
-        </ion-col>
-      </ion-row>
+
       <ion-row size="12">
         <ion-col size="6">
           <ion-label floating>COSTO</ion-label>
