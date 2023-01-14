@@ -1,4 +1,5 @@
 {
   "editor.tabSize": 2,
-  "editor.codeLensFontSize": 3
+  "editor.codeLensFontSize": 3,
+  "git.ignoreLimitWarning": true
 }
