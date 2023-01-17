@@ -136,7 +136,7 @@ export class RemisionesComponent implements OnInit {
   }
   ngOnInit() { }
   getStatus() {
-    this.service.serviceGeneralGet(`Remision/GetEstatusPedidosEntregas?id_suscursal=${this.user.branch}&dataBase=${this.user.dataBase}`).subscribe((data: any) => {
+    this.service.serviceGeneralGet(`Remision/GetEstatusPedidosEntregas?id_suscursal=${this.user.branch}&dataBase=DB1`).subscribe((data: any) => {
       if (data.success) {
         console.log('resp status', data);
         this.catStatus = data.result;
@@ -166,19 +166,22 @@ export class RemisionesComponent implements OnInit {
     const newFormat = [];
     if (eventos.length !== 0) {
       eventos.forEach(e => {
-        const horaInicio = e.fechaEntregaReal.split(':');
-        const horaFinal = e.fechaProgEntrega.split(':');
-        const inicio = new Date(e.date);
+        console.log(`Evento: ${e}`)
         this.colors.forEach(c => {
           if (e.estatusEntrega === this.colors.id) {
             newFormat.push({
               id: e.id,
-              start: new Date(e.fechaEntregaReal),
-              end: new Date(e.fechaEntregaReal),
+              start: e.fechaEntregaReal !== null ? new Date(e.fechaEntregaReal) : new Date(e.fechaProgEntrega),
+              end: e.fechaEntregaReal !== null ? new Date(e.fechaEntregaReal) : new Date(e.fechaProgEntrega),
               title: e.proveedorName,
               color: c,
               statusName: e.estatusEntregaName,
+              estatusPedido: e.estatusPedido,
+              estatusPedidoName: e.estatusPedidoName,
+              estatusEntregaName: e.estatusEntregaName,
+              estatusEntrega: e.estatusEntrega,
               draggable: true,
+              commentPedido: e.comentariosPedido,
               coment: e.comentariosEntrega,
               estatusId: e.estatusEntrega,
               fechaEntrega: e.fechaProgEntrega,
@@ -197,12 +200,17 @@ export class RemisionesComponent implements OnInit {
           if (e.estatusPedido === c.id) {
             newFormat.push({
               id: e.id,
-              start: new Date(e.fechaPedidoReal),
-              end: new Date(e.fechaPedidoReal),
+              start: e.fechaPedidoReal !== null ? new Date(e.fechaPedidoReal) : new Date(e.fechaProgPedido),
+              end: e.fechaPedidoReal !== null ? new Date(e.fechaPedidoReal) : new Date(e.fechaProgPedido),
               title: e.proveedorName,
               color: c,
               statusName: e.estatusPedidoName,
+              estatusPedido: e.estatusPedido,
+              estatusPedidoName: e.estatusPedidoName,
+              estatusEntregaName: e.estatusEntregaName,
+              estatusEntrega: e.estatusEntrega,
               draggable: true,
+              commentPedido: e.comentariosPedido,
               coment: e.comentariosPedido,
               estatusId: e.estatusPedido,
               fechaEntrega: e.fechaProgPedido,
@@ -217,7 +225,7 @@ export class RemisionesComponent implements OnInit {
 
       });
     }
-
+    console.log('new Formats', newFormat);
     this.events = newFormat;
     //     this.dataGet = newFormat;
     console.log('info', this.events);
@@ -570,18 +578,18 @@ export class RemisionesComponent implements OnInit {
   guardarComent(data) {
     console.log('save', data);
     data = {
-
       id: data.event.id,
       idProveedor: data.event.idProvedor,
       fechaProgPedido: data.event.fechaEntrega,
       fechaPedidoReal: data.event.end,
       fechaProgEntrega: data.event.fechaEntrega,
       fechaEntregaReal: data.event.start,
-      comentariosPedido: data.event.coment,
+      comentariosPedido: data.event.commentPedido,
       comentariosEntrega: data.event.coment,
-      estatusEntrega: data.event.estatusId,
+      estatusEntrega: data.event.estatusEntrega,
       estatusPedido: data.event.estatusId,
-      idSucursal: data.event.idSucursal
+      idSucursal: data.event.idSucursal,
+      tFotosPedidosEntregas: [] 
     }
     this.service.serviceGeneralPut(`Remision?dataBase=${this.user.dataBase}`, data).subscribe((data: any) => {
       if (data.success) {

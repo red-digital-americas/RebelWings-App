@@ -183,28 +183,71 @@
         <div class="mb-2 ">
           <ion-row size="12">
             <ion-col size="6" class="ion-align-self-center">
-              <span>Fecha: {{modalData?.event.start | date : "dd MMM yyy"}}</span>
+              <span>Fecha: {{modalData?.event.fechaEntrega | date : "dd MMM yyy"}}</span>
 
             </ion-col>
             <ion-col size="6" class="ion-align-self-center">
-              <span>Hora: {{modalData?.event.start | date: "shortTime"}}</span>
+              <span>Hora: {{modalData?.event.fechaEntrega | date: "shortTime"}}</span>
+            </ion-col>
+          </ion-row>
+        </div>
+
+        <div class="mb-2">
+          <io-row size="12">
+            <mat-form-field>
+              <input matInput [ngxMatDatetimePicker]="picker" placeholder="Escoge una fecha" [formControl]="dateControl"
+                 [min]="minDate" [max]="maxDate" [disabled]="disabled">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+                 [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond"
+                 [touchUi]="touchUi" [color]="color" [enableMeridian]="enableMeridian" 
+                 [disableMinute]="disableMinute" [hideTime]="hideTime">
+              </ngx-mat-datetime-picker>
+           </mat-form-field>
+          </io-row>
+        </div>
+
+        <div class="mb-2 ">
+          <ion-row size="12">
+            <ion-col size="6" class="ion-align-self-center">
+              <span class="proveedorModal">
+                <b>
+                  Status Entrega:
+                </b>
+                {{modalData?.event.estatusEntregaName }}
+              </span>
+            </ion-col>
+
+            <ion-col size="6" class="ion-align-self-center">
+              <span class="proveedorModal">
+                <b>
+                  Status Pedido:
+                </b>
+                {{modalData?.event.estatusPedidoName }}
+              </span>
             </ion-col>
 
           </ion-row>
         </div>
-        <div class="mb-2 ">
-          <span class="proveedorModal">
-            <b>
-              Status:
-            </b>
-            {{modalData?.event.statusName }}
-          </span>
-        </div>
+
         <div>
           <div>
             <ion-row size="12">
               <ion-col size="12" class="ion-align-self-center">
-                <ion-label>Comentario</ion-label>
+                <ion-label>Comentario Pedido:</ion-label>
+                <span>
+                  {{ modalData?.event.commentPedido }}
+                </span>
+              </ion-col>
+            </ion-row>
+          </div>
+        </div>
+
+        <div>
+          <div>
+            <ion-row size="12">
+              <ion-col size="12" class="ion-align-self-center">
+                <ion-label>Comentario Entrega:</ion-label>
                 <ion-card>
                   <ion-textarea [(ngModel)]="modalData?.event.coment" rows="6" cols="20">
                   </ion-textarea>
@@ -213,6 +256,7 @@
             </ion-row>
           </div>
         </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" (click)="close()">
