@@ -183,6 +183,15 @@ pre {
   background: #d0122d;
 }
 
+.circuloPending {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  /* background: #000; */
+  margin: 9px 1px 3px 5px;
+  background: rgb(26,71,42);
+}
+
 .time {
   display: flex;
 

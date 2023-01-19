@@ -19,7 +19,14 @@ import {
 } from 'angular-calendar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { WeekViewHour, WeekViewHourColumn } from 'calendar-utils';
-;
+import { FormControl } from '@angular/forms';
+import * as moment from 'moment';
+import { ThemePalette } from '@angular/material/core';
+import {
+  UserPhoto,
+  PhotoService,
+} from 'src/app/core/services/services/photo.service';
+import { environment } from 'src/environments/environment';
 // import { ExportAsConfig } from 'ngx-export-as';
 
 
@@ -37,6 +44,27 @@ interface EventGroupMeta {
 
 })
 export class RemisionesComponent implements OnInit {
+  @ViewChild('picker') picker: any;
+  public dateControl = new FormControl(new Date(2021,9,4,5,6,7));
+  public dateControlMinMax = new FormControl(new Date());
+  public date: moment.Moment;
+  public disabled = false;
+  public showSpinners = true;
+  public showSeconds = false;
+  public touchUi = false;
+  public enableMeridian = false;
+  public minDate: moment.Moment;
+  public maxDate: moment.Moment;
+  public stepHour = 1;
+  public stepMinute = 1;
+  public stepSecond = 1;
+  public color: ThemePalette = 'primary';
+
+
+  public datePedidoReal: any;
+  public dateEntregaProg: any;
+  public dateEntregaReal: any;
+
   public turno;
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
   modalData: {
@@ -85,6 +113,9 @@ export class RemisionesComponent implements OnInit {
 
 
   public catStatus;
+  public catStatusPedido;
+  public catStatusEntrega;
+  public url = 'http://opera.no-ip.net/back/api_rebel_wings/'
 
   public colors: any = [
     {
@@ -103,9 +134,14 @@ export class RemisionesComponent implements OnInit {
       id: 4,
     },
     {
-      primary: '#d0122d',
-      secondary: '#d0122d',
+      primary: '(228,213,183)',
+      secondary: '(217,185,155)',
       id: 3,
+    },
+    {
+      primary: '(26,71,42)',
+      secondary: '(42,98,61)',
+      id: 8,
     },
   ];
   public valueModal: any[] = [];
@@ -119,7 +155,7 @@ export class RemisionesComponent implements OnInit {
     public load: LoaderComponent,
     public popoverCtrl: PopoverController,
     private modal: NgbModal,
-
+    public photoService: PhotoService,
   ) { }
   ionViewWillEnter() {
     this.user = JSON.parse(localStorage.getItem('userData'));
@@ -136,11 +172,16 @@ export class RemisionesComponent implements OnInit {
   }
   ngOnInit() { }
   getStatus() {
-    this.service.serviceGeneralGet(`Remision/GetEstatusPedidosEntregas?id_suscursal=${this.user.branch}&dataBase=DB1`).subscribe((data: any) => {
+    let city = this.user.stateId === 1 ? 'DB2' : 'DB1';
+    console.log(`State ${this.user.stateId} and DB ${city}`);
+    this.service.serviceGeneralGet(`Remision/GetEstatusPedidosEntregas?id_suscursal=${this.user.branch}&dataBase=${city}`).subscribe((data: any) => {
       if (data.success) {
         console.log('resp status', data);
         this.catStatus = data.result;
+        this.catStatusPedido = data.result.filter(e=>e.tipo == 'Pedido');
+        this.catStatusEntrega = data.result.filter(e=>e.tipo == 'Entrega');
         console.log(`Estos son  ${this.catStatus}`);
+        console.log('Catalogos por tipo', this.catStatusEntrega, this.catStatusPedido);
       }
     });
   }
@@ -166,9 +207,11 @@ export class RemisionesComponent implements OnInit {
     const newFormat = [];
     if (eventos.length !== 0) {
       eventos.forEach(e => {
-        console.log(`Evento: ${e}`)
+        console.log(`Evento:`, e);
+        console.log(this.colors);
         this.colors.forEach(c => {
-          if (e.estatusEntrega === this.colors.id) {
+          console.log(c);
+          if (e.estatusEntrega === c.id) {
             newFormat.push({
               id: e.id,
               start: e.fechaEntregaReal !== null ? new Date(e.fechaEntregaReal) : new Date(e.fechaProgEntrega),
@@ -180,24 +223,22 @@ export class RemisionesComponent implements OnInit {
               estatusPedidoName: e.estatusPedidoName,
               estatusEntregaName: e.estatusEntregaName,
               estatusEntrega: e.estatusEntrega,
-              draggable: true,
+              draggable: false,
               commentPedido: e.comentariosPedido,
               coment: e.comentariosEntrega,
               estatusId: e.estatusEntrega,
               fechaEntrega: e.fechaProgEntrega,
+              fechaEntregaReal: e.fechaEntregaReal,
+              fechaPedido: e.fechaProgPedido,
+              fechaPedidoReal: e.fechaPedidoReal,
               sucursalName: this.user.branchName,
               idSucursal: e.idSucursal,
               idProvedor: e.idProveedor,
               nombre: 'Entrega',
+              fotosPedidosEntregas: e.tFotosPedidosEntregas
             });
           }
-        });
-      });
-    }
-    if (eventos.length !== 0) {
-      eventos.forEach(e => {
-        this.colors.forEach(c => {
-          if (e.estatusPedido === c.id) {
+          else if (e.statusPedido === c.id) {
             newFormat.push({
               id: e.id,
               start: e.fechaPedidoReal !== null ? new Date(e.fechaPedidoReal) : new Date(e.fechaProgPedido),
@@ -209,20 +250,22 @@ export class RemisionesComponent implements OnInit {
               estatusPedidoName: e.estatusPedidoName,
               estatusEntregaName: e.estatusEntregaName,
               estatusEntrega: e.estatusEntrega,
-              draggable: true,
+              draggable: false,
               commentPedido: e.comentariosPedido,
               coment: e.comentariosPedido,
               estatusId: e.estatusPedido,
-              fechaEntrega: e.fechaProgPedido,
+              fechaEntrega: e.fechaProgEntrega,
+              fechaEntregaReal: e.fechaEntregaReal,
+              fechaPedido: e.fechaProgPedido,
+              fechaPedidoReal: e.fechaPedidoReal,
               sucursalName: this.user.branchName,
               idSucursal: e.idSucursal,
               idProvedor: e.idProveedor,
               nombre: 'Pedidido',
-
+              fotosPedidosEntregas: e.tFotosPedidosEntregas
             });
           }
         });
-
       });
     }
     console.log('new Formats', newFormat);
@@ -581,25 +624,48 @@ export class RemisionesComponent implements OnInit {
       id: data.event.id,
       idProveedor: data.event.idProvedor,
       fechaProgPedido: data.event.fechaEntrega,
-      fechaPedidoReal: data.event.end,
+      fechaPedidoReal: data.event.fechaPedidoReal,
       fechaProgEntrega: data.event.fechaEntrega,
-      fechaEntregaReal: data.event.start,
+      fechaEntregaReal: data.event.fechaEntregaReal,
       comentariosPedido: data.event.commentPedido,
       comentariosEntrega: data.event.coment,
       estatusEntrega: data.event.estatusEntrega,
       estatusPedido: data.event.estatusId,
       idSucursal: data.event.idSucursal,
-      tFotosPedidosEntregas: [] 
+      tFotosPedidosEntregas: this.photos
     }
     this.service.serviceGeneralPut(`Remision?dataBase=${this.user.dataBase}`, data).subscribe((data: any) => {
       if (data.success) {
         console.log('success', data);
+        this.photos = [];
         this.ionViewWillEnter();
+        this.router.navigate([this.router.url]);
       }
     });
 
 
   }
+
+  closePicker() {
+    this.picker.cancel();
+  }
+  photos: any = [];
+  async addPhotoToGallery(id: number) {
+    await this.photoService.addNewToGallery();
+    await this.photoService.loadSaved();
+
+    // agregaremos las fotos pero con id type de acuerdo al caso
+    // al agregar las fotos en storage, las pasamos por lista
+    console.log('obj fotos', this.photoService);
+    this.photos.push({
+      id: 0,
+      idPedido: id,
+      foto: this.photoService.photos[0].webviewPath,
+      tipo: 'jpeg',
+    });
+    console.log('fotos', this.photos);
+  }
+
 }
 
 class RemisionesModel {
