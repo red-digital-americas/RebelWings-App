@@ -25,7 +25,7 @@ export class VoladoEfectivoComponent implements OnInit {
   public base64 = 'data:image/jpeg;base64';
   public disabled = false;
   public fotosEfectivo;
-  public url = 'http://opera.no-ip.net/back/api_rebel_wings/';
+  public url = 'http://operamx.mooo.com/back/api_rebel_wings/';
   public turno;
   // ******variables de validacion ********
   public activeAmount = true;

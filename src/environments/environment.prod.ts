@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
-  apiURL: 'http://opera.no-ip.net/back/api_rebel_wings/api/',
+  apiURL: 'http://operamx.mooo.com/back/api_rebel_wings/api/',
 };
 
-// http://opera.no-ip.net/front/rebel_wings/login
+// http://operamx.mooo.com/front/rebel_wings/login
 
-// apiURL: 'http://opera.no-ip.net/back/api_rebel_wings/api/',
+// apiURL: 'http://operamx.mooo.com/back/api_rebel_wings/api/',
