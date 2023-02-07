@@ -1,49 +1,32 @@
-/* eslint-disable @typescript-eslint/member-ordering */
-/* eslint-disable @typescript-eslint/dot-notation */
-/* eslint-disable max-len */
-/* eslint-disable @typescript-eslint/semi */
-/* eslint-disable prefer-arrow/prefer-arrow-functions */
-/* eslint-disable @typescript-eslint/no-shadow */
-/* eslint-disable @typescript-eslint/prefer-for-of */
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ChangeDetectionStrategy, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { ThemePalette } from '@angular/material/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, PopoverController } from '@ionic/angular';
-import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
-import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
-import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, isSameMinute } from 'date-fns';
-import { Subject } from 'rxjs';
-import {
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { 
   CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarMonthViewBeforeRenderEvent,
   CalendarMonthViewDay,
   CalendarView, CalendarWeekViewBeforeRenderEvent,
-} from 'angular-calendar';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
+ } from 'angular-calendar';
+import { Subject } from 'rxjs';
 import { WeekViewHour, WeekViewHourColumn } from 'calendar-utils';
-import { FormControl } from '@angular/forms';
-import * as moment from 'moment';
-import { ThemePalette } from '@angular/material/core';
-import {
-  UserPhoto,
-  PhotoService,
-} from 'src/app/core/services/services/photo.service';
-import { environment } from 'src/environments/environment';
-// import { ExportAsConfig } from 'ngx-export-as';
-
-
-
+import { ServiceGeneralService } from 'src/app/core/services/service-general/service-general.service';
+import { PhotoService, UserPhoto } from 'src/app/core/services/services/photo.service';
+import { LoaderComponent } from '../../dialog-general/loader/loader.component';
+import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, isSameMinute } from 'date-fns';
 
 interface EventGroupMeta {
   type: string;
 }
-@Component({
-  selector: 'app-remisiones',
-  templateUrl: './remisiones.component.html',
-  styleUrls: ['./remisiones.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 
+@Component({
+  selector: 'app-remisiones-view',
+  templateUrl: './remisiones-view.component.html',
+  styleUrls: ['./remisiones-view.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class RemisionesComponent implements OnInit {
+export class RemisionesViewComponent implements OnInit {
   @ViewChild('picker') picker: any;
   public dateControl = new FormControl(new Date(2021,9,4,5,6,7));
   public dateControlMinMax = new FormControl(new Date());
@@ -71,11 +54,6 @@ export class RemisionesComponent implements OnInit {
     action: string;
     event;
   };
-  // view: CalendarView = CalendarView.Month;
-  // calendarView = CalendarView;
-
-  // viewDate: Date = new Date();
-
   public today = new Date();
   public user: any;
   view: CalendarView = CalendarView.Month;
@@ -86,16 +64,6 @@ export class RemisionesComponent implements OnInit {
   activeDayIsOpen = false;
   filteruno = false;
   selectDisabled: boolean = true;
-  // exportAsConfig: ExportAsConfig = {
-  //   type: 'pdf', // the type you want to download
-  //   elementIdOrContent: 'export',
-  //   options: { // html-docx-js document options
-  //     jsPDF: {
-  //       orientation: 'landscape'
-  //     },
-  //   }
-  // }
-  // public data: RemisionesModel = new RemisionesModel();
   public idSucursal: string;
   // public swiremi = false;
   // selectedDays: any = [];
@@ -148,7 +116,6 @@ export class RemisionesComponent implements OnInit {
   ];
   public valueModal: any[] = [];
 
-
   constructor(
     public router: Router,
     public modalController: ModalController,
@@ -172,7 +139,7 @@ export class RemisionesComponent implements OnInit {
     await this.getData();
     await this.getStatus();
   }
-  ngOnInit() { }
+  ngOnInit() {}
   getStatus() {
     let city = this.user.stateId === 1 ? 'DB2' : 'DB1';
     console.log(`State ${this.user.stateId} and DB ${city}`);
@@ -255,151 +222,7 @@ export class RemisionesComponent implements OnInit {
         eventosFinales.push(dataEventos[i]);
       }
     }
-
-    //console.log("Eventos filtrados: ", eventosFinales);
-    // this.dataCalendario(eventosFinales);
   }
-  // dataCalendario(eventos) {
-  //   this.events = [];
-  //   for (let i = 0; i < eventos.length; i++) {
-  //     const str = eventos[i].startTime;
-  //     if (str != null) {
-  //       eventos[i].inicio = str.replace(':', '');
-  //     }
-  //   }
-  //   for (let i = 0; i < eventos.length; i++) {
-  //     const str = eventos[i].inicio;
-  //     if (str != null) {
-  //       eventos[i].inicio = str.replace(':', '');
-  //     }
-  //   }
-  //   for (let i = 0; i < eventos.length; i++) {
-  //     const horaInicio = eventos[i].startTime.split(':');
-  //     const horaFinal = eventos[i].endTime.split(':');
-  //     const inicio = new Date(eventos[i].date);
-  //     inicio.setHours(Number(horaInicio[0]), Number(horaInicio[1]));
-  //     const final = new Date(eventos[i].date);
-  //     final.setHours(Number(horaFinal[0]), Number(horaFinal[1]));
-  //     const dataEventoPrueba = {
-  //       horaInicio: horaInicio[0],
-  //       horaFinal: horaFinal[0],
-  //       start: inicio,
-  //       end: final,
-  //       title: '',
-  //       color: null,
-  //       sr: '',
-  //       date: eventos[i].date,
-  //       id: eventos[i].id,
-  //       timeStart: eventos[i].startTime,
-  //       timeEnd: eventos[i].endTime,
-  //       meta: {
-  //         type: ''
-  //       },
-  //       resizable: {
-  //         beforeStart: true,
-  //         afterEnd: true,
-  //       },
-  //       draggable: true,
-  //     }
-  //     const a1 = '0800';
-  //     const a2 = '1200';
-  //     const b = '1600';
-  //     const c = '2000';
-  //     if (Number(eventos[i].inicio) >= Number(a1) && Number(eventos[i].inicio) <= Number(a2)) {
-  //       dataEventoPrueba.color = colors.uno;
-  //       dataEventoPrueba.meta.type = 'uno';
-  //     }
-  //     if (Number(eventos[i].inicio) >= Number(a2) && Number(eventos[i].inicio) <= Number(b)) {
-  //       dataEventoPrueba.color = colors.dos;
-  //       dataEventoPrueba.meta.type = 'dos';
-  //     }
-  //     if (Number(eventos[i].inicio) >= Number(b) && Number(eventos[i].inicio) <= Number(c)) {
-  //       dataEventoPrueba.color = colors.tres;
-  //       dataEventoPrueba.meta.type = 'tres';
-  //     }
-
-
-  //     if (eventos[i].services.length > 0) {
-  //       dataEventoPrueba.sr = eventos[i].serviceRecordId;
-  //       dataEventoPrueba.title = 'SR: ' + eventos[i].serviceRecordId + ' /Supplier: ' + eventos[i].suppliername + ' Assignee: ' + eventos[i].assignee + ' / Partner: ' + eventos[i].name + ' / Client: ' + eventos[i].client + ' / City: ' + eventos[i].city + ' / ' + eventos[i].services[0].category + ' / ' + eventos[i].services[0].serviceNumber;
-  //       this.events.push(dataEventoPrueba);
-  //     }
-  //   };
-
-  //   console.log(this.events);
-
-
-  //   for (let i = 0; i < this.dataGet.length; i++) {
-  //     const element = this.dataGet[i];
-  //     this.events.push(element);
-  //   }
-  //   for (let i = 0; i < this.events.length; i++) {
-  //     if (this.events[i].title && this.events[i].title === 'Available') {
-  //       this.events[i].color = colors.green;
-  //     }
-  //     if (this.events[i].title && this.events[i].title === 'No Available') {
-  //       this.events[i].color = colors.red;
-  //     }
-  //   }
-  //   this.groupedSimilarEvents = [];
-  //   const processedEvents = new Set();
-  //   const a1 = '08';
-  //   const a2 = '12';
-  //   const a3 = '16';
-  //   const a4 = '20';
-  //   this.events.forEach((event) => {
-  //     if (processedEvents.has(event)) {
-  //       return;
-  //     }
-  //     const similarEvents = this.events.filter((otherEvent) => {
-  //       if (otherEvent !== event &&
-  //         !processedEvents.has(otherEvent) &&
-  //         isSameMinute(otherEvent.start, event.start) &&
-  //         (isSameMinute(otherEvent.end, event.end) ||
-  //           (!otherEvent.end && !event.end)) &&
-  //         otherEvent.date === event.date && otherEvent.sr === event.sr &&
-  //         otherEvent.color.primary === event.color.primary &&
-  //         otherEvent.color.sr === event.sr) {
-
-  //         console.log('ENTRA A PRIMER IF MAÑANA');
-  //         console.log(event.sr, otherEvent.sr);
-  //         return true;
-  //       }
-  //       if (otherEvent.rrule === event.rrule && otherEvent.rrule !== undefined && event.rrule !== undefined && !processedEvents.has(otherEvent) && event.date === otherEvent.date) {
-  //         console.log('ENTRA A SEGUNDO IF AVAILABLE');
-  //         return true;
-  //       }
-
-  //     });
-
-  //     processedEvents.add(event);
-  //     similarEvents.forEach((otherEvent) => {
-  //       processedEvents.add(otherEvent);
-  //     });
-  //     if (similarEvents.length > 0) {
-  //       this.groupedSimilarEvents.push({
-  //         title: `${similarEvents.length + 1} events`,
-  //         color: event.color,
-  //         start: event.start,
-  //         end: event.end,
-  //         meta: {
-  //           groupedEvents: [event, ...similarEvents],
-  //         },
-  //       });
-  //     } else {
-  //       this.groupedSimilarEvents.push(event);
-  //     }
-  //   });
-  //   //******************************************************************//
-
-
-  //   console.log(this.groupedSimilarEvents);
-  //   console.log(this.events);
-
-  //   this.setIcon();
-
-  // }
-
 
   //COLOR BTN//
   colorBtn(btn: string) {
@@ -430,13 +253,7 @@ export class RemisionesComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
   return() {
-    // window.history.back();
-    if (this.turno === '1') {
-      this.router.navigateByUrl('supervisor/control-matutino/tarea/2');
-    }
-    else {
-      this.router.navigateByUrl('supervisor/control-vespertino/tarea/2');
-    }
+    this.router.navigateByUrl(`regional/centro-control/${this.idSucursal}/tarea/6`);
   }
 
   dayClicked(day: CalendarMonthViewDay, { date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -455,51 +272,8 @@ export class RemisionesComponent implements OnInit {
   }
   dialogConfirmAvailability() {
     console.log('aqui va un dialogo:');
-    //ABRE MODAL PARA AGREGAR HORAS//
-    // const dialogRef = this.dialog.open(ConfirmationCalendarComponent, {
-    //   data: {
-    //     header: 'Availability Calendar',
-    //     body: 'Do you want to modify the availability in the calendar?'
-    //   },
-    //   width: '350px'
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result) {
-    //     const information = {
-    //       id: 0,
-    //       day: [],
-    //       daysSelected: this.selectedDays,
-    //       horaNoDisponible: this.horaNoDisponibles,
-    //       operacion: 'inserccion'
-    //     }
-    //     this.selectedDays.forEach((e: any) => {
-    //       if (e.date.getDay() === 0) {
-    //         information.day.push(7);
-    //       }
-    //       if (e.date.getDay() === 1) {
-    //         information.day.push(1);
-    //       }
-    //       if (e.date.getDay() === 2) {
-    //         information.day.push(2);
-    //       }
-    //       if (e.date.getDay() === 3) {
-    //         information.day.push(3);
-    //       }
-    //       if (e.date.getDay() === 4) {
-    //         information.day.push(4);
-    //       }
-    //       if (e.date.getDay() === 5) {
-    //         information.day.push(5);
-    //       }
-    //       if (e.date.getDay() === 6) {
-    //         information.day.push(6);
-    //       }
-    //     });
-
-    //     this.selectDay(information);
-    //   }
-    // })
   }
+
   selectDay(information) {
     console.log('ENTRA A FUNCION SELECTED DAY:', information);
     console.log('aqui va un dialogo:');

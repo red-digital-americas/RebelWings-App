@@ -31,6 +31,7 @@ import { SalonMantenimientoComponent } from './salon-mantenimiento/salon-manteni
 import { BanosMantenimientoComponent } from './banos-mantenimiento/banos-mantenimiento.component';
 import { BarraMantenimientoComponent } from './barra-mantenimiento/barra-mantenimiento.component';
 import { LevantamientoTicketComponent } from './levantamiento-ticket/levantamiento-ticket.component';
+import { RemisionesViewComponent } from './remisiones-view/remisiones-view.component';
 const routes: Routes = [
   {
     path: '',
@@ -140,6 +141,9 @@ const routes: Routes = [
   {
     path: 'levantamiento-ticket/:id',
     component: LevantamientoTicketComponent,
+  },{
+    path: 'remisiones/:turno/:id',
+    component: RemisionesViewComponent,
   },
 ];
 @NgModule({

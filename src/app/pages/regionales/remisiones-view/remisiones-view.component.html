@@ -202,7 +202,7 @@
             <ion-col size="12" class="ion-align-self-center">
               <ion-label>Comentario:</ion-label>
               <ion-card>
-                <ion-textarea [(ngModel)]="modalData?.event.comment" rows="6" cols="20">
+                <ion-textarea [disabled]="true" [(ngModel)]="modalData?.event.comment" rows="6" cols="20">
                 </ion-textarea>
               </ion-card>
             </ion-col>
@@ -211,32 +211,8 @@
 
         <ion-row size="12">
            
-          <ion-col size="6" *ngIf="modalData?.event.fotosPedidosEntregas !== null">
+          <ion-col size="6" *ngFor="let item of modalData?.event.tFotosPedidosEntregas">`
             <ion-label>FOTOGRAFIAS</ion-label>
-            <ion-card
-              style="height: 9rem"
-              class="center"
-              (click)="addPhotoToGallery(modalData?.event.id)"
-            >
-              <div style="margin-top: 2rem">
-                <ion-icon
-                  class="sizePhoto"
-                  src="./assets/icon/icon_foto.svg"
-                ></ion-icon>
-              </div>
-            </ion-card>
-          </ion-col>
-
-          <ion-col size="6" *ngFor="let item of modalData?.event.tFotosPedidosEntregas">
-            <ion-card
-              style="height: 9rem"
-              class="center"
-            >
-            <img src="{{ url }}Files/Alarmas/{{ item.foto }}"/>
-            </ion-card>
-          </ion-col>
-
-          <ion-col size="6" *ngFor="let item of photos">
             <ion-card
               style="height: 9rem"
               class="center"
@@ -251,9 +227,6 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" (click)="close()">
           Cerrar
-        </button>
-        <button type="button" class="btn btn-warning" (click)="[guardarComent(modalData), close()]" [disabled]="isOutDateButton || isDoneButton">
-          Guardar
         </button>
       </div>
     </ng-template>

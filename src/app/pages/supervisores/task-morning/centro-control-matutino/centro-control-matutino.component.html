@@ -98,9 +98,9 @@
                   </ion-segment-button>
                 </ion-col>
                 <ion-col size="6">
-                  <!-- <ion-segment-button value="2" (click)="getDataControl(2)">
+                  <ion-segment-button value="2" (click)="getDataControl(2)">
                     <span class="btnMenu">OTROS</span>
-                  </ion-segment-button> -->
+                  </ion-segment-button>
                 </ion-col>
                 
               </ion-row>
@@ -442,7 +442,7 @@
           <!-------------- remisiones ------------------------>
           <!-- *ngIf="data[1]" -->
           <ion-col size="6">
-            <ion-card (click)="remisiones(0)">
+            <ion-card (click)="remisiones(branchId)">
               <ion-card-content>
                 <ion-row size="12">
                   <ion-col size="3" class="ion-align-self-center">

@@ -39,8 +39,16 @@ import { SalonMantenimientoComponent } from './salon-mantenimiento/salon-manteni
 import { BanosMantenimientoComponent } from './banos-mantenimiento/banos-mantenimiento.component';
 import { BarraMantenimientoComponent } from './barra-mantenimiento/barra-mantenimiento.component';
 import { LevantamientoTicketComponent } from './levantamiento-ticket/levantamiento-ticket.component';
-
-
+import { RemisionesViewComponent } from './remisiones-view/remisiones-view.component';
+// Calendar
+import { FlatpickrModule } from 'angularx-flatpickr';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from  '@angular/material/core'
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
   declarations: [
     CentroControlComponent,
@@ -69,7 +77,8 @@ import { LevantamientoTicketComponent } from './levantamiento-ticket/levantamien
     SalonMantenimientoComponent,
     BanosMantenimientoComponent,
     BarraMantenimientoComponent,
-    LevantamientoTicketComponent
+    LevantamientoTicketComponent,
+    RemisionesViewComponent
   ],
   imports: [
     CommonModule,
@@ -80,7 +89,17 @@ import { LevantamientoTicketComponent } from './levantamiento-ticket/levantamien
     IonicSelectableModule,
     RegionalesRoutingModule,
     IonicRatingModule,
-
+    FlatpickrModule.forRoot(),
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    NgxMatNativeDateModule,
+    NgxMatTimepickerModule,
+    NgxMatDatetimePickerModule
   ],
   providers: [DatePicker],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
