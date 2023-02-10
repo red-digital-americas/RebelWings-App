@@ -332,6 +332,12 @@ export class CentroControlComponent implements OnInit {
     this.router.navigateByUrl('regional/barra-mantenimiento/' + this.branchId);
     // }
   }
+  remisiones(id) {
+    if (id === null) {
+      id = 0;
+    }
+    this.router.navigateByUrl('regional/remisiones/1/' + id);
+  }
   async cerrarSesion() {
     console.log('cerrar sesion');
     localStorage.removeItem('userData');

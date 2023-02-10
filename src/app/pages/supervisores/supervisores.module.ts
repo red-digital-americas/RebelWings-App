@@ -39,6 +39,10 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from  '@angular/material/core'
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -68,7 +72,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     RemisionesComponent,
     ResguardoTabletAlarmaComponent,
     DialogNotificationAlarmComponent,
-    DialogUpdateStockPolloComponent,
+    DialogUpdateStockPolloComponent, 
   ],
   imports: [
     CommonModule,
@@ -85,6 +89,12 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    NgxMatNativeDateModule,
+    NgxMatTimepickerModule,
+    NgxMatDatetimePickerModule
   ],
   providers: [DatePicker],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

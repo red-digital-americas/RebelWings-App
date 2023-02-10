@@ -33,8 +33,7 @@ import { APP_ROUTING } from './app-routing.module';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormatePipePipe } from './pages/shared/formate-pipe.pipe';
-
-
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,6 +67,9 @@ import { FormatePipePipe } from './pages/shared/formate-pipe.pipe';
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule
   ],
   providers: [
     LoaderComponent,
