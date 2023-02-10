@@ -7,7 +7,7 @@ import { DialogAddPackageComponent } from '../../dialog/dialog-add-package/dialo
 import { LoaderComponent } from 'src/app/pages/dialog-general/loader/loader.component';
 import { DialogUpdateStockPolloComponent } from '../../dialog/dialog-update-stock-pollo/dialog-update-stock-pollo.component';
 import { AlertController } from '@ionic/angular';
-import { DatePipe } from '@angular/common';
+import { DatePipe, formatNumber } from '@angular/common';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
@@ -189,11 +189,19 @@ export class SalesExpectationComponent implements OnInit {
           // stock.diferencia
           stock.diferencia = respValidar.message;
           
+          stock.invInicial = (Number(respValidar.message) - Number(stock.cantidad))* -1;
+          console.log('stock inicial',stock.invInicial);
+
           this.openDialogValidarStock(stock,i);
           console.log('new valor permitida', stock);
           
         }
         else {
+          
+          stock.diferencia = respValidar.message;
+          stock.invInicial = (Number(respValidar.message) - Number(stock.cantidad))* -1;
+          console.log('stock inicial',stock.invInicial);
+
           console.log('no hay diferencia', stock);
           this.contador[i] = 3;
           if(isNaN(this.strikes[i])){this.strikes[i] = 1;}

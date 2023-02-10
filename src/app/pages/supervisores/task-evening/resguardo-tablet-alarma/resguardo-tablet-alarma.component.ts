@@ -35,7 +35,7 @@ export class ResguardoTabletAlarmaComponent implements OnInit {
 
   public valUsuario = 0;
 
-  public url = 'http://opera.no-ip.net/back/api_rebel_wings/';
+  public url = 'http://operamx.mooo.com/back/api_rebel_wings/';
   constructor(public router: Router,
     private camera: Camera,
     public routerActive: ActivatedRoute,
